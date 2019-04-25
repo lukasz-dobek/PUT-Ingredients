@@ -1,0 +1,32 @@
+<div class="container">
+    <img src="/images/full_logo.png" alt="logo" class="landing-logo mx-auto d-block">
+    <h1>Masz już konto? <a href="/login">Zaloguj się!</a></h1>
+    <form action="/users/register" method="POST">
+        <div class="form-group">
+            <input type="email" name="email" id="emailForm1" class="form-control" placeholder="E-mail">
+        </div>
+        <div class="form-group">
+            <input type="text" name="nickname" id="nickForm1" class="form-control" placeholder="Pseudonim">
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" id="passwordForm2" class="form-control" placeholder="Hasło">
+        </div>
+        <div class="form-group">
+            <input type="password" name="passwordconfirm" id="passwordForm2" class="form-control"
+                placeholder="Potwierdź hasło">
+        </div>
+        <div class="form-group">
+            <input type="text" name="name" id="nameForm1" class="form-control"
+                placeholder="Imię">
+        </div>
+        <div class="form-group">
+            <input type="text" name="surname" id="surnameForm1" class="form-control"
+                placeholder="Nazwisko">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="check" id="checkForm1" class="form-check-input">
+            <label for="checkForm1" class="form-check-label">Potwierdzam, że zapoznałem się z <a href="/">regulaminem</a></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Załóż konto</button>
+    </form>
+</div>
