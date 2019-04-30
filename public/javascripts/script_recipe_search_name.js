@@ -53,11 +53,26 @@ $.getJSON(endpoint, function (data) {
         let score = document.createElement('p');
         score.textContent = `Ocena: ${item["score"]}`;
 
+        let id = item['id_recipe'];
+
+        let categoriesList = document.createElement('p');
+
+        $.getJSON('/categories/api/categories_per_recipe/'+id, (result)=>{
+            let cats = [];
+            result.forEach(resultItem => {
+                cats.push(resultItem);
+            });
+            cats.forEach(cat => {
+                categoriesList.textContent += cat['category_name'] + ' ';
+            });
+        });
+
         textSection.appendChild(title);
         textSection.appendChild(complicity);
         textSection.appendChild(preparationTime);
         textSection.appendChild(portionSize);
         textSection.appendChild(score);
+        textSection.appendChild(categoriesList);
 
         row.appendChild(imageSection);
         row.appendChild(textSection);
