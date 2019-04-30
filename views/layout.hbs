@@ -16,18 +16,54 @@
 
 <body>
   <header class="container-fluid head-fluid">Ingredients</header>
+  <nav style="background-color: white;" class="navbar navbar-light">
+    <img src="/images/full_logo.png" alt="logo" width="250" class="d-inline-block align-top navbar-brand">
+
+    <div class="container justify-content-center">
+      <div class="row">
+        <form method="GET" action="/recipes/search/name" class="form-inline">
+          <div class="col-sm">
+            <div class="input-group mb-3">
+              <input type="text" name="searchRecipeName" id="" class="form-control" placeholder="Nazwa...">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary">Button</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form method="GET" class="form-inline">
+
+          <div class="col-sm">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Kategorie...
+              </button>
+              <div class="dropdown" id="dropdownCategories" aria-labelledby="dropdownMenuButton">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <a class="btn btn-primary" href="#" role="button">Wyszukaj po składnikach</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </nav>
+  <hr>
   {{{body}}}
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src="/javascripts/index.js"></script>
+  <script src="{{scriptName}}"></script>
 </body>
 
 </html>

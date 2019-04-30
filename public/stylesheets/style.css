@@ -44,7 +44,7 @@ div.main-2{
   margin-top:50px;
 }
 
-.container a {
+.container a.index-anchor {
   background-color: #27ae60;
   border: 0px;
   width: 150px;
