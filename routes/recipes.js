@@ -21,7 +21,7 @@ router.get('/search/name', (req, res) => {
 })
 
 router.get('/api/all', (req, res) => {
-    pgClient.query('SELECT r.*, u.nickname FROM recipes r JOIN users u ON u.id_user = r.user_id JOIN categories_per_recipe cpr ON cpr.recipe_id = r.id_recipe JOIN categories c ON cpr.category_id = c.id_category GROUP BY r.id_recipe', (err, result) => {
+    pgClient.query('SELECT r.*, u.nickname FROM recipes r JOIN users u ON u.id_user = r.user_id JOIN categories_per_recipe cpr ON cpr.recipe_id = r.id_recipe JOIN categories c ON cpr.category_id = c.id_category GROUP BY r.id_recipe, u.nickname', (err, result) => {
         res.json(result.rows);
     });
 });

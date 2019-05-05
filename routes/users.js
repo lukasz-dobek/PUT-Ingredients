@@ -10,6 +10,10 @@ router.get('/register', function (req, res, next) {
     res.render('register');
 });
 
+router.get('/after_register', (req, res) => {
+    res.render('after_register');   
+});
+
 router.post('/register', (req, res, next) => {
     let email = req.body.email;
     let nickname = req.body.nickname;
@@ -28,7 +32,7 @@ router.post('/register', (req, res, next) => {
         }
         console.log(result);
     })
-    res.redirect('/users/login');
+    res.redirect('/users/after_register');
 });
 
 router.get('/api/all', (req, res) => {
