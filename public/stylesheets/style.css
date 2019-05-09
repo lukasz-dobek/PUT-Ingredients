@@ -46,7 +46,7 @@ div.main-2{
 
 .container a.index-anchor {
   background-color: #27ae60;
-  border: 0px;
+  border: none;
   width: 150px;
   height: 60px;
   color: #333333;

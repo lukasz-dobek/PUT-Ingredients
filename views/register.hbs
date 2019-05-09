@@ -1,6 +1,6 @@
 <div class="container">
     <img src="/images/full_logo.png" alt="logo" class="landing-logo mx-auto d-block">
-    <h1>Masz już konto? <a href="/login">Zaloguj się!</a></h1>
+    <h1>Masz już konto? <a href="/users/login">Zaloguj się!</a></h1>
     <form action="/users/register" method="POST">
         <div class="form-group">
             <input type="email" name="email" id="emailForm1" class="form-control" placeholder="E-mail">
@@ -25,7 +25,7 @@
         </div>
         <div class="form-check">
             <input type="checkbox" name="check" id="checkForm1" class="form-check-input">
-            <label for="checkForm1" class="form-check-label">Potwierdzam, że zapoznałem się z <a href="/">regulaminem</a></label>
+            <label for="checkForm1" class="form-check-label">Potwierdzam, że zapoznałem się z <a href="/terms_of_use">regulaminem</a></label>
         </div>
         <button type="submit" class="btn btn-primary">Załóż konto</button>
     </form>

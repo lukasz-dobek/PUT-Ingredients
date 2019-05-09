@@ -18,6 +18,9 @@ $.getJSON("/recipes/api/all", function (data) {
     items.forEach(item => {
         console.log(item["recipe_name"]);
         let el = document.getElementById('item'+(iterate+1).toString());
+
+        let imageAnchor = document.createElement('a');
+        
         let image = document.createElement('img'); // <img class="card-img-top" src="">
         image.classList.add('card-img-top');
         image.src = item['photo'];
