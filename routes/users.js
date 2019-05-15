@@ -3,11 +3,15 @@ var router = express.Router();
 const pgClient = require('./../db/pg-controller');
 
 router.get('/login', function (req, res, next) {
-    res.render('login');
+    res.render('login', {layout: 'layout_before_login'});
 });
 
 router.get('/register', function (req, res, next) {
-    res.render('register');
+    res.render('register', {layout: 'layout_before_login'});
+});
+
+router.get('/after_register', (req, res) => {
+    res.render('after_register', {layout: 'layout_before_login'});   
 });
 
 router.post('/register', (req, res, next) => {
@@ -28,7 +32,7 @@ router.post('/register', (req, res, next) => {
         }
         console.log(result);
     })
-    res.redirect('/users/login');
+    res.redirect('/users/after_register');
 });
 
 router.get('/api/all', (req, res) => {

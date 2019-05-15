@@ -18,14 +18,17 @@ $.getJSON("/recipes/api/all", function (data) {
     items.forEach(item => {
         console.log(item["recipe_name"]);
         let el = document.getElementById('item'+(iterate+1).toString());
-        let image = document.createElement('img');
+
+        let imageAnchor = document.createElement('a');
+        
+        let image = document.createElement('img'); // <img class="card-img-top" src="">
         image.classList.add('card-img-top');
         image.src = item['photo'];
 
         let cardBody = document.createElement('div');
         cardBody.classList.add('card-body');
         
-        let cardText = document.createElement('p');
+        let cardText = document.createElement('p'); // <p class="card-text"></p>
         cardText.classList.add('card-text');
         cardText.textContent = item["recipe_name"]
         
@@ -36,7 +39,6 @@ $.getJSON("/recipes/api/all", function (data) {
 
         iterate++;
     })
-
 });
 
 $.getJSON("/categories/api/all", (data) => {
@@ -68,5 +70,4 @@ $.getJSON("/categories/api/all", (data) => {
         dropdownUnorderedList.appendChild(categoriesCheckboxItem);
     });
     dropdownCategories.appendChild(dropdownUnorderedList);
-
 });
