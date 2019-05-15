@@ -40,7 +40,8 @@ INSERT INTO recipes (user_id,recipe_name,state,score,date_of_creation,date_of_mo
 (8,'Pulpety z sosem','Oczekuje akceptacji',0.0,clock_timestamp(),null,1,'30min','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor nulla eget elit tristique scelerisque. Quisque eget sollicitudin velit, sed.',5,'test3'),
 (7,'Krokiety','Usuniety',4.0,'2019-03-28 21:00:12',null,2,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id pretium purus, et sagittis erat. Curabitur vestibulum nisi ac interdum.',4,'test2'),
 (1,'Poutine','Zweryfikowany',2.0,'2019-04-01 22:10:12',null,2,'1h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis pretium erat, a lacinia magna. Proin sodales placerat hendrerit. Aenean..',5,'test2'),
-(4,'Smoothie owocowe','Oczekuje akceptacji',0.0,clock_timestamp(),null,1,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nisl turpis, euismod in lacus vel, tincidunt mollis odio. Quisque non.',1,'test2');
+(4,'Smoothie owocowe','Oczekuje akceptacji',0.0,clock_timestamp(),null,1,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nisl turpis, euismod in lacus vel, tincidunt mollis odio. Quisque non.',1,'test2'),
+(4,'Frytki z warzyw','Zweryfikowany',3.0,clock_timestamp(),null,2,'30min','Lorem Ipsum blablaaablalbalabal',4,'test');
 
 INSERT INTO categories_per_recipe (recipe_id,category_id) VALUES
 (1,2),
