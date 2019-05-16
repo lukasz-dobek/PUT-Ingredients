@@ -1,6 +1,5 @@
 let recipeName = document.getElementById('recipeName').textContent.toLowerCase();
 let endpoint = "/recipes/api/name/" + recipeName;
-console.log(endpoint);
 
 $.getJSON(endpoint, function (data) {
     let items = [];

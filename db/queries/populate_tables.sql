@@ -20,7 +20,7 @@ INSERT INTO user_activities (user_id,date_of_login,browser_info) VALUES
 (4,clock_timestamp(),'Mozzila Firefox'),
 (6,clock_timestamp(),'Mozzila Firefox');
 
-INSERT INTO categories (categoryn_name) VALUES
+INSERT INTO categories (category_name) VALUES
 ('Sniadanie'),
 ('Obiad'),
 ('Kolacja'),
@@ -33,15 +33,15 @@ INSERT INTO categories (categoryn_name) VALUES
 ('Kuchnia polska');
 
 INSERT INTO recipes (user_id,recipe_name,state,score,date_of_creation,date_of_modification,complicity,preparation_time,description,number_of_people,photo ) VALUES
-(3,'Pierogi','Zweryfikowany',3.5,'2019-03-12 21:00:00',null,2,'1h30min','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius porttitor felis. Praesent ultrices nisi eget mauris sodales semper. Proin.',4,'test'),
-(2,'Ziemniaki z gzikiem','Zweryfikowany',4.0,'2019-03-13 9:30:00','2019-04-10 9:00:00',1,'1h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius porttitor felis. Praesent ultrices nisi eget mauris sodales semper',3,'test1'),
-(4,'Stek z warzywami','Oczekuje akceptacji',0.0,clock_timestamp(),null,3,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt risus nec mauris venenatis, ut pulvinar ante euismod. Maecenas scelerisque.',2,'test2'),
-(3,'Spaghetti bolognese','Zweryfikowany',4.73,'2019-02-28 19:00:12',null,3,'1h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat, metus at sodales auctor, nulla lorem eleifend massa, non dignissim.',2,'test3'),
-(8,'Pulpety z sosem','Oczekuje akceptacji',0.0,clock_timestamp(),null,1,'30min','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor nulla eget elit tristique scelerisque. Quisque eget sollicitudin velit, sed.',5,'test3'),
-(7,'Krokiety','Usuniety',4.0,'2019-03-28 21:00:12',null,2,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id pretium purus, et sagittis erat. Curabitur vestibulum nisi ac interdum.',4,'test2'),
-(1,'Poutine','Zweryfikowany',2.0,'2019-04-01 22:10:12',null,2,'1h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis pretium erat, a lacinia magna. Proin sodales placerat hendrerit. Aenean..',5,'test2'),
-(4,'Smoothie owocowe','Oczekuje akceptacji',0.0,clock_timestamp(),null,1,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nisl turpis, euismod in lacus vel, tincidunt mollis odio. Quisque non.',1,'test2'),
-(4,'Frytki z warzyw','Zweryfikowany',3.0,clock_timestamp(),null,2,'30min','Lorem Ipsum blablaaablalbalabal',4,'test');
+(3,'Pierogi','Zweryfikowany',3.5,'2019-03-12 21:00:00',null,2,'1h30min','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius porttitor felis. Praesent ultrices nisi eget mauris sodales semper. Proin.',4,'/images/pierogi-z-jagodami.jpeg'),
+(2,'Ziemniaki z gzikiem','Zweryfikowany',4.0,'2019-03-13 9:30:00','2019-04-10 9:00:00',1,'1h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius porttitor felis. Praesent ultrices nisi eget mauris sodales semper',3,'/images/pyry-z-gzikiem.jpg'),
+(4,'Stek z warzywami','Oczekuje akceptacji',0.0,clock_timestamp(),null,3,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt risus nec mauris venenatis, ut pulvinar ante euismod. Maecenas scelerisque.',2,'/images/stek-z-warzywami.jpg'),
+(3,'Spaghetti bolognese','Zweryfikowany',4.73,'2019-02-28 19:00:12',null,3,'1h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat, metus at sodales auctor, nulla lorem eleifend massa, non dignissim.',2,'/images/spaghetti-bolognese.jpg'),
+(8,'Pulpety z sosem','Oczekuje akceptacji',0.0,clock_timestamp(),null,1,'30min','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor nulla eget elit tristique scelerisque. Quisque eget sollicitudin velit, sed.',5,'/images/pulpety-z-sosem.jpg'),
+(7,'Krokiety','Usuniety',4.0,'2019-03-28 21:00:12',null,2,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id pretium purus, et sagittis erat. Curabitur vestibulum nisi ac interdum.',4,'/images/krokiety.jpeg'),
+(1,'Poutine','Zweryfikowany',2.0,'2019-04-01 22:10:12',null,2,'1h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis pretium erat, a lacinia magna. Proin sodales placerat hendrerit. Aenean..',5,'/images/poutine.jpg'),
+(4,'Smoothie owocowe','Oczekuje akceptacji',0.0,clock_timestamp(),null,1,'2h','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nisl turpis, euismod in lacus vel, tincidunt mollis odio. Quisque non.',1,'/images/smoothie-z-owocami.jpg'),
+(4,'Frytki z warzyw','Zweryfikowany',3.0,clock_timestamp(),null,2,'30min','Lorem Ipsum blablaaablalbalabal',4,'/images/frytki-z-warzyw.jpg');
 
 INSERT INTO categories_per_recipe (recipe_id,category_id) VALUES
 (1,2),

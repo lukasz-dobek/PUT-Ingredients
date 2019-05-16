@@ -3,15 +3,15 @@ var router = express.Router();
 const pgClient = require('./../db/pg-controller');
 
 router.get('/login', function (req, res, next) {
-    res.render('login', {layout: 'layout_before_login'});
+    res.render('./users/login', { layout: 'layout_before_login' });
 });
 
 router.get('/register', function (req, res, next) {
-    res.render('register', {layout: 'layout_before_login'});
+    res.render('./users/register', { layout: 'layout_before_login' });
 });
 
 router.get('/after_register', (req, res) => {
-    res.render('after_register', {layout: 'layout_before_login'});   
+    res.render('./users/after_register', { layout: 'layout_before_login' });
 });
 
 router.post('/register', (req, res, next) => {
@@ -34,6 +34,8 @@ router.post('/register', (req, res, next) => {
     })
     res.redirect('/users/after_register');
 });
+
+// API
 
 router.get('/api/all', (req, res) => {
     pgClient.query('SELECT * FROM users', (err, result) => {

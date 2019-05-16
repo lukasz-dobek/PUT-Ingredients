@@ -49,16 +49,47 @@
         </form>
       </div>
     </div> --}}
-  <nav style="background-color: white;" class="navbar navbar-light">
-    <img src="/images/logo.png" alt="logo" width="200" class="position-absolute mt-5">
-  </nav>
+  {{!-- <nav style="background-color: white;" class="navbar navbar-light"> --}}
+    <img src="/images/logo.png" alt="logo" width="250" class="position-absolute">
+  {{!-- </nav> --}}
   <div class="container">
 
-    <div class="row">
+    <div class="row mt-5">
 
-      <div class="col"><button class="btn btn-success mt-5 w-100 h-75"></button></div>
-      <div class="col"><button class="btn btn-primary mt-5 w-100 h-75"></button></div>
-      <div class="col"><button class="btn btn-danger mt-5 w-100 h-75"></button></div>
+      <div class="col">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Nazwa..." aria-label="Nazwa..."
+            aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">></button>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Kategorie..." aria-label="Kategorie...">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div role="separator" class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </div>
+        </div></button>
+      </div>
+      <div class="col">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Wyszukaj po składnikach" aria-label="Wyszukaj po składnikach"
+            aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
