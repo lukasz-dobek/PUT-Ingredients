@@ -1,32 +1,33 @@
-<div class="container">
+<div class="container text-center">
     <img src="/images/full_logo.png" alt="logo" class="landing-logo mx-auto d-block">
-    <h1>Masz już konto? <a href="/users/login">Zaloguj się!</a></h1>
+    <hr class="w-75" style="background-color: black;">
+
+    <h3>Masz już konto? <a href="/users/login" class="anchor-green">Zaloguj się!</a></h3>
     <form action="/users/register" method="POST">
-        <div class="form-group">
-            <input type="email" name="email" id="emailForm1" class="form-control" placeholder="E-mail">
+        <div class="form-group d-flex justify-content-center mt-4">
+            <input type="email" name="email" id="emailForm1" class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="E-mail">
         </div>
-        <div class="form-group">
-            <input type="text" name="nickname" id="nickForm1" class="form-control" placeholder="Pseudonim">
+        <div class="form-group d-flex justify-content-center mt-4">
+            <input type="text" name="nickname" id="nickForm1" class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Pseudonim">
         </div>
-        <div class="form-group">
-            <input type="password" name="password" id="passwordForm2" class="form-control" placeholder="Hasło">
+        <div class="form-group d-flex justify-content-center mt-4">
+            <input type="password" name="password" id="passwordForm2" class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Hasło">
         </div>
-        <div class="form-group">
-            <input type="password" name="passwordconfirm" id="passwordForm2" class="form-control"
+        <div class="form-group d-flex justify-content-center mt-4">
+            <input type="password" name="passwordconfirm" id="passwordForm2" class="form-control w-25 border-top-0 border-left-0 border-right-0"
                 placeholder="Potwierdź hasło">
         </div>
-        <div class="form-group">
-            <input type="text" name="name" id="nameForm1" class="form-control"
-                placeholder="Imię">
+        <div class="form-group d-flex justify-content-center mt-4">
+            <input type="text" name="name" id="nameForm1" class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Imię">
         </div>
-        <div class="form-group">
-            <input type="text" name="surname" id="surnameForm1" class="form-control"
-                placeholder="Nazwisko">
+        <div class="form-group d-flex justify-content-center mt-4">
+            <input type="text" name="surname" id="surnameForm1" class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Nazwisko">
         </div>
-        <div class="form-check">
+        <div class="form-check mt-5">
             <input type="checkbox" name="check" id="checkForm1" class="form-check-input">
-            <label for="checkForm1" class="form-check-label">Potwierdzam, że zapoznałem się z <a href="/terms_of_use">regulaminem</a></label>
+            <label for="checkForm1" class="form-check-label">Potwierdzam, że zapoznałem się z <a
+                    href="/terms_of_use" class="anchor-green">regulaminem</a></label>
         </div>
-        <button type="submit" class="btn btn-primary">Załóż konto</button>
+        <button type="submit" class="btn btn-success mt-4">Załóż konto</button>
     </form>
 </div>

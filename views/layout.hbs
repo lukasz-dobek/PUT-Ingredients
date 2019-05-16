@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/style.css">
-  
+
   <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 
@@ -19,14 +19,11 @@
 
 <body>
   <header class="container-fluid head-fluid">Ingredients</header>
-  <nav style="background-color: white;" class="navbar navbar-light">
-    <img src="/images/full_logo.png" alt="logo" width="250" class="d-inline-block align-top navbar-brand">
-
-    <div class="container justify-content-center">
+  {{!-- <div class="container d-flex justify-content-center ">
       <div class="row">
         <form method="GET" action="/recipes/search/name" class="form-inline">
-          <div class="col-sm">
-            <div class="input-group mb-3">
+          <div class="col">
+            <div class="input-group">
               <input type="text" name="searchRecipeName" id="" class="form-control" placeholder="Nazwa...">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary">Button</button>
@@ -51,10 +48,21 @@
           </div>
         </form>
       </div>
-    </div>
-
+    </div> --}}
+  <nav style="background-color: white;" class="navbar navbar-light">
+    <img src="/images/logo.png" alt="logo" width="200" class="position-absolute mt-5">
   </nav>
-  <hr>
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col"><button class="btn btn-success mt-5 w-100 h-75"></button></div>
+      <div class="col"><button class="btn btn-primary mt-5 w-100 h-75"></button></div>
+      <div class="col"><button class="btn btn-danger mt-5 w-100 h-75"></button></div>
+    </div>
+  </div>
+
+  <hr class="mt-5">
   {{{body}}}
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

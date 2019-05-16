@@ -60,3 +60,12 @@ div.main p {
   text-align: justify;
   color: #8f8f8f;
 }
+
+.anchor-green {
+  color: #27ae60;
+}
+
+.no-border {
+  border: 0;
+  box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}
