@@ -1,63 +1,39 @@
 <div class="container" id="mainRecipesContent">
     <h1>Ostatnio dodane przepisy:</h1>
-    <div class="row" style="margin-top:20px;">
+    <div class="row">
+        {{#listItem 0 3 recipes}}
         <div class="col-sm">
-
-            <div class="card" id="item1">
-
+            <div class="card">
+                <img src="{{photo}}" alt="" class="card-img-top">
+                <div class="card-body">
+                    <p class="card-text">{{recipe_name}}</p>
+                </div>
             </div>
         </div>
-        <div class="col-sm">
-
-            <div class="card" id="item2">
-
-            </div>
-        </div>
-        <div class="col-sm">
-
-            <div class="card" id="item3">
-
-            </div>
-        </div>
+        {{/listItem}}
     </div>
-    <div class="row" style="margin-top:20px;">
+    <div class="row">
+        {{#listItem 3 6 recipes}}
         <div class="col-sm">
-
-            <div class="card" id="item4">
-
+            <div class="card">
+                <img src="{{photo}}" alt="" class="card-img-top">
+                <div class="card-body">
+                    <p class="card-text">{{recipe_name}}</p>
+                </div>
             </div>
         </div>
-        <div class="col-sm">
-
-            <div class="card" id="item5">
-
-            </div>
-        </div>
-        <div class="col-sm">
-
-            <div class="card" id="item6">
-
-            </div>
-        </div>
+        {{/listItem}}
     </div>
-    <div class="row" style="margin-top:20px;">
+    <div class="row">
+        {{#listItem 6 9 recipes}}
         <div class="col-sm">
-
-            <div class="card" id="item7">
-
+            <div class="card">
+                <img src="{{photo}}" alt="" class="card-img-top">
+                <div class="card-body">
+                    <p class="card-text">{{recipe_name}}</p>
+                </div>
             </div>
         </div>
-        <div class="col-sm">
-
-            <div class="card" id="item8">
-
-            </div>
-        </div>
-        <div class="col-sm">
-
-            <div class="card" id="item9">
-
-            </div>
-        </div>
+        {{/listItem}}
     </div>
 </div>

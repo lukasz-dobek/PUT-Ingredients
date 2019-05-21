@@ -2,7 +2,16 @@ const express = require('express');
 const router = express.Router();
 const pgClient = require('./../db/pg-controller');
 
+
 router.get('/', (req, res) => {
+    pgClient.query('SELECT * FROM recipes ORDER BY date_of_creation LIMIT 9', (err, result) => {
+        if (err) throw err;
+        res.render('./recipes/front_page', {recipes: result.rows});
+    });
+
+});
+
+router.get('/old', (req, res) => {
     let recipes;
     pgClient.query('SELECT * FROM recipes', (err, result) => {
         if (err) throw err;
@@ -12,16 +21,10 @@ router.get('/', (req, res) => {
     });
 
 
-    res.render('./recipes/front_page',{scriptName: '/javascripts/script.js'});
+    res.render('./recipes/front_page_old',{scriptName: '/javascripts/script.js'});
 });
 
-router.get('/test', (req, res) => {
-    pgClient.query('SELECT * FROM recipes ORDER BY date_of_creation LIMIT 9', (err, result) => {
-        if (err) throw err;
-        res.render('./recipes/front_page_test', {recipes: result.rows});
-    });
 
-});
 
 router.get('/search/name', (req, res) => {
     // console.log(req.query['searchRecipeName']);

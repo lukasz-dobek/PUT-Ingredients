@@ -31,29 +31,47 @@
               style="height: 60px; background-color: #333333; color: #ffffff;" name="searchRecipeName"
               placeholder="Nazwa..." aria-label="Nazwa..." aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button class="btn btn-secondary border-0 rounded-0" style="background-color: #333333; color: #27ae60; font-weight: bold; font-size: 30px;"
+              <button class="btn btn-secondary border-0 rounded-0"
+                style="background-color: #333333; color: #27ae60; font-weight: bold; font-size: 30px;"
                 type="button">></button>
             </div>
           </div>
         </form>
       </div>
       <div class="col">
-        <div class="input-group">
-          <input type="text" class="form-control border-0 rounded-0"
-            style="height: 60px; background-color: #333333; color: #ffffff;" placeholder="Kategorie..."
-            aria-label="Kategorie...">
-          <div class="input-group-append">
-            <button class="btn btn-secondary dropdown-toggle border-0 rounded-0" style="background-color: #333333; color: #27ae60; font-weight: bold; font-size: 30px;"
-              type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div role="separator" class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-          </div>
+
+        <div class="dropdown" id="dropdownCategories"> 
+          <button class="btn btn-secondary dropdown-toggle border-0 rounded-0 text-right"
+            style="height: 60px; background-color: #333333;  font-weight: bold; width:100%; color: #27ae60; font-size: 30px;"
+            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span
+              style="margin-top:20px; line-height: 50%; font-weight: 100; font-size: 1rem; float: left; color: #ffffff; opacity: 0.33;">Kategorie...</span>
+          </button>
+          {{!-- <ul class="dropdown-menu checkbox-menu allow-focus" style="width: 100%;" id="dropdownCategories" aria-labelledby="dropdownCategories">
+
+            <li>
+              <label>
+                <input type="checkbox"> Cheese
+              </label>
+            </li>
+
+            <li>
+              <label>
+                <input type="checkbox"> Pepperoni
+              </label>
+            </li>
+
+            <li>
+              <label>
+                <input type="checkbox"> Peppers
+              </label>
+            </li>
+
+          </ul> --}}
         </div>
+
+
+
       </div>
       <div class="col">
         <div class="input-group">
@@ -61,7 +79,8 @@
             style="height: 60px; background-color: #333333; color: #ffffff;" placeholder="Wyszukaj po składnikach"
             aria-label="Wyszukaj po składnikach" aria-describedby="basic-addon2">
           <div class="input-group-append" style="height: 60px;">
-            <button class="btn btn-secondary border-0 rounded-0" style="background-color: #333333; color: #27ae60; font-weight: bold; font-size: 30px;"
+            <button class="btn btn-secondary border-0 rounded-0"
+              style="background-color: #333333; color: #27ae60; font-weight: bold; font-size: 30px;"
               type="button">></button>
           </div>
         </div>
@@ -81,6 +100,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    <script src="/javascripts/categories_dropdown.js"></script>
   <script src="{{scriptName}}"></script>
 </body>
 
