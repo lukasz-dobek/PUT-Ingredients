@@ -38,41 +38,20 @@
           </div>
         </form>
       </div>
+
       <div class="col">
-
-        <div class="dropdown" id="dropdownCategories"> 
-          <button class="btn btn-secondary dropdown-toggle border-0 rounded-0 text-right"
-            style="height: 60px; background-color: #333333;  font-weight: bold; width:100%; color: #27ae60; font-size: 30px;"
-            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span
-              style="margin-top:20px; line-height: 50%; font-weight: 100; font-size: 1rem; float: left; color: #ffffff; opacity: 0.33;">Kategorie...</span>
-          </button>
-          {{!-- <ul class="dropdown-menu checkbox-menu allow-focus" style="width: 100%;" id="dropdownCategories" aria-labelledby="dropdownCategories">
-
-            <li>
-              <label>
-                <input type="checkbox"> Cheese
-              </label>
-            </li>
-
-            <li>
-              <label>
-                <input type="checkbox"> Pepperoni
-              </label>
-            </li>
-
-            <li>
-              <label>
-                <input type="checkbox"> Peppers
-              </label>
-            </li>
-
-          </ul> --}}
-        </div>
-
-
-
+        <form action="/recipes/search/categories" method="get">
+          <div class="dropdown" id="dropdownCategories">
+            <button class="btn btn-secondary dropdown-toggle border-0 rounded-0 text-right"
+              style="height: 60px; background-color: #333333;  font-weight: bold; width:100%; color: #27ae60; font-size: 30px;"
+              type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span
+                style="margin-top:20px; line-height: 50%; font-weight: 100; font-size: 1rem; float: left; color: #ffffff; opacity: 0.33;">Kategorie...</span>
+            </button>
+          </div>
+        </form>
       </div>
+
       <div class="col">
         <div class="input-group">
           <input type="text" class="form-control border-0 rounded-0"
@@ -100,7 +79,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-    <script src="/javascripts/categories_dropdown.js"></script>
+  <script src="/javascripts/categories_dropdown.js"></script>
   <script src="{{scriptName}}"></script>
 </body>
 

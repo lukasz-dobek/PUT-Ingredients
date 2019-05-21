@@ -30,6 +30,12 @@ $.getJSON("/categories/api/all", (data) => {
         categoriesCheckboxItem.appendChild(categoriesAnchorItem);
         dropdownUnorderedList.appendChild(categoriesCheckboxItem);
     });
+
+    let searchButton = document.createElement('button');
+    searchButton.classList.add('btn', 'btn-success');
+    searchButton.type = 'submit';
+    searchButton.textContent = 'Szukaj';
+    dropdownUnorderedList.appendChild(searchButton);
     dropdownCategories.appendChild(dropdownUnorderedList);
 });
 
