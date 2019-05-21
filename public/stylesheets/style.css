@@ -9,6 +9,7 @@ a {
 
 body {
   font-family: 'Roboto', sans-serif;
+  padding-bottom: 70px;
 }
 
 .head-fluid {
@@ -67,7 +68,7 @@ div.main p {
 
 .no-border {
   border: 0;
-  box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+  box-shadow: none;
 }
 
 .card-img-top {

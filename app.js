@@ -3,7 +3,7 @@ var path = require('path');
 var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var handlebars = require('hbs');
 // Favicon handler
 var favicon = require('serve-favicon');
 
@@ -14,6 +14,14 @@ var recipesRouter = require('./routes/recipes');
 var categoriesRouter = require('./routes/categories');
 
 var app = express();
+
+handlebars.registerHelper('listItem', function (from, to, context, options) {
+  var item = "";
+  for (var i = from, j = to; i < j; i++) {
+    item = item + options.fn(context[i]);
+  }
+  return item;
+});
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,12 +46,12 @@ app.use('/recipes', recipesRouter);
 app.use('/categories', categoriesRouter);
 
 // Catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // Error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

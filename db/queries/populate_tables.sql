@@ -54,7 +54,8 @@ INSERT INTO categories_per_recipe (recipe_id,category_id) VALUES
 (6,10),
 (7,2),
 (8,4),
-(8,1);
+(8,1),
+(9,4);
 
 INSERT INTO favourites (user_id, recipe_id, date_of_favourite) VALUES
 (1,1,clock_timestamp()),
