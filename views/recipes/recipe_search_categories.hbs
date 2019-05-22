@@ -1,8 +1,8 @@
 <div class="container" id="listOfRecipes">
     <h3 class="mb-5" style="text-transform: uppercase">Wyszukano: <span>{{#each searchedCategories}}
-        {{this}}
-        {{/each}}
-    </span></h3>
+            [<a href="#placeholder_for_category_screen">{{this}}</a>]
+            {{/each}}
+        </span></h3>
     {{#each recipes}}
     <div class="row align-items-center mt-2">
         <div class="col-6 col-md-4">
@@ -12,6 +12,8 @@
             <h3>{{recipe_name}}</h3>
             <p>Stopien trudności: {{complicity}}</p>
             <p>Czas przygotowania: {{preparation_time}}</p>
+            <p>Ilość porcji: {{number_of_people}}</p>
+            <p>Ocena: {{score}}</p>
         </div>
     </div>
     {{/each}}

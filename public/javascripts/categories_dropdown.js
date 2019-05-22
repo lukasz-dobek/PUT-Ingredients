@@ -32,7 +32,7 @@ $.getJSON("/categories/api/all", (data) => {
     });
 
     let searchButton = document.createElement('button');
-    searchButton.classList.add('btn', 'btn-success');
+    searchButton.classList.add('btn', 'btn-success', 'float-right', 'm-2', 'w-100', 'rounded-0');
     searchButton.type = 'submit';
     searchButton.textContent = 'Szukaj';
     dropdownUnorderedList.appendChild(searchButton);

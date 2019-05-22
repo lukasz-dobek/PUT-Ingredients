@@ -21,15 +21,15 @@ INSERT INTO user_activities (user_id,date_of_login,browser_info) VALUES
 (6,clock_timestamp(),'Mozzila Firefox');
 
 INSERT INTO categories (category_name) VALUES
-('Sniadanie'),
+('Śniadanie'),
 ('Obiad'),
 ('Kolacja'),
 ('Przystawki'),
 ('Deser'),
 ('Drinki'),
-('Kuchnia wloska'),
-('Kuchania francuska'),
-('Kuchnia chinska'),
+('Kuchnia włoska'),
+('Kuchnia francuska'),
+('Kuchnia chińska'),
 ('Kuchnia polska');
 
 INSERT INTO recipes (user_id,recipe_name,state,score,date_of_creation,date_of_modification,complicity,preparation_time,description,number_of_people,photo ) VALUES

@@ -20,6 +20,7 @@ router.get('/old', (req, res) => {
 });
 
 router.get('/search/name', (req, res) => {
+    // TODO: rewrite query so it also includes user_id
     const queryString = "SELECT * FROM recipes WHERE LOWER(recipe_name) LIKE $1;";
     const value = req.query['searchRecipeName'];
 
@@ -50,6 +51,7 @@ router.get('/search/categories', (req, res) => {
     }
 
     // Generate query string with $i's
+    // TODO: rewrite query so it also includes user_id
     const queryString = `SELECT DISTINCT ON (r.recipe_name) recipe_name, r.*, cpr.recipe_id, cpr.category_id, c.category_name FROM recipes r 
     JOIN categories_per_recipe cpr ON cpr.recipe_id = r.id_recipe
     JOIN categories c ON cpr.category_id = c.id_category

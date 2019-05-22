@@ -5,10 +5,15 @@
         <div class="col-6 col-md-4">
             <img src="{{photo}}" alt="" class="card-img-top">
         </div>
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-4">
             <h3>{{recipe_name}}</h3>
-            <p>Stopien trudności: {{complicity}}</p>
-            <p>Czas przygotowania: {{preparation_time}}</p>
+            <div class="container" style="background-color:gainsboro">
+                <p>Stopien trudności: {{complicity}}</p>
+                <p>Czas przygotowania: {{preparation_time}}</p>
+                <p>Ilość porcji: {{number_of_people}}</p>
+                <p>Ocena: {{score}}</p>
+                <!-- ajax to show categories -->
+            </div>
         </div>
     </div>
     {{/each}}
