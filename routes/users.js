@@ -24,7 +24,9 @@ router.post('/register', (req, res, next) => {
 
     console.log(`${email}, ${nickname}`);
 
-    const insertQueryString = `INSERT INTO users (email_address, password, nickname, date_of_join, name, surname, is_admin, state, activation_url, url_status, salt) VALUES ($1, $2, $3, to_timestamp(${Date.now() / 1000.0}), $4, $5, '0', 4, 'abc', '0', 'abcdefghj');`
+    const insertQueryString = `INSERT INTO users 
+    (email_address, password, nickname, date_of_join, name, surname, is_admin, state, activation_url, url_status, salt)
+    VALUES ($1, $2, $3, to_timestamp(${Date.now() / 1000.0}), $4, $5, '0', 4, 'abc', '0', 'abcdefghj');`
     pgClient.query(insertQueryString, [email, password, nickname, name, surname], (err, result) => {
         if (err) {
             throw err;

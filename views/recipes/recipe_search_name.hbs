@@ -1,13 +1,13 @@
 <div class="container" id="listOfRecipes">
-    <h3 class="mb-5" style="text-transform: uppercase">Wyszukano: <span>{{searchString}}</span></h3>
+    <h3 class="mb-3" style="text-transform: uppercase">Wyszukano: <span>{{searchString}}</span></h3>
     {{#each recipes}}
     <div class="row align-items-center mt-2">
         <div class="col-6 col-md-4">
-            <img src="{{photo}}" alt="" class="card-img-top">
+            <a href="/recipes/{{link_to_recipe}}"><img src="{{photo_one}}" alt="" class="card-img-top"></a>
         </div>
         <div class="col-6 col-4">
-            <h3>{{recipe_name}}</h3>
-            <div class="container" style="background-color:gainsboro">
+             <a href="/recipes/{{link_to_recipe}}"><h3>{{recipe_name}}</h3></a>
+            <div class="container" style="background-color:gainsboro; padding: 15px;">
                 <p>Stopien trudności: {{complicity}}</p>
                 <p>Czas przygotowania: {{preparation_time}}</p>
                 <p>Ilość porcji: {{number_of_people}}</p>

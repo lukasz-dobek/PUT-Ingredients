@@ -19,6 +19,19 @@ router.get('/old', (req, res) => {
     res.render('./recipes/front_page_old', { scriptName: '/javascripts/script.js' });
 });
 
+router.get('/:linkToRecipe', (req,res) => {
+    // maybe save link to recipe in database aswell?
+    // if we're talking about that, remember that we need photo 1 photo 2 and photo 3 columns aswell
+    // select '/recipes/' || replace(lower(recipe_name), ' ', '_') as url from recipes;
+    const queryString = "SELECT * FROM recipes WHERE link_to_recipe LIKE $1;";
+    const value = req.params.linkToRecipe;
+
+    pgClient.query(queryString, [value], (err, result) => {
+        if (err) throw err;
+        res.render('./recipes/recipe_page', { recipe: result.rows });
+    });
+});
+
 router.get('/search/name', (req, res) => {
     // TODO: rewrite query so it also includes user_id
     const queryString = "SELECT * FROM recipes WHERE LOWER(recipe_name) LIKE $1;";

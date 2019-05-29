@@ -43,7 +43,11 @@ CREATE TABLE IF NOT EXISTS recipes (
 	preparation_time VARCHAR(50) NOT NULL,
 	description TEXT NOT NULL,
 	number_of_people INTEGER NOT NULL,
-	photo VARCHAR(100) NOT NULL
+	link_to_recipe VARCHAR(100),
+	photo_one VARCHAR(100) NOT NULL,
+	photo_two VARCHAR(100),
+	photo_three VARCHAR(100),
+	photo_four VARCHAR(100)
 );
 
 -- Categories per recipe
