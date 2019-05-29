@@ -41,7 +41,7 @@ router.get('/search/name', (req, res) => {
 
     pgClient.query(queryString, ['%' + value + '%'], (err, result) => {
         if (err) throw err;
-        res.render('./recipes/recipe_search_name', { searchString: value, recipes: result.rows, scriptName: '/javascripts/script_recipe_search_name.js' });
+        res.render('./recipes/recipe_search_name', { searchString: value, recipes: result.rows });
     });
 });
 
