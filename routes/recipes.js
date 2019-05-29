@@ -24,10 +24,12 @@ router.get('/:linkToRecipe', (req,res) => {
     // if we're talking about that, remember that we need photo 1 photo 2 and photo 3 columns aswell
     // select '/recipes/' || replace(lower(recipe_name), ' ', '_') as url from recipes;
     const queryString = "SELECT * FROM recipes WHERE link_to_recipe LIKE $1;";
-    const value = req.params.linkToRecipe;
+    const value = '/recipes/'.concat(req.params.linkToRecipe);
 
     pgClient.query(queryString, [value], (err, result) => {
         if (err) throw err;
+        console.log(value);
+        console.log(result.rows);
         res.render('./recipes/recipe_page', { recipe: result.rows });
     });
 });
