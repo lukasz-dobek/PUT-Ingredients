@@ -14,11 +14,12 @@ router.get('/api/categories_per_recipe/:id', (req, res) => {
     //     inner join recipes r on r.id_recipe = cpr.recipe_id where r.id_recipe = $1;`;
     
     const queryString = `select r.recipe_name, cpr.recipe_id, c.category_name
-    from recipes r join categories_per_recipe cpr on r.id_recipe = cpr.recipe_id join categories c on c.id_category = cpr.category_id;`
+    from recipes r join categories_per_recipe cpr on r.id_recipe = cpr.recipe_id join categories c on c.id_category = cpr.category_id
+    where r.id_recipe = $1;`
 
     const value = [parseInt(req.params.id)];
 
-    pgClient.query(queryString, (err, result) => {
+    pgClient.query(queryString, value ,(err, result) => {
         if (err) throw err;
         res.json(result.rows);
     });

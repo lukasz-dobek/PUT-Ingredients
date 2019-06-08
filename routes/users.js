@@ -1,4 +1,5 @@
 var express = require('express');
+const argon2 = require('argon2');
 var router = express.Router();
 const pgClient = require('./../db/pg-controller');
 
@@ -15,26 +16,69 @@ router.get('/after_register', (req, res) => {
 });
 
 router.post('/register', (req, res, next) => {
-    let email = req.body.email;
-    let nickname = req.body.nickname;
-    let password = req.body.password;
-    let passwordConfirm = req.body.passwordconfirm;
-    let name = req.body.name;
-    let surname = req.body.surname;
 
-    console.log(`${email}, ${nickname}`);
+    const { email, nickname, password, passwordConfirm, name, surname } = req.body;
+    console.log(email, nickname, password, passwordConfirm);
+    let errors = [];
 
-    const insertQueryString = `INSERT INTO users 
-    (email_address, password, nickname, date_of_join, name, surname, is_admin, state, activation_url, url_status, salt)
-    VALUES ($1, $2, $3, to_timestamp(${Date.now() / 1000.0}), $4, $5, '0', 4, 'abc', '0', 'abcdefghj');`
-    pgClient.query(insertQueryString, [email, password, nickname, name, surname], (err, result) => {
+    if (!nickname || !email || !password || !passwordConfirm) {
+        errors.push({ msg: "Please fill in all necessary fields" });
+    }
+
+    if (password !== passwordConfirm) {
+        errors.push({ msg: "Passwords do not match" });
+    }
+
+    if (password.length < 8) {
+        errors.push({ msg: "Password should be at least 8 characters" });
+    }
+
+    const checkIfUserExistsQuery = `SELECT email_address FROM users WHERE email_address = $1`;
+
+    let userRowCount;
+    
+    pgClient.query(checkIfUserExistsQuery, [email], (err, result) => {
         if (err) {
             throw err;
             res.render('error');
         }
-        console.log(result);
+        console.log(result.rows);
+        userRowCount = result.rowCount;
     })
-    res.redirect('/users/after_register');
+
+    if (userRowCount === 0){
+        errors.push({ msg: "Email already exists in database" });
+    }
+
+    if (errors.length > 0) {
+        console.log(errors);
+        res.render('./users/register', {
+            errors: errors,
+            layout: 'layout_before_login'
+        });
+    } else {
+        const insertQueryString = `INSERT INTO users 
+            (email_address, password, nickname, date_of_join, name, surname, is_admin, state, activation_url, url_status, salt)
+            VALUES ($1, $2, $3, to_timestamp(${Date.now() / 1000.0}), $4, $5, '0', 4, 'abc', '0', 'abcdefghj');`;
+
+        try {
+            argon2.hash(password).then(hash => {
+                console.log(hash.length);
+                console.log(hash);
+                pgClient.query(insertQueryString, [email, hash, nickname, name, surname], (err, result) => {
+                    if (err) {
+                        throw err;
+                        res.render('error');
+                    }
+                    console.log(result);
+                })
+                // TODO: Email confirmation
+                res.redirect('/users/after_register');
+            })
+        } catch (err) {
+            throw err;
+        }
+    }
 });
 
 // API
