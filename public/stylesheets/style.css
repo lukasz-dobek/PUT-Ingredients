@@ -108,3 +108,11 @@ div.main p {
 .checkbox-menu li.active label:focus {
   background-color: #b8b8ff;
 }
+
+.error{
+  border-color: red;
+}
+.error-message{
+  color: red;
+  font-style: bold;
+}
