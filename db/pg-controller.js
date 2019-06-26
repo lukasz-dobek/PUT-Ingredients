@@ -1,4 +1,5 @@
 const { Client } = require('pg')
+
 const client = new Client({
     host: 'localhost',
     port: 5432,
@@ -14,10 +15,5 @@ client.connect((err) => {
       console.log('connected')
     }
 });
-
-// client.query('SELECT * FROM recipes;', (err, res) => {
-//     if (err) throw err;
-//     console.log(res.rows[0]['recipe_name']);
-// });
 
 module.exports = client;

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const pgClient = require('./../db/pg-controller');
 
-
 router.get('/', (req, res) => {
     pgClient.query('SELECT * FROM recipes ORDER BY date_of_creation LIMIT 9', (err, result) => {
         if (err) throw err;
@@ -41,6 +40,7 @@ router.get('/search/name', (req, res) => {
 
     pgClient.query(queryString, ['%' + value + '%'], (err, result) => {
         if (err) throw err;
+        console.log(result.rows);
         res.render('./recipes/recipe_search_name', { searchString: value, recipes: result.rows });
     });
 });

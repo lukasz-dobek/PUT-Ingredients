@@ -1,7 +1,9 @@
-var express = require('express');
+const express = require('express');
 const argon2 = require('argon2');
-var router = express.Router();
+const router = express.Router();
 const pgClient = require('./../db/pg-controller');
+const mailClient = require('../MailController');
+const crypto = require('crypto');
 
 router.get('/login', function (req, res, next) {
     res.render('./users/login', { layout: 'layout_before_login' });
@@ -57,9 +59,11 @@ router.post('/register', (req, res, next) => {
             layout: 'layout_before_login'
         });
     } else {
+        const emailConfirmHash = crypto.randomBytes(48);
+        console.log(emailConfirmHash.toString('hex'));
         const insertQueryString = `INSERT INTO users 
             (email_address, password, nickname, date_of_join, name, surname, is_admin, state, activation_url, url_status, salt)
-            VALUES ($1, $2, $3, to_timestamp(${Date.now() / 1000.0}), $4, $5, '0', 4, 'abc', '0', 'abcdefghj');`;
+            VALUES ($1, $2, $3, to_timestamp(${Date.now() / 1000.0}), $4, $5, '0', 4, '${emailConfirmHash.toString('hex')}', '0', 'abcdefghj');`;
 
         try {
             argon2.hash(password).then(hash => {
@@ -72,13 +76,34 @@ router.post('/register', (req, res, next) => {
                     }
                     console.log(result);
                 })
-                // TODO: Email confirmation
+                
+                mailClient.sendEmail(email, `users/confirm_email/${emailConfirmHash.toString('hex')}`);
+
                 res.redirect('/users/after_register');
             })
         } catch (err) {
             throw err;
         }
     }
+});
+
+router.get('/confirm_email/:hash', (req, res) => {
+    console.log("test");
+    console.log(req.params.hash.toString);
+    const updateQueryString = `UPDATE users SET state=1 WHERE activation_url = $1`;
+    pgClient.query(updateQueryString, [req.params.hash], (err, result) => {
+        if (err) {
+            throw err;
+            res.render('error');
+        }
+        if (result.rowCount === 0){
+            console.log("nie bylo takiego hashu");
+        } else {
+            console.log("udalo sie");
+        }
+        console.log(result);
+    })
+    res.render('./users/confirm_email', { layout: 'layout_before_login' });
 });
 
 // API
