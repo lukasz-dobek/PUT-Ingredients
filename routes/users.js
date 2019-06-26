@@ -7,7 +7,7 @@ router.get('/login', function (req, res, next) {
 });
 
 router.get('/register', function (req, res, next) {
-    res.render('./users/register', { layout: 'layout_before_login' });
+    res.render('./users/register', { layout: 'layout_before_login'});
 });
 
 router.get('/after_register', (req, res) => {

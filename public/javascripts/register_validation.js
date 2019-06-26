@@ -1,3 +1,49 @@
+$.getJSON("/users/api/all", (data) => {
+ let customNickname = document.getElementById('nickForm1');
+ let customEmail = document.getElementById('emailForm1');
+ let nicknameTaken = false;
+ let emailTaken = false;
+ let items = [];
+
+ data.forEach(element => {
+  items.push(element);
+ });
+ let names = [];
+ items.forEach(item => {
+  names.push(item['nickname']);
+ });
+ let emails=[];
+ items.forEach(item=>{
+  emails.push(item['email_address'])
+ });
+console.log(emails);
+console.log(names);
+
+ if (customNickname.value) {
+  console.log(items);
+
+  for (let i = 0; i < names.length; i++) {
+   if (customNickname.value != names[i]) {
+    nicknameTaken = false;
+   } else {
+    nicknameTaken = true;
+    break;
+   }
+  }
+ }
+
+ if (customEmail.value) {
+//  console.log(items);
+
+  for (let i = 0; i < emails.length; i++) {
+   if (customEmail.value != emails[i]) {
+    emailTaken = false;
+   } else {
+    emailTaken = true;
+    break;
+   }
+  }
+ }
 
 // Validate the field
 let hasError = function (field) {
@@ -5,7 +51,17 @@ let hasError = function (field) {
  // Don't validate submits, buttons, file and reset inputs, and disabled fields
  if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
 
- check();
+ if (check()){
+  if(field.name==='passwordconfirm') return 'Hasła nie zgadzają się';
+ }
+
+ if(nicknameTaken){
+  if(field.name==='nickname') return 'Pseudonim już zajęty';
+ }
+
+ if(emailTaken){
+  if(field.name==='email') return 'Konto dla danego adresu email już istnieje';
+ }
  // Get validity
  let validity = field.validity;
 
@@ -24,7 +80,6 @@ let hasError = function (field) {
   if (field.type === 'email') return 'Wprowadź poprawny adres email';
  }
 
- if(validity.trr) return "ja jebe";
  // If too short
  if (validity.tooShort){
   if (field.name === 'password') return 'Hasło musi mieć conajmniej 6 znaków.'
@@ -51,46 +106,46 @@ let hasError = function (field) {
 // Show an error message
 let showError = function (field, error) {
 
- // Add error class to field
- field.classList.add('error');
- // Get field id or name
- let id = field.id || field.name;
- if (!id) return;
+     // Add error class to field
+     field.classList.add('error');
+     // Get field id or name
+     let id = field.id || field.name;
+     if (!id) return;
 
- // Check if error message field already exists
- // If not, create one
- let message = field.form.querySelector('.error-message#error-for-' + id );
- if (!message) {
-  message = document.createElement('div');
-  message.className = 'error-message';
-  message.id = 'error-for-' + id;
+     // Check if error message field already exists
+     // If not, create one
+     let message = field.form.querySelector('.error-message#error-for-' + id);
+     if (!message) {
+      message = document.createElement('div');
+      message.className = 'error-message';
+      message.id = 'error-for-' + id;
 
-  // If the field is a radio button or checkbox, insert error after the label
-  let label;
-  //if (field.type === 'radio' || field.type ==='checkbox') {
-   label = field.form.querySelector('label[for="' + id + '"]') || field.parentNode;
-   if (label) {
-    label.parentNode.insertBefore( message, label.nextSibling );
-   }
-  //}
+      // If the field is a radio button or checkbox, insert error after the label
+      let label;
+      //if (field.type === 'radio' || field.type ==='checkbox') {
+      label = field.form.querySelector('label[for="' + id + '"]') || field.parentNode;
+      if (label) {
+       label.parentNode.insertBefore(message, label.nextSibling);
+      }
+      //}
 
-  // Otherwise, insert it after the field
-  if (!label) {
-   field.parentNode.insertBefore( message, field.nextSibling );
-  }
+      // Otherwise, insert it after the field
+      if (!label) {
+       field.parentNode.insertBefore(message, field.nextSibling);
+      }
 
- }
+     }
 
- // Add ARIA role to the field
- field.setAttribute('aria-describedby', 'error-for-' + id);
+     // Add ARIA role to the field
+     field.setAttribute('aria-describedby', 'error-for-' + id);
 
- // Update error message
- message.innerHTML = error;
+     // Update error message
+     message.innerHTML = error;
 
- // Show error message
- message.style.display = 'block';
- message.style.visibility = 'visible';
-
+     // Show error message
+     message.style.display = 'block';
+     message.style.visibility = 'visible';
+ //   }
 };
 
 
@@ -121,9 +176,6 @@ let removeError = function (field) {
 document.addEventListener('blur', function (event) {
 
  let error = hasError(event.target);
- if(check()) error='Hasła nie zgadzaja sie';
- //if(!nicknames()) error='Pseudonim juz zajety';
-
  // If there's an error, show it
  if (error) {
   showError(event.target, error);
@@ -179,40 +231,4 @@ let check = function () {
    }
   }
 };
-
-
-let nicknames = function () {
- $.getJSON("/users/api/all",(data) =>{
-  let items =[];
-
-  data.forEach(element =>{
-   items.push(element);
-  });
-
-  console.log(items);
-
-  let names = []
- items.forEach(item =>{
-  names.push(item['nickname']);
-     });
-  let customNickname = document.getElementById('nickForm1');
-
-  let pom = false;
-  for(let i=0;i<names.length;i++)
-  {
-   pom = customNickname != names[i];
-  }
-  return pom;
- })
-};
-
-// let nicknameAvability = function () {
-//  let customNickname = document.getElementById('nickForm1');
-//  let nicknamesArray = nicknames();
-//  let pom = false;
-//  for(let i=0;i<nicknamesArray.length;i++)
-//  {
-//   pom = customNickname != nicknamesArray[i];
-//  }
-//  return pom;
-// };
+});
