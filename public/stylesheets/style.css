@@ -119,3 +119,10 @@ div.main p {
 .short-desc {
   background-color:#eeeeee;
 }
+.error{
+  border-color: red;
+}
+.error-message{
+  color: red;
+  font-style: bold;
+}
