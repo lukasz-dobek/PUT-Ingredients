@@ -80,6 +80,10 @@ router.get('/search/categories', (req, res) => {
 
 });
 
+router.get('/add_new_recipe', (req, res) => {
+    res.render('./recipes/add_new_recipe');
+});
+
 router.get('/api/all', (req, res) => {
     let getAllRecipes = `SELECT r.*, u.nickname
     FROM recipes r JOIN users u ON u.id_user = r.user_id
