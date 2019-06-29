@@ -17,10 +17,20 @@ module.exports =  function(passport) {
                 if(userRowCount == 0){
                     return done(null, false, { message: 'User not registered' });
                 } else {
-                    console.log(result.rows);
                     argon2.verify(result.rows[0].password, password).then((isAuthorised) => {
                         if(isAuthorised) {
-                            return done(null, result.rows[0]);
+                            const user = {
+                                id_user: result.rows[0]["id_user"],
+                                email_address: result.rows[0]["email_address"],
+                                nickname: result.rows[0]["nickname"],
+                                name: result.rows[0]["name"],
+                                surname: result.rows[0]["surname"],
+                                is_admin: result.rows[0]["is_admin"],
+                                state: result.rows[0]["state"]
+                            }
+                            console.log("User: ");
+                            console.log(user);
+                            return done(null, user);
                         } else {
                             return done(null, false, { message: 'Password incorrect' });
                         }
@@ -38,7 +48,16 @@ module.exports =  function(passport) {
     passport.deserializeUser(function(id, done) {
         const findUserOfCertainID = `SELECT * FROM users WHERE id_user = $1`;
         pgClient.query(findUserOfCertainID, [id], (err, result) => {
-            done(err, result.rows[0]);
+            const user = {
+                id_user: result.rows[0]["id_user"],
+                email_address: result.rows[0]["email_address"],
+                nickname: result.rows[0]["nickname"],
+                name: result.rows[0]["name"],
+                surname: result.rows[0]["surname"],
+                is_admin: result.rows[0]["is_admin"],
+                state: result.rows[0]["state"]
+            }
+            done(err, user);
         });
     });
 }

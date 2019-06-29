@@ -63,9 +63,9 @@ router.get('/:linkToRecipe', (req, res) => {
             /* 
             
             Recipe fields: id_recipe, recipe_name, score, date_of_creation, complicity, preparation_time, description
-            number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname
+            number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname.
 
-            Ingredients fields: ingredient_name, amount, unit_name
+            Ingredients fields: ingredient_name, amount, unit_name.
 
             */
             res.render('./recipes/recipe_page', { recipe: recipeQueryResult.rows, ingredients: ingredientsQueryResult.rows});
