@@ -1,13 +1,186 @@
 {{#each recipe}}
 <div class="container">
-    <h1>{{recipe_name}}</h1>
-  <div class="row">
-    <div class="col">
-      <img width='250' src="{{photo_one}}">
+
+  <div class="row ">
+    <div class="col col-md-4">
+      <img src="{{photo_one}}" alt="" class="card-img-top">
     </div>
-    <div class="col" >
-        <div class="grid-bacgrond"></div>
-      2 of 2
+
+    <div class="col">
+      <div class="row ">
+        <div class="col">
+            <h3 style="color: black">{{toUpperCase recipe_name}}</h3>
+        </div>
+        <div class="col">
+          <p style="text-align:right;">serduszkoooo</p>
+        </div>
+      </div>
+
+      <div class="container" style="background-color:gainsboro; padding: 15px; color:black;">
+        <div class="row ">
+          <div class="col">
+            <p>Stopien trudności: {{complicity}}</p>
+          </div>
+
+          <div class="col">
+            <div class="container" style="background-color:#7BCE9E; color:black;">
+              <p style="text-align:left; font-size: 1.05vw; padding-top: 0.22vw; padding-bottom: 0.22vw">Dodano przez: *kupadupa@gmail.com*</p>
+            </div>
+          </div>
+
+      </div>
+      <p>Czas przygotowania: {{preparation_time}}</p>
+      <p>Ilość porcji: {{number_of_people}}</p>
+      <p>Ocena: {{score}}</p>
+      <div class="row ">
+        <div class="col">
+          <p>*ikony kategorii*</p>
+        </div>
+        <div class="col">
+          <p style="text-align:right; font-size:1vw; margin-top: 0.5vw; margin-bottom: 0vw;">Data dodania przepisu:
+            *data*</p>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+
+<div class="row ">
+  <div class="col col-md-4">
+  </div>
+  <div class="col">
+    <p class="split-para">Podoba Ci się? <span>Gwiazdki</span></p>
+    <p></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-md-4">
+    <div class="container skladniki" style="background-color:gainsboro; padding: 15px; color:black;">
+      <h3>Składniki:</h3>
+      <hr>
+      </hr>
+      <div class="row ">
+        <div class="col">
+          <p>ziemak:</p>
+        </div>
+        <div class="col">
+          <p>1</p>
+        </div>
+        <div class="col">
+          <p>kg</p>
+        </div>
+      </div>
+
+      <div class="row ">
+        <div class="col">
+          <p>marchewka:</p>
+        </div>
+        <div class="col">
+          <p>3</p>
+        </div>
+        <div class="col">
+          <p>g</p>
+        </div>
+      </div>
+
+      <div class="row ">
+        <div class="col">
+          <p>oliwa z oliwek extra vergine:</p>
+        </div>
+        <div class="col border" style="text-align-last: bottom;">
+          <p>400</p>
+        </div>
+        <div class="col">
+          <p>ml</p>
+        </div>
+      </div>
+
+      <div class="row ">
+        <div class="col">
+          <p>chkeb pszenny:</p>
+        </div>
+        <div class="col">
+          <p>150</p>
+        </div>
+        <div class="col">
+          <p>g</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="container skladniki" style="background-color:white; padding: 15px; color:black;">
+      <h3>Sposób przygotowania:</h3>
+      <hr>
+      </hr>
+      <p>
+        1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec porta leo. Pellentesque faucibus
+        aliquam neque. Sed lacinia vitae dui in facilisis. Mauris pellentesque lorem sed est convallis, vel ornare
+        dolor fringilla.
+      </p>
+      <p>
+        2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec porta leo. Pellentesque faucibus
+        aliquam neque. Sed lacinia vitae dui in facilisis. Mauris pellentesque lorem sed est convallis, vel ornare
+        dolor fringilla.
+      </p>
+      <p>
+        3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec porta leo. Pellentesque faucibus
+        aliquam neque. Sed lacinia vitae dui in facilisis. Mauris pellentesque lorem sed est convallis, vel ornare
+        dolor fringilla.
+      </p>
+      <p>
+        4. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec porta leo. Pellentesque faucibus
+        aliquam neque. Sed lacinia vitae dui in facilisis. Mauris pellentesque lorem sed est convallis, vel ornare
+        dolor fringilla.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top:3vw">
+  <div class="col col-md-4">
+    <div class="container skladniki" style="background-color:#7BCE9E; padding: 15px; color:black;">
+      <h3 style="color: black">ZAMIENNIKI:</h3>
+      <p>W tym przepisie możesz zamienić następujące składniki:</p>
+      <hr>
+      </hr>
+      <p>ziemniaki na bataty</p>
+      <p>x na y</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="row">
+      <div class="col-sm">
+        <a href="{{link_to_recipe}}"><img src="{{photo_one}}" alt="" class="card-img-top"></a>
+      </div>
+      <div class="col-sm">
+        <div class="container brak-zdj"
+          style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center">
+          <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="container brak-zdj"
+          style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center">
+          <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:2.5vw">
+      <button type="stworz-liste-zakupow" class="btn btn-success ml-3">STWÓRZ LISTĘ ZAKUPÓW</button>
+    </div>
+  </div>
+</div>
+<p style="margin-top:2vw">Przepis narusza regulamin, zawiera treści niestosowne, nieadekwatne lub jest nie kompletny?
+  <a href="https://www.w3schools.com" target="_blank" style="color: red">Zgłoś przepis</a></p>
+
+
+
+
+
+
 </div>
 {{/each}}

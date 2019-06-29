@@ -10,6 +10,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
     });
 });
 
+router.get('/add_new_recipe', (req, res) => {
+    res.render('./recipes/add_new_recipe');
+});
+
 router.get('/old', (req, res) => {
     let recipes;
     pgClient.query('SELECT * FROM recipes', (err, result) => {
@@ -81,9 +85,7 @@ router.get('/search/categories', (req, res) => {
 
 });
 
-router.get('/add_new_recipe', (req, res) => {
-    res.render('./recipes/add_new_recipe');
-});
+
 
 router.get('/api/all', (req, res) => {
     let getAllRecipes = `SELECT r.*, u.nickname

@@ -30,6 +30,14 @@ handlebars.registerHelper('listItem', function (from, to, context, options) {
   return item;
 });
 
+handlebars.registerHelper('toLowerCase', function(str) {
+  return str.toLowerCase();
+});
+
+handlebars.registerHelper('toUpperCase', function(str) {
+  return str.toUpperCase();
+});
+
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
