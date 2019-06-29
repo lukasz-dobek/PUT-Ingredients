@@ -1,9 +1,10 @@
-var express = require('express');
-var path = require('path');
-var createError = require('http-errors');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var handlebars = require('hbs');
+const express = require('express');
+const path = require('path');
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const handlebars = require('hbs');
+const fs = require('fs');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
@@ -18,6 +19,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var recipesRouter = require('./routes/recipes');
 var categoriesRouter = require('./routes/categories');
+var unitsRouter = require('./routes/units');
 
 var app = express();
 
@@ -39,6 +41,8 @@ handlebars.registerHelper('toUpperCase', function (str) {
   return str.toUpperCase();
 });
 
+handlebars.registerPartials(__dirname.concat('/views/partials'));
+
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -49,12 +53,6 @@ app.use(logger('dev'));
 // Extended true - we might want to use more complex forms
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// app.use(session({
-//   secret: 'secret',
-//   resave: true,
-//   saveUninitialized: true,
-// }));
 
 app.use(session({
   store: new pgSession({
@@ -93,6 +91,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recipes', ensureAuthenticated, recipesRouter);
 app.use('/categories', categoriesRouter);
+app.use('/units', unitsRouter);
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
