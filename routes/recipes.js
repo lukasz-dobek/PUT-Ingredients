@@ -14,6 +14,10 @@ router.get('/add_new_recipe', (req, res) => {
     res.render('./recipes/add_new_recipe');
 });
 
+router.get('/add_recipe_confirmation', (req, res) => { 
+    res.render('./recipes/add_recipe_confirmation');
+});
+
 router.get('/old', (req, res) => {
     let recipes;
     pgClient.query('SELECT * FROM recipes', (err, result) => {
@@ -151,6 +155,7 @@ router.get('/api/name/:name', (req, res) => {
         res.json(result.rows);
     });
 });
+
 
 
 module.exports = router;
