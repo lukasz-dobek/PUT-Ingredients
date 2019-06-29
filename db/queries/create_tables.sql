@@ -122,3 +122,11 @@ CREATE TABLE IF NOT EXISTS ingredients_used_in_recipe (
 	amount VARCHAR(50) NOT NULL
 );
 
+-- Persistant session table
+CREATE TABLE IF NOT EXISTS user_session (
+    "sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+ALTER TABLE user_session ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;

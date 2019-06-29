@@ -6,7 +6,7 @@ const { ensureAuthenticated } = require('../config/auth');
 router.get('/', ensureAuthenticated, (req, res) => {
     pgClient.query('SELECT * FROM recipes ORDER BY date_of_creation LIMIT 9', (err, result) => {
         if (err) throw err;
-        res.render('./recipes/front_page', { recipes: result.rows, user: req.user });
+        res.render('./recipes/front_page', { recipes: result.rows, user: req.user['email_address'] });
     });
 });
 

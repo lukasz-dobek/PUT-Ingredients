@@ -8,7 +8,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const { ensureAuthenticated } = require('./config/auth');
-
+const pgClient = require('./db/pg-controller');
+const pgSession = require('connect-pg-simple')(session);
 // Favicon handler
 var favicon = require('serve-favicon');
 
@@ -30,11 +31,11 @@ handlebars.registerHelper('listItem', function (from, to, context, options) {
   return item;
 });
 
-handlebars.registerHelper('toLowerCase', function(str) {
+handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });
 
-handlebars.registerHelper('toUpperCase', function(str) {
+handlebars.registerHelper('toUpperCase', function (str) {
   return str.toUpperCase();
 });
 
@@ -49,10 +50,22 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// app.use(session({
+//   secret: 'secret',
+//   resave: true,
+//   saveUninitialized: true,
+// }));
+
 app.use(session({
-  secret: 'secret',
+  store: new pgSession({
+    pool: pgClient,                // Connection pool
+    tableName: 'user_session'   // Use another table-name than the default "session" one
+  }),
+  secret: process.env.FOO_COOKIE_SECRET,
   resave: true,
+  secret: 'secret',
   saveUninitialized: true,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 }));
 
 app.use(passport.initialize());
