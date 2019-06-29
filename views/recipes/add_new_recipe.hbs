@@ -81,35 +81,29 @@
         <hr class="w-100" style="background-color: black;">
         <h6 align="left">Wprowadź nazwę składnika, uzupełnij ilość oraz wybierz jednostkę. Do dzieła!</h6>
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
+            <div class="col-auto">
             <input type="text" name="ingredientName" id="ingredientNameForm1"
                    class="form-control mb-2 mr-sm-2"
                    style="background-color: gainsboro;align:left" placeholder="*Składnik" required>
             <input type="text" name="quantity" id="quantityForm"
                    class="form-control mb-2 mr-sm-2 w-60"
                    style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
-            <div class="col-auto">
-                <select class="form-control w-30" id="unitSelect" style="background: gainsboro" required>
+                <select class="form-control w-30" id="unitSelect1" style="background: gainsboro" required>
                     <option disabled selected hidden>*Jednostka</option>
-                    <option value="Kg">kg</option>
-                    <option value="G">g</option>
-                    <option value="ml">ml</option>
                 </select>
             </div>
         </form>
         <br>
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
+            <div class="col-auto">
             <input type="text" name="ingredientName" id="ingredientNameForm2"
                    class="form-control mb-2 mr-sm-2"
                    style="background-color: gainsboro;align:left" placeholder="*Składnik" required>
             <input type="text" name="quantity" id="quantityForm"
                    class="form-control mb-2 mr-sm-2 w-60"
                    style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
-            <div class="col-auto">
                 <select class="form-control w-30" id="unitSelect2" style="background: gainsboro" required>
                     <option disabled selected hidden>*Jednostka</option>
-                    <option value="Kg">kg</option>
-                    <option value="G">g</option>
-                    <option value="ml">ml</option>
                 </select>
             </div>
         </form>
