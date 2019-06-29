@@ -131,3 +131,30 @@ div.main p {
 /*recipe page*/
 .split-para      { display:block;margin:10px;}
 .split-para span { display:block;float:right;width:5vw;margin-left:0px;}
+.custom_file{
+  margin: 3%;
+  margin-top: 0%  ;
+  width: 45%;
+  height: 400px;
+  background-color:gray;
+  display: flex;
+}
+.custom_file_input{
+  margin: 3%;
+  margin-top: 0%  ;
+  width: 100%;
+  height: 400px;
+  background-color:grey;
+}
+
+.custom-file-label{
+  color: black;
+  font-size: 30px;
+}
+.icon {
+  padding: 10px;
+  background: dodgerblue;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
