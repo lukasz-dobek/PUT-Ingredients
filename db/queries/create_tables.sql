@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS alternative_ingredients (
 -- Units table
 CREATE TABLE IF NOT EXISTS units (
 	id_unit SERIAL PRIMARY KEY,
-	name VARCHAR(50) NOT NULL
+	unit_name VARCHAR(50) NOT NULL
 );
 
 -- Ingredients_used_in_recipe table

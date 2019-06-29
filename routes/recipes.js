@@ -23,12 +23,27 @@ router.get('/old', (req, res) => {
     res.render('./recipes/front_page_old', { scriptName: '/javascripts/script.js' });
 });
 
-router.get('/:linkToRecipe', (req,res) => {
-    // maybe save link to recipe in database aswell?
-    // if we're talking about that, remember that we need photo 1 photo 2 and photo 3 columns aswell
-    // select '/recipes/' || replace(lower(recipe_name), ' ', '_') as url from recipes;
-    const recipeQueryString = "SELECT * FROM recipes WHERE link_to_recipe LIKE $1;";
-    const ingredientsQueryString = `SELECT b.ingredient_name, a.amount, c.name 
+router.get('/:linkToRecipe', (req, res) => {
+
+    const recipeQueryString = `SELECT 
+	rec.id_recipe, 
+	rec.recipe_name, 
+	rec.score, 
+	rec.date_of_creation, 
+	rec.complicity, 
+	rec.preparation_time, 
+	rec.description, 
+	rec.number_of_people, 
+	rec.link_to_recipe, 
+	rec.photo_one, 
+	rec.photo_two, 
+	rec.photo_three, 
+	rec.photo_four,
+	usr.email_address,
+	usr.nickname
+    FROM recipes rec INNER JOIN users usr ON rec.user_id = usr.id_user WHERE rec.link_to_recipe LIKE $1;`;
+
+    const ingredientsQueryString = `SELECT b.ingredient_name, a.amount, c.unit_name 
     FROM ingredients_used_in_recipe a 
     INNER JOIN ingredients b ON a.ingredient_id = b.id_ingredient 
     INNER JOIN units c ON a.unit_id = c.id_unit 
@@ -41,7 +56,14 @@ router.get('/:linkToRecipe', (req,res) => {
         const recipeId = recipeQueryResult.rows[0]["id_recipe"];
         pgClient.query(ingredientsQueryString, [recipeId], (ingredientsQueryError, ingredientsQueryResult) => {
             if (ingredientsQueryError) throw ingredientsQueryError;
-            // Ingredients fields: ingredient_name, amount, name (unit name - might need to change that in database later)
+            /* 
+            
+            Recipe fields: id_recipe, recipe_name, score, date_of_creation, complicity, preparation_time, description
+            number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname
+
+            Ingredients fields: ingredient_name, amount, unit_name
+
+            */
             res.render('./recipes/recipe_page', { recipe: recipeQueryResult.rows, ingredients: ingredientsQueryResult.rows});
         });
     });
