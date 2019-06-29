@@ -1,4 +1,4 @@
-$.getJSON("/users/api/all", (data) => {
+$.getJSON("/api/users/all", (data) => {
   let customNickname = document.getElementById('nickForm1');
   let customEmail = document.getElementById('emailForm1');
   let nicknameTaken = false;

@@ -1,4 +1,4 @@
-$.getJSON("/categories/api/all", (data) => {
+$.getJSON("/api/categories/all", (data) => {
     let items = [];
 
     data.forEach(element => {

@@ -120,22 +120,4 @@ router.get('/confirm_email/:hash', (req, res) => {
     res.render('./users/confirm_email', { layout: 'layout_before_login' });
 });
 
-// API
-
-router.get('/api/all', (req, res) => {
-    pgClient.query('SELECT * FROM users', (err, result) => {
-        res.json(result.rows);
-    });
-});
-
-router.get('/api/:id', (req, res) => {
-    const queryString = 'SELECT * FROM users WHERE id_user = $1';
-    const value = [parseInt(req.params.id)];
-
-    pgClient.query(queryString, value, (err, result) => {
-        if (err) throw err;
-        res.json(result.rows);
-    });
-});
-
 module.exports = router;

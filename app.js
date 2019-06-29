@@ -8,18 +8,22 @@ const fs = require('fs');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const pgSession = require('connect-pg-simple')(session);
+const favicon = require('serve-favicon');
+
 const { ensureAuthenticated } = require('./config/auth');
 const pgClient = require('./db/pg-controller');
-const pgSession = require('connect-pg-simple')(session);
 // Favicon handler
-var favicon = require('serve-favicon');
 
 // Routers
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var recipesRouter = require('./routes/recipes');
-var categoriesRouter = require('./routes/categories');
-var unitsRouter = require('./routes/units');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const recipesRouter = require('./routes/recipes');
+
+const apiRecipesRouter = require('./routes/api/recipes');
+const apiUsersRouter = require('./routes/api/users');
+const apiCategoriesRouter = require('./routes/api/categories');
+const apiUnitsRouter = require('./routes/api/units');
 
 var app = express();
 
@@ -90,8 +94,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recipes', ensureAuthenticated, recipesRouter);
-app.use('/categories', categoriesRouter);
-app.use('/units', unitsRouter);
+
+app.use('/api/recipes', apiRecipesRouter);
+app.use('/api/users', apiUsersRouter);
+app.use('/api/categories', apiCategoriesRouter);
+app.use('/api/units', apiUnitsRouter);
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
