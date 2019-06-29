@@ -4,10 +4,24 @@ const router = express.Router();
 const pgClient = require('./../db/pg-controller');
 const mailClient = require('../MailController');
 const crypto = require('crypto');
+const passport = require('passport');
 
 router.get('/login', function (req, res, next) {
+    console.log(res.locals.error);
     res.render('./users/login', { layout: 'layout_before_login' });
 });
+
+router.post('/login', passport.authenticate('local', { 
+    successRedirect: '/recipes', 
+    failureRedirect: '/users/login', 
+    failureFlash: true 
+}));
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'You are logged out');
+    res.redirect('/users/login');
+  });
 
 router.get('/register', function (req, res, next) {
     res.render('./users/register', { layout: 'layout_before_login'});
