@@ -27,14 +27,23 @@ router.get('/:linkToRecipe', (req,res) => {
     // maybe save link to recipe in database aswell?
     // if we're talking about that, remember that we need photo 1 photo 2 and photo 3 columns aswell
     // select '/recipes/' || replace(lower(recipe_name), ' ', '_') as url from recipes;
-    const queryString = "SELECT * FROM recipes WHERE link_to_recipe LIKE $1;";
-    const value = '/recipes/'.concat(req.params.linkToRecipe);
+    const recipeQueryString = "SELECT * FROM recipes WHERE link_to_recipe LIKE $1;";
+    const ingredientsQueryString = `SELECT b.ingredient_name, a.amount, c.name 
+    FROM ingredients_used_in_recipe a 
+    INNER JOIN ingredients b ON a.ingredient_id = b.id_ingredient 
+    INNER JOIN units c ON a.unit_id = c.id_unit 
+    WHERE recipe_id = $1;`
 
-    pgClient.query(queryString, [value], (err, result) => {
-        if (err) throw err;
-        console.log(value);
-        console.log(result.rows);
-        res.render('./recipes/recipe_page', { recipe: result.rows });
+    const linkToRecipe = '/recipes/'.concat(req.params.linkToRecipe);
+
+    pgClient.query(recipeQueryString, [linkToRecipe], (recipeQueryError, recipeQueryResult) => {
+        if (recipeQueryError) throw recipeQueryError;
+        const recipeId = recipeQueryResult.rows[0]["id_recipe"];
+        pgClient.query(ingredientsQueryString, [recipeId], (ingredientsQueryError, ingredientsQueryResult) => {
+            if (ingredientsQueryError) throw ingredientsQueryError;
+            // Ingredients fields: ingredient_name, amount, name (unit name - might need to change that in database later)
+            res.render('./recipes/recipe_page', { recipe: recipeQueryResult.rows, ingredients: ingredientsQueryResult.rows});
+        });
     });
 });
 
