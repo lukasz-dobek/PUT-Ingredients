@@ -1,10 +1,14 @@
 const express = require('express');
-const router = express.Router();
 const pgClient = require('../../db/pg-controller');
+const router = express.Router();
 
 router.get('/names', (req, res) => {
-    pgClient.query('SELECT unit_name FROM units;', (err, result) => {
-        res.json(result.rows);
+    const unitsNamesQueryString = "SELECT unit_name FROM units;";
+    pgClient.query(unitsNamesQueryString, (unitsNamesQueryError, unitsNamesQueryResult) => {
+        if(unitsNamesQueryError) {
+            throw unitsNamesQueryError;
+        }
+        res.json(unitsNamesQueryResult.rows);
     });
 });
 

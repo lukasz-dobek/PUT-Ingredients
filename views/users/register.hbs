@@ -9,7 +9,7 @@
     {{#each errors}}
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{msg}}
+        {{msg}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -21,35 +21,172 @@
 
         <div class="form-group d-flex justify-content-center mt-4">
             <input type="email" name="email" id="emailForm1"
-                class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="E-mail"
-                pattern="^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$" required>
+                class="form-control w-25 border-top-0 border-left-0 border-right-0 rounded-0" placeholder="E-mail"
+                pattern="^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$"
+                required>
         </div>
         <div class="form-group d-flex justify-content-center mt-4">
             <input type="text" name="nickname" id="nickForm1"
-                class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Pseudonim"
+                class="form-control w-25 border-top-0 border-left-0 border-right-0 rounded-0" placeholder="Pseudonim"
                 required minlength="3" maxlength="50">
         </div>
         <div class="form-group d-flex justify-content-center mt-4">
             <input type="password" name="password" id="passwordForm2"
-                class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Hasło"
+                class="form-control w-25 border-top-0 border-left-0 border-right-0 rounded-0" placeholder="Hasło"
                 minlength="6" pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$" required>
         </div>
         <div class="form-group d-flex justify-content-center mt-4">
             <input type="password" name="passwordConfirm" id="passwordForm1"
-                class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Potwierdź hasło" required>
+                class="form-control w-25 border-top-0 border-left-0 border-right-0 rounded-0"
+                placeholder="Potwierdź hasło" required>
         </div>
         <div class="form-group d-flex justify-content-center mt-4">
             <input type="text" name="name" id="nameForm1"
-                class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Imię">
+                class="form-control w-25 border-top-0 border-left-0 border-right-0 rounded-0" placeholder="Imię">
         </div>
         <div class="form-group d-flex justify-content-center mt-4">
             <input type="text" name="surname" id="surnameForm1"
-                class="form-control w-25 border-top-0 border-left-0 border-right-0" placeholder="Nazwisko">
+                class="form-control w-25 border-top-0 border-left-0 border-right-0 rounded-0" placeholder="Nazwisko">
         </div>
         <div class="form-check mt-5">
             <input type="checkbox" name="check" id="checkForm1" class="form-check-input" required>
-            <label for="checkForm1" class="form-check-label">Potwierdzam, że zapoznałem się z <a href="/terms_of_use"
-                    class="anchor-green">regulaminem</a></label>
+            <label for="checkForm1" class="form-check-label">Potwierdzam, że zapoznałem się z <a href="#"
+                    class="anchor-green" type="button" data-toggle="modal"
+                    data-target="#exampleModalLong">regulaminem</a>.</label>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Regulamin</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-justify">
+                            1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a commodo erat, at
+                            rhoncus tellus. Maecenas eu
+                            sapien dapibus ex ornare venenatis. Suspendisse vulputate magna ut porttitor rhoncus.
+                            Vestibulum at tempor risus.
+                            Etiam tempus finibus nisi sit amet sodales. Nullam vel laoreet lacus. Aliquam molestie
+                            malesuada elit, vel malesuada
+                            turpis porttitor posuere. Vestibulum ligula nulla, gravida eget augue facilisis, cursus
+                            iaculis augue. Maecenas
+                            blandit eros facilisis tincidunt venenatis. Pellentesque vulputate fringilla dapibus.
+                            Quisque feugiat sapien et nibh
+                            auctor, a pretium quam gravida. Cras non nunc gravida, viverra massa eget, dictum ex.
+                            Quisque sodales enim eget
+                            dolor porttitor vestibulum.
+                            <br /><br />
+                            2. Sed pulvinar elit hendrerit faucibus accumsan. Aliquam erat volutpat. Ut at tellus ut dui
+                            ultricies convallis sed
+                            et
+                            tortor. Duis quis bibendum nulla. Curabitur quis turpis sollicitudin, molestie ex eu,
+                            dapibus sem. Nulla ultricies
+                            ipsum nec dolor convallis, vitae imperdiet mauris vulputate. Etiam ut nunc quis est
+                            efficitur commodo.
+                            <br /><br />
+                            3. Aliquam auctor purus tellus, at pretium lorem hendrerit vel. Vestibulum ante ipsum primis
+                            in faucibus orci luctus
+                            et
+                            ultrices posuere cubilia Curae; Vestibulum semper turpis tellus. Integer commodo faucibus
+                            imperdiet. Ut eu dui
+                            justo. Donec convallis urna vitae risus gravida, non ornare massa dapibus. Phasellus
+                            facilisis eget odio ac
+                            placerat. Etiam varius, massa eu sodales posuere, sem augue lobortis ex, vel suscipit ipsum
+                            diam eget urna. Donec
+                            dignissim, turpis non blandit feugiat, sapien metus laoreet nibh, vel facilisis elit ipsum
+                            et justo. Donec eu tempus
+                            ipsum. In dictum porttitor semper. Praesent euismod sagittis purus, laoreet vehicula nunc
+                            bibendum eget.
+                            <br /><br />
+                            4. Duis ac tempus libero. Nullam hendrerit vestibulum facilisis. Nam vestibulum dolor vel
+                            mauris aliquet, quis
+                            lacinia
+                            sapien venenatis. Donec felis est, aliquam et justo at, aliquet congue justo. Morbi sed
+                            magna hendrerit, posuere
+                            urna in, auctor mauris. Curabitur ut venenatis dui, a condimentum mi. Cras placerat mauris
+                            velit, vitae sodales
+                            felis bibendum vel. Mauris suscipit, velit a pretium ultricies, diam ex tempor nisi, a
+                            maximus arcu arcu sed nibh.
+                            <br /><br />
+                            5. Nunc eget accumsan neque. Donec lobortis tristique semper. Nunc ante ligula, maximus et
+                            felis a, fringilla
+                            maximus
+                            est. Aliquam sodales lorem lectus, eget luctus orci mollis id. Suspendisse ultricies massa
+                            dolor, sit amet
+                            consectetur lacus efficitur sed. Sed molestie sed ante et fringilla. Nullam eget nibh non
+                            lorem pulvinar sagittis.
+                            Vivamus ut finibus nisi. Duis tempus pharetra pellentesque. Suspendisse id ipsum nibh. Nam
+                            quam augue, iaculis in
+                            convallis vel, cursus a dolor. In efficitur leo neque, at elementum ante commodo eu. Donec
+                            fermentum ipsum vel
+                            pretium vulputate.
+                            <br /><br />
+                            6. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a commodo erat, at
+                            rhoncus tellus. Maecenas eu
+                            sapien dapibus ex ornare venenatis. Suspendisse vulputate magna ut porttitor rhoncus.
+                            Vestibulum at tempor risus.
+                            Etiam tempus finibus nisi sit amet sodales. Nullam vel laoreet lacus. Aliquam molestie
+                            malesuada elit, vel malesuada
+                            turpis porttitor posuere. Vestibulum ligula nulla, gravida eget augue facilisis, cursus
+                            iaculis augue. Maecenas
+                            blandit eros facilisis tincidunt venenatis. Pellentesque vulputate fringilla dapibus.
+                            Quisque feugiat sapien et nibh
+                            auctor, a pretium quam gravida. Cras non nunc gravida, viverra massa eget, dictum ex.
+                            Quisque sodales enim eget
+                            dolor porttitor vestibulum.
+                            <br /><br />
+                            7. Sed pulvinar elit hendrerit faucibus accumsan. Aliquam erat volutpat. Ut at tellus ut dui
+                            ultricies convallis sed et
+                            tortor. Duis quis bibendum nulla. Curabitur quis turpis sollicitudin, molestie ex eu,
+                            dapibus sem. Nulla ultricies
+                            ipsum nec dolor convallis, vitae imperdiet mauris vulputate. Etiam ut nunc quis est
+                            efficitur commodo.
+                            <br /><br />
+                            8. Aliquam auctor purus tellus, at pretium lorem hendrerit vel. Vestibulum ante ipsum primis
+                            in faucibus orci luctus et
+                            ultrices posuere cubilia Curae; Vestibulum semper turpis tellus. Integer commodo faucibus
+                            imperdiet. Ut eu dui
+                            justo. Donec convallis urna vitae risus gravida, non ornare massa dapibus. Phasellus
+                            facilisis eget odio ac
+                            placerat. Etiam varius, massa eu sodales posuere, sem augue lobortis ex, vel suscipit ipsum
+                            diam eget urna. Donec
+                            dignissim, turpis non blandit feugiat, sapien metus laoreet nibh, vel facilisis elit ipsum
+                            et justo. Donec eu tempus
+                            ipsum. In dictum porttitor semper. Praesent euismod sagittis purus, laoreet vehicula nunc
+                            bibendum eget.
+                            <br /><br />
+                            9. Duis ac tempus libero. Nullam hendrerit vestibulum facilisis. Nam vestibulum dolor vel
+                            mauris aliquet, quis lacinia
+                            sapien venenatis. Donec felis est, aliquam et justo at, aliquet congue justo. Morbi sed
+                            magna hendrerit, posuere
+                            urna in, auctor mauris. Curabitur ut venenatis dui, a condimentum mi. Cras placerat mauris
+                            velit, vitae sodales
+                            felis bibendum vel. Mauris suscipit, velit a pretium ultricies, diam ex tempor nisi, a
+                            maximus arcu arcu sed nibh.
+                            <br /><br />
+                            10. Nunc eget accumsan neque. Donec lobortis tristique semper. Nunc ante ligula, maximus et
+                            felis a, fringilla maximus
+                            est. Aliquam sodales lorem lectus, eget luctus orci mollis id. Suspendisse ultricies massa
+                            dolor, sit amet
+                            consectetur lacus efficitur sed. Sed molestie sed ante et fringilla. Nullam eget nibh non
+                            lorem pulvinar sagittis.
+                            Vivamus ut finibus nisi. Duis tempus pharetra pellentesque. Suspendisse id ipsum nibh. Nam
+                            quam augue, iaculis in
+                            convallis vel, cursus a dolor. In efficitur leo neque, at elementum ante commodo eu. Donec
+                            fermentum ipsum vel
+                            pretium vulputate.
+                            <br /><br />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-success mt-4">Załóż konto</button>
     </form>

@@ -82,12 +82,9 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
 app.use(cookieParser());
 
 // Path to serve static files
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes

@@ -60,15 +60,15 @@ $.getJSON("/api/users/all", (data) => {
     if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
 
     if (check()) {
-      if (field.name === 'passwordConfirm') return 'Hasła nie zgadzają się';
+      if (field.name === 'passwordConfirm') return 'Hasła nie zgadzają się.';
     }
 
     if (checkNickname()) {
-      if (field.name === 'nickname') return 'Pseudonim już zajęty';
+      if (field.name === 'nickname') return 'Pseudonim jest już zajęty.';
     }
 
     if (checkEmail()) {
-      if (field.name === 'email') return 'Konto dla danego adresu email już istnieje';
+      if (field.name === 'email') return 'Konto dla danego adresu e-mail już istnieje.';
     }
     // Get validity
     let validity = field.validity;
@@ -78,35 +78,35 @@ $.getJSON("/api/users/all", (data) => {
 
     // If field is required and empty
     if (validity.valueMissing) {
-      if (field.name === 'check') return 'Akceptacja regulaminu jest obowiązkowa.';
-      return 'Pole obowiązkowe. Wypełnij je';
+      if (field.name === 'check') return 'Musisz zaakceptować regulamin.';
+      return 'To pole jest obowiązkowe.';
     }
 
     // If not the right type
     if (validity.typeMismatch) {
       // Email
-      if (field.type === 'email') return 'Wprowadź poprawny adres email';
+      if (field.type === 'email') return 'Wprowadź poprawny adres e-mail.';
     }
 
     // If too short
     if (validity.tooShort) {
-      if (field.name === 'password') return 'Hasło musi mieć conajmniej 6 znaków.'
-      if (field.name === 'nickname') return 'Pseudonim musi mieć conajmniej 3 znaki.'
+      if (field.name === 'password') return 'Hasło musi składać się z co najmniej 6 znaków.'
+      if (field.name === 'nickname') return 'Pseudonim musi składać się z co najmniej 3 znaków.'
     }
 
     // If too long
     if (validity.tooLong) {
-      if (field.name === 'nickname') return 'Pseudonim może mieć maksymalnie 50 znkaów.'
+      if (field.name === 'nickname') return 'Pseudonim może składać się z maksymalnie 50 znaków.'
     }
 
     // If pattern doesn't match
     if (validity.patternMismatch) {
-      if (field.name === 'password') return 'Podane hasło błędne. Hasło musi mieć co najniej 6 znaków w tym jedną liczbę i jedna iterą.';
-      if (field.type === 'email') return 'Proszę podać poprawny adres email.'
+      if (field.name === 'password') return 'Podane hasło nie spełnia wymagań. Musi składać się ono z co najmniej 6 znaków, w tym jednej litery i jednej cyfry.';
+      if (field.type === 'email') return 'Podany e-mail jest nieprawidłowy.'
     }
 
     // If all else fails, return a generic catchall error
-    return 'Podana wartość jest błedna.';
+    return 'Podana wartość jest błędna.';
 
   };
 
