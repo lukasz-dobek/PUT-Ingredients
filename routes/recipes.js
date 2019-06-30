@@ -7,7 +7,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
     const lastNineRecipesQueryString = "SELECT * FROM recipes ORDER BY date_of_creation LIMIT 9";
     pgClient.query(lastNineRecipesQueryString, (lastNineRecipesQueryError, lastNineRecipesQueryResult) => {
         if (lastNineRecipesQueryError) throw lastNineRecipesQueryError;
-        res.render('./recipes/front_page', { recipes: lastNineRecipesQueryResult.rows, user: req.user['email_address'] });
+        res.render('./recipes/front_page', { 
+            recipes: lastNineRecipesQueryResult.rows, 
+            user: req.user['email_address'] 
+        });
     });
 });
 
@@ -68,11 +71,14 @@ router.get('/:linkToRecipe', (req, res) => {
             */
             res.render('./recipes/recipe_page', { 
                 recipe: recipeQueryResult.rows, 
-                ingredients: ingredientsQueryResult.rows
+                ingredients: ingredientsQueryResult.rows,
+                user: req.user['email_address']
             });
         });
     });
 });
+
+// TODO: partial do wyswietlania listy znalezionych przepisow
 
 router.get('/search/name', (req, res) => {
     const searchNameQueryString = `
@@ -102,7 +108,8 @@ router.get('/search/name', (req, res) => {
         if (searchNameQueryError) throw searchNameQueryError;
         res.render('./recipes/recipe_search_name', { 
             searchString: searchRecipeName, 
-            recipes: searchNameQueryResult.rows 
+            recipes: searchNameQueryResult.rows,
+            user: req.user['email_address']
         });
     });
 });
@@ -156,7 +163,8 @@ router.get('/search/categories', (req, res) => {
         if (searchCategoriesQueryError) throw searchCategoriesQueryError;
         res.render('./recipes/recipe_search_categories', { 
             searchedCategories: categoriesFromRequestAsArray,
-            recipes: searchCategoriesQueryResult.rows 
+            recipes: searchCategoriesQueryResult.rows,
+            user: req.user['email_address']
         });
     });
 });

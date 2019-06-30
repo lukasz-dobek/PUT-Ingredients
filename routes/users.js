@@ -6,6 +6,8 @@ const mailClient = require('../MailController');
 const crypto = require('crypto');
 const passport = require('passport');
 
+// TODO: Move users to /, create pages such as users recipes in /users/
+
 router.get('/login', function (req, res, next) {
     console.log(res.locals.error);
     res.render('./users/login', { layout: 'layout_before_login' });

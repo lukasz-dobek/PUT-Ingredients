@@ -29,7 +29,24 @@
 </head>
 
 <body>
-  <header class="container-fluid head-fluid"><a href="/" style="color: white; text-decoration:none;">Ingredients</a></header>
+  <header class="container-fluid head-fluid">
+    <a href="/" style="color: white; text-decoration:none;">Ingredients</a>
+    <div class="dropdown show float-right" style="top: 0;">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user-circle"></i> {{user}}
+      </a>
+
+      <div class="dropdown-menu dropdown-menu-right col-sm-12" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" style="line-height: 30px;" href="#">Ulubione</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="#">Zarządzaj kontem</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/recipes/add_new_recipe">Dodaj przepis</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="#">Moje listy zakupów</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="#">Moje przepisy</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/users/logout">Wyloguj się</a>
+      </div>
+    </div>
+  </header>
   <a href="/recipes/"><img src="/images/logo.png" alt="logo" width="250" class="position-absolute"></a>
   <div class="container">
 
@@ -75,11 +92,14 @@
           </div>
         </div>
       </div>
+
     </div>
+
   </div>
 
   <hr class="mt-5">
   {{{body}}}
   <script src="{{scriptName}}"></script>
 </body>
+
 </html>
