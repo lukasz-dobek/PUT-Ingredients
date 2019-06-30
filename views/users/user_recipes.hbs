@@ -1,1 +1,26 @@
-<h1>User recipes</h1>
+<div class="container" id="listOfRecipes">
+    <div class="row">
+        <div class="col-6"><h2 style="text-transform: uppercase">Przepisy użytkownika:</h2></div>
+        <div class="col-6"><h2 class="margin-auto">{{userNickname}}</h2></div>
+    </div>
+    {{#each recipes}}
+    <div class="row align-items-center mt-2">
+        <div class="col-6 col-md-4">
+            <a href="{{link_to_recipe}}"><img src="{{photo_one}}" alt="" class="card-img-top"></a>
+        </div>
+        <div class="col-6">
+             <a href="{{link_to_recipe}}"><h3>{{recipe_name}}</h3></a>
+            <div class="container" style="background-color:gainsboro; padding: 15px; color:black;">
+                <p>Stopien trudności: {{complicity}}</p>
+                <p>Czas przygotowania: {{preparation_time}}</p>
+                <p>Ilość porcji: {{number_of_people}}</p>
+                <p>Ocena: {{score}}</p>
+                <!-- ajax to show categories -->
+                <div id="categoriesList{{id_recipe}}">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
