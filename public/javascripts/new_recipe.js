@@ -126,6 +126,7 @@ $.getJSON("/api/recipes/all", (data) => {
         }
         // If field is required and empty
         if (validity.valueMissing) {
+            if (field.id === "categorySelect1") return 'Musi zostać wybrana co najmniej jedna kategoria.';
             if (field.name === 'check') return 'Musisz zaakceptować regulamin.';
             return 'To pole jest obowiązkowe.';
         }
@@ -173,9 +174,13 @@ $.getJSON("/api/recipes/all", (data) => {
                     let lastChild = document.getElementById('secondRow');
                     lastChild.parentNode.insertBefore(message,lastChild.nextSibling);
                 }
+                else if(label.parentNode.parentNode.id==='ingredients' || label.parentNode.parentNode.id === 'generalInfo'){
+                    field.parentNode.appendChild(message);
+                }
                     else{
                         label.parentNode.insertBefore(message,label.nextSibling);
                 }
+
             }
             //}
 

@@ -80,7 +80,8 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   if (req.user){
-    res.locals.user = req.user["email_address"];
+    res.locals.userEmail = req.user["email_address"];
+    res.locals.userNickname = req.user["nickname"];
   }
   next();
 });

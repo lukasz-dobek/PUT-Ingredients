@@ -34,15 +34,15 @@
     <div class="dropdown show float-right" style="top: 0;">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-user-circle"></i> {{user}}
+        <i class="fas fa-user-circle"></i> {{userEmail}}
       </a>
 
       <div class="dropdown-menu dropdown-menu-right col-sm-12" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" style="line-height: 30px;" href="#">Ulubione</a>
-        <a class="dropdown-item" style="line-height: 30px;" href="/users/user_settings">Zarządzaj kontem</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/users/favourites">Ulubione</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/users/settings">Zarządzaj kontem</a>
         <a class="dropdown-item" style="line-height: 30px;" href="/recipes/add_new_recipe">Dodaj przepis</a>
-        <a class="dropdown-item" style="line-height: 30px;" href="#">Moje listy zakupów</a>
-        <a class="dropdown-item" style="line-height: 30px;" href="/users/my_recipes">Moje przepisy</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/users/shopping_lists">Moje listy zakupów</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/users/user_recipes/{{userNickname}}">Moje przepisy</a>
         <a class="dropdown-item" style="line-height: 30px;" href="/logout">Wyloguj się</a>
       </div>
     </div>
