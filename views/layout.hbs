@@ -39,10 +39,10 @@
 
       <div class="dropdown-menu dropdown-menu-right col-sm-12" aria-labelledby="dropdownMenuLink">
         <a class="dropdown-item" style="line-height: 30px;" href="/users/favourites">Ulubione</a>
-        <a class="dropdown-item" style="line-height: 30px;" href="/users/settings">Zarządzaj kontem</a>
         <a class="dropdown-item" style="line-height: 30px;" href="/recipes/add_new_recipe">Dodaj przepis</a>
-        <a class="dropdown-item" style="line-height: 30px;" href="/users/shopping_lists">Moje listy zakupów</a>
         <a class="dropdown-item" style="line-height: 30px;" href="/users/user_recipes/{{userNickname}}">Moje przepisy</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/users/shopping_lists">Moje listy zakupów</a>
+        <a class="dropdown-item" style="line-height: 30px;" href="/users/settings">Zarządzaj kontem</a>
         <a class="dropdown-item" style="line-height: 30px;" href="/logout">Wyloguj się</a>
       </div>
     </div>
@@ -100,7 +100,10 @@
   <hr class="mt-5">
   {{>messages}}
   {{{body}}}
+  {{#if scriptName}}
+  {{!-- TODO --}}
   <script src="{{scriptName}}"></script>
+  {{/if}}
 </body>
 
 </html>
