@@ -4,7 +4,7 @@ module.exports = {
         return next();
       }
       req.flash('error_msg', 'Zaloguj się, aby mieć dostęp do tej strony.');
-      res.redirect('/users/login');
+      res.redirect('/login');
     },
     ensureLoggedIn: function(req, res, next) {
       if (req.isAuthenticated()) {

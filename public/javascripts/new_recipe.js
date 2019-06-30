@@ -132,7 +132,7 @@ $.getJSON("/api/recipes/all", (data) => {
         // If too short
         if (validity.tooShort) {
             if (field.name === 'recipename') return 'Nazwa przepisu musi składać się co najmniej 5 znaków.'
-            if (field.name === 'ingredientName') return 'Pseudonim musi składać się z co najmniej 3 znaków.'
+            if (field.name === 'ingredientName') return 'Nazwa składnika musi mieć co najmniej 5 znaków.'
         }
 
         // If too long
@@ -160,7 +160,7 @@ $.getJSON("/api/recipes/all", (data) => {
         let message = field.form.querySelector('.error-message#error-for-' + id);
         if (!message) {
             message = document.createElement('div');
-            message.className = 'error-message';
+            message.className = 'error-message container';
             message.id = 'error-for-' + id;
 
             // If the field is a radio button or checkbox, insert error after the label
@@ -168,7 +168,14 @@ $.getJSON("/api/recipes/all", (data) => {
             //if (field.type === 'radio' || field.type ==='checkbox') {
             label = field.form.querySelector('label[for="' + id + '"]') || field.parentNode;
             if (label) {
-                label.parentNode.insertBefore(message, label.nextSibling);
+                if (field.id==='categorySelect1') {
+                    let form = document.getElementById('categories');
+                    let lastChild = document.getElementById('secondRow');
+                    lastChild.parentNode.insertBefore(message,lastChild.nextSibling);
+                }
+                    else{
+                        label.parentNode.insertBefore(message,label.nextSibling);
+                }
             }
             //}
 

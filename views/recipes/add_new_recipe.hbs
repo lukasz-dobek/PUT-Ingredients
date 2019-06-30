@@ -3,74 +3,82 @@
     <div class="container" style="background-color:gainsboro; padding: 15px; color:black;">
         <h3 align="left">Ogólne informacje</h3>
         <hr class="w-100" style="background-color: black;">
-        <h6 align="left">Wprowadź informację, które jako pierwsze będą oglądane przez uzytkownika</h6>
-        <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
+        <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center" id="recipeName">
+            <h6 style="text-align: justify" align="left">Wprowadź informację, które jako pierwsze będą oglądane przez uzytkownika</h6>
             <div class="form-row d-flex justify-content-center mt-4 w-100">
                 <input type="text" name="recipename" id="recipeNameForm"
-                       class="form-control w-100 border-top-0 border-left-0 border-right-0"
-                       style="background-color: gainsboro" placeholder="*Nazwa potrawy" required minlength="5"
-                       maxlength="100">
+                    class="form-control w-50 border-top-0 border-left-0 border-right-0 rounded-0"
+                    style="background-color: gainsboro" placeholder="*Nazwa potrawy" required minlength="5"
+                    maxlength="100">
             </div>
+        </form>
+
             <br>
-            <div class="form-row d-flex justify-content-center mt-4">
-                <div>
-                    <select class="form-control w-20" id="categorySelect1" style="background: gainsboro" required>
-                        <option disabled selected hidden value="">*Kategoria</option>
+        <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center" id="categories">
+        <div class="row d-flex justify-content-center mt-4" id="firstRow">
+                <div class="col">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect1" style="background: gainsboro" required>
+                        <option disabled selected hidden value="">* Kategoria</option>
                     </select>
                 </div>
-                <div>
-                    <select class="form-control w-20" id="categorySelect2" style="background: gainsboro">
+                <div class="col">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect2" style="background: gainsboro">
                         <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
-                <div>
-                    <select class="form-control w-20" id="categorySelect3" style="background: gainsboro">
-                        <option disabled selected hidden value="">Kategoria</option>
-                        >
-                    </select>
-                </div>
-                <div>
-                    <select class="form-control w-20" id="categorySelect4" style="background: gainsboro">
-                        <option disabled selected hidden value="">Kategoria</option>
-                    </select>
-                </div>
-                <div>
-                    <select class="form-control w-20" id="categorySelect5" style="background: gainsboro">
-                        <option disabled selected hidden value="">Kategoria</option>
-                    </select>
-                </div>
-                <div>
-                    <select class="form-control w-20" id="categorySelect6" style="background: gainsboro">
+                <div class="col">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect3" style="background: gainsboro">
                         <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
             </div>
-            <br>
-            <div class="form-row d-flex justify-content-center mt-4">
-                <div class="col-auto">
-                    <select class="form-control w-30" id="complicity" style="background: gainsboro;" required>
-                        <option disabled selected hidden value="">*Stopień trudnośći</option>
+        <div class="row d-flex justify-content-center mt-4" id="secondRow">
+                <div class="col">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect4" style="background: gainsboro">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect5" style="background: gainsboro">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect6" style="background: gainsboro">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center">
+        <div class="row d-flex justify-content-center mt-4">
+
+                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0" id="complicity" style="background: gainsboro;" required>
+                        <option disabled selected hidden value="">* Stopień trudnośći</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                     </select>
-                </div>
-                <div class="col-auto">
-                    <select class="form-control w-30" id="numberOfPortions" style="background: gainsboro" required>
-                        <option disabled selected hidden value="">*Ilość porcji</option>
+        </div>
+        </form>
+        <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center">
+            <div class="row d-flex justify-content-center mt-4">
+                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0" id="numberOfPortions" style="background: gainsboro" required>
+                        <option disabled selected hidden value="">* Ilość porcji</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="4+">4+</option>
                     </select>
                 </div>
-                <div class="col-auto">
-                    <select class="form-control w-30" id="timeToMake" style="background: gainsboro" required>
-                        <option disabled selected hidden value="">*Czas przygotowania</option>
+        </form>
+        <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center">
+            <div class="row d-flex justify-content-center mt-4">
+                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0" id="timeToMake" style="background: gainsboro" required>
+                        <option disabled selected hidden value="">* Czas przygotowania</option>
                         <option value="30">30 min</option>
                         <option value="60">60 min</option>
                         <option value="90+">90+ min</option>
                     </select>
-                </div>
             </div>
         </form>
     </div>
@@ -84,14 +92,13 @@
             <div class="form-row d-flex justify-content-center mt-4">
                 <div class="col-auto">
                     <input type="text" name="ingredientName" id="ingredientNameForm1"
-                           class="form-control w-30 border-top-0 border-left-0 border-right-0"
-                           style="background-color: gainsboro;align:left" placeholder="*Składnik" required minlength="5"
-                           maxlength="50">
+                        class="form-control w-30 border-top-0 border-left-0 border-right-0"
+                        style="background-color: gainsboro;align:left" placeholder="*Składnik" required minlength="5"
+                        maxlength="50">
                 </div>
                 <div class="col-auto">
-                    <input type="number" name="quantity" id="quantityForm"
-                           class="form-control  mr-sm-2 w-60"
-                           style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
+                    <input type="number" name="quantity" id="quantityForm" class="form-control  mr-sm-2 w-60"
+                        style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
                 </div>
                 <div class="col-auto">
                     <select class="form-control w-30" id="unitSelect1" style="background: gainsboro" required>
@@ -106,14 +113,13 @@
             <div class="form-row d-flex justify-content-center mt-4">
                 <div class="col-auto">
                     <input type="text" name="ingredientName" id="ingredientNameForm2"
-                           class="form-control w-30 border-top-0 border-left-0 border-right-0"
-                           style="background-color: gainsboro;align:left" placeholder="*Składnik" required minlength="5"
-                           maxlength="50">
+                        class="form-control w-30 border-top-0 border-left-0 border-right-0"
+                        style="background-color: gainsboro;align:left" placeholder="*Składnik" required minlength="5"
+                        maxlength="50">
                 </div>
                 <div class="col-auto">
-                    <input type="number" name="quantity" id="quantityForm"
-                           class="form-control mr-sm-2 w-60"
-                           style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
+                    <input type="number" name="quantity" id="quantityForm" class="form-control mr-sm-2 w-60"
+                        style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
                 </div>
                 <div class="col-auto">
                     <select class="form-control w-30" id="unitSelect2" style="background: gainsboro" required>
@@ -136,8 +142,8 @@
         <h6 align="left">Postaraj się dokładnie rozpisać kolejne kroki tworzenia twojej kulinarnej kompozycji</h6>
         <form action="/recipes/add_new_recipe" method="POST">
             <div class="form-group">
-                <textarea class="form-control" style="width: 100%" id="descrpitionForm"
-                          rows="10" required></textarea></div>
+                <textarea class="form-control" style="width: 100%" id="descrpitionForm" rows="10" required></textarea>
+            </div>
         </form>
     </div>
     <br>
@@ -155,20 +161,20 @@
             <div align="left" style="float: left; width: 45%;height: 400px; background-color: #27ae60;">
                 <h5 style="margin: 3%">Zdjęcia dodane przez Ciebie </h5>
                 <div align="left"
-                     style="margin-left:3%; margin-right:3%;margin-bottom: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
+                    style="margin-left:3%; margin-right:3%;margin-bottom: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
                 <div align="left"
-                     style="text-align: center;margin-left:3%; margin-right:3%;margin-bottom: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
+                    style="text-align: center;margin-left:3%; margin-right:3%;margin-bottom: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
                 <div style="clear: both"></div>
                 <div align="left"
-                     style="margin-left:3%; margin-right:3%; margin-top: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
+                    style="margin-left:3%; margin-right:3%; margin-top: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
                 <div align="left"
-                     style="margin-left:3%; margin-right:3%;margin-top: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
+                    style="margin-left:3%; margin-right:3%;margin-top: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
             </div>
@@ -180,8 +186,7 @@
         <div class="form-check mt-4">
             <input type="checkbox" name="check" id="checkForm1" class="form-check-input" required>
             <label for="checkForm1" class="form-check-label" style="margin-left: 3% ">Potwierdzam, że zapoznałem się z
-                <a href="/terms_of_use"
-                   class="anchor-green">regulaminem</a></label>
+                <a href="/terms_of_use" class="anchor-green">regulaminem</a></label>
         </div>
         <div class="form-check mt-2">
             <input type="checkbox" name="check2" id="checkForm2" class="form-check-input">

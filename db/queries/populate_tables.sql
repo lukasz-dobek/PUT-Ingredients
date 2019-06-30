@@ -1,12 +1,12 @@
-INSERT INTO users (email_address,password,nickname,date_of_join,name,surname,is_admin,state,activation_url,url_status,salt) VALUES
-('jkowalski@gmail.com','9b8180df6f2059807fa0f2f0f4e95f3f7a813b2a4e09b48d8f3d2161c4294ede','Kowal',clock_timestamp(),'Jan','Kowalski',false,1,'url.com/test',true,'somesalt'),
-('serduszko@gmail.com','d5159aab57cab09e3e6dd52d029c28d614ad827cb26a1669a7689d92081712df','Agusia','2019-02-28 14:32:13','','',false,1,'url.com/asdasd',true,'somesalt'),
-('nieoficjalny@gmail.com','a9fd3f94ea352ac9d1ccc2cbfb1fa5395ec3033391d5a4e83a068293281b925b','Predator','2019-01-16 12:12:23','Maciej','Nowak',true,1,'url.com/sss',true,'somesalt'),
-('banan@o2.pl','d50e3d3f1031033d026bfd7ed4a17c872edf9b221457dfb1450572cce74b207c','Tester',clock_timestamp(),'Krzysztof','Kot',false,0,'url.com/balaals',false,'somesalt'),
-('test@wp.pl','4294de7bdacf80160f2610d081193a599dffd6127a1bc99a13ab2159bc4294e1','Lechita','2019-03-12 08:12:23','','',false,1,'url.com/sdaascvzx',true,'somesalt'),
-('cukiereczek@gmail.com','b2f14b180b1ba910d062d8bcfffc8306d841948de70f5eb80d9493463b2e0279','Bandzior','2019-01-21 11:54:23','Sebastian','Dres',false,0,'url.com/321dsada',false,'somesalt'),
-('najlepszeszanty@gmail.com','c56e582934fce95d0c8c97ad31957b9e1937e46349520ddd63aec6f8b3ad2dec','Szaman',clock_timestamp(),'','',false,1,'url.com/sssdadas',true,'somesalt'),
-('indegrients@gmail.com','f38afe1266d247cf1f6f836ffdbb0ab946c0a7edbcb4ba6e7324b32b9050441e','Szefu','2018-11-16 14:52:32','Szymon','Szymanski',true,1,'url.com/fdfd',true,'somesalt');
+INSERT INTO users (email_address,password,nickname,date_of_join,name,surname,is_admin,state,activation_url) VALUES
+('jkowalski@gmail.com','9b8180df6f2059807fa0f2f0f4e95f3f7a813b2a4e09b48d8f3d2161c4294ede','Kowal',clock_timestamp(),'Jan','Kowalski',false,1,'url.com/test'),
+('serduszko@gmail.com','d5159aab57cab09e3e6dd52d029c28d614ad827cb26a1669a7689d92081712df','Agusia','2019-02-28 14:32:13','','',false,1,'url.com/asdasd'),
+('nieoficjalny@gmail.com','a9fd3f94ea352ac9d1ccc2cbfb1fa5395ec3033391d5a4e83a068293281b925b','Predator','2019-01-16 12:12:23','Maciej','Nowak',true,1,'url.com/sss'),
+('banan@o2.pl','d50e3d3f1031033d026bfd7ed4a17c872edf9b221457dfb1450572cce74b207c','Tester',clock_timestamp(),'Krzysztof','Kot',false,0,'url.com/balaals'),
+('test@wp.pl','4294de7bdacf80160f2610d081193a599dffd6127a1bc99a13ab2159bc4294e1','Lechita','2019-03-12 08:12:23','','',false,1,'url.com/sdaascvzx'),
+('cukiereczek@gmail.com','b2f14b180b1ba910d062d8bcfffc8306d841948de70f5eb80d9493463b2e0279','Bandzior','2019-01-21 11:54:23','Sebastian','Dres',false,0,'url.com/321dsada'),
+('najlepszeszanty@gmail.com','c56e582934fce95d0c8c97ad31957b9e1937e46349520ddd63aec6f8b3ad2dec','Szaman',clock_timestamp(),'','',false,1,'url.com/sssdadas'),
+('indegrients@gmail.com','f38afe1266d247cf1f6f836ffdbb0ab946c0a7edbcb4ba6e7324b32b9050441e','Szefu','2018-11-16 14:52:32','Szymon','Szymanski',true,1,'url.com/fdfd');
 
 INSERT INTO user_activities (user_id,date_of_login,browser_info) VALUES
 (1,clock_timestamp(),'Mozzila Firefox'),
@@ -119,7 +119,7 @@ INSERT INTO alternative_ingredients (ingredient_id,replacement_id) VALUES
 (5,10),
 (10,5);
 
-INSERT INTO units (name) VALUES
+INSERT INTO units (unit_name) VALUES
 ('g'),
 ('kg'),
 ('ml'),
