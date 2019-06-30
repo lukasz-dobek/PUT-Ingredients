@@ -125,6 +125,7 @@ div.main p {
 .error-message{
   color: red;
   font-style: bold;
+  font-size: 14px;
 }
 
 
