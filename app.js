@@ -92,7 +92,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', ensureAuthenticated, usersRouter);
 app.use('/recipes', ensureAuthenticated, recipesRouter);
 
 app.use('/api/recipes', apiRecipesRouter);
