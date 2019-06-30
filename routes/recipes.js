@@ -8,8 +8,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
     pgClient.query(lastNineRecipesQueryString, (lastNineRecipesQueryError, lastNineRecipesQueryResult) => {
         if (lastNineRecipesQueryError) throw lastNineRecipesQueryError;
         res.render('./recipes/front_page', { 
-            recipes: lastNineRecipesQueryResult.rows, 
-            user: req.user['email_address'] 
+            recipes: lastNineRecipesQueryResult.rows
         });
     });
 });
@@ -28,7 +27,7 @@ router.get('/:linkToRecipe', (req, res) => {
         rec.id_recipe, 
         rec.recipe_name, 
         rec.score, 
-        rec.date_of_creation, 
+        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation, 
         rec.complicity, 
         rec.preparation_time, 
         rec.description, 
@@ -69,6 +68,7 @@ router.get('/:linkToRecipe', (req, res) => {
             Ingredients fields: ingredient_name, amount, unit_name.
 
             */
+           console.log(recipeQueryResult.rows);
             res.render('./recipes/recipe_page', { 
                 recipe: recipeQueryResult.rows, 
                 ingredients: ingredientsQueryResult.rows,
@@ -108,8 +108,7 @@ router.get('/search/name', (req, res) => {
         if (searchNameQueryError) throw searchNameQueryError;
         res.render('./recipes/recipe_search_name', { 
             searchString: searchRecipeName, 
-            recipes: searchNameQueryResult.rows,
-            user: req.user['email_address']
+            recipes: searchNameQueryResult.rows
         });
     });
 });
@@ -163,8 +162,7 @@ router.get('/search/categories', (req, res) => {
         if (searchCategoriesQueryError) throw searchCategoriesQueryError;
         res.render('./recipes/recipe_search_categories', { 
             searchedCategories: categoriesFromRequestAsArray,
-            recipes: searchCategoriesQueryResult.rows,
-            user: req.user['email_address']
+            recipes: searchCategoriesQueryResult.rows
         });
     });
 });

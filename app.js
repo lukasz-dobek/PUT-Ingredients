@@ -79,6 +79,9 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  if (req.user){
+    res.locals.user = req.user["email_address"];
+  }
   next();
 });
 

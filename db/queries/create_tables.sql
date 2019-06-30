@@ -11,9 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
 	surname VARCHAR(50),
 	is_admin BOOLEAN NOT NULL,
 	state INTEGER NOT NULL,
-	activation_url TEXT NOT NULL,
-	url_status BOOLEAN NOT NULL,
-	salt VARCHAR(64) NOT NULL
+	activation_url TEXT NOT NULL
 );
 
 -- User_activities table

@@ -5,10 +5,11 @@ const pgClient = require('./../db/pg-controller');
 const mailClient = require('../MailController');
 const crypto = require('crypto');
 const passport = require('passport');
+const { ensureLoggedIn } = require('../config/auth');
 
 // TODO: Move users to /, create pages such as users recipes in /users/
 
-router.get('/login', function (req, res, next) {
+router.get('/login', ensureLoggedIn, function (req, res, next) {
     console.log(res.locals.error);
     res.render('./users/login', { layout: 'layout_before_login' });
 });
@@ -40,15 +41,15 @@ router.post('/register', (req, res, next) => {
     let errors = [];
 
     if (!nickname || !email || !password || !passwordConfirm) {
-        errors.push({ msg: "Please fill in all necessary fields" });
+        errors.push({ msg: "Wypełnij wszystkie potrzebne pola." });
     }
 
     if (password !== passwordConfirm) {
-        errors.push({ msg: "Passwords do not match" });
+        errors.push({ msg: "Hasła się nie zgadzają." });
     }
 
     if (password.length < 6) {
-        errors.push({ msg: "Password should be at least 8 characters" });
+        errors.push({ msg: "Hasło powinno skłądać się z przynajmniej 6 znaków." });
     }
 
     const checkIfUserExistsQuery = `SELECT email_address FROM users WHERE email_address = $1`;
@@ -64,8 +65,8 @@ router.post('/register', (req, res, next) => {
         userRowCount = result.rowCount;
     })
 
-    if (userRowCount === 0){
-        errors.push({ msg: "Email already exists in database" });
+    if (userRowCount != 0){
+        errors.push({ msg: "Konto o podanym adresie istnieje już w bazie danych." });
     }
 
     if (errors.length > 0) {
@@ -77,9 +78,28 @@ router.post('/register', (req, res, next) => {
     } else {
         const emailConfirmHash = crypto.randomBytes(48);
         console.log(emailConfirmHash.toString('hex'));
-        const insertQueryString = `INSERT INTO users 
-            (email_address, password, nickname, date_of_join, name, surname, is_admin, state, activation_url, url_status, salt)
-            VALUES ($1, $2, $3, to_timestamp(${Date.now() / 1000.0}), $4, $5, '0', 4, '${emailConfirmHash.toString('hex')}', '0', 'abcdefghj');`;
+        const insertQueryString = `
+        INSERT INTO users (
+            email_address, 
+            password, 
+            nickname, 
+            date_of_join, 
+            name, 
+            surname, 
+            is_admin, 
+            state, 
+            activation_url 
+        ) VALUES (
+            $1,
+            $2, 
+            $3, 
+            to_timestamp(${Date.now() / 1000.0}), 
+            $4, 
+            $5, 
+            FALSE,
+            0, 
+            '${emailConfirmHash.toString('hex')}'
+            );`;
 
         try {
             argon2.hash(password).then(hash => {
@@ -104,8 +124,6 @@ router.post('/register', (req, res, next) => {
 });
 
 router.get('/confirm_email/:hash', (req, res) => {
-    console.log("test");
-    console.log(req.params.hash.toString);
     const updateQueryString = `UPDATE users SET state=1 WHERE activation_url = $1`;
     pgClient.query(updateQueryString, [req.params.hash], (err, result) => {
         if (err) {
