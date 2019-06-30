@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
 const pgClient = require('../../db/pg-controller');
+const router = express.Router();
 
 router.get('/all', (req, res) => {
     let getAllRecipes = `SELECT r.*, u.nickname

@@ -3,27 +3,32 @@ const router = express.Router();
 const pgClient = require('../../db/pg-controller');
 
 router.get('/all', (req, res) => {
-    pgClient.query('SELECT * FROM categories', (err, result) => {
-        res.json(result.rows);
+    const allCategoriesQueryString = "SELECT * FROM categories;";
+    pgClient.query(allCategoriesQueryString, (allCategoriesQueryError, allCategoriesQueryResult) => {
+        if(allCategoriesQueryError) {
+            throw allCategoriesQueryError;
+        }
+        res.json(allCategoriesQueryResult.rows);
     });
 });
 
-router.get('/categories_per_recipe/:id', (req, res) => {
-    // const queryString = `select c.category_name from categories c
-    //     inner join categories_per_recipe cpr on cpr.category_id =c.id_category
-    //     inner join recipes r on r.id_recipe = cpr.recipe_id where r.id_recipe = $1;`;
-    
-    const queryString = `select r.recipe_name, cpr.recipe_id, c.category_name
-    from recipes r join categories_per_recipe cpr on r.id_recipe = cpr.recipe_id join categories c on c.id_category = cpr.category_id
-    where r.id_recipe = $1;`
+router.get('/recipe/:id', (req, res) => {
+    const catPerRecipeQueryString = `
+    SELECT 
+        rec.recipe_name,
+        cpr.recipe_id,
+        cat.category_name
+    FROM recipes rec 
+        INNER JOIN categories_per_recipe cpr ON rec.id_recipe = cpr.recipe_id
+        INNER JOIN categories cat ON cat.id_category = cpr.category_id
+    WHERE rec.id_recipe = $1;`;
 
-    const value = [parseInt(req.params.id)];
+    const idRecipe = parseInt(req.params.id);
 
-    pgClient.query(queryString, value ,(err, result) => {
-        if (err) throw err;
-        res.json(result.rows);
+    pgClient.query(catPerRecipeQueryString, [idRecipe], (catPerRecipeQueryError, catPerRecipeQueryResult) => {
+        if (catPerRecipeQueryError) throw catPerRecipeQueryError;
+        res.json(catPerRecipeQueryResult.rows);
     });
-
 });
 
 module.exports = router;

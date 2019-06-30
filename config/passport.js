@@ -15,7 +15,7 @@ module.exports =  function(passport) {
                 userRowCount = result.rowCount;
 
                 if(userRowCount == 0){
-                    return done(null, false, { message: 'User not registered' });
+                    return done(null, false, { message: 'Użytkownik o podanym adresie nie istnieje.' });
                 } else {
                     argon2.verify(result.rows[0].password, password).then((isAuthorised) => {
                         if(isAuthorised) {
@@ -28,11 +28,9 @@ module.exports =  function(passport) {
                                 is_admin: result.rows[0]["is_admin"],
                                 state: result.rows[0]["state"]
                             }
-                            console.log("User: ");
-                            console.log(user);
                             return done(null, user);
                         } else {
-                            return done(null, false, { message: 'Password incorrect' });
+                            return done(null, false, { message: 'Hasło niepoprawne.' });
                         }
                     });
                 }
@@ -41,7 +39,6 @@ module.exports =  function(passport) {
     );
 
     passport.serializeUser(function(user, done) {
-        console.log(user.id_user);
         done(null, user.id_user);
     });
 

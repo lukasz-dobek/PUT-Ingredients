@@ -6,6 +6,8 @@ const mailClient = require('../MailController');
 const crypto = require('crypto');
 const passport = require('passport');
 
+// TODO: Move users to /, create pages such as users recipes in /users/
+
 router.get('/login', function (req, res, next) {
     console.log(res.locals.error);
     res.render('./users/login', { layout: 'layout_before_login' });
@@ -19,7 +21,7 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/logout', (req, res) => {
     req.logout();
-    req.flash('success_msg', 'You are logged out');
+    req.flash('success_msg', 'Zostałeś poprawnie wylogowany.');
     res.redirect('/users/login');
   });
 
