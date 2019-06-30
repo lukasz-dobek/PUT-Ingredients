@@ -5,41 +5,41 @@
         <hr class="w-100" style="background-color: black;">
         <h6 align="left">Wprowadź informację, które jako pierwsze będą oglądane przez uzytkownika</h6>
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
-            <input type="text" name="name" id="recipeNameForm"
+            <input type="text" name="recipename" id="recipeNameForm"
                    class="form-control w-100 border-top-0 border-left-0 border-right-0"
-                   style="background-color: gainsboro" placeholder="*Nazwa potrawy" required>
+                   style="background-color: gainsboro" placeholder="*Nazwa potrawy" required minlength="5" maxlength="100">
         </form>
         <br>
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
             <div class="form-row align-items-center ">
                 <div>
                     <select class="form-control w-20" id="categorySelect1" style="background: gainsboro" required>
-                        <option disabled selected hidden>*Kategoria</option>
+                        <option disabled selected hidden value="">*Kategoria</option>
                     </select>
                 </div>
                 <div>
                     <select class="form-control w-20" id="categorySelect2" style="background: gainsboro">
-                        <option disabled selected hidden>Kategoria</option>
+                        <option disabled selected hidden  value="">Kategoria</option>
                     </select>
                 </div>
                 <div>
                     <select class="form-control w-20" id="categorySelect3" style="background: gainsboro">
-                        <option disabled selected hidden>Kategoria</option>>
+                        <option disabled selected hidden value="">Kategoria</option>>
                     </select>
                 </div>
                 <div>
                     <select class="form-control w-20" id="categorySelect4" style="background: gainsboro">
-                        <option disabled selected hidden>Kategoria</option>
+                        <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
                 <div>
                     <select class="form-control w-20" id="categorySelect5" style="background: gainsboro">
-                        <option disabled selected hidden>Kategoria</option>
+                        <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
                 <div>
                     <select class="form-control w-20" id="categorySelect6" style="background: gainsboro">
-                        <option disabled selected hidden>Kategoria</option>
+                        <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
             </div>
@@ -48,24 +48,24 @@
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
             <div class="form-row " >
                 <div class="col-auto">
-                    <select class="form-control w-30" id="complicity" style="background: gainsboro;">
-                        <option disabled selected hidden>*Stopień trudnośći</option>
+                    <select class="form-control w-30" id="complicity" style="background: gainsboro;" required>
+                        <option disabled selected hidden value="">*Stopień trudnośći</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                     </select>
                 </div>
                 <div class="col-auto">
-                    <select class="form-control w-30" id="numberOfPortions" style="background: gainsboro">
-                        <option disabled selected hidden>*Ilość porcji</option>
+                    <select class="form-control w-30" id="numberOfPortions" style="background: gainsboro" required>
+                        <option disabled selected hidden  value="">*Ilość porcji</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="4+">4+</option>
                     </select>
                 </div>
                 <div class="col-auto">
-                    <select class="form-control w-30" id="timeToMake" style="background: gainsboro">
-                        <option disabled selected hidden>*Czas przygotowania</option>
+                    <select class="form-control w-30" id="timeToMake" style="background: gainsboro" required>
+                        <option disabled selected hidden value="">*Czas przygotowania</option>
                         <option value="30">30 min</option>
                         <option value="60">60 min</option>
                         <option value="90+">90+ min</option>
@@ -81,40 +81,34 @@
         <hr class="w-100" style="background-color: black;">
         <h6 align="left">Wprowadź nazwę składnika, uzupełnij ilość oraz wybierz jednostkę. Do dzieła!</h6>
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
-            <input type="text" name="ingredientName" id="ingredientNameForm1"
-                   class="form-control mb-2 mr-sm-2"
-                   style="background-color: gainsboro;align:left" placeholder="*Składnik" required>
-            <input type="text" name="quantity" id="quantityForm"
-                   class="form-control mb-2 mr-sm-2 w-60"
-                   style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
             <div class="col-auto">
-                <select class="form-control w-30" id="unitSelect" style="background: gainsboro" required>
-                    <option disabled selected hidden>*Jednostka</option>
-                    <option value="Kg">kg</option>
-                    <option value="G">g</option>
-                    <option value="ml">ml</option>
+            <input type="text" name="ingredientName" id="ingredientNameForm1"
+                   class="form-control  mr-sm-2"
+                   style="background-color: gainsboro;align:left" placeholder="*Składnik" required minlength="5" maxlength="50">
+            <input type="number" name="quantity" id="quantityForm"
+                   class="form-control  mr-sm-2 w-60"
+                   style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
+                <select class="form-control w-30" id="unitSelect1" style="background: gainsboro" required>
+                    <option disabled selected hidden value="">*Jednostka</option>
                 </select>
             </div>
         </form>
         <br>
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline">
-            <input type="text" name="ingredientName" id="ingredientNameForm2"
-                   class="form-control mb-2 mr-sm-2"
-                   style="background-color: gainsboro;align:left" placeholder="*Składnik" required>
-            <input type="text" name="quantity" id="quantityForm"
-                   class="form-control mb-2 mr-sm-2 w-60"
-                   style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
             <div class="col-auto">
+            <input type="text" name="ingredientName" id="ingredientNameForm2"
+                   class="form-control mr-sm-2"
+                   style="background-color: gainsboro;align:left" placeholder="*Składnik" required minlength="5" maxlength="50">
+            <input type="number" name="quantity" id="quantityForm"
+                   class="form-control mr-sm-2 w-60"
+                   style="background-color: gainsboro;align:left" placeholder="*Ilość" required>
                 <select class="form-control w-30" id="unitSelect2" style="background: gainsboro" required>
-                    <option disabled selected hidden>*Jednostka</option>
-                    <option value="Kg">kg</option>
-                    <option value="G">g</option>
-                    <option value="ml">ml</option>
+                    <option disabled selected hidden value="">*Jednostka</option>
                 </select>
             </div>
         </form>
         <div align="left">
-            <button type="button" class="btn btn-success" style="color: black"> Dodaj kolejną pozycję +</button>
+            <button type="button" class="btn btn-success" style="color: black;margin-left: 3%; margin-top: 3%;"> Dodaj kolejną pozycję +</button>
         </div>
     </div>
     <br>
@@ -139,7 +133,6 @@
             <div class="custom_file">
                 <i class="fas fa-camera icon"></i>
                 <input type="file" class="custom_file_input" id="photoForm">
-                <label class="custom-file-label" for="photoForm">dupa</label>
             </div>
 
             <div align="left" style="float: left; width: 45%;height: 400px; background-color: #27ae60;">
@@ -174,7 +167,7 @@
                    class="anchor-green">regulaminem</a></label>
         </div>
         <div class="form-check mt-2">
-            <input type="checkbox" name="check2" id="checkForm2" class="form-check-input" required>
+            <input type="checkbox" name="check2" id="checkForm2" class="form-check-input">
             <label for="checkForm1" class="form-check-label" style="margin-left: 3%">Chcę aby mój adres email był
                 widoczny dla uzytkonwików korzystajacych z przepisu</label>
         </div>
@@ -187,4 +180,4 @@
     </button>
 </div>
 
-<script src="/javascripts/categories_select.js"></script>
+<script src="/javascripts/new_recipe.js"></script>
