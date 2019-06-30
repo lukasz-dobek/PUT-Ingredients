@@ -3,7 +3,7 @@
 
   <div class="row ">
     <div class="col col-md-4">
-      <img src="{{photo_one}}" alt="" class="card-img-top">
+      <img src="{{photo_one}}" alt="" class="card-img-top" style="height: 16.35vw">
     </div>
 
     <div class="col">
@@ -12,7 +12,9 @@
           <h3 style="color: black">{{toUpperCase recipe_name}}</h3>
         </div>
         <div class="col">
-          <p style="text-align:right;">serduszkoooo</p>
+          <p style="text-align:right;">
+            <i class="far fa-heart" style="font-size: 1.3vw"></i>
+          </p>
         </div>
       </div>
 
@@ -31,7 +33,7 @@
           <div class="col">
             <div class="container" style="background-color:#7BCE9E; color:black;">
               <p style="text-align:left; font-size: 1.05vw; padding-top: 0.22vw; padding-bottom: 0.22vw">Dodano przez:
-                *kupadupa@gmail.com*</p>
+                {{email_address}}</p>
             </div>
           </div>
         </div>
@@ -79,8 +81,8 @@
             <p>*ikony kategorii*</p>
           </div>
           <div class="col">
-            <p style="text-align:right; font-size:1vw; margin-top: 0.5vw; margin-bottom: 0vw;">Data dodania przepisu:
-              *data*</p>
+            <p style="text-align:right; font-size:1vw; margin-top: 0.5vw; margin-bottom: 0vw; font-size: 0.9vw">Data
+              dodania przepisu: {{date_of_creation}}</p>
           </div>
         </div>
       </div>
@@ -91,8 +93,17 @@
     <div class="col col-md-4">
     </div>
     <div class="col">
-      <p class="split-para">Podoba Ci się? <span>Gwiazdki</span></p>
-      <p></p>
+      <p class="split-para">Podoba Ci się?
+        <div style=" font-size: 1.5vw; color: #F8D93F; text-align: right">
+          <span >
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        </span>
+        </div>
+        </p>
     </div>
   </div>
 
@@ -100,55 +111,23 @@
     <div class="col col-md-4">
       <div class="container skladniki" style="background-color:gainsboro; padding: 15px; color:black;">
         <h3>Składniki:</h3>
-        <hr>
+        <hr style="margin-bottom: 0.8vw">
         </hr>
-        <div class="row ">
-          <div class="col">
-            <p>ziemak:</p>
-          </div>
-          <div class="col">
-            <p>1</p>
-          </div>
-          <div class="col">
-            <p>kg</p>
-          </div>
-        </div>
 
+        {{#each ../ingredients}}
         <div class="row ">
           <div class="col">
-            <p>marchewka:</p>
+            <p>{{ingredient_name}}</p>
           </div>
           <div class="col">
-            <p>3</p>
+            <p style="position: absolute; bottom:0;">{{amount}}</p>
           </div>
           <div class="col">
-            <p>g</p>
+            <p style="bottom:0;">{{unit_name}}</p>
           </div>
         </div>
-
-        <div class="row ">
-          <div class="col">
-            <p>oliwa z oliwek extra vergine:</p>
-          </div>
-          <div class="col" style="text-align-last: bottom;">
-            <p style="position: absolute; bottom:0;">400</p>
-          </div>
-          <div class="col">
-            <p style="position: absolute; bottom:0;">ml</p>
-          </div>
-        </div>
-
-        <div class="row ">
-          <div class="col">
-            <p>chkeb pszenny:</p>
-          </div>
-          <div class="col">
-            <p style="position: absolute; bottom:0;">150</p>
-          </div>
-          <div class="col">
-            <p style="position: absolute; bottom:0;">g</p>
-          </div>
-        </div>
+        {{/each}}
+        
       </div>
     </div>
 
@@ -178,18 +157,18 @@
 
     <div class="col">
       <div class="row">
-        <div class="col-sm">
-          <a href="{{link_to_recipe}}"><img src="{{photo_one}}" alt="" class="card-img-top"></a>
+        <div class="col">
+          <a href="{{link_to_recipe}}"><img src="{{photo_one}}" alt="" class="card-img-top" style="height: 12vw"></a>
         </div>
-        <div class="col-sm">
+        <div class="col">
           <div class="container brak-zdj"
-            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center">
+            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
           </div>
         </div>
-        <div class="col-sm">
+        <div class="col">
           <div class="container brak-zdj"
-            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center">
+            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
           </div>
         </div>
@@ -200,7 +179,7 @@
     </div>
   </div>
   <p style="margin-top:2vw">Przepis narusza regulamin, zawiera treści niestosowne, nieadekwatne lub jest nie kompletny?
-    <a href="https://www.w3schools.com" target="_blank" style="color: red">Zgłoś przepis</a></p>
+    <a href="#" target="_blank" style="color: red">Zgłoś przepis</a></p>
 
 
 
