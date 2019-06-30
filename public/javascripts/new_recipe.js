@@ -47,16 +47,6 @@ $("[id^=categorySelect]").on('change', function () {
         }
     }
 
-    // selects.forEach(item => {
-    //     values.push($(item).children("option:selected").val());
-    //     console.log(values);
-    //     let i;
-    //     for (i = 0; i < values.length; i++) {
-    //         if ($(item).find('option[value="' + values[i] + '"]')) {
-    //             $(item).find('option[value="' + values[i] + '"]').hide();
-    //         }
-    //     }
-    // });
 });
 
 $.getJSON("/api/units/names", (data) => {
@@ -99,7 +89,7 @@ $.getJSON("/api/recipes/all", (data) => {
         if (customRecipeName.value) {
             console.log(items);
 
-            for (let i = 0; i < names.length; i++) {
+            for (let i = 0; i < recipeNames.length; i++) {
                 if (customRecipeName.value != recipeNames[i]) {
                     recipeNameTaken = false;
                 } else {
@@ -121,6 +111,9 @@ $.getJSON("/api/recipes/all", (data) => {
             if (field.name === 'recipename') return 'Podany przepis juz istnieje.';
         }
 
+        if(field.type === 'number'){
+            if(field.value <=0) return "Wartość nie może być zerowa, lub ujemna."
+        }
         // Get validity
         let validity = field.validity;
 
