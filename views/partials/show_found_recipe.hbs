@@ -1,19 +1,21 @@
 <div class="container">
-    <div style="margin-top: 1vw"></div>
+  <div style="margin-top: 1vw"></div>
   <div class="row ">
     <div class="col col-md-4">
-      <img src="{{photo_one}}" alt="" class="card-img-top" style="height: 16vw">
+      <img src="{{photo_one}}" alt="" class="card-img-top" style="height: 14.1vw">
     </div>
 
     <div class="col">
       <div class="row ">
         <div class="col">
-            <a href="{{link_to_recipe}}" style="color: black">
-          <h3 style="color: black">{{toUpperCase recipe_name}}</h3> </a>
+          <a href="{{link_to_recipe}}" style="color: black;  text-decoration: none;">
+            <h3 style="color: black;">{{toUpperCase recipe_name}}</h3>
+          </a>
         </div>
         <div class="col">
           <p style="text-align:right;">
-            <i id="favouritesButton_{{id_recipe}}" class="far fa-heart" style="font-size: 1.3vw" onClick="action(event)"></i>
+            <i id="favouritesButton_{{id_recipe}}" class="far fa-heart"
+              style="font-size: 1.3vw position: absolute; bottom:0.4vw; right:1vw" onClick="action(event)"></i>
           </p>
         </div>
       </div>
@@ -23,7 +25,7 @@
           <div class="col">
             <div class="row ">
               <div class="col">
-                <p>Stopien trudności: </p>
+                <p>Stopień trudności: </p>
               </div>
               <div class="col">
                 <p>{{complicity}}</p>
@@ -32,7 +34,9 @@
           </div>
           <div class="col">
             <div class="container" style="background-color:#7BCE9E; color:black;">
-              <p style="text-align:left; font-size: 1.05vw; padding-top: 0.22vw; padding-bottom: 0.22vw">Dodano przez:
+              <p
+                style="text-align:left; font-size: 0.75vw; padding-top: 0.01vw; padding-bottom: 0.01vw; text-align: center">
+                Dodano przez:
                 {{email_address}}</p>
             </div>
           </div>
@@ -70,7 +74,8 @@
                 <p>Ocena: </p>
               </div>
               <div class="col">
-                <p> {{score}}</p>
+                <p> {{score}}<i class="fas fa-star" style=" font-size: 1.3vw; color: #F8D93F; margin-left:0.5vw"></i>
+                </p>
               </div>
             </div>
           </div>
@@ -78,7 +83,7 @@
         </div>
         <div class="row ">
           <div class="col">
-            <p>*ikony kategorii*</p>
+            <p><i class="fas fa-utensils" style="font-size: 1.3vw; position: absolute; bottom:0;"></i></p>
           </div>
           <div class="col">
             <p style="text-align:right; font-size:1vw; margin-top: 0.5vw; margin-bottom: 0vw; font-size: 0.9vw">Data
@@ -88,5 +93,5 @@
       </div>
     </div>
   </div>
-  <div style="margin-bottom: 2.2vw;"></div>
+  <div style="margin-bottom: 2vw;"></div>
 </div>
