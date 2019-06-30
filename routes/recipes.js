@@ -68,7 +68,6 @@ router.get('/:linkToRecipe', (req, res) => {
             Ingredients fields: ingredient_name, amount, unit_name.
 
             */
-           console.log(recipeQueryResult.rows);
             res.render('./recipes/recipe_page', { 
                 recipe: recipeQueryResult.rows, 
                 ingredients: ingredientsQueryResult.rows,

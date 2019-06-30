@@ -26,11 +26,11 @@ router.get('/logout', (req, res) => {
     res.redirect('/users/login');
   });
 
-router.get('/register', function (req, res, next) {
+router.get('/register', ensureLoggedIn, function (req, res, next) {
     res.render('./users/register', { layout: 'layout_before_login'});
 });
 
-router.get('/after_register', (req, res) => {
+router.get('/after_register', ensureLoggedIn, (req, res) => {
     res.render('./users/after_register', { layout: 'layout_before_login' });
 });
 
@@ -49,7 +49,7 @@ router.post('/register', (req, res, next) => {
     }
 
     if (password.length < 6) {
-        errors.push({ msg: "Hasło powinno skłądać się z przynajmniej 6 znaków." });
+        errors.push({ msg: "Hasło powinno składać się z przynajmniej 6 znaków." });
     }
 
     const checkIfUserExistsQuery = `SELECT email_address FROM users WHERE email_address = $1`;
