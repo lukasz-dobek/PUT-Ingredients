@@ -1,10 +1,7 @@
 <div class="container" id="listOfRecipes">
-    <div class="row">
-        <div class="col-6"><h2 style="text-transform: uppercase">Przepisy użytkownika:</h2></div>
-        <div class="col-6"><h2 class="margin-auto">{{userNickname}}</h2></div>
-    </div>
+     <h3 class="mb-3" style="margin-top:1vw; margin-left: 0.8vw">PRZEPISY UŻYTKOWNIKA: <span>{{userNickname}}</span>
     {{#each recipes}}
-    <div class="row align-items-center mt-2">
+    {{!-- <div class="row align-items-center mt-2">
         <div class="col-6 col-md-4">
             <a href="{{link_to_recipe}}"><img src="{{photo_one}}" alt="" class="card-img-top"></a>
         </div>
@@ -21,6 +18,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+    {{>show_found_recipe}}
     {{/each}}
 </div>
