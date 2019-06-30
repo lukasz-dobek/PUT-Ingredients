@@ -48,7 +48,7 @@ router.get('/:linkToRecipe', (req, res) => {
     SELECT 
         ing.ingredient_name,
         iur.amount, 
-        unt.name 
+        unt.unit_name 
     FROM ingredients_used_in_recipe iur 
 	    INNER JOIN ingredients ing ON iur.ingredient_id = ing.id_ingredient 
 	    INNER JOIN units unt ON iur.unit_id = unt.id_unit 
