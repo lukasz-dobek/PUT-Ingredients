@@ -101,7 +101,7 @@ router.get('/search/name', (req, res) => {
         INNER JOIN users usr ON rec.user_id = usr.id_user     
     WHERE LOWER(recipe_name) LIKE $1;`;
 
-    const searchRecipeName = req.query['searchRecipeName'];
+    const searchRecipeName = req.query['searchRecipeName'].toLowerCase();
 
     pgClient.query(searchNameQueryString, ['%' + searchRecipeName + '%'], (searchNameQueryError, searchNameQueryResult) => {
         if (searchNameQueryError) throw searchNameQueryError;
