@@ -24,6 +24,8 @@ const apiRecipesRouter = require('./routes/api/recipes');
 const apiUsersRouter = require('./routes/api/users');
 const apiCategoriesRouter = require('./routes/api/categories');
 const apiUnitsRouter = require('./routes/api/units');
+const apiFavouritesRouter = require('./routes/api/favourites');
+
 
 var app = express();
 
@@ -80,6 +82,7 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   if (req.user){
+    res.locals.userId = req.user["id_user"];
     res.locals.userEmail = req.user["email_address"];
     res.locals.userNickname = req.user["nickname"];
   }
@@ -100,6 +103,8 @@ app.use('/api/recipes', apiRecipesRouter);
 app.use('/api/users', apiUsersRouter);
 app.use('/api/categories', apiCategoriesRouter);
 app.use('/api/units', apiUnitsRouter);
+app.use('/api/favourites', apiFavouritesRouter);
+
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
