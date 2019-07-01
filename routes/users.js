@@ -59,16 +59,17 @@ router.get('/favourites', (req, res) => {
         rec.photo_two, 
         rec.photo_three, 
         rec.photo_four,
-        usr.email_address,
-        usr.nickname
+        usr_a.email_address,
+        usr_a.nickname
     FROM favourites fav 
         INNER JOIN recipes rec ON fav.recipe_id = rec.id_recipe
-		INNER JOIN users usr ON usr.id_user = fav.user_id 
-    WHERE usr.nickname = $1;`;
+		INNER JOIN users usr_a ON usr_a.id_user = rec.user_id 
+		INNER JOIN users usr_b ON usr_b.id_user = fav.user_id
+    WHERE usr_b.email_address = $1;`;
 
-    const userNickname = res.locals.userNickname;
+    const userEmail = res.locals.userEmail;
 
-    pgClient.query(userFavouritesQueryString, [userNickname], (userFavouritesQueryError, userFavouritesQueryResult) => {
+    pgClient.query(userFavouritesQueryString, [userEmail], (userFavouritesQueryError, userFavouritesQueryResult) => {
         if(userFavouritesQueryError) {
             throw userFavouritesQueryError;
         }
