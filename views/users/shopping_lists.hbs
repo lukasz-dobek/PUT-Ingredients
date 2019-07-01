@@ -1,1 +1,50 @@
-<h1>Listy zakupów</h1>
+<div class="container text-center">
+    <h1>Moje listy zakupów</h1>
+    <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 1
+    </button>
+    <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 2
+    </button>
+    <button type="button" class="btn btn-success" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 3</button>
+    <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 4
+    </button>
+    <br>
+    <br>
+    <hr class="w-100" style="background-color: black;">
+</div>
+<div class="container text-center">
+    <h1>Wybrano: Nazwa 3</h1>
+    <div class="row">
+        <div class="column" style="width: 45%; background-color:#eeeeee;">
+            <h3 align="left" >Owoce</h3>
+            <hr class="w-100" style="background-color: black;">
+            <div style=" width: 100%">
+                <form action="/recipes/add_new_recipe" method="POST" class="form-inline" id="ingredients">
+                <div class="form-row d-flex justify-content-center mt-2">
+                    <div class="col-auto">
+                <h6 style="text-align: left;margin-top: 5%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col-auto">
+                    <input type="number" name="quantity" id="quantityForm" class="form-control"
+                           style="background-color: #eeeeee;width:35%" placeholder="3">
+                </div>
+                    <div class="col-auto">
+                        <input type="number" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 40%" placeholder="g">
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="column" style="width: 45%;">
+            <button type="button" class="btn btn-success" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 3
+            </button>
+            <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa
+                4
+            </button>
+        </div>
+
+        <br>
+        <br>
+    </div>
+</div>

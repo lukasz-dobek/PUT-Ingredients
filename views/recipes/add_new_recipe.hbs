@@ -4,79 +4,90 @@
         <h3 align="left">Ogólne informacje</h3>
         <hr class="w-100" style="background-color: black;">
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center" id="recipeName">
-            <h6 style="text-align: justify" align="left">Wprowadź informację, które jako pierwsze będą oglądane przez uzytkownika</h6>
+            <h6 style="text-align: justify" align="left">Wprowadź informację, które jako pierwsze będą oglądane przez
+                uzytkownika</h6>
             <div class="form-row d-flex justify-content-center mt-4 w-100">
                 <input type="text" name="recipename" id="recipeNameForm"
-                    class="form-control w-50 border-top-0 border-left-0 border-right-0 rounded-0"
-                    style="background-color: #eeeeee" placeholder="*Nazwa potrawy" required minlength="5"
-                    maxlength="100">
+                       class="form-control w-50 border-top-0 border-left-0 border-right-0 rounded-0"
+                       style="background-color: #eeeeee" placeholder="*Nazwa potrawy" required minlength="5"
+                       maxlength="100">
             </div>
         </form>
 
-            <br>
+        <br>
         <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center" id="categories">
-        <div class="row d-flex justify-content-center mt-4" id="firstRow">
+            <div class="row d-flex justify-content-center mt-4" id="firstRow">
                 <div class="col">
-                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect1" style="background: #eeeeee" required>
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="categorySelect1" style="background: #eeeeee" required>
                         <option disabled selected hidden value="">* Kategoria</option>
                     </select>
                 </div>
                 <div class="col">
-                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect2" style="background: #eeeeee">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="categorySelect2" style="background: #eeeeee">
                         <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
                 <div class="col">
-                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect3" style="background: #eeeeee">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="categorySelect3" style="background: #eeeeee">
                         <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
             </div>
-        <div class="row d-flex justify-content-center mt-4" id="secondRow">
+            <div class="row d-flex justify-content-center mt-4" id="secondRow">
                 <div class="col">
-                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect4" style="background: #eeeeee">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="categorySelect4" style="background: #eeeeee">
                         <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
                 <div class="col">
-                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect5" style="background: #eeeeee">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="categorySelect5" style="background: #eeeeee">
                         <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
                 <div class="col">
-                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0" id="categorySelect6" style="background: #eeeeee">
+                    <select class="form-control w-20 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="categorySelect6" style="background: #eeeeee">
                         <option disabled selected hidden value="">Kategoria</option>
                     </select>
                 </div>
             </div>
         </form>
-        <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center" id="generalInfo">
-        <div class="row d-flex justify-content-center mt-4">
-            <div class="col">
-                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0" id="complicity" style="background: #eeeeee;" required>
+        <form action="/recipes/add_new_recipe" method="POST" class="form-inline justify-content-center"
+              id="generalInfo">
+            <div class="row d-flex justify-content-center mt-4">
+                <div class="col">
+                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="complicity" style="background: #eeeeee;" required>
                         <option disabled selected hidden value="">* Stopień trudnośći</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                     </select>
-        </div>
-            <div class="col">
-                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0" id="numberOfPortions" style="background: gainsboro" required>
+                </div>
+                <div class="col">
+                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="numberOfPortions" style="background: #eeeeee" required>
                         <option disabled selected hidden value="">* Ilość porcji</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="4+">4+</option>
                     </select>
                 </div>
-            <div class="col">
-                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0" id="timeToMake" style="background: gainsboro" required>
+                <div class="col">
+                    <select class="form-control w-30 border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="timeToMake" style="background: #eeeeee" required>
                         <option disabled selected hidden value="">* Czas przygotowania</option>
                         <option value="30">30 min</option>
                         <option value="60">60 min</option>
                         <option value="90+">90+ min</option>
                     </select>
+                </div>
             </div>
-        </div>
         </form>
     </div>
     <br>
@@ -89,13 +100,13 @@
             <div class="form-row d-flex justify-content-center mt-4">
                 <div class="col-auto">
                     <input type="text" name="ingredientName" id="ingredientNameForm"
-                        class="form-control w-30 border-top-0 border-left-0 border-right-0"
-                        style="background-color: #eeeeee;align:left" placeholder="*Składnik" required minlength="5"
-                        maxlength="50">
+                           class="form-control w-30 border-top-0 border-left-0 border-right-0"
+                           style="background-color: #eeeeee;align:left" placeholder="*Składnik" required minlength="5"
+                           maxlength="50">
                 </div>
                 <div class="col-auto">
                     <input type="number" name="quantity" id="quantityForm" class="form-control  mr-sm-2 w-60"
-                        style="background-color: #eeeeee;align:left" placeholder="*Ilość" required>
+                           style="background-color: #eeeeee;align:left" placeholder="*Ilość" required>
                 </div>
                 <div class="col-auto">
                     <select class="form-control w-30" id="unitSelect" style="background: #eeeeee" required>
@@ -110,13 +121,13 @@
             <div class="form-row d-flex justify-content-center mt-4">
                 <div class="col-auto">
                     <input type="text" name="ingredientName" id="ingredientNameForm"
-                        class="form-control w-30 border-top-0 border-left-0 border-right-0"
-                        style="background-color: #eeeeee;align:left" placeholder="*Składnik" required minlength="5"
-                        maxlength="50">
+                           class="form-control w-30 border-top-0 border-left-0 border-right-0"
+                           style="background-color: #eeeeee;align:left" placeholder="*Składnik" required minlength="5"
+                           maxlength="50">
                 </div>
                 <div class="col-auto">
                     <input type="number" name="quantity" id="quantityForm" class="form-control mr-sm-2 w-60"
-                        style="background-color: #eeeeee;align:left" placeholder="*Ilość" required>
+                           style="background-color: #eeeeee;align:left" placeholder="*Ilość" required>
                 </div>
                 <div class="col-auto">
                     <select class="form-control w-30" id="unitSelect" style="background: #eeeeee" required>
@@ -154,24 +165,23 @@
                 <i class="fas fa-camera icon"></i>
                 <input type="file" class="custom_file_input" id="photoForm">
             </div>
-
             <div align="left" style="float: left; width: 45%;height: 400px; background-color: #27ae60;">
                 <h5 style="margin: 3%">Zdjęcia dodane przez Ciebie </h5>
                 <div align="left"
-                    style="margin-left:3%; margin-right:3%;margin-bottom: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
+                     style="margin-left:3%; margin-right:3%;margin-bottom: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
                 <div align="left"
-                    style="text-align: center;margin-left:3%; margin-right:3%;margin-bottom: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
+                     style="text-align: center;margin-left:3%; margin-right:3%;margin-bottom: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
                 <div style="clear: both"></div>
                 <div align="left"
-                    style="margin-left:3%; margin-right:3%; margin-top: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
+                     style="margin-left:3%; margin-right:3%; margin-top: 3%;float: left; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
                 <div align="left"
-                    style="margin-left:3%; margin-right:3%;margin-top: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
+                     style="margin-left:3%; margin-right:3%;margin-top: 3%;float: right; width: 43%;height: 150px; background-color: honeydew;">
                     <h5 style="margin: 3%" align="center">BRAK ZDJĘCIA</h5>
                 </div>
             </div>
@@ -179,21 +189,156 @@
         </form>
     </div>
 
-    <div class="mt-4">
-        <p>Wszystkie pola zaznaczone * muszą zostać wypełnione</p>
-    </div>
-    <form action="/recipes/add_new_recipe" method="POST">
-        <div class="form-check mt-4">
-            <input type="checkbox" name="check" id="checkForm1" class="form-check-input" required>
-            <label for="checkForm1" class="form-check-label" style="margin-left: 3% ">Potwierdzam, że zapoznałem się z
-                <a href="/terms_of_use" class="anchor-green">regulaminem</a></label>
-        </div>
-        <div class="form-check mt-2">
-            <input type="checkbox" name="check2" id="checkForm2" class="form-check-input">
-            <label for="checkForm1" class="form-check-label" style="margin-left: 3%">Chcę aby mój adres email był
-                widoczny dla uzytkonwików korzystajacych z przepisu</label>
-        </div>
 
+    <form action="/recipes/add_new_recipe" method="POST">
+        <div class="container" style="width: 30%;">
+            <div class="mt-1">
+                <p>Wszystkie pola zaznaczone * muszą zostać wypełnione</p>
+            </div>
+        <div class="form-check mt-1" style="padding-left: 16%;">
+            <input type="checkbox" name="check" id="checkForm1" class="form-check-input" required style="margin-top: 7%;">
+            <label for="checkForm1" class="form-check-label" style="text-align: left">Potwierdzam, że zapoznałem się z
+            <a href="#" class="anchor-green" type="button" data-toggle="modal"
+               data-target="#exampleModalLong">regulaminem</a>.</label>
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Regulamin</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-justify">
+                            1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a commodo erat, at
+                            rhoncus tellus. Maecenas eu
+                            sapien dapibus ex ornare venenatis. Suspendisse vulputate magna ut porttitor rhoncus.
+                            Vestibulum at tempor risus.
+                            Etiam tempus finibus nisi sit amet sodales. Nullam vel laoreet lacus. Aliquam molestie
+                            malesuada elit, vel malesuada
+                            turpis porttitor posuere. Vestibulum ligula nulla, gravida eget augue facilisis, cursus
+                            iaculis augue. Maecenas
+                            blandit eros facilisis tincidunt venenatis. Pellentesque vulputate fringilla dapibus.
+                            Quisque feugiat sapien et nibh
+                            auctor, a pretium quam gravida. Cras non nunc gravida, viverra massa eget, dictum ex.
+                            Quisque sodales enim eget
+                            dolor porttitor vestibulum.
+                            <br /><br />
+                            2. Sed pulvinar elit hendrerit faucibus accumsan. Aliquam erat volutpat. Ut at tellus ut dui
+                            ultricies convallis sed
+                            et
+                            tortor. Duis quis bibendum nulla. Curabitur quis turpis sollicitudin, molestie ex eu,
+                            dapibus sem. Nulla ultricies
+                            ipsum nec dolor convallis, vitae imperdiet mauris vulputate. Etiam ut nunc quis est
+                            efficitur commodo.
+                            <br /><br />
+                            3. Aliquam auctor purus tellus, at pretium lorem hendrerit vel. Vestibulum ante ipsum primis
+                            in faucibus orci luctus
+                            et
+                            ultrices posuere cubilia Curae; Vestibulum semper turpis tellus. Integer commodo faucibus
+                            imperdiet. Ut eu dui
+                            justo. Donec convallis urna vitae risus gravida, non ornare massa dapibus. Phasellus
+                            facilisis eget odio ac
+                            placerat. Etiam varius, massa eu sodales posuere, sem augue lobortis ex, vel suscipit ipsum
+                            diam eget urna. Donec
+                            dignissim, turpis non blandit feugiat, sapien metus laoreet nibh, vel facilisis elit ipsum
+                            et justo. Donec eu tempus
+                            ipsum. In dictum porttitor semper. Praesent euismod sagittis purus, laoreet vehicula nunc
+                            bibendum eget.
+                            <br /><br />
+                            4. Duis ac tempus libero. Nullam hendrerit vestibulum facilisis. Nam vestibulum dolor vel
+                            mauris aliquet, quis
+                            lacinia
+                            sapien venenatis. Donec felis est, aliquam et justo at, aliquet congue justo. Morbi sed
+                            magna hendrerit, posuere
+                            urna in, auctor mauris. Curabitur ut venenatis dui, a condimentum mi. Cras placerat mauris
+                            velit, vitae sodales
+                            felis bibendum vel. Mauris suscipit, velit a pretium ultricies, diam ex tempor nisi, a
+                            maximus arcu arcu sed nibh.
+                            <br /><br />
+                            5. Nunc eget accumsan neque. Donec lobortis tristique semper. Nunc ante ligula, maximus et
+                            felis a, fringilla
+                            maximus
+                            est. Aliquam sodales lorem lectus, eget luctus orci mollis id. Suspendisse ultricies massa
+                            dolor, sit amet
+                            consectetur lacus efficitur sed. Sed molestie sed ante et fringilla. Nullam eget nibh non
+                            lorem pulvinar sagittis.
+                            Vivamus ut finibus nisi. Duis tempus pharetra pellentesque. Suspendisse id ipsum nibh. Nam
+                            quam augue, iaculis in
+                            convallis vel, cursus a dolor. In efficitur leo neque, at elementum ante commodo eu. Donec
+                            fermentum ipsum vel
+                            pretium vulputate.
+                            <br /><br />
+                            6. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a commodo erat, at
+                            rhoncus tellus. Maecenas eu
+                            sapien dapibus ex ornare venenatis. Suspendisse vulputate magna ut porttitor rhoncus.
+                            Vestibulum at tempor risus.
+                            Etiam tempus finibus nisi sit amet sodales. Nullam vel laoreet lacus. Aliquam molestie
+                            malesuada elit, vel malesuada
+                            turpis porttitor posuere. Vestibulum ligula nulla, gravida eget augue facilisis, cursus
+                            iaculis augue. Maecenas
+                            blandit eros facilisis tincidunt venenatis. Pellentesque vulputate fringilla dapibus.
+                            Quisque feugiat sapien et nibh
+                            auctor, a pretium quam gravida. Cras non nunc gravida, viverra massa eget, dictum ex.
+                            Quisque sodales enim eget
+                            dolor porttitor vestibulum.
+                            <br /><br />
+                            7. Sed pulvinar elit hendrerit faucibus accumsan. Aliquam erat volutpat. Ut at tellus ut dui
+                            ultricies convallis sed et
+                            tortor. Duis quis bibendum nulla. Curabitur quis turpis sollicitudin, molestie ex eu,
+                            dapibus sem. Nulla ultricies
+                            ipsum nec dolor convallis, vitae imperdiet mauris vulputate. Etiam ut nunc quis est
+                            efficitur commodo.
+                            <br /><br />
+                            8. Aliquam auctor purus tellus, at pretium lorem hendrerit vel. Vestibulum ante ipsum primis
+                            in faucibus orci luctus et
+                            ultrices posuere cubilia Curae; Vestibulum semper turpis tellus. Integer commodo faucibus
+                            imperdiet. Ut eu dui
+                            justo. Donec convallis urna vitae risus gravida, non ornare massa dapibus. Phasellus
+                            facilisis eget odio ac
+                            placerat. Etiam varius, massa eu sodales posuere, sem augue lobortis ex, vel suscipit ipsum
+                            diam eget urna. Donec
+                            dignissim, turpis non blandit feugiat, sapien metus laoreet nibh, vel facilisis elit ipsum
+                            et justo. Donec eu tempus
+                            ipsum. In dictum porttitor semper. Praesent euismod sagittis purus, laoreet vehicula nunc
+                            bibendum eget.
+                            <br /><br />
+                            9. Duis ac tempus libero. Nullam hendrerit vestibulum facilisis. Nam vestibulum dolor vel
+                            mauris aliquet, quis lacinia
+                            sapien venenatis. Donec felis est, aliquam et justo at, aliquet congue justo. Morbi sed
+                            magna hendrerit, posuere
+                            urna in, auctor mauris. Curabitur ut venenatis dui, a condimentum mi. Cras placerat mauris
+                            velit, vitae sodales
+                            felis bibendum vel. Mauris suscipit, velit a pretium ultricies, diam ex tempor nisi, a
+                            maximus arcu arcu sed nibh.
+                            <br /><br />
+                            10. Nunc eget accumsan neque. Donec lobortis tristique semper. Nunc ante ligula, maximus et
+                            felis a, fringilla maximus
+                            est. Aliquam sodales lorem lectus, eget luctus orci mollis id. Suspendisse ultricies massa
+                            dolor, sit amet
+                            consectetur lacus efficitur sed. Sed molestie sed ante et fringilla. Nullam eget nibh non
+                            lorem pulvinar sagittis.
+                            Vivamus ut finibus nisi. Duis tempus pharetra pellentesque. Suspendisse id ipsum nibh. Nam
+                            quam augue, iaculis in
+                            convallis vel, cursus a dolor. In efficitur leo neque, at elementum ante commodo eu. Donec
+                            fermentum ipsum vel
+                            pretium vulputate.
+                            <br /><br />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-check mt-1 w-30" style="padding-left: 16%;">
+            <input type="checkbox" name="check2" id="checkForm2" class="form-check-input" style="margin-top: 10%;">
+            <label for="checkForm1" class="form-check-label" style="text-align: left">Chcę aby mój adres email był widoczny
+                 dla użytkowników korzystających z przepisu.</label>
+        </div>
+        </div>
     </form>
 
 
