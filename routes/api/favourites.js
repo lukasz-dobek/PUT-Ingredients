@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
     const addToFavouritesQueryString = `
     INSERT INTO favourites (user_id, recipe_id, date_of_favourite) VALUES
     ($1, $2, TO_TIMESTAMP($3 / 1000.0));
-    `
+    `;
     // to_timestamp(${Date.now() / 1000.0})
     const userId = req.body.userId;
     const recipeId = req.body.recipeId;

@@ -21,6 +21,7 @@ const usersRouter = require('./routes/users');
 const recipesRouter = require('./routes/recipes');
 
 const apiRecipesRouter = require('./routes/api/recipes');
+const apiVotesRouter = require('./routes/api/votes');
 const apiUsersRouter = require('./routes/api/users');
 const apiCategoriesRouter = require('./routes/api/categories');
 const apiUnitsRouter = require('./routes/api/units');
@@ -104,6 +105,7 @@ app.use('/api/users', apiUsersRouter);
 app.use('/api/categories', apiCategoriesRouter);
 app.use('/api/units', apiUnitsRouter);
 app.use('/api/favourites', apiFavouritesRouter);
+app.use('/api/votes', apiVotesRouter);
 
 
 // Catch 404 and forward to error handler

@@ -13,7 +13,9 @@
         </div>
         <div class="col">
           <p style="text-align:right;">
-            <i class="far fa-heart" style="font-size: 1.7vw; position: absolute; bottom:0.4vw; right:1vw"></i>
+            <i class="far fa-heart" id="favouritesButton_{{id_recipe}}"
+              onClick="addToFavourites(event, {{@root.userId}})"
+              style="font-size: 1.7vw; position: absolute; bottom:0.4vw; right:1vw"></i>
           </p>
         </div>
       </div>
@@ -32,7 +34,8 @@
           </div>
           <div class="col">
             <div class="container" style="background-color:#7BCE9E; color:black;">
-              <p style="text-align:left; font-size: 0.9vw; padding-top: 0.22vw; padding-bottom: 0.22vw; padding-top: 0.01vw; padding-bottom: 0.01vw; text-align: center">Dodano przez:
+              <p style="text-align:left; font-size: 0.8vw; padding-top: 0.22vw; padding-bottom: 0.22vw; padding-top: 0.01vw; padding-bottom: 0.01vw; text-align: center;"
+                id="test">Dodano przez:
                 {{email_address}}</p>
             </div>
           </div>
@@ -70,7 +73,8 @@
                 <p>Ocena: </p>
               </div>
               <div class="col">
-                <p> {{score}}<i class="fas fa-star" style=" font-size: 1.3vw; color: #F8D93F; margin-left:0.5vw"></i></p>
+                <p> {{score}}<i class="fas fa-star" style=" font-size: 1.3vw; color: #F8D93F; margin-left:0.5vw"></i>
+                </p>
               </div>
             </div>
           </div>
@@ -98,13 +102,12 @@
           <p style="margin-top: 0.35vw">Podoba Ci się? Oceń przepis!</p>
         </div>
         <div class="col">
-          <p style=" font-size: 1.5vw; color: #F8D93F; text-align: right">
-            <i class="fas fa-star"></i>
+          <p style="font-size: 1.5vw; color: #F8D93F; text-align: right" id="starBox"></p>
+          {{!-- <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-          </p>
+            <i class="far fa-star"></i> --}}
         </div>
       </div>
     </div>
@@ -178,7 +181,8 @@
         </div>
       </div>
       <div class="row" style="margin-top:2.5vw">
-        <button type="stworz-liste-zakupow" class="btn btn-success ml-3" style="color:black; background-color:#27AE60">STWÓRZ LISTĘ ZAKUPÓW</button>
+        <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
+          style="color:black; background-color:#27AE60">STWÓRZ LISTĘ ZAKUPÓW</button>
       </div>
     </div>
   </div>
@@ -192,3 +196,5 @@
 
 </div>
 {{/each}}
+<script src="/javascripts/favouritesHandler.js"></script>
+<script src="/javascripts/scoreStarsHandler.js"></script>
