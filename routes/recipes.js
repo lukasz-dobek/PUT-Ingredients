@@ -7,7 +7,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
     const lastNineRecipesQueryString = "SELECT * FROM recipes ORDER BY date_of_creation LIMIT 9";
     pgClient.query(lastNineRecipesQueryString, (lastNineRecipesQueryError, lastNineRecipesQueryResult) => {
         if (lastNineRecipesQueryError) throw lastNineRecipesQueryError;
-        res.render('./recipes/front_page', { 
+        res.render('./recipes/front_page', {
             recipes: lastNineRecipesQueryResult.rows
         });
     });
@@ -17,7 +17,7 @@ router.get('/add_new_recipe', (req, res) => {
     res.render('./recipes/add_new_recipe');
 });
 
-router.get('/add_recipe_confirmation', (req, res) => { 
+router.get('/add_recipe_confirmation', (req, res) => {
     res.render('./recipes/add_recipe_confirmation');
 });
 
@@ -53,6 +53,19 @@ router.get('/:linkToRecipe', (req, res) => {
 	    INNER JOIN units unt ON iur.unit_id = unt.id_unit 
     WHERE iur.recipe_id = $1;`
 
+    const alternativeIngredientsQueryString = `
+    SELECT 
+    ing.ingredient_name,
+    string_agg(ing_a.ingredient_name, ', ') AS alternative_ingredients
+    FROM ingredients_used_in_recipe iur 
+        INNER JOIN ingredients ing ON iur.ingredient_id = ing.id_ingredient 
+        INNER JOIN units unt ON iur.unit_id = unt.id_unit
+        INNER JOIN alternative_ingredients ai ON ing.id_ingredient = ai.ingredient_id
+        INNER JOIN ingredients ing_a ON ai.replacement_id = ing_a.id_ingredient
+    WHERE iur.recipe_id = $1
+    GROUP BY ing.ingredient_name;
+    `;
+
     const linkToRecipe = '/recipes/'.concat(req.params.linkToRecipe);
 
     pgClient.query(recipeQueryString, [linkToRecipe], (recipeQueryError, recipeQueryResult) => {
@@ -68,11 +81,17 @@ router.get('/:linkToRecipe', (req, res) => {
             Ingredients fields: ingredient_name, amount, unit_name.
 
             */
-            res.render('./recipes/recipe_page', { 
-                recipe: recipeQueryResult.rows, 
-                ingredients: ingredientsQueryResult.rows,
-                user: req.user['email_address']
+            pgClient.query(alternativeIngredientsQueryString, [recipeId], (alternativeIngredientsQueryError, alternativeIngredientsQueryResult) => {
+                if (alternativeIngredientsQueryError) {
+                    throw alternativeIngredientsQueryError;
+                }
+                res.render('./recipes/recipe_page', {
+                    recipe: recipeQueryResult.rows,
+                    ingredients: ingredientsQueryResult.rows,
+                    alternative_ingredients: alternativeIngredientsQueryResult.rows
+                });
             });
+
         });
     });
 });
@@ -105,8 +124,8 @@ router.get('/search/name', (req, res) => {
 
     pgClient.query(searchNameQueryString, ['%' + searchRecipeName + '%'], (searchNameQueryError, searchNameQueryResult) => {
         if (searchNameQueryError) throw searchNameQueryError;
-        res.render('./recipes/recipe_search_name', { 
-            searchString: searchRecipeName, 
+        res.render('./recipes/recipe_search_name', {
+            searchString: searchRecipeName,
             recipes: searchNameQueryResult.rows
         });
     });
@@ -159,7 +178,7 @@ router.get('/search/categories', (req, res) => {
     // Query PostgreSQL - ops have to be an array (even if there is only one value within)
     pgClient.query(searchCategoriesQueryString, categoriesFromRequestAsArray, (searchCategoriesQueryError, searchCategoriesQueryResult) => {
         if (searchCategoriesQueryError) throw searchCategoriesQueryError;
-        res.render('./recipes/recipe_search_categories', { 
+        res.render('./recipes/recipe_search_categories', {
             searchedCategories: categoriesFromRequestAsArray,
             recipes: searchCategoriesQueryResult.rows
         });

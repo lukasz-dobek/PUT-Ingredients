@@ -153,8 +153,9 @@
         <p>W tym przepisie możesz zamienić następujące składniki:</p>
         <hr>
         </hr>
-        <p>ziemniaki na bataty</p>
-        <p>x na y</p>
+        {{#each ../alternative_ingredients}}
+        <p>{{ingredient_name}} na {{alternative_ingredients}}</p>
+        {{/each}}
       </div>
     </div>
 
