@@ -39,12 +39,25 @@ function addToFavourites(e, userId) {
 
 window.onload = () => {
     let favourites = document.querySelectorAll('[id^="favouritesButton_"]'); // just those elements!
+    let categoriesBoxes = document.querySelectorAll('[id^="categoryBox_"]');
     // let favourites = $('*[id^="favouritesButton_"]'); - something else
     const currentUserEmail = document.getElementById('userProfileDropdown').textContent.trim();
     let recipesOnPage = [];
     Object.values(favourites).forEach(favourite => {
         recipesOnPage.push(parseInt(splitRecipeId(favourite.id)));
+        $.getJSON(`/api/categories/recipe/${splitRecipeId(favourite.id)}`, (jsonData) => {
+            let categoryBox = document.getElementById(`categoryBox_${splitRecipeId(favourite.id)}`);
+            console.log(categoryBox);
+            jsonData.forEach(element => {
+                // <span class="badge badge-pill badge-secondary">Secondary</span>
+                let pill = document.createElement('span');
+                pill.classList.add('badge', 'badge-pill', 'badge-secondary');
+                pill.textContent = element["category_name"];
+                categoryBox.appendChild(pill);
+            });
+        });
     });
+
     $.getJSON(`/api/favourites/user_email/${currentUserEmail}`, (jsonData) => {
         let currentUserFavouriteRecipes = [];
 
@@ -61,4 +74,7 @@ window.onload = () => {
             colorHeartAsFavourite(favouriteIcon);
         });
     });
+
+    
+
 }
