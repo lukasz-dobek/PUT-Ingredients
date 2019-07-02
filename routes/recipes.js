@@ -115,14 +115,16 @@ router.post('/add_new_recipe', (req, res) => {
                     });
             }
         })
-
         res.redirect('/recipes/add_recipe_confirmation');
     });
-
 });
 
 router.get('/add_recipe_confirmation', (req, res) => {
     res.render('./recipes/add_recipe_confirmation');
+});
+
+router.get('/ingredients', (req, res) => {
+    res.render('./recipes/ingredients_search_screen');
 });
 
 router.get('/:linkToRecipe', (req, res) => {
@@ -199,8 +201,6 @@ router.get('/:linkToRecipe', (req, res) => {
         });
     });
 });
-
-// TODO: partial do wyswietlania listy znalezionych przepisow
 
 router.get('/search/name', (req, res) => {
     const searchNameQueryString = `
@@ -287,6 +287,10 @@ router.get('/search/categories', (req, res) => {
             recipes: searchCategoriesQueryResult.rows
         });
     });
+});
+
+router.get('/search/ingredients', (req, res) => {
+    
 });
 
 module.exports = router;
