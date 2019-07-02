@@ -42,6 +42,27 @@ router.post('/add_new_recipe', (req, res) => {
         photo_three,
         photo_four
     ) VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5 / 1000.0), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15);`;
+
+    let ingredientsNumber = req.body.ingredientName.length;
+
+    let addIngredientsQueryString = `
+    INSERT INTO ingredients_used_in_recipe (recipe_id, ingredient_id, unit_id, amount) VALUES
+        ($1, (SELECT id_ingredient FROM ingredients WHERE ingredient_name = $2), (SELECT id_unit FROM units WHERE unit_name = $3), $4)`;
+
+    let selectRecipeIdQueryString = `SELECT id_recipe FROM recipes WHERE recipe_name = $1`;
+
+    let queryParametersList = [];
+    for (let i = 1; i <= ingredientsNumber; i++) {
+        queryParametersList.push('$' + (i * i));
+        queryParametersList.push('$' + (i * i) + 1);
+        queryParametersList.push('$' + (i * i) + 2);
+        queryParametersList.push('$' + (i * i) + 3);
+    }
+
+    // for (let i = 0; i < ingredientsNumber; i++){
+    //     addIngredientsQueryString+=' ($1, SELECT id_ingredient FROM ingredients WHERE ingredient_name = $2), (SELECT id_unit FROM units WHERE unit_name = $3), $4),';
+    // }
+    // addIngredientsQueryString = addIngredientsQueryString.slice(0,-1);
     // to_timestamp(${Date.now() / 1000.0})
     const recipeBody = {
         user_id: res.locals.userId,
@@ -77,9 +98,24 @@ router.post('/add_new_recipe', (req, res) => {
         recipeBody.photo_three,
         recipeBody.photo_four
     ], (addRecipeQueryError, addRecipeQueryResult) => {
-        if(addRecipeQueryError) {
+        if (addRecipeQueryError) {
             throw addRecipeQueryError;
         }
+        pgClient.query(selectRecipeIdQueryString, [recipeBody.recipe_name], (selectRecipeIdQueryError, selectRecipeIdQueryResult) => {
+            if (selectRecipeIdQueryError) {
+                throw selectRecipeIdQueryError;
+            }
+            for (let i = 0; i < ingredientsNumber; i++) {
+                pgClient.query(addIngredientsQueryString, [selectRecipeIdQueryResult.rows[0]["id_recipe"], req.body.ingredientName[0], req.body.ingredientUnit[0], req.body.ingredientQuantity[0]],
+                    (addIngredientsQueryError, addIngredientsQueryResult) => {
+                        if (addIngredientsQueryError) {
+                            throw addIngredientsQueryError;
+                        }
+                        console.log(addIngredientsQueryResult.command, addIngredientsQueryResult.rowCount);
+                    });
+            }
+        })
+
         res.redirect('/recipes/add_recipe_confirmation');
     });
 
