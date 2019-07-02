@@ -193,8 +193,8 @@ div.main p {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
-
-
-
-
-
+.btn-shoppingList{
+  width: 75%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
