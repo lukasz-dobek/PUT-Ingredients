@@ -251,3 +251,5 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         numberOfIngredients--;
     }
 });
+
+// weryfikacja
