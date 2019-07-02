@@ -290,7 +290,7 @@ INSERT INTO units (unit_name) VALUES
 INSERT INTO categories_per_recipe (recipe_id,category_id) VALUES
 (1,14),
 (2,5),
-(3,10),
+(2,10),
 (3,11),
 (3,2),
 (4,23),
