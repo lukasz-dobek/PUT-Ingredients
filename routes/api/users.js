@@ -18,4 +18,22 @@ router.get('/id/:id', (req, res) => {
     });
 });
 
+router.get('/shopping_list',(req, res)=>{
+    const userShoppingListQueryString=`
+    SELECT
+        recipe_name
+    FROM recipes r
+        JOIN shop_lists sl ON r.id_recipe=sl.recipe_id
+        JOIN users u ON u.id_user=sl.user_id
+    WHERE u.id_user = $1;`
+
+    const userId = res.locals.userId;
+    pgClient.query(userShoppingListQueryString, [userId], (userShoppingListQueryError, userShoppingListQueryResult) => {
+        if(userShoppingListQueryError) {
+            throw userShoppingListQueryError;
+        }
+        console.log(userShoppingListQueryResult.rows);
+        res.json(userShoppingListQueryResult.rows);
+    });
+});
 module.exports = router;
