@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS recipes (
 	id_recipe SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
-	recipe_name VARCHAR(100) NOT NULL,
+	recipe_name VARCHAR(100) UNIQUE NOT NULL,
 	state VARCHAR(20) NOT NULL,
 	score NUMERIC,
 	date_of_creation TIMESTAMP NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS recipes (
 	preparation_time VARCHAR(50) NOT NULL,
 	description TEXT NOT NULL,
 	number_of_people INTEGER NOT NULL,
-	link_to_recipe VARCHAR(100),
+	link_to_recipe VARCHAR(100) UNIQUE,
 	photo_one VARCHAR(100) NOT NULL,
 	photo_two VARCHAR(100),
 	photo_three VARCHAR(100),
@@ -119,19 +119,6 @@ CREATE TABLE IF NOT EXISTS ingredients_used_in_recipe (
 	ingredient_id INTEGER REFERENCES ingredients(id_ingredient) NOT NULL,
 	unit_id INTEGER REFERENCES units(id_unit) NOT NULL,
 	amount VARCHAR(50) NOT NULL
-);
-CREATE TABLE IF NOT EXISTS shop_lists(
-id_shop_list SERIAL PRIMARY KEY,
-user_id INTEGER REFERENCES users(id_user) NOT NULL,
-recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS ingredients_used_in_shop_list(
-id_connection SERIAL PRIMARY KEY,
-shop_list_id INTEGER REFERENCES shop_lists(id_shop_list) NOT NULL,
-ingredient_id INTEGER REFERENCES ingredients(id_ingredient) NOT NULL,
-unit_id INTEGER REFERENCES units(id_unit) NOT NULL,
-amount VARCHAR(50) NOT NULL
 );
 
 -- Persistant session table
