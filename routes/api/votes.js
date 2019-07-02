@@ -12,12 +12,39 @@ router.post('/', (req, res) => {
     const score = req.body.vote;
     const date = req.body.voteDate;
 
+    const getNumberOfVotesPerRecipeQueryString = `
+    SELECT 
+        COUNT(*) AS number_of_votes,
+        ROUND(AVG(uvo.score), 2) AS average_score
+    FROM user_votes uvo 
+        INNER JOIN recipes rec ON uvo.recipe_id = rec.id_recipe
+    WHERE uvo.recipe_id = $1;`;
+
+    const updateRecipeScoreQueryString = `
+    UPDATE recipes
+    SET score = $1
+    WHERE id_recipe = $2;`;
+
+
     pgClient.query(addVoteQueryString, [userId, recipeId, score, date], (addVoteQueryError, addVoteQueryResult) => {
         if (addVoteQueryError) {
             throw addVoteQueryError;
         }
-        console.log(`POST /votes - query successful - ${addVoteQueryResult.rowCount} added`);
-        res.json(addVoteQueryResult.rows);   
+        pgClient.query(getNumberOfVotesPerRecipeQueryString, [recipeId], (getNumberOfVotesPerRecipeQueryError, getNumberOfVotesPerRecipeQueryResult) => {
+            if (getNumberOfVotesPerRecipeQueryError) {
+                throw getNumberOfVotesPerRecipeQueryError;
+            }
+            let numberOfVotes = getNumberOfVotesPerRecipeQueryResult.rows[0]["number_of_votes"];
+            let averageScore = getNumberOfVotesPerRecipeQueryResult.rows[0]["average_score"];
+            
+            pgClient.query(updateRecipeScoreQueryString, [averageScore, recipeId], (updateRecipeScoreQueryError, updateRecipeScoreQueryResult) => {
+                if (updateRecipeScoreQueryError) {
+                    throw updateRecipeScoreQueryError;
+                }
+                console.log(`POST /votes - query successful - ${addVoteQueryResult.rowCount} added`);
+                res.json(addVoteQueryResult.rows);   
+            });
+        });
     });
 });
 
