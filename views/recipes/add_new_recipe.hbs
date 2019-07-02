@@ -90,17 +90,17 @@
                     <div class="col-6">
                         <input type="text" name="ingredientName" id="ingredientName1"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;align:left" placeholder="* Składnik" required minlength="5"
+                            style="background-color: #eeeeee;" placeholder="* Składnik" required minlength="5"
                             maxlength="50">
                     </div>
                     <div class="col">
                         <input type="text" name="ingredientQuantity" id="ingredientQuantity1"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;align:left" placeholder="* Ilość" required>
+                            style="background-color: #eeeeee;" placeholder="* Ilość" required>
                     </div>
                     <div class="col">
                         <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            id="ingredientUnit1" style="background: #eeeeee" required>
+                            id="ingredientUnit1" name="ingredientUnit" style="background: #eeeeee" required>
                             <option disabled selected hidden value="">* Jednostka</option>
                         </select>
                     </div>
@@ -110,17 +110,17 @@
                     <div class="col-6">
                         <input type="text" name="ingredientName" id="ingredientName2"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;align:left" placeholder="* Składnik" required minlength="5"
+                            style="background-color: #eeeeee;" placeholder="* Składnik" required minlength="5"
                             maxlength="50">
                     </div>
                     <div class="col">
                         <input type="text" name="ingredientQuantity" id="ingredientQuantity2"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;align:left" placeholder="* Ilość" required>
+                            style="background-color: #eeeeee;" placeholder="* Ilość" required>
                     </div>
                     <div class="col">
                         <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            id="ingredientUnit2" style="background: #eeeeee" required>
+                            id="ingredientUnit2" name="ingredientUnit" style="background: #eeeeee" required>
                             <option disabled selected hidden value="">* Jednostka</option>
                         </select>
                     </div>
@@ -129,7 +129,7 @@
 
                 </div>
             </div>
-            <button class="btn btn-success mt-3" id="addNewIngredient" onclick="addNewIngredient()">Dodaj kolejną pozycję</button>
+            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()">Dodaj kolejną pozycję</button>
         </div>
 
         <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
