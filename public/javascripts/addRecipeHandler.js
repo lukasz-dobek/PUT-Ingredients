@@ -158,12 +158,8 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         });
     }
 
-
-
     autocompleteIngredientName(document.getElementById("ingredientName1"), ingredientsNames);
     autocompleteIngredientName(document.getElementById("ingredientName2"), ingredientsNames);
-
-
 
     createIngredient = function () {
         numberOfIngredients++;
@@ -246,6 +242,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientRow.appendChild(ingredientUnitCol);
 
         ingredientsField.appendChild(ingredientRow);
+        autocompleteIngredientName(document.getElementById(ingredientName.id), ingredientsNames);
     }
 
     deleteIngredient = function (rowId) {
