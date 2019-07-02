@@ -1,8 +1,33 @@
+// Wypełnianie pól z kategoriami
+$.getJSON('/api/categories/all').then((categoriesJSON) => {
+    let categoriesInputs = [
+        document.getElementById('category1'),
+        document.getElementById('category2'),
+        document.getElementById('category3'),
+        document.getElementById('category4'),
+        document.getElementById('category5'),
+        document.getElementById('category6')
+    ];
+    categoriesJSON.forEach(categoryRow => {
+        categoriesInputs.forEach(categoryInput => {
+            let categoryOption = document.createElement('option');
+            categoryOption.value = categoryRow["category_name"];
+            categoryOption.textContent = categoryRow["category_name"];
+            categoryInput.appendChild(categoryOption);
+        });
+    });
+});
+
+// Wypełnienie autocompleta ze składnikami
+$.getJSON('/api/ingredients/names').then((ingredientsNames) => {
+    console.log(ingredientsNames);
+});
+
 let numberOfIngredients = 2;
 let createIngredient;
 let deleteIngredient;
-
-$.getJSON('/api/units/names', (unitNames) => {
+// Wypełnianie jednostek i dodawanie składników
+$.getJSON('/api/units/names').then((unitNames) => {
 
     let ingredientUnitsOne = document.getElementById('ingredientUnit1');
     let ingredientUnitsTwo = document.getElementById('ingredientUnit2');
@@ -109,25 +134,4 @@ $.getJSON('/api/units/names', (unitNames) => {
         ingredientToGetDeleted.remove();
         numberOfIngredients--;
     }
-
 });
-
-// <div class="row">
-// <div class="col-6">
-//     <input type="text" name="ingredientName" id="ingredientName1"
-//         class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-//         style="background-color: #eeeeee;align:left" placeholder="* Składnik" required minlength="5"
-//         maxlength="50">
-// </div>
-// <div class="col">
-//     <input type="text" name="ingredientQuantity" id="ingredientQuantity1"
-//         class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-//         style="background-color: #eeeeee;align:left" placeholder="* Ilość" required>
-// </div>
-// <div class="col">
-//     <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-//         id="ingredientUnit1" style="background: #eeeeee" required>
-//         <option disabled selected hidden value="">* Jednostka</option>
-//     </select>
-// </div>
-// </div>
