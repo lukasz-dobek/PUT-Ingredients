@@ -120,6 +120,19 @@ CREATE TABLE IF NOT EXISTS ingredients_used_in_recipe (
 	unit_id INTEGER REFERENCES units(id_unit) NOT NULL,
 	amount VARCHAR(50) NOT NULL
 );
+CREATE TABLE IF NOT EXISTS shop_lists(
+id_shop_list SERIAL PRIMARY KEY,
+user_id INTEGER REFERENCES users(id_user) NOT NULL,
+recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ingredients_used_in_shop_list(
+id_connection SERIAL PRIMARY KEY,
+shop_list_id INTEGER REFERENCES shop_lists(id_shop_list) NOT NULL,
+ingredient_id INTEGER REFERENCES ingredients(id_ingredient) NOT NULL,
+unit_id INTEGER REFERENCES units(id_unit) NOT NULL,
+amount VARCHAR(50) NOT NULL
+);
 
 -- Persistant session table
 CREATE TABLE IF NOT EXISTS user_session (

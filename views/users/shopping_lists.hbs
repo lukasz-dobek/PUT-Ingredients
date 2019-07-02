@@ -1,50 +1,329 @@
-<div class="container text-center">
+<div class="container text-center" id="allRecipesShoppingList">
     <h1>Moje listy zakupów</h1>
-    <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 1
-    </button>
-    <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 2
-    </button>
-    <button type="button" class="btn btn-success" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 3</button>
-    <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 4
-    </button>
-    <br>
     <br>
     <hr class="w-100" style="background-color: black;">
 </div>
-<div class="container text-center">
-    <h1>Wybrano: Nazwa 3</h1>
-    <div class="row">
-        <div class="column" style="width: 45%; background-color:#eeeeee;">
-            <h3 align="left" >Owoce</h3>
+<br>
+<form action="/recipes/add_new_recipe" method="POST" class="form-inline" id="ingredients">
+    <div class="container text-center">
+        <h1>Wybrano: Nazwa 3</h1>
+        <div style="width: 100%; background-color:#eeeeee;margin-bottom: 5%;">
+            <h3 align="left" style="margin-left: 2%;padding-top: 2%">Owoce</h3>
+            <hr style="background-color: black;width: 95%">
+            <div style=" width: 100%">
+                <div class="row" style="margin-top: 3%">
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%;">
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 3%" ;>
+                <div class="col">
+                    <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                </div>
+                <div class="col">
+                    <input type="number" name="quantity" id="quantityForm" class="form-control"
+                           style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                </div>
+                <div class="col">
+                    <input type="text" name="unit" id="unitForm" class="form-control"
+                           style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; background-color:#eeeeee; margin-bottom: 5%;margin-top: 5%;">
+            <h3 align="left" style="margin-left: 2%;padding-top: 2%">Owoce</h3>
             <hr class="w-100" style="background-color: black;">
             <div style=" width: 100%">
-                <form action="/recipes/add_new_recipe" method="POST" class="form-inline" id="ingredients">
-                <div class="form-row d-flex justify-content-center mt-2">
-                    <div class="col-auto">
-                <h6 style="text-align: left;margin-top: 5%;">Nazwa składnika</h6>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
                     </div>
-                    <div class="col-auto">
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%;">
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 3%" ;>
+                <div class="col">
+                    <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                </div>
+                <div class="col">
                     <input type="number" name="quantity" id="quantityForm" class="form-control"
-                           style="background-color: #eeeeee;width:35%" placeholder="3">
+                           style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
                 </div>
-                    <div class="col-auto">
-                        <input type="number" name="unit" id="unitForm" class="form-control"
-                               style="background-color: #eeeeee;width: 40%" placeholder="g">
-                    </div>
+                <div class="col">
+                    <input type="text" name="unit" id="unitForm" class="form-control"
+                           style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
                 </div>
-                </form>
             </div>
         </div>
 
-        <div class="column" style="width: 45%;">
-            <button type="button" class="btn btn-success" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa 3
-            </button>
-            <button type="button" class="btn btn-secondary" style="width: 75%;margin-top: 1%;margin-bottom: 1%;">Nazwa
-                4
-            </button>
+        <div style="width: 100%; background-color:#eeeeee;margin-bottom: 5%;margin-top: 5%;">
+            <h3 align="left" style="margin-left: 2%;padding-top: 2%">Owoce</h3>
+            <hr class="w-100" style="background-color: black;">
+            <div style=" width: 100%">
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%;">
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 3%" ;>
+                <div class="col">
+                    <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                </div>
+                <div class="col">
+                    <input type="number" name="quantity" id="quantityForm" class="form-control"
+                           style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                </div>
+                <div class="col">
+                    <input type="text" name="unit" id="unitForm" class="form-control"
+                           style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                </div>
+            </div>
         </div>
-
-        <br>
-        <br>
+        <div style="width: 100%; background-color:#eeeeee;margin-top: 5%;margin-bottom: 5%;">
+            <h3 align="left" style="margin-left: 2%;padding-top: 2%">Owoce</h3>
+            <hr class="w-100" style="background-color: black;">
+            <div style=" width: 100%">
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%;">
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3%" ;>
+                    <div class="col">
+                        <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="quantityForm" class="form-control"
+                               style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="unit" id="unitForm" class="form-control"
+                               style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 3%" ;>
+                <div class="col">
+                    <h6 style="text-align: left;margin-top: 5%;margin-left: 10%;">Nazwa składnika</h6>
+                </div>
+                <div class="col">
+                    <input type="number" name="quantity" id="quantityForm" class="form-control"
+                           style="background-color: #eeeeee;width:80%;border-radius: 0" placeholder="3">
+                </div>
+                <div class="col">
+                    <input type="text" name="unit" id="unitForm" class="form-control"
+                           style="background-color: #eeeeee;width: 80%;border-radius: 0" placeholder="g">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <button type="submit" class="btn btn-success mt-4" style="color: black; font-size:
+36px">Prześlij na E-mail
+                </button>
+            </div>
+            <div class="col-auto" style="margin-right: 7%;margin-left: 7%;">
+                <button type="submit" class="btn btn-success mt-4" style="color: black; font-size:
+36px">Zapisz zmiany
+                </button>
+            </div>
+            <div class="col-auto" style="margin-left: 4%;">
+                <button type="submit" class="btn btn-success mt-4" style="color: black; font-size:
+36px">Usuń listę
+                </button>
+            </div>
+        </div>
     </div>
-</div>
+
+</form>
+
+<script src="/javascripts/shoppingList.js"></script>
