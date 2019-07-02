@@ -17,6 +17,10 @@ router.get('/add_new_recipe', (req, res) => {
     res.render('./recipes/add_new_recipe');
 });
 
+router.post('/add_new_recipe', (req, res) => {
+    console.log(req.body);
+});
+
 router.get('/add_recipe_confirmation', (req, res) => {
     res.render('./recipes/add_recipe_confirmation');
 });
