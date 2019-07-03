@@ -383,12 +383,11 @@ $.getJSON("/api/recipes/all", (data) => {
             //if (field.type === 'radio' || field.type ==='checkbox') {
             label = field.form.querySelector('label[for="' + id + '"]') || field.parentNode;
             if (label) {
-                if (field.id==='categorySelect1') {
-                    let form = document.getElementById('categories');
-                    let lastChild = document.getElementById('secondRow');
+                if (field.id==='category1') {
+                    let lastChild = document.getElementById('categoryRow');
                     lastChild.parentNode.insertBefore(message,lastChild.nextSibling);
                 }
-                else if(label.parentNode.parentNode.id==='ingredients' || label.parentNode.parentNode.id === 'generalInfo'){
+                else if(label.parentNode.parentNode.id==='ingredients' || label.parentNode.id === 'generalInfo'){
                     field.parentNode.appendChild(message);
                 }
                 else{

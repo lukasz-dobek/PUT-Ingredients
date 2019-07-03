@@ -19,9 +19,9 @@ $.getJSON("/api/categories/all", (data) => {
     })
 });
 
-$("[id^=categorySelect]").on('change', function () {
-    let selects = document.querySelectorAll("[id^=categorySelect]");
-    let oneSelect = document.getElementById("categorySelect1");
+$("[id^=category]").on('change', function () {
+    let selects = document.querySelectorAll("[id^=category]");
+    let oneSelect = document.getElementById("category1");
     let allCategories =[];
     let i;
     for(i=0;i<oneSelect.length;i++){
@@ -37,13 +37,13 @@ $("[id^=categorySelect]").on('change', function () {
     console.log(values);
     console.log(values.length);
     for(i =0; i<values.length;i++){
-        if($("[id^=categorySelect]").find('option[value="' + values[i] + '"]')){
-            $("[id^=categorySelect]").find('option[value="' + values[i] + '"]').hide();
+        if($("[id^=category]").find('option[value="' + values[i] + '"]')){
+            $("[id^=category]").find('option[value="' + values[i] + '"]').hide();
         }
     }
     for(i=0;i<allCategories.length;i++){
         if(values.includes(allCategories[i]) === false){
-            $("[id^=categorySelect]").find('option[value="' + allCategories[i] + '"]').show();
+            $("[id^=category]").find('option[value="' + allCategories[i] + '"]').show();
         }
     }
 
