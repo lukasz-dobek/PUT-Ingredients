@@ -27,7 +27,7 @@ const apiCategoriesRouter = require('./routes/api/categories');
 const apiUnitsRouter = require('./routes/api/units');
 const apiFavouritesRouter = require('./routes/api/favourites');
 const apiIngredientsRouter = require('./routes/api/ingredients');
-
+const apiShoppingListRouter = require('./routes/api/shoppingList');
 
 var app = express();
 
@@ -106,6 +106,7 @@ app.use('/api/users', apiUsersRouter);
 app.use('/api/categories', apiCategoriesRouter);
 app.use('/api/units', apiUnitsRouter);
 app.use('/api/favourites', apiFavouritesRouter);
+app.use('/api/shoppingList',apiShoppingListRouter);
 app.use('/api/votes', apiVotesRouter);
 app.use('/api/ingredients', apiIngredientsRouter);
 
