@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
         if (addToShoppingListQueryError) {
             throw addToShoppingListQueryError;
         }
-        console.log(`POST /favourites - query successful - ${addToShoppingListQueryResult.rowCount} added`);
+        console.log(`POST /shoppingList - query successful - ${addToShoppingListQueryResult.rowCount} added`);
         res.json(addToShoppingListQueryResult.rows);
     });
 });

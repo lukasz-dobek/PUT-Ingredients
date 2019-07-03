@@ -10,3 +10,17 @@ function addToShopList(e, userId) {
             recipeId: recipeId,
         });
 }
+
+
+function deleteFromShoppingList(e,userId) {
+    let shopList = document.getElementById(e.target.id);
+    let recipeId = splitRecipeId(shopList.id);
+    $.ajax({
+        url: '/api/favourites/',
+        type: 'DELETE',
+        data: {
+            userId: userId,
+            recipeId: recipeId
+        }
+    });
+}
