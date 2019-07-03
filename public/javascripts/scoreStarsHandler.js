@@ -1,4 +1,3 @@
-const currentUserEmail = document.getElementById('userProfileDropdown').textContent.trim();
 let heart = document.querySelectorAll('[id^="favouritesButton_"]')[0];
 let recipeId = splitRecipeId(heart.id);
 
