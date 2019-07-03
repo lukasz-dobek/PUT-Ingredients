@@ -22,15 +22,19 @@ $.getJSON("/api/users/shopping_list", (data) => {
             button.textContent=item['recipe_name'];
             listOfRecipes.appendChild(button);
         });
+
+        let deleteButton = document.getElementById('deleteButton');
+        deleteButton.addEventListener("click",()=>{
+            deleteRow(this.parentNode.parentNode.id);
+        });
+
+
+        deleteRow = function (rowId) {
+            let rowToDelete = document.getElementById(rowId);
+            rowToDelete.remove();
+        }
+
+
 });
 
 
-$(":button").on('click', function () {
-    let id = this.id;
-    let value = document.getElementById(id);
-    recipeName=value;
-    console.log(recipeName);
-
-});
-
-module.exports = router;
