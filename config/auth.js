@@ -13,5 +13,13 @@ module.exports = {
       } else {
         next();
       }
+    },
+    ensureAdministrator: function(req, res, next) {
+      if(!req.user["is_admin"]) {
+        req.flash('error_msg', 'Nie masz wystarczających przywilejów, aby wykonać tę akcję.');
+        res.redirect('/recipes');
+      } else {
+        next();
+      }
     }
   };

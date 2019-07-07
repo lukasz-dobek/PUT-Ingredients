@@ -12,6 +12,7 @@ const pgSession = require('connect-pg-simple')(session);
 const favicon = require('serve-favicon');
 
 const { ensureAuthenticated } = require('./config/auth');
+const { ensureAdministrator } = require('./config/auth');
 const pgClient = require('./db/pg-controller');
 // Favicon handler
 
@@ -19,6 +20,8 @@ const pgClient = require('./db/pg-controller');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const recipesRouter = require('./routes/recipes');
+const adminsRouter = require('./routes/admins');
+
 
 const apiRecipesRouter = require('./routes/api/recipes');
 const apiVotesRouter = require('./routes/api/votes');
@@ -100,6 +103,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', ensureAuthenticated, usersRouter);
 app.use('/recipes', ensureAuthenticated, recipesRouter);
+app.use('/administrator_panel', ensureAdministrator, adminsRouter);
 
 app.use('/api/recipes', apiRecipesRouter);
 app.use('/api/users', apiUsersRouter);
