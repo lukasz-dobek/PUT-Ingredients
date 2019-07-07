@@ -36,7 +36,7 @@ router.get('/user_recipes/:user', (req, res) => {
     const userNickname = req.params.user;
 
     pgClient.query(searchUserRecipesQueryString, [userNickname], (searchUserRecipesQueryError, searchUserRecipesQueryResult) => {
-        if(searchUserRecipesQueryError) {
+        if (searchUserRecipesQueryError) {
             throw searchUserRecipesQueryError;
         }
         res.render('./users/user_recipes', { recipes: searchUserRecipesQueryResult.rows });
@@ -70,7 +70,7 @@ router.get('/favourites', (req, res) => {
     const userEmail = res.locals.userEmail;
 
     pgClient.query(userFavouritesQueryString, [userEmail], (userFavouritesQueryError, userFavouritesQueryResult) => {
-        if(userFavouritesQueryError) {
+        if (userFavouritesQueryError) {
             throw userFavouritesQueryError;
         }
         console.log(userFavouritesQueryResult.rows);
@@ -78,6 +78,50 @@ router.get('/favourites', (req, res) => {
     });
 });
 
+router.post('/change_password', (req, res) => {
+    const email = req.body.email;
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+    const passwordConfirm = req.body.passwordConfirm;
+
+    const veryfiOldPasswordQueryString = `
+    SELECT password FROM users WHERE email_address = $1;
+    `;
+
+    const updateQueryString = `
+    UPDATE users SET password = $1 WHERE email_address = $2;
+    `;
+
+    pgClient.query(veryfiOldPasswordQueryString, [email], (veryfiOldPasswordQueryError, veryfiOldPasswordQueryResult) => {
+        if (veryfiOldPasswordQueryError) {
+            throw veryfiOldPasswordQueryError;
+        }
+        console.log('Veryfying...');
+        argon2.verify(veryfiOldPasswordQueryResult.rows[0].password, oldPassword).then((isAuthorised) => {
+            if (isAuthorised) {
+                try {
+                    console.log('Authorised...');
+                    argon2.hash(newPassword).then(hash => {
+                        pgClient.query(updateQueryString, [hash, email], (updateQueryError, updateQueryResult) => {
+                            console.log('Updating...');
+                            if (updateQueryError) {
+                                throw updateQueryError;
+                            };
+                            req.flash('success_msg', 'Hasło zmienione poprawnie.');
+                            res.redirect('/users/settings');
+                        });
+                    });
+                } catch (err) {
+                    throw err;
+                }
+            } else {
+                console.log('Not authorised...');
+                req.flash('error_msg', 'Podano niepoprawne stare hasło.');
+                res.redirect('/users/settings');
+            }
+        });
+    });
+});
 
 router.get('/shopping_lists', (req, res) => {
     res.render('./users/shopping_lists');
