@@ -100,7 +100,7 @@ INSERT INTO types (name) VALUES
 INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (1,'Marchew'),
 (1,'Pomidor'),
-(2,'Jablko'),
+(2,'Jabłko'),
 (3,'Wołowina'),
 (7,'Pieczarki'),
 (8,'Krewetki'),
@@ -108,7 +108,7 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (14,'Cukier'),
 (3,'Pierś z kurczaka'),
 (7,'Shitake'),
-(14,'Miod'),
+(14,'Miód'),
 (4,'Twaróg'),
 (4,'Jajka'),
 (4,'Mleko'),
@@ -280,12 +280,12 @@ INSERT INTO units (unit_name) VALUES
 ('kg'),
 ('ml'),
 ('l'),
-('łyżeczka'),
-('łyżka'),
-('szklanka'),
-('plaster'),
-('szczypta'),
-('sztuka');
+('łyżeczki'),
+('łyżki'),
+('szklanki'),
+('plastery'),
+('szczypty'),
+('sztuki');
 
 INSERT INTO categories_per_recipe (recipe_id,category_id) VALUES
 (1,14),
