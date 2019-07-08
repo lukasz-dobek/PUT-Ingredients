@@ -198,3 +198,23 @@ div.main p {
   margin-top: 1%;
   margin-bottom: 1%;
 }
+
+.form-control::-webkit-input-placeholder {
+  color: #ffffff;
+}
+
+.form-control::-moz-placeholder {
+  color:#ffffff;
+}
+
+.form-control::-ms-placeholder {
+  color: #ffffff;
+}
+
+.form-control::placeholder {
+  color: #ffffff;
+}
+
+.btn.disabled, .btn:disabled {
+  opacity:1;
+}
