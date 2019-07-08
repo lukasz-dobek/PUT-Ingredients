@@ -123,6 +123,54 @@ router.post('/change_password', (req, res) => {
     });
 });
 
+router.post('/change_names', (req, res) => {
+    let name = req.body.name;
+    let surname = req.body.surname;
+    
+    const updateUserInfoQueryString = `
+    UPDATE users SET name = $1, surname = $2 WHERE email_address = $3;
+    `;
+
+    pgClient.query(updateUserInfoQueryString, [name, surname, res.locals.userEmail], (updateUserInfoQueryError, updateUserInfoQueryResult) => {
+        if (updateUserInfoQueryError) {
+            throw updateUserInfoQueryString;
+        }
+        console.log(`Updated ${updateUserInfoQueryResult.rowCount} row`);
+    });
+
+    if (name && !surname) {
+        
+        res.send('Name was defined, but surname wasnt!');
+    } else if (!name && surname) {
+        res.send('Name wasnt defined, but surname was!');
+    } else if (name && surname) {
+        res.send("Both name and surname were defined!");
+    } else {
+        res.send('Nothing was supplied!');
+    }
+});
+
+router.get('/delete_account', (req, res) => {
+    const swapRecipeAuthorsQueryString =`
+    UPDATE recipes SET user_id = 1 WHERE user_id = $1`;
+    pgClient.query(swapRecipeAuthorsQueryString, [res.locals.userId], (swapRecipeAuthorsQueryError, swapRecipeAuthorsQueryResult) => {
+        if (swapRecipeAuthorsQueryError) {
+            throw swapRecipeAuthorsQueryError;
+        }
+        console.log(`Updated ${swapRecipeAuthorsQueryResult.rowCount} row`);
+    });
+    
+    const userDeleteQueryString = `
+    UPDATE users SET state=3 WHERE email_address = $1;`;
+    pgClient.query(userDeleteQueryString, [res.locals.userEmail], (userDeleteQueryError, userDeleteQueryResult) => {
+        if (userDeleteQueryError) {
+            throw userDeleteQueryError;
+        }
+        console.log(`Updated ${userDeleteQueryResult.rowCount} row`);
+    });
+    res.redirect('/logout');
+})
+
 router.get('/shopping_lists', (req, res) => {
     res.render('./users/shopping_lists');
 });

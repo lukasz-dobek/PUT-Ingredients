@@ -290,7 +290,55 @@ router.get('/search/categories', (req, res) => {
 });
 
 router.post('/search/ingredients', (req, res) => {
-    res.send(req.body);
+    let ingredientsFromRequest = req.body['ingredientCheck'];
+    let ingredientsFromRequestAsArray;
+    // Check if there is more than one value passed by form
+    if (!Array.isArray(ingredientsFromRequest)) {
+        // If there isn't, push existing values to empty array
+        ingredientsFromRequestAsArray = [];
+        ingredientsFromRequestAsArray.push(ingredientsFromRequest);
+    } else {
+        // If there is, copy values to new array
+        ingredientsFromRequestAsArray = ingredientsFromRequest;
+    }
+
+    // Determine how many parameters are needed in PG Query - for each create $i string
+    let queryParametersList = [];
+    for (let i = 1; i <= ingredientsFromRequestAsArray.length; i++) {
+        queryParametersList.push('$' + i);
+    }
+
+    // Generate query string with $i's
+    const searchIngredientsQueryString = `
+    SELECT DISTINCT ON (rec.recipe_name) recipe_name, 
+        rec.id_recipe, 
+        rec.score, 
+        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation, 
+        rec.complicity, 
+        rec.preparation_time, 
+        rec.description, 
+        rec.number_of_people, 
+        rec.link_to_recipe, 
+        rec.photo_one, 
+        rec.photo_two, 
+        rec.photo_three, 
+        rec.photo_four,
+        usr.email_address,
+        usr.nickname
+    FROM recipes rec 
+        INNER JOIN ingredients_used_in_recipe iuir ON rec.id_recipe = iuir.recipe_id
+        INNER JOIN ingredients ing ON iuir.ingredient_id = ing.id_ingredient
+        INNER JOIN users usr ON rec.user_id = usr.id_user     
+    WHERE ing.ingredient_name IN (${queryParametersList.join(',')})`;
+
+    // Query PostgreSQL - ops have to be an array (even if there is only one value within)
+    pgClient.query(searchIngredientsQueryString, ingredientsFromRequestAsArray, (searchIngredientsQueryError, searchIngredientsQueryResult) => {
+        if (searchIngredientsQueryError) throw searchIngredientsQueryError;
+        res.render('./recipes/recipe_search_ingredients', {
+            searchedIngredients: ingredientsFromRequestAsArray,
+            recipes: searchIngredientsQueryResult.rows
+        });
+    });
 });
 
 module.exports = router;

@@ -90,6 +90,8 @@ app.use((req, res, next) => {
     res.locals.userId = req.user["id_user"];
     res.locals.userEmail = req.user["email_address"];
     res.locals.userNickname = req.user["nickname"];
+    res.locals.userName = req.user["name"];
+    res.locals.userSurname = req.user["surname"];
   }
   next();
 });

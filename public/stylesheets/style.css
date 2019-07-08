@@ -199,19 +199,19 @@ div.main p {
   margin-bottom: 1%;
 }
 
-.form-control::-webkit-input-placeholder {
+#searchEngines.form-control::-webkit-input-placeholder {
   color: #ffffff;
 }
 
-.form-control::-moz-placeholder {
+#searchEngines.form-control::-moz-placeholder {
   color:#ffffff;
 }
 
-.form-control::-ms-placeholder {
+#searchEngines.form-control::-ms-placeholder {
   color: #ffffff;
 }
 
-.form-control::placeholder {
+#searchEngines.form-control::placeholder {
   color: #ffffff;
 }
 
