@@ -8,7 +8,8 @@
             <div class="form-group row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="text" readonly class="form-control-plaintext" name="email" id="staticEmail" value="{{userEmail}}">
+                    <input type="text" readonly class="form-control-plaintext" name="email" id="staticEmail"
+                        value="{{userEmail}}">
                 </div>
             </div>
             <div class="form-group row">
@@ -44,7 +45,7 @@
     <div class="container w-75 p-3 mt-3" style="background-color: #eeeeee">
         <h2>Twój profil:</h2>
         <hr>
-        <form action="#">
+        <form action="/users/change_names" method="POST">
             <div class="form-group row">
                 <label for="nickname" class="col-sm-2 col-form-label">Pseudonim</label>
                 <div class="col-sm-10">
@@ -55,14 +56,14 @@
                 <div class="col-sm-10">
                     <input type="text" name="name" id="nameInput"
                         class="form-control  border-top-0 border-left-0 border-right-0 rounded-0" placeholder="Imię..."
-                        minlength="3" required>
+                        minlength="3" value={{userName}}>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-10">
                     <input type="text" name="surname" id="surnameInput"
                         class="form-control  border-top-0 border-left-0 border-right-0 rounded-0"
-                        placeholder="Nazwisko..." minlength="3" required>
+                        placeholder="Nazwisko..." minlength="3" value={{userSurname}}>
                 </div>
             </div>
             <div class="text-center">
