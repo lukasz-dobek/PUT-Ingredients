@@ -1,0 +1,12 @@
+<div class="container" id="listOfRecipes">
+    <h3 class="mb-3" style="text-transform: uppercase; margin-top:1vw; margin-left: 0.8vw">Wyszukano: <span>{{#each searchedIngredients}}
+            <span style="color: black; text-decoration: none;">[{{this}}]</span>
+            {{/each}}
+        </span></h3>
+
+    {{#each recipes}}
+    {{>show_found_recipe}}
+    {{/each}}
+
+</div>
+<script src="/javascripts/favouritesHandler.js"></script>
