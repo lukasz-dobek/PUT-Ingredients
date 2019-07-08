@@ -1,10 +1,42 @@
-<div class="container w-75">
-    <h3>Szybkie wybieranie...</h3>
-    <hr>   
-    <form action="">
+<form action="/recipes/search/ingredients" method="POST">
+
+    <div class="container w-75">
+        <h3>Szybkie wybieranie...</h3>
+        <hr>
         <div class="" id="quickIngredientsSearch">
-            
+
         </div>
-    </form>
-</div>
+    </div>
+
+    <div class="container w-75 mt-5">
+        <h3>Wybieranie standardowe...</h3>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <div class="input-group">
+                    <input type="text" class="form-control border-0 rounded-0"
+                        style="height: 60px; background-color: #333333; color: #ffffff;" id="ingredientName"
+                        placeholder="Składnik..." aria-label="Nazwa..." aria-describedby="basic-addon2" autocomplete="off">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary border-0 rounded-0"
+                            style="background-color: #333333; color: #27ae60; font-weight: bold; font-size: 30px;"
+                            type="button" onclick="addIngredientFromField()"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-secondary border-0 rounded-0 float-right"
+                    style="background-color: #333333; color: #27ae60; height: 60px;">Szukaj <i
+                        class="fas fa-arrow-right"></i></button> </div>
+        </div>
+    </div>
+
+    <div class="container mt-4 bg-light">
+
+        <h3>Twoja lista składników:</h3>
+
+        <div id="ingredientsContainer"></div>
+    </div>
+</form>
+
 <script src="/javascripts/ingredientsSearchHandler.js"></script>

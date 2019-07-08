@@ -289,8 +289,8 @@ router.get('/search/categories', (req, res) => {
     });
 });
 
-router.get('/search/ingredients', (req, res) => {
-    
+router.post('/search/ingredients', (req, res) => {
+    res.send(req.body);
 });
 
 module.exports = router;
