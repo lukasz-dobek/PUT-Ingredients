@@ -222,3 +222,8 @@ div.main p {
 .image-upload>input {
   display: none;
 }
+
+.admin-width-container {
+  margin-left: 0.7vw;
+  margin-right: 0.7vw;
+}
