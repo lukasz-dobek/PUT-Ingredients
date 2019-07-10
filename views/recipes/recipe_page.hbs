@@ -164,25 +164,42 @@
 
     <div class="col">
       <div class="row">
+
         <div class="col">
-          <a href="{{link_to_recipe}}"><img src="{{photo_one}}" alt="" class="card-img-top" style="height: 12vw"></a>
-        </div>
-        <div class="col">
+          {{#if photo_two}}
+          <a href="{{link_to_recipe}}"><img src="{{photo_two}}" alt="" class="card-img-top" style="height: 12vw"></a>
+          {{else}}
           <div class="container brak-zdj"
             style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
           </div>
+          {{/if}}
         </div>
         <div class="col">
+          {{#if photo_three}}
+          <a href="{{link_to_recipe}}"><img src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw"></a>
+          {{else}}
           <div class="container brak-zdj"
             style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
           </div>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if photo_four}}
+          <a href="{{link_to_recipe}}"><img src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw"></a>
+          {{else}}
+          <div class="container brak-zdj"
+            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
+            <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
+          </div>
+          {{/if}}
         </div>
       </div>
       <div class="row" style="margin-top:2.5vw">
-        <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
-          style="color:black; background-color:#27AE60" id="shopListButton_{{id_recipe}}" onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ ZAKUPÓW</button>
+        <button type="stworz-liste-zakupow" class="btn btn-success ml-3" style="color:black; background-color:#27AE60"
+          id="shopListButton_{{id_recipe}}" onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
+          ZAKUPÓW</button>
       </div>
     </div>
   </div>

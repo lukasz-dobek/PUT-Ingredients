@@ -1,16 +1,16 @@
 <div class="container">
     <h1 class="mb-5 text-center">DODAWANIE PRZEPISU</h1>
-    <form action="/recipes/add_new_recipe" method="post">
+    <form action="/recipes/add_new_recipe" enctype="multipart/form-data" method="post">
         {{!-- Informacje ogolne --}}
         <div class="container w-100 p-3" style="background-color: #eeeeee">
 
             <h2>Informacje ogólne:</h2>
             <hr>
             <div>
-            <input type="text" name="recipeName" id="recipeName"
-                class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
-                maxlength="35">
+                <input type="text" name="recipeName" id="recipeName"
+                    class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                    style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
+                    maxlength="35">
             </div>
             <div class="row mt-4" id="categoryRow">
                 <div class="col">
@@ -92,8 +92,8 @@
                     <div class="col-6 autocomplete">
                         <input type="text" name="ingredientName" id="ingredientName1"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;" placeholder="* Składnik" required minlength="3"
-                            maxlength="50">
+                            style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
+                            minlength="3" maxlength="50">
                     </div>
                     <div class="col">
                         <input type="text" name="ingredientQuantity" id="ingredientQuantity1"
@@ -112,8 +112,8 @@
                     <div class="col-6 autocomplete">
                         <input type="text" name="ingredientName" id="ingredientName2"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;" placeholder="* Składnik" required minlength="3"
-                            maxlength="50">
+                            style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
+                            minlength="3" maxlength="50">
                     </div>
                     <div class="col">
                         <input type="text" name="ingredientQuantity" id="ingredientQuantity2"
@@ -131,7 +131,8 @@
 
                 </div>
             </div>
-            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()">Dodaj kolejną pozycję</button>
+            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()">Dodaj
+                kolejną pozycję</button>
         </div>
 
         <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
@@ -148,23 +149,34 @@
 
             <div class="row p-3">
                 <div class="col-md">
-                    <input type="image" src="/images/inputPhoto.png" alt="Submit" style="width:500px">
+                    <div class="image-upload">
+                        <label for="file-input">
+                            <img src="/images/inputPhoto.png" style="width:500px" />
+                        </label>
+
+                        <input id="file-input" type="file" name="imageInput" id="imageInput" multiple />
+                    </div>
                 </div>
                 <div class="col text-center" style="background-color:palegreen">
                     <div class="row h-50 mt-3">
                         <div class="col">
-                            <div class="container w-75 h-75" style="background-color: #cccccc">Brak zdjęcia</div>
+                            <img id="photoOne" class="w-75 h-75 mx-auto" src="#" alt="Brak zdjęcia"
+                                style="object-fit: cover;" />
                         </div>
                         <div class="col">
-                            <div class="container w-75 h-75" style="background-color: #cccccc">Brak zdjęcia</div>
+                            <img id="photoTwo" src="#" class="w-75 h-75 mx-auto" alt="Brak zdjęcia"
+                                style="width: 100%; object-fit: cover;" />
+
                         </div>
                     </div>
                     <div class="row h-50 mt-3">
                         <div class="col">
-                            <div class="container w-75 h-75" style="background-color: #cccccc">Brak zdjęcia</div>
+                            <img id="photoThree" src="#" class="w-75 h-75 mx-auto" alt="Brak zdjęcia"
+                                style="width: 100%; object-fit: cover;" />
                         </div>
                         <div class="col">
-                            <div class="container w-75 h-75" style="background-color: #cccccc">Brak zdjęcia</div>
+                            <img id="photoFour" src="#" class="w-75 h-75 mx-auto" alt="Brak zdjęcia"
+                                style="width: 100%; object-fit: cover;" />
                         </div>
                     </div>
                 </div>

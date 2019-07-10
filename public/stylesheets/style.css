@@ -218,3 +218,7 @@ div.main p {
 .btn.disabled, .btn:disabled {
   opacity:1;
 }
+
+.image-upload>input {
+  display: none;
+}

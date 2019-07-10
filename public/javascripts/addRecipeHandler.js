@@ -21,27 +21,26 @@ $.getJSON('/api/categories/all').then((categoriesJSON) => {
 $("[id^=category]").on('change', function () {
     let selects = document.querySelectorAll("[id^=category]");
     let oneSelect = document.getElementById("category1");
-    let allCategories =[];
+    let allCategories = [];
     let i;
-    for(i=0;i<oneSelect.length;i++){
+    for (i = 0; i < oneSelect.length; i++) {
         allCategories.push(oneSelect.options[i].value);
     }
     // console.log(allCategories);
     // console.log(allCategories.length);
     let values = [];
-    for(i=0 ;i<selects.length;i++)
-    {
+    for (i = 0; i < selects.length; i++) {
         values.push($(selects[i]).children("option:selected").val());
     }
     console.log(values);
     console.log(values.length);
-    for(i =0; i<values.length;i++){
-        if($("[id^=category]").find('option[value="' + values[i] + '"]')){
+    for (i = 0; i < values.length; i++) {
+        if ($("[id^=category]").find('option[value="' + values[i] + '"]')) {
             $("[id^=category]").find('option[value="' + values[i] + '"]').hide();
         }
     }
-    for(i=0;i<allCategories.length;i++){
-        if(values.includes(allCategories[i]) === false){
+    for (i = 0; i < allCategories.length; i++) {
+        if (values.includes(allCategories[i]) === false) {
             $("[id^=category]").find('option[value="' + allCategories[i] + '"]').show();
         }
     }
@@ -223,7 +222,8 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientName.placeholder = '*Składnik';
         ingredientName.minLength = '5';
         ingredientName.maxLength = '50';
-        ingredientName.setAttribute('required','');
+        ingredientName.autocomplete = "off";
+        ingredientName.setAttribute('required', '');
 
         ingredientNameCol.appendChild(ingredientName);
 
@@ -237,7 +237,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientQuantity.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
         ingredientQuantity.style.backgroundColor = '#eeeeee';
         ingredientQuantity.placeholder = '*Ilość';
-        ingredientQuantity.setAttribute('required','');
+        ingredientQuantity.setAttribute('required', '');
 
         ingredientQuantityCol.appendChild(ingredientQuantity);
 
@@ -249,7 +249,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientUnitSelect.id = `ingredientUnit${numberOfIngredients}`
         ingredientUnitSelect.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
         ingredientUnitSelect.style.backgroundColor = '#eeeeee';
-        ingredientUnitSelect.setAttribute('required','');
+        ingredientUnitSelect.setAttribute('required', '');
 
         let ingredientUnitOption = document.createElement('option');
         ingredientUnitOption.disabled = true;
@@ -283,6 +283,40 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientToGetDeleted.remove();
         numberOfIngredients--;
     }
+});
+
+function readURL(input) {
+    if (input.files) {
+        let counter = 0;
+        for (let file of input.files) {
+            let reader = new FileReader();
+
+            if (counter == 0) {
+                reader.onload = function (e) {
+                    $('#photoOne').attr('src', e.target.result);
+                }
+            } else if (counter == 1) {
+                reader.onload = function (e) {
+                    $('#photoTwo').attr('src', e.target.result);
+                }
+            } else if (counter == 2) {
+                reader.onload = function (e) {
+                    $('#photoThree').attr('src', e.target.result);
+                }
+            } else if (counter == 3) {
+                reader.onload = function (e) {
+                    $('#photoFour').attr('src', e.target.result);
+                }
+            }
+            reader.readAsDataURL(file);
+            counter++;
+        }
+
+    }
+}
+
+$("#file-input").change(function () {
+    readURL(this);
 });
 
 // weryfikacja
@@ -328,8 +362,8 @@ $.getJSON("/api/recipes/all", (data) => {
             if (field.name === 'recipeName') return 'Podany przepis juz istnieje.';
         }
 
-        if(field.type === 'number'){
-            if(field.value <=0) return "Wartość nie może być zerowa, lub ujemna."
+        if (field.type === 'number') {
+            if (field.value <= 0) return "Wartość nie może być zerowa, lub ujemna."
         }
         // Get validity
         let validity = field.validity;
@@ -386,15 +420,15 @@ $.getJSON("/api/recipes/all", (data) => {
             //if (field.type === 'radio' || field.type ==='checkbox') {
             label = field.form.querySelector('label[for="' + id + '"]') || field.parentNode;
             if (label) {
-                if (field.id==='category1') {
+                if (field.id === 'category1') {
                     let lastChild = document.getElementById('categoryRow');
-                    lastChild.parentNode.insertBefore(message,lastChild.nextSibling);
+                    lastChild.parentNode.insertBefore(message, lastChild.nextSibling);
                 }
-                else if(label.parentNode.parentNode.id==='ingredients' || label.parentNode.id === 'generalInfo'){
+                else if (label.parentNode.parentNode.id === 'ingredients' || label.parentNode.id === 'generalInfo') {
                     field.parentNode.appendChild(message);
                 }
-                else{
-                    label.parentNode.insertBefore(message,label.nextSibling);
+                else {
+                    label.parentNode.insertBefore(message, label.nextSibling);
                 }
 
             }
