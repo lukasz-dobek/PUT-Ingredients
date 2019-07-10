@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS recipes (
 	photo_one VARCHAR(100) NOT NULL,
 	photo_two VARCHAR(100),
 	photo_three VARCHAR(100),
-	photo_four VARCHAR(100)
+	photo_four VARCHAR(100),
+	visible_email BOOLEAN NOT NULL;
 );
 
 -- Categories per recipe
