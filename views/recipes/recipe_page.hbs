@@ -35,13 +35,11 @@
           <div class="col">
             <div class="container" style="background-color:#7BCE9E; color:black;">
               <p style="text-align:left; font-size: 0.8vw; padding-top: 0.22vw; padding-bottom: 0.22vw; padding-top: 0.01vw; padding-bottom: 0.01vw; text-align: center;"
-                id="test">Dodano przez:
+                id="test">Dodano przez: {{nickname}}
                 {{#if visible_email}}
                 {{email_address}}
-                {{else}}
-                {{nickname}}
                 {{/if}}
-                </p>
+              </p>
             </div>
           </div>
         </div>
@@ -202,8 +200,9 @@
         </div>
       </div>
       <div class="row" style="margin-top:2.5vw">
-        <button type="stworz-liste-zakupow" class="btn btn-success ml-3" style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.6vw"
-          id="shopListButton_{{id_recipe}}" onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
+        <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
+          style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.6vw" id="shopListButton_{{id_recipe}}"
+          onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
           ZAKUPÓW</button>
       </div>
     </div>
