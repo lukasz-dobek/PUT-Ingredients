@@ -103,7 +103,7 @@ router.post('/reset_password/:hash', (req, res) => {
             if (password !== passwordConfirm) {
                 errors.push({ msg: "Hasła się nie zgadzają." });
             }
-        
+
             if (password.length < 6) {
                 errors.push({ msg: "Hasło powinno składać się z przynajmniej 6 znaków." });
             }
@@ -242,6 +242,10 @@ router.get('/confirm_email/:hash', (req, res) => {
             res.render('./index/confirm_email', { layout: 'layout_before_login' });
         }
     });
+});
+
+router.get('/authors', (req, res) => {
+    res.render('./index/authors', { layout: 'layout_before_login' });
 });
 
 module.exports = router;
