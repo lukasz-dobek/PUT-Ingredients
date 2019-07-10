@@ -16,3 +16,27 @@ AFTER INSERT
 ON user_votes
 FOR EACH ROW
 EXECUTE PROCEDURE add_to_favourites();
+
+CREATE OR REPLACE FUNCTION add_ingredients_to_shopping_list()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO ingredients_used_in_shop_list (shop_list_id, ingredient_id,unit_id,amount)
+    select sl.id_shop_list, i.id_ingredient,u.id_unit,iur.amount  from shop_lists sl
+    join recipes r on r.id_recipe=sl.recipe_id
+    join ingredients_used_in_recipe iur on iur.recipe_id=r.id_recipe
+    join ingredients i on i.id_ingredient=iur.ingredient_id
+    join units u on u.id_unit=iur.unit_id
+    join users us on sl.user_id=us.id_user
+    where sl.recipe_id= new.recipe_id;
+    RETURN NEW;
+END;
+$BODY$
+language plpgsql;
+
+CREATE TRIGGER add_ingredients_to_shopping_list
+AFTER INSERT
+ON shop_lists
+FOR EACH ROW
+EXECUTE PROCEDURE add_ingredients_to_shopping_list();
+

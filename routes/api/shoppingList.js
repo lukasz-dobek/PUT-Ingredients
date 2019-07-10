@@ -20,20 +20,21 @@ router.post('/', (req, res) => {
     });
 });
 
-// router.delete('/', (req, res) => {
-//     const removeFromFavouritesQueryString = `
-//     DELETE FROM favourites
-//     WHERE user_id = $1 AND recipe_id = $2;
-//     `
-//     const userId = req.body.userId;
-//     const recipeId = req.body.recipeId;
-//     pgClient.query(removeFromFavouritesQueryString, [userId, recipeId], (removeFromFavouritesQueryError, removeFromFavouritesQueryResult) => {
-//         if (removeFromFavouritesQueryError) {
-//             throw removeFromFavouritesQueryError;
-//         }
-//         console.log(`DELETE /favourites - query successful - ${removeFromFavouritesQueryResult.rowCount} removed`);
-//         res.json(removeFromFavouritesQueryResult.rows);
-//     });
-// });
+
+router.delete('/', (req, res) => {
+    const removeFromShoppingListQueryString = `
+    DELETE FROM shop_lists
+    WHERE user_id = $1 AND recipe_id = $2;
+    `
+    const userId = req.body.userId;
+    const recipeId = req.body.recipeId;
+    pgClient.query(removeFromShoppingListQueryString, [userId, recipeId], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
+        if (removeFromShoppingListQueryError) {
+            throw removeFromShoppingListQueryError;
+        }
+        console.log(`DELETE /favourites - query successful - ${removeFromShoppingListQueryResult.rowCount} removed`);
+        res.json(removeFromShoppingListQueryResult.rows);
+    });
+});
 
 module.exports = router;
