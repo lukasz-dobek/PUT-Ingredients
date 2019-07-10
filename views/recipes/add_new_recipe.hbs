@@ -1,16 +1,16 @@
 <div class="container">
     <h1 class="mb-5 text-center">DODAWANIE PRZEPISU</h1>
-    <form action="/recipes/add_new_recipe" method="post">
+    <form action="/recipes/add_new_recipe" enctype="multipart/form-data" method="post">
         {{!-- Informacje ogolne --}}
         <div class="container w-100 p-3" style="background-color: #eeeeee">
 
             <h2>Informacje ogólne:</h2>
             <hr>
             <div>
-            <input type="text" name="recipeName" id="recipeName"
-                class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
-                maxlength="35">
+                <input type="text" name="recipeName" id="recipeName"
+                    class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                    style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
+                    maxlength="35">
             </div>
             <div class="row mt-4" id="categoryRow">
                 <div class="col">
@@ -92,7 +92,7 @@
                     <div class="col-6 autocomplete">
                         <input type="text" name="ingredientName" id="ingredientName1"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;" placeholder="* Składnik" required minlength="3"
+                            style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
                             maxlength="50">
                     </div>
                     <div class="col">
@@ -112,7 +112,7 @@
                     <div class="col-6 autocomplete">
                         <input type="text" name="ingredientName" id="ingredientName2"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                            style="background-color: #eeeeee;" placeholder="* Składnik" required minlength="3"
+                            style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
                             maxlength="50">
                     </div>
                     <div class="col">
@@ -131,7 +131,8 @@
 
                 </div>
             </div>
-            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()" style="color:black; background-color:#27AE60;">Dodaj kolejną pozycję</button>
+            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()"
+                style="color:black; background-color:#27AE60;">Dodaj kolejną pozycję</button>
         </div>
 
         <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
@@ -145,30 +146,37 @@
         <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
             <h2>Wybór zdjęcia:</h2>
             <hr>
-
+            <h6>Pamiętaj, aby dodać co najmniej jedno zdjęcie.</h6>
             <div class="row p-3">
                 <div class="col-md">
-                    <input type="image" src="/images/inputPhoto.png" alt="Submit" style="width:500px">
-                </div>
-                <div class="col text-center" style="background-color:#B0E1BD">
-                    <div class="row">
-                        <p style="margin:0.3vw">Zdjęcia dodane przez Ciebie:</p>
-                    </div>
+                    <div class="image-upload">
+                        <label for="file-input">
+                            <img src="/images/inputPhoto.png" style="width:500px" />
+                        </label>
 
-                    <div class="row" style="margin-bottom: 0%; height: 9.3vw">
-                        <div class="col" >
-                            <div class="container w-75 h-75" style="background-color: #eeeeee; margin-left:3vw; margin-top:1vw; margin-bottom:0vw">Brak zdjęcia</div>
+                        <input id="file-input" type="file" name="imageInput" id="imageInput" multiple required />
+                    </div>
+                </div>
+                <div class="col text-center" style="background-color:palegreen">
+                    <div class="row h-50 mt-3">
+                        <div class="col">
+                            <img id="photoOne" class="w-75 h-75 mx-auto" src="#" alt="Brak zdjęcia"
+                                style="object-fit: cover;" />
                         </div>
                         <div class="col">
-                            <div class="container w-75 h-75" style="background-color: #eeeeee; margin-right:3vw; margin-top:1vw; margin-bottom:0vw">Brak zdjęcia</div>
+                            <img id="photoTwo" src="#" class="w-75 h-75 mx-auto" alt="Brak zdjęcia"
+                                style="width: 100%; object-fit: cover;" />
+
                         </div>
                     </div>
                     <div class="row" style="margin-bottom: 0%; height: 9.3vw">
                         <div class="col">
-                            <div class="container w-75 h-75" style="background-color: #eeeeee; margin-left:3vw; margin-top:0w">Brak zdjęcia</div>
+                            <img id="photoThree" src="#" class="w-75 h-75 mx-auto" alt="Brak zdjęcia"
+                                style="width: 100%; object-fit: cover;" />
                         </div>
                         <div class="col">
-                            <div class="container w-75 h-75" style="background-color: #eeeeee; margin-right:3vw;">Brak zdjęcia</div>
+                            <img id="photoFour" src="#" class="w-75 h-75 mx-auto" alt="Brak zdjęcia"
+                                style="width: 100%; object-fit: cover;" />
                         </div>
                     </div>
                 </div>
@@ -178,12 +186,14 @@
 
         <div class="container w-25 p-3 mt-3 text-center">
             <div class="form-group form-check" style="margin-left: 0.8vw">
-                <input type="checkbox" name="emailAccepted" id="emailAccepted" class="form-check-input" >
-                <label for="emailAccepted" class="form-check-label text-left" style="font-size: 0.8vw; width:13.6vw;">Chcę aby mój adres email był
+                <input type="checkbox" name="emailAccepted" id="emailAccepted" class="form-check-input">
+                <label for="emailAccepted" class="form-check-label text-left"
+                    style="font-size: 0.8vw; width:13.6vw;">Chcę aby mój adres email był
                     widoczny dla użytkowników korzystających z przepisu.</label>
             </div>
 
-            <button type="submit" class="btn btn-success" style="color:black; background-color:#27AE60;">Dodaj przepis</button>
+            <button type="submit" class="btn btn-success" style="color:black; background-color:#27AE60;">Dodaj
+                przepis</button>
         </div>
     </form>
 </div>

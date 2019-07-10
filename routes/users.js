@@ -126,7 +126,7 @@ router.post('/change_password', (req, res) => {
 router.post('/change_names', (req, res) => {
     let name = req.body.name;
     let surname = req.body.surname;
-    
+
     const updateUserInfoQueryString = `
     UPDATE users SET name = $1, surname = $2 WHERE email_address = $3;
     `;
@@ -139,7 +139,7 @@ router.post('/change_names', (req, res) => {
     });
 
     if (name && !surname) {
-        
+
         res.send('Name was defined, but surname wasnt!');
     } else if (!name && surname) {
         res.send('Name wasnt defined, but surname was!');
@@ -151,7 +151,7 @@ router.post('/change_names', (req, res) => {
 });
 
 router.get('/delete_account', (req, res) => {
-    const swapRecipeAuthorsQueryString =`
+    const swapRecipeAuthorsQueryString = `
     UPDATE recipes SET user_id = 1 WHERE user_id = $1`;
     pgClient.query(swapRecipeAuthorsQueryString, [res.locals.userId], (swapRecipeAuthorsQueryError, swapRecipeAuthorsQueryResult) => {
         if (swapRecipeAuthorsQueryError) {
@@ -159,7 +159,7 @@ router.get('/delete_account', (req, res) => {
         }
         console.log(`Updated ${swapRecipeAuthorsQueryResult.rowCount} row`);
     });
-    
+
     const userDeleteQueryString = `
     UPDATE users SET state=3 WHERE email_address = $1;`;
     pgClient.query(userDeleteQueryString, [res.locals.userEmail], (userDeleteQueryError, userDeleteQueryResult) => {
@@ -170,6 +170,57 @@ router.get('/delete_account', (req, res) => {
     });
     res.redirect('/logout');
 })
+
+router.post('/report_recipe', (req, res) => {
+
+    let reportedRecipeUrl = req.get('Referer').match(/\/recipes\/[a-z_]+/)[0];
+
+    const getRecipeInfoQueryString = `
+    SELECT 
+        rec.id_recipe, 
+        rec.user_id 
+    FROM recipes rec  
+    WHERE rec.link_to_recipe = $1;`;
+
+    pgClient.query(getRecipeInfoQueryString, [reportedRecipeUrl], (getRecipeInfoQueryError, getRecipeInfoQueryResult) => {
+        console.log(getRecipeInfoQueryResult);
+        if (getRecipeInfoQueryError) {
+            throw getRecipeInfoQueryError;
+        }
+        let reporteeId = res.locals.userId;
+        let reportedId = getRecipeInfoQueryResult.rows[0]["user_id"];
+        let reportedRecipeId = getRecipeInfoQueryResult.rows[0]["id_recipe"];
+        let assignedAdmin = 1;
+        let reportDescription = req.body["reportRecipeDescription"];
+        let status = 0;
+        const reportQueryString = `
+        INSERT INTO reports (
+            reportee_id,
+            reported_id,
+            assigned_admin_id,
+            recipe_id,
+            description,
+            status,
+            date_of_report
+        ) VALUES ($1, $2, $3, $4, $5, $6, TO_TIMESTAMP($7 / 1000.0));`;
+
+        console.log(reporteeId, reportedId);
+
+        if (reporteeId === reportedId) {
+            req.flash('error_msg', 'Nie można zgłosić swojego przepisu!');
+            res.redirect(reportedRecipeUrl);
+        } else {
+            pgClient.query(reportQueryString, [reporteeId, reportedId, assignedAdmin, reportedRecipeId, reportDescription, status, Date.now()],
+                (reportQueryError, reportQueryResult) => {
+                    if (reportQueryError) {
+                        throw reportQueryError;
+                    }
+                    req.flash('success_msg', 'Zgłoszenie zostało wysłane poprawnie.');
+                    res.redirect(reportedRecipeUrl);
+                });
+        }
+    });
+});
 
 router.get('/shopping_lists', (req, res) => {
     res.render('./users/shopping_lists');

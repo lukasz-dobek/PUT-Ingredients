@@ -2,7 +2,20 @@ const express = require('express');
 const router = express.Router();
 const pgClient = require('./../db/pg-controller');
 const latinize = require('latinize');
+const multer = require('multer');
+
 const { ensureAuthenticated } = require('../config/auth');
+
+let storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './public/images');
+    },
+    filename: function (req, file, callback) {
+        callback(null, Date.now() + '_' +  file.originalname.replace(' ', '_'));
+    }
+});
+
+let upload = multer({ storage : storage });
 
 function createLinkToRecipe(recipeName) {
     return '/recipes/'.concat(latinize(recipeName.replace(' ', '_')));
@@ -22,8 +35,18 @@ router.get('/add_new_recipe', (req, res) => {
     res.render('./recipes/add_new_recipe');
 });
 
-router.post('/add_new_recipe', (req, res) => {
-    console.log(req.body);
+router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
+    let filepathsArray = [];
+    // Modify filepaths so they match database format
+    for (let file of req.files) {
+        filepathsArray.push('/' + file.path.substring(7).replace('\\', '/'));
+    }
+
+    // Fill array with nulls
+    for (let i = filepathsArray.length; i < 4; i++){
+        filepathsArray.push(null);
+    }
+
     const addRecipeQueryString = `
     INSERT INTO recipes (
         user_id,
@@ -40,8 +63,9 @@ router.post('/add_new_recipe', (req, res) => {
         photo_one,
         photo_two,
         photo_three,
-        photo_four
-    ) VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5 / 1000.0), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15);`;
+        photo_four,
+        visible_email
+    ) VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5 / 1000.0), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16);`;
 
     let ingredientsNumber = req.body.ingredientName.length;
 
@@ -76,10 +100,11 @@ router.post('/add_new_recipe', (req, res) => {
         description: req.body.description,
         number_of_people: req.body.numberOfPeople,
         link_to_recipe: createLinkToRecipe(req.body.recipeName),
-        photo_one: '/images/pesto_1.jpeg',
-        photo_two: null,
-        photo_three: null,
-        photo_four: null,
+        photo_one: filepathsArray[0],
+        photo_two: filepathsArray[1],
+        photo_three: filepathsArray[2],
+        photo_four: filepathsArray[3],
+        visible_email: req.body.emailAccepted ? "true" : "false"
     };
     pgClient.query(addRecipeQueryString, [
         recipeBody.user_id,
@@ -96,7 +121,8 @@ router.post('/add_new_recipe', (req, res) => {
         recipeBody.photo_one,
         recipeBody.photo_two,
         recipeBody.photo_three,
-        recipeBody.photo_four
+        recipeBody.photo_four,
+        recipeBody.visible_email
     ], (addRecipeQueryError, addRecipeQueryResult) => {
         if (addRecipeQueryError) {
             throw addRecipeQueryError;
@@ -106,7 +132,7 @@ router.post('/add_new_recipe', (req, res) => {
                 throw selectRecipeIdQueryError;
             }
             for (let i = 0; i < ingredientsNumber; i++) {
-                pgClient.query(addIngredientsQueryString, [selectRecipeIdQueryResult.rows[0]["id_recipe"], req.body.ingredientName[0], req.body.ingredientUnit[0], req.body.ingredientQuantity[0]],
+                pgClient.query(addIngredientsQueryString, [selectRecipeIdQueryResult.rows[0]["id_recipe"], req.body.ingredientName[i], req.body.ingredientUnit[i], req.body.ingredientQuantity[i]],
                     (addIngredientsQueryError, addIngredientsQueryResult) => {
                         if (addIngredientsQueryError) {
                             throw addIngredientsQueryError;
@@ -143,6 +169,7 @@ router.get('/:linkToRecipe', (req, res) => {
         rec.photo_two, 
         rec.photo_three, 
         rec.photo_four,
+        rec.visible_email,
         usr.email_address,
         usr.nickname
     FROM recipes rec 
