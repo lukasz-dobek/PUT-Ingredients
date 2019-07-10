@@ -22,7 +22,7 @@ function createLinkToRecipe(recipeName) {
 }
 
 router.get('/', ensureAuthenticated, (req, res) => {
-    const lastNineRecipesQueryString = "SELECT * FROM recipes ORDER BY date_of_creation LIMIT 9";
+    const lastNineRecipesQueryString = "SELECT * FROM recipes WHERE state ='Zweryfikowany' ORDER BY date_of_creation DESC LIMIT 9 ";
     pgClient.query(lastNineRecipesQueryString, (lastNineRecipesQueryError, lastNineRecipesQueryResult) => {
         if (lastNineRecipesQueryError) throw lastNineRecipesQueryError;
         res.render('./recipes/front_page', {
@@ -249,7 +249,7 @@ router.get('/search/name', (req, res) => {
         usr.nickname
     FROM recipes rec 
         INNER JOIN users usr ON rec.user_id = usr.id_user     
-    WHERE LOWER(recipe_name) LIKE $1;`;
+    WHERE LOWER(recipe_name) LIKE $1 AND rec.state = 'Zweryfikowany';`;
 
     const searchRecipeName = req.query['searchRecipeName'].toLowerCase();
 
@@ -304,7 +304,7 @@ router.get('/search/categories', (req, res) => {
         INNER JOIN categories_per_recipe cpr ON cpr.recipe_id = rec.id_recipe
         INNER JOIN categories cat ON cpr.category_id = cat.id_category
         INNER JOIN users usr ON rec.user_id = usr.id_user     
-    WHERE cat.category_name IN  (${queryParametersList.join(',')})`;
+    WHERE cat.category_name IN  (${queryParametersList.join(',')}) AND rec.state = 'Zweryfikowany';`;
 
     // Query PostgreSQL - ops have to be an array (even if there is only one value within)
     pgClient.query(searchCategoriesQueryString, categoriesFromRequestAsArray, (searchCategoriesQueryError, searchCategoriesQueryResult) => {
@@ -356,7 +356,7 @@ router.post('/search/ingredients', (req, res) => {
         INNER JOIN ingredients_used_in_recipe iuir ON rec.id_recipe = iuir.recipe_id
         INNER JOIN ingredients ing ON iuir.ingredient_id = ing.id_ingredient
         INNER JOIN users usr ON rec.user_id = usr.id_user     
-    WHERE ing.ingredient_name IN (${queryParametersList.join(',')})`;
+    WHERE ing.ingredient_name IN (${queryParametersList.join(',')}) AND rec.state = 'Zweryfikowany';`;
 
     // Query PostgreSQL - ops have to be an array (even if there is only one value within)
     pgClient.query(searchIngredientsQueryString, ingredientsFromRequestAsArray, (searchIngredientsQueryError, searchIngredientsQueryResult) => {
