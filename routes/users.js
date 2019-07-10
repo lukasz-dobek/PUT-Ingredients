@@ -39,7 +39,7 @@ router.get('/user_recipes/:user', (req, res) => {
         if (searchUserRecipesQueryError) {
             throw searchUserRecipesQueryError;
         }
-        res.render('./users/user_recipes', { recipes: searchUserRecipesQueryResult.rows });
+        res.render('./users/user_recipes', { recipes: searchUserRecipesQueryResult.rows, nickname: userNickname });
     });
 });
 

@@ -92,6 +92,7 @@ app.use((req, res, next) => {
     res.locals.userNickname = req.user["nickname"];
     res.locals.userName = req.user["name"];
     res.locals.userSurname = req.user["surname"];
+    res.locals.userIsAdmin = req.user["is_admin"];
   }
   next();
 });
