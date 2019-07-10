@@ -51,22 +51,22 @@
     <hr class="mt-3 mb-0">
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-md-3  sidebar" style="background-color: #333333">
+        <nav class="col-md-1.8  sidebar" style="background-color: #333333">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link" href="#" style="text-decoration: none; color: white;">
-                  <i class="fas fa-home"></i> Pulpit 
+                  <i class="fas fa-home" style="margin-right: 0.7vw; margin-top: 0.8vw"></i> PULPIT 
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" style="text-decoration: none; color: white;">
-                  Zarządzanie kontami
+                  <i class="fas fa-user-friends" style="margin-right: 0.7vw; margin-top: 0.5vw"></i>ZARZĄDZANIE KONTAMI
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" style="text-decoration: none; color: white;">
-                  Zarządzanie przepisami
+                  <i class="far fa-list-alt" style="margin-right: 0.7vw; margin-top: 0.6vw"></i>ZARZĄDZANIE PRZEPISAMI
                 </a>
               </li>
             </ul>
@@ -88,7 +88,23 @@
             </div>
           </div>
 
-          <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+          {{!-- statistics --}}
+
+
+          <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black;">
+            <div class="row">
+              <div class="col">
+                  test1
+              </div>
+              <div class="col">
+                  test2
+              </div>
+            </div>
+          </div>
+
+
+          <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="601" height="253" style="display: block; width: 601px; height: 253px;"></canvas>
+          
 
           <h2>Section title</h2>
           <div class="table-responsive">
@@ -232,4 +248,50 @@
     {{/if}}
 </body>
 
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          datasets: [{
+            data: [3444, 21345, 444444, 24003, 22489, 24092, 11034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
+  </body>
 </html>
