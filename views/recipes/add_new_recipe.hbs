@@ -93,7 +93,7 @@
                         <input type="text" name="ingredientName" id="ingredientName1"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
                             style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
-                            minlength="3" maxlength="50">
+                            maxlength="50">
                     </div>
                     <div class="col">
                         <input type="text" name="ingredientQuantity" id="ingredientQuantity1"
@@ -113,7 +113,7 @@
                         <input type="text" name="ingredientName" id="ingredientName2"
                             class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
                             style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
-                            minlength="3" maxlength="50">
+                            maxlength="50">
                     </div>
                     <div class="col">
                         <input type="text" name="ingredientQuantity" id="ingredientQuantity2"
@@ -131,7 +131,8 @@
 
                 </div>
             </div>
-            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()" style="color:black; background-color:#27AE60;">Dodaj kolejną pozycję</button>
+            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()"
+                style="color:black; background-color:#27AE60;">Dodaj kolejną pozycję</button>
         </div>
 
         <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
@@ -145,7 +146,7 @@
         <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
             <h2>Wybór zdjęcia:</h2>
             <hr>
-
+            <h6>Pamiętaj, aby dodać co najmniej jedno zdjęcie.</h6>
             <div class="row p-3">
                 <div class="col-md">
                     <div class="image-upload">
@@ -153,7 +154,7 @@
                             <img src="/images/inputPhoto.png" style="width:500px" />
                         </label>
 
-                        <input id="file-input" type="file" name="imageInput" id="imageInput" multiple />
+                        <input id="file-input" type="file" name="imageInput" id="imageInput" multiple required />
                     </div>
                 </div>
                 <div class="col text-center" style="background-color:palegreen">
@@ -185,12 +186,14 @@
 
         <div class="container w-25 p-3 mt-3 text-center">
             <div class="form-group form-check" style="margin-left: 0.8vw">
-                <input type="checkbox" name="emailAccepted" id="emailAccepted" class="form-check-input" >
-                <label for="emailAccepted" class="form-check-label text-left" style="font-size: 0.8vw; width:13.6vw;">Chcę aby mój adres email był
+                <input type="checkbox" name="emailAccepted" id="emailAccepted" class="form-check-input">
+                <label for="emailAccepted" class="form-check-label text-left"
+                    style="font-size: 0.8vw; width:13.6vw;">Chcę aby mój adres email był
                     widoczny dla użytkowników korzystających z przepisu.</label>
             </div>
 
-            <button type="submit" class="btn btn-success" style="color:black; background-color:#27AE60;">Dodaj przepis</button>
+            <button type="submit" class="btn btn-success" style="color:black; background-color:#27AE60;">Dodaj
+                przepis</button>
         </div>
     </form>
 </div>

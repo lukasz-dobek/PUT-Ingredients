@@ -36,7 +36,12 @@
             <div class="container" style="background-color:#7BCE9E; color:black;">
               <p style="text-align:left; font-size: 0.8vw; padding-top: 0.22vw; padding-bottom: 0.22vw; padding-top: 0.01vw; padding-bottom: 0.01vw; text-align: center;"
                 id="test">Dodano przez:
-                {{email_address}}</p>
+                {{#if visible_email}}
+                {{email_address}}
+                {{else}}
+                {{nickname}}
+                {{/if}}
+                </p>
             </div>
           </div>
         </div>
@@ -204,7 +209,33 @@
     </div>
   </div>
   <p style="margin-top:2vw">Przepis narusza regulamin, zawiera treści niestosowne, nieadekwatne lub jest nie kompletny?
-    <a href="#" target="_blank" style="color: red">Zgłoś przepis</a></p>
+    <a href="#" type="button" style="color: red" data-toggle="modal" data-target="#exampleModalLong">Zgłoś przepis</a>
+  </p>
+
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Zgłoś przepis</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="/users/report_recipe" method="post">
+
+          <div class="modal-body text-justify">
+            <textarea name="reportRecipeDescription" id="reportRecipe" cols="45" rows="10"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-danger">Wyślij</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 
 
 

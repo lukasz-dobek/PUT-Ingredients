@@ -220,7 +220,6 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientName.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
         ingredientName.style.backgroundColor = '#eeeeee';
         ingredientName.placeholder = '*Składnik';
-        ingredientName.minLength = '5';
         ingredientName.maxLength = '50';
         ingredientName.autocomplete = "off";
         ingredientName.setAttribute('required', '');

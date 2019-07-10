@@ -63,8 +63,9 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         photo_one,
         photo_two,
         photo_three,
-        photo_four
-    ) VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5 / 1000.0), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15);`;
+        photo_four,
+        visible_email
+    ) VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5 / 1000.0), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16);`;
 
     let ingredientsNumber = req.body.ingredientName.length;
 
@@ -103,6 +104,7 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         photo_two: filepathsArray[1],
         photo_three: filepathsArray[2],
         photo_four: filepathsArray[3],
+        visible_email: req.body.emailAccepted ? "true" : "false"
     };
     pgClient.query(addRecipeQueryString, [
         recipeBody.user_id,
@@ -119,7 +121,8 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         recipeBody.photo_one,
         recipeBody.photo_two,
         recipeBody.photo_three,
-        recipeBody.photo_four
+        recipeBody.photo_four,
+        recipeBody.visible_email
     ], (addRecipeQueryError, addRecipeQueryResult) => {
         if (addRecipeQueryError) {
             throw addRecipeQueryError;
@@ -166,6 +169,7 @@ router.get('/:linkToRecipe', (req, res) => {
         rec.photo_two, 
         rec.photo_three, 
         rec.photo_four,
+        rec.visible_email,
         usr.email_address,
         usr.nickname
     FROM recipes rec 
