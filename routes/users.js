@@ -31,11 +31,11 @@ router.get('/user_recipes/:user', (req, res) => {
         usr.nickname
     FROM recipes rec 
         INNER JOIN users usr ON rec.user_id = usr.id_user 
-    WHERE usr.nickname LIKE $1;`;
+    WHERE usr.nickname LIKE $1 AND rec.state LIKE $2;`;
 
     const userNickname = req.params.user;
-
-    pgClient.query(searchUserRecipesQueryString, [userNickname], (searchUserRecipesQueryError, searchUserRecipesQueryResult) => {
+    let state = req.params.user === res.locals.userNickname ? '%' : 'Zweryfikowany';
+    pgClient.query(searchUserRecipesQueryString, [userNickname, state], (searchUserRecipesQueryError, searchUserRecipesQueryResult) => {
         if (searchUserRecipesQueryError) {
             throw searchUserRecipesQueryError;
         }
