@@ -11,12 +11,18 @@ function addToShopList(e, userId) {
         });
 }
 
+function getIdOfList(e) {
+    let shopList = document.getElementById(e.target.id);
+    let recipeId = splitRecipeId(shopList.id);
+    return recipeId;
+
+}
 
 function deleteFromShoppingList(e,userId) {
     let shopList = document.getElementById(e.target.id);
     let recipeId = splitRecipeId(shopList.id);
     $.ajax({
-        url: '/api/favourites/',
+        url: '/api/shoppingList/',
         type: 'DELETE',
         data: {
             userId: userId,
