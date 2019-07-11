@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS user_activities (
 	id_user_activity SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
 	date_of_login TIMESTAMP NOT NULL,
-	browser_info VARCHAR(50) NOT NULL
+	browser_info VARCHAR(150) NOT NULL
 );
 
 -- Categories table

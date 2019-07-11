@@ -242,7 +242,13 @@ document.addEventListener('submit', function (event) {
 
     console.log(fields);
     for (let i = 0; i < fields.length; i++) {
-        error = hasError(fields[i]);
+        if(fields[i].parentElement.nextSibling.textContent === 'Podany adres email jest już zajęty.'){
+            error ='Podany adres email jest już zajęty.'
+        }
+        else if(fields[i].parentElement.nextSibling.textContent === 'Podany pseudonim jest już zajęty.'){
+            error = 'Podany pseudonim jest już zajęty.'
+        }
+        else {error = hasError(fields[i])}
         if (error) {
             showError(fields[i], error);
             if (!hasErrors) {
