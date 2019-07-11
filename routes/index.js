@@ -15,11 +15,31 @@ router.get('/login', ensureLoggedIn, function (req, res, next) {
     res.render('./index/login', { layout: 'layout_before_login' });
 });
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/recipes',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
+// router.post('/login', passport.authenticate('local', {
+//     successRedirect: '/recipes',
+//     failureRedirect: '/login',
+//     failureFlash: true
+// }));
+
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err); }
+        if (!user) { req.flash('error', info.message); return res.redirect('/login') }
+        req.logIn(user, (err) => {
+            if (err) { return next(err); }
+            console.log(req);
+            const insertActivityQueryString = `
+            INSERT INTO user_activities (
+                user_id,
+                date_of_login,
+                browser_info) VALUES ($1, TO_TIMESTAMP($2/1000.0), $3)`;
+            pgClient.query(insertActivityQueryString, [user['id_user'], Date.now(), req.headers['user-agent']], (err, result) => {
+                if(err) { throw err }
+                res.redirect('/recipes');
+            });
+        });
+    })(req, res, next);
+});
 
 router.get('/logout', (req, res) => {
     req.logout();
