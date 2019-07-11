@@ -1,8 +1,7 @@
-      <main role="main" class="col">
-        <div
-          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">PULPIT</h1>
-          {{!-- <div class="btn-toolbar mb-2 mb-md-0">
+<main role="main" class="col">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">PULPIT</h1>
+    {{!-- <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
               <button class="btn btn-sm btn-outline-secondary">Share</button>
               <button class="btn btn-sm btn-outline-secondary">Export</button>
@@ -12,105 +11,101 @@
               This week
             </button>
           </div> --}}
+  </div>
+
+
+  {{!-- statistics --}}
+  <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black; margin-top:1.3vw">
+    <h4 style="margin-left: 0.2vw; margin-top: 0.2vw">ILOŚĆ NOWO DODANYCH PRZEPISÓW</h4>
+    <div class="row">
+      <div class="col">
+        <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">1. Na przestrzeni
+          tygodnia:</p>
+        <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="nowe_przepisy_tydzien" height="250"
+          style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
+      </div>
+      <div class="col">
+        <div class="container-statistic2">
+          <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">2. Na przestrzeni
+            roku:</p>
+          <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="nowe_przepisy_rok" height="250"
+            style="background-color:white; padding-top: 0.8vw; margin-right: 07vw"></canvas>
         </div>
-
-
-        {{!-- statistics --}}
-        <div class="admin-width-container"
-          style="background-color:#eeeeee; padding: 5px; color:black; margin-top:1.3vw">
-          <h4 style="margin-left: 0.2vw; margin-top: 0.2vw">ILOŚĆ NOWO DODANYCH PRZEPISÓW</h4>
-          <div class="row">
-            <div class="col">
-              <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">1. Na przestrzeni
-                tygodnia:</p>
-              <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="nowe_przepisy_tydzien"
-                height="250" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
-            </div>
-            <div class="col">
-              <div class="container-statistic2">
-                <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">2. Na przestrzeni
-                  roku:</p>
-                <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="nowe_przepisy_rok" height="250"
-                  style="background-color:white; padding-top: 0.8vw; margin-right: 07vw"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="container-statistic3">
-                <p style="margin-left: 0.7vw">3. Na przestrzeni miesiąca:</p>
-                <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="nowe_przepisy_miesiac"
-                  width="500" height="95"
-                  style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="container-statistic3">
+          <p style="margin-left: 0.7vw">3. Na przestrzeni miesiąca:</p>
+          <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="nowe_przepisy_miesiac" width="500"
+            height="95" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <p>&nbsp</p>
+  <p>&nbsp</p>
 
-        <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black;">
-          <h4 style="margin-left: 0.2vw; margin-top: 0.2vw">AKTYWNOŚC UŻYTKOWNIKÓW</h4>
-          <div class="row">
-            <div class="col">
-              <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">1. Na przestrzeni
-                tygodnia:</p>
-              <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="aktywnosc_uzytkownika_tydzien"
-                height="250" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
-            </div>
-            <div class="col">
-              <div class="container-statistic2">
-                <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">2. Na przestrzeni
-                  roku:</p>
-                <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="aktywnosc_uzytkownika_rok"
-                  height="250" style="background-color:white; padding-top: 0.8vw; margin-right: 07vw"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="container-statistic3">
-                <p style="margin-left: 0.7vw">3. Na przestrzeni miesiąca:</p>
-                <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="aktywnosc_uzytkownika_miesiac"
-                  width="500" height="95"
-                  style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
-              </div>
-            </div>
-          </div>
+  <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black;">
+    <h4 style="margin-left: 0.2vw; margin-top: 0.2vw">AKTYWNOŚC UŻYTKOWNIKÓW</h4>
+    <div class="row">
+      <div class="col">
+        <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">1. Na przestrzeni
+          tygodnia:</p>
+        <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="aktywnosc_uzytkownika_tydzien"
+          height="250" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
+      </div>
+      <div class="col">
+        <div class="container-statistic2">
+          <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">2. Na przestrzeni
+            roku:</p>
+          <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="aktywnosc_uzytkownika_rok"
+            height="250" style="background-color:white; padding-top: 0.8vw; margin-right: 07vw"></canvas>
         </div>
-
-        <p> &nbsp</p>
-
-        <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black;">
-          <h4 style="margin-left: 0.2vw; margin-top: 0.2vw">LICZBA UŻYTKOWNIKÓW</h4>
-          <div class="row">
-            <div class="col">
-              <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">1. Na przestrzeni
-                tygodnia:</p>
-              <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="liczba_uzytkownikow_tydzien"
-                height="250" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
-            </div>
-            <div class="col">
-              <div class="container-statistic2">
-                <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">2. Na przestrzeni
-                  roku:</p>
-                <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="liczba_uzytkownikow_rok"
-                  height="250" style="background-color:white; padding-top: 0.8vw; margin-right: 07vw"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="container-statistic3">
-                <p style="margin-left: 0.7vw">3. Na przestrzeni miesiąca:</p>
-                <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="liczba_uzytkownikow_miesiac"
-                  width="300" height="95"
-                  style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="container-statistic3">
+          <p style="margin-left: 0.7vw">3. Na przestrzeni miesiąca:</p>
+          <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="aktywnosc_uzytkownika_miesiac"
+            width="500" height="95" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
         </div>
-{{!-- 
+      </div>
+    </div>
+  </div>
+
+  <p> &nbsp</p>
+
+  <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black;">
+    <h4 style="margin-left: 0.2vw; margin-top: 0.2vw">LICZBA UŻYTKOWNIKÓW</h4>
+    <div class="row">
+      <div class="col">
+        <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">1. Na przestrzeni
+          tygodnia:</p>
+        <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="liczba_uzytkownikow_tydzien"
+          height="250" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
+      </div>
+      <div class="col">
+        <div class="container-statistic2">
+          <p style="margin-left: 0.7vw; margin-bottom:0vw; margin-top:0.5vw; padding-bottom:0vw">2. Na przestrzeni
+            roku:</p>
+          <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="liczba_uzytkownikow_rok" height="250"
+            style="background-color:white; padding-top: 0.8vw; margin-right: 07vw"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="container-statistic3">
+          <p style="margin-left: 0.7vw">3. Na przestrzeni miesiąca:</p>
+          <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="liczba_uzytkownikow_miesiac"
+            width="300" height="95" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{!-- 
 
 
 
@@ -244,6 +239,6 @@
             </table>
           </div>
         </div>
-      </main>
     </div>
   </div> --}}
+</main>
