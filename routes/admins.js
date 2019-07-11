@@ -6,4 +6,12 @@ router.get('/', (req, res) => {
     res.render('./admin_panel/main', { layout: 'layout_admin_panel'});
 });
 
+router.get('/user_management', (req, res) => {
+    res.render('./admin_panel//user_management', { layout: 'layout_admin_panel'});
+});
+
+router.get('/recipe_management', (req, res) => {
+    res.render('./admin_panel/recipe_management', { layout: 'layout_admin_panel'});
+});
+
 module.exports = router;

@@ -175,11 +175,11 @@ router.post('/register', (req, res, next) => {
         errors.push({ msg: "Hasło powinno składać się z przynajmniej 6 znaków." });
     }
 
-    const checkIfUserExistsQuery = `SELECT email_address FROM users WHERE email_address = $1`;
+    const checkIfUserExistsQuery = `SELECT nickname,email_address FROM users WHERE email_address = $1 OR nickname = $2`;
 
     let userRowCount;
 
-    pgClient.query(checkIfUserExistsQuery, [email], (err, result) => {
+    pgClient.query(checkIfUserExistsQuery, [email,nickname], (err, result) => {
         if (err) {
             throw err;
             res.render('error');
@@ -187,7 +187,7 @@ router.post('/register', (req, res, next) => {
         userRowCount = result.rowCount;
         console.log(`Liczba kont: ${userRowCount}`);
         if (userRowCount !== 0) {
-            errors.push({ msg: "Konto o podanym adresie istnieje już w bazie danych." });
+            errors.push({ msg: "Konto o podanym adresie/loginie istnieje już w bazie danych." });
         }
 
         if (errors.length > 0) {
