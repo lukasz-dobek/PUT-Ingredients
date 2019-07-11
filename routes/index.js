@@ -164,67 +164,65 @@ router.post('/register', (req, res, next) => {
             throw err;
             res.render('error');
         }
-        console.log(result.rows);
         userRowCount = result.rowCount;
-    });
-
-    console.log(`Liczba kont: ${userRowCount}`);
-    if (userRowCount === 0) {
-        errors.push({ msg: "Konto o podanym adresie istnieje już w bazie danych." });
-    }
-
-    if (errors.length > 0) {
-        console.log(errors);
-        res.render('register', {
-            errors: errors,
-            layout: 'layout_before_login'
-        });
-    } else {
-        const emailConfirmHash = crypto.randomBytes(48);
-        console.log(emailConfirmHash.toString('hex'));
-        const insertQueryString = `
-      INSERT INTO users (
-          email_address, 
-          password, 
-          nickname, 
-          date_of_join, 
-          name, 
-          surname, 
-          is_admin, 
-          state, 
-          activation_url 
-      ) VALUES (
-          $1,
-          $2, 
-          $3, 
-          to_timestamp(${Date.now() / 1000.0}), 
-          $4, 
-          $5, 
-          FALSE,
-          0, 
-          '${emailConfirmHash.toString('hex')}'
-          );`;
-
-        try {
-            argon2.hash(password).then(hash => {
-                console.log(hash.length);
-                console.log(hash);
-                pgClient.query(insertQueryString, [email, hash, nickname, name, surname], (err, result) => {
-                    if (err) {
-                        throw err;
-                        res.render('error');
-                    }
-                    console.log(result);
-                })
-                let subject = 'Ingredients - Dokończ proces rejestracji';
-                let message = `<a href="http://localhost:3000/confirm_email/${emailConfirmHash.toString('hex')}">Kliknij, aby ukończyć proces rejestracji!</a>`;
-                mailClient.sendEmail(email, subject, message);
-                res.redirect('/after_register');
-            })
-        } catch (err) {
-            throw err;
+        console.log(`Liczba kont: ${userRowCount}`);
+        if (userRowCount !== 0) {
+            errors.push({ msg: "Konto o podanym adresie istnieje już w bazie danych." });
         }
-    }
+
+        if (errors.length > 0) {
+            console.log(errors);
+            res.render('./index/register', {
+                errors: errors,
+                layout: 'layout_before_login'
+            });
+        } else {
+            const emailConfirmHash = crypto.randomBytes(48);
+            console.log(emailConfirmHash.toString('hex'));
+            const insertQueryString = `
+          INSERT INTO users (
+              email_address, 
+              password, 
+              nickname, 
+              date_of_join, 
+              name, 
+              surname, 
+              is_admin, 
+              state, 
+              activation_url 
+          ) VALUES (
+              $1,
+              $2, 
+              $3, 
+              to_timestamp(${Date.now() / 1000.0}), 
+              $4, 
+              $5, 
+              FALSE,
+              0, 
+              '${emailConfirmHash.toString('hex')}'
+              );`;
+
+            try {
+                argon2.hash(password).then(hash => {
+                    console.log(hash.length);
+                    console.log(hash);
+                    pgClient.query(insertQueryString, [email, hash, nickname, name, surname], (err, result) => {
+                        if (err) {
+                            throw err;
+                            res.render('error');
+                        }
+                        console.log(result);
+                    })
+                    let subject = 'Ingredients - Dokończ proces rejestracji';
+                    let message = `<a href="http://localhost:3000/confirm_email/${emailConfirmHash.toString('hex')}">Kliknij, aby ukończyć proces rejestracji!</a>`;
+                    mailClient.sendEmail(email, subject, message);
+                    res.redirect('/after_register');
+                })
+            } catch (err) {
+                throw err;
+            }
+        }
+    });
 });
 
 router.get('/confirm_email/:hash', (req, res) => {
