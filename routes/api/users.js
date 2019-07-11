@@ -8,12 +8,32 @@ router.get('/all', (req, res) => {
     });
 });
 
+router.get('/email/:email',(req,res)=>{
+    const  queryString = `SELECT * FROM users WHERE email_address = $1`;
+    const emailValue = req.params.email;
+    pgClient.query(queryString,[emailValue],(err,result)=>{
+        if(err) throw err;
+        res.json(result.rowCount);
+    })
+});
+
+router.get('/nickname/:nickname',(req,res)=>{
+    const  queryString = `SELECT * FROM users WHERE nickname = $1`;
+    const nicknameValue = req.params.nickname;
+    pgClient.query(queryString,[nicknameValue],(err,result)=>{
+        if(err) throw err;
+        res.json(result.rowCount);
+    })
+});
+
+
 router.get('/id/:id', (req, res) => {
     const queryString = 'SELECT * FROM users WHERE id_user = $1';
     const value = [parseInt(req.params.id)];
 
     pgClient.query(queryString, value, (err, result) => {
         if (err) throw err;
+        console.log(result.rows);
         res.json(result.rows);
     });
 });
