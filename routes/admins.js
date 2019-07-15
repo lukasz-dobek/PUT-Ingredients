@@ -68,7 +68,7 @@ router.get('/user_management/:nickname', (req, res) => {
             if (userActivitiesQueryError) {
                 throw userActivitiesQueryError;
             }
-            res.render('temp', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows, userActivities: userActivitiesQueryResult.rows });
+            res.render('user_management_details', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows, userActivities: userActivitiesQueryResult.rows });
         });
     });
 });
