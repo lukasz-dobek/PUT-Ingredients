@@ -11,11 +11,11 @@ let storage = multer.diskStorage({
         callback(null, './public/images');
     },
     filename: function (req, file, callback) {
-        callback(null, Date.now() + '_' +  file.originalname.replace(' ', '_'));
+        callback(null, Date.now() + '_' + file.originalname.replace(' ', '_'));
     }
 });
 
-let upload = multer({ storage : storage });
+let upload = multer({ storage: storage });
 
 function createLinkToRecipe(recipeName) {
     return '/recipes/'.concat(latinize(recipeName.replace(' ', '_')));
@@ -43,7 +43,7 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
     }
 
     // Fill array with nulls
-    for (let i = filepathsArray.length; i < 4; i++){
+    for (let i = filepathsArray.length; i < 4; i++) {
         filepathsArray.push(null);
     }
 
@@ -73,6 +73,10 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
     INSERT INTO ingredients_used_in_recipe (recipe_id, ingredient_id, unit_id, amount) VALUES
         ($1, (SELECT id_ingredient FROM ingredients WHERE ingredient_name = $2), (SELECT id_unit FROM units WHERE unit_name = $3), $4)`;
 
+    let insertCategoriesQueryString = `
+    INSERT INTO categories_per_recipe (recipe_id, category_id) VALUES 
+    ($1, (SELECT id_category FROM categories WHERE category_name = $2));`;
+
     let selectRecipeIdQueryString = `SELECT id_recipe FROM recipes WHERE recipe_name = $1`;
 
     let queryParametersList = [];
@@ -82,6 +86,9 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         queryParametersList.push('$' + (i * i) + 2);
         queryParametersList.push('$' + (i * i) + 3);
     }
+
+    let isCategoryAnArray = Array.isArray(req.body.category);
+    let categoriesNumber = isCategoryAnArray ? req.body.category.length : 1;
 
     // for (let i = 0; i < ingredientsNumber; i++){
     //     addIngredientsQueryString+=' ($1, SELECT id_ingredient FROM ingredients WHERE ingredient_name = $2), (SELECT id_unit FROM units WHERE unit_name = $3), $4),';
@@ -106,6 +113,7 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         photo_four: filepathsArray[3],
         visible_email: req.body.emailAccepted ? "true" : "false"
     };
+    console.log(`numer katetgorii: ${categoriesNumber}`)
     pgClient.query(addRecipeQueryString, [
         recipeBody.user_id,
         recipeBody.recipe_name,
@@ -136,9 +144,17 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
                     (addIngredientsQueryError, addIngredientsQueryResult) => {
                         if (addIngredientsQueryError) {
                             throw addIngredientsQueryError;
-                        }
+                        } 
                         console.log(addIngredientsQueryResult.command, addIngredientsQueryResult.rowCount);
                     });
+            }
+            for (let j = 0; j < categoriesNumber; j++) {
+                pgClient.query(insertCategoriesQueryString, [selectRecipeIdQueryResult.rows[0]["id_recipe"], isCategoryAnArray ? req.body.category[j] : req.body.category ], (insertCategoriesQueryError, insertCategoriesQueryResult) => {
+                    if (insertCategoriesQueryError) {
+                        throw insertCategoriesQueryError;
+                    }
+                    console.log(insertCategoriesQueryResult.command, insertCategoriesQueryResult.rowCount);
+                });
             }
         })
         res.redirect('/recipes/add_recipe_confirmation');
