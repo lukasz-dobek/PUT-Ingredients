@@ -51,11 +51,25 @@ router.get('/user_management/:nickname', (req, res) => {
         END AS state,
         id_user
     FROM users WHERE nickname = $1;`;
-    pgClient.query(userInfoQueryString, (userInfoQueryError, userInfoQueryResult) => {
+
+    const userActivitiesQueryString = `
+    SELECT 
+        date_of_activity,
+        activity_name,
+        link,
+        details
+    FROM user_activities
+    WHERE nickname = $1`
+    pgClient.query(userInfoQueryString, [nickname], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
         }
-        res.render('temp', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows });
+        pgClient.query(userActivitiesQueryString, [nickname], (userActivitiesQueryError, userActivitiesQueryResult) => {
+            if (userActivitiesQueryError) {
+                throw userActivitiesQueryError;
+            }
+            res.render('temp', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows, userActivities: userActivitiesQueryResult.rows });
+        });
     });
 });
 

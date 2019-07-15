@@ -31,8 +31,9 @@ router.post('/login', (req, res, next) => {
             const insertActivityQueryString = `
             INSERT INTO user_activities (
                 user_id,
-                date_of_login,
-                browser_info) VALUES ($1, TO_TIMESTAMP($2/1000.0), $3)`;
+                date_of_activity,
+                activity_name,
+                details) VALUES ($1, TO_TIMESTAMP($2/1000.0), 'Logowanie', $3)`;
             pgClient.query(insertActivityQueryString, [user['id_user'], Date.now(), req.headers['user-agent']], (err, result) => {
                 if(err) { throw err }
                 res.redirect('/recipes');
