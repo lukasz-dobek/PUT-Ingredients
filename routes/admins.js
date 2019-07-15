@@ -19,10 +19,53 @@ router.get('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        MAX(usa.date_of_login) AS date_of_login
+        MAX(usa.date_of_activity) AS date_of_login
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
+    WHERE usa.activity_name = 'Logowanie'
     GROUP BY usr.nickname, usr.id_user;`;
     pgClient.query(userInfoQueryString, (userInfoQueryError, userInfoQueryResult) => {
+        if (userInfoQueryError) {
+            throw userInfoQueryError;
+        }
+        res.render('./admin_panel/user_management', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows });
+    });
+});
+
+router.post('/user_management', (req, res) => {
+    let activeParam = req.body.active;
+    let sortUsing = req.body.sortUsing;
+    let sortType = req.body.sortType;
+    let nameSearch = req.body.nameSearch ? req.body.nameSearch : '%';
+
+    let orderBy;
+
+    if (sortUsing === 'nickname') {
+        orderBy = 'usr.nickname';
+    } else if (sortUsing === 'ID') {
+        orderBy = 'usr.id_user';
+    } else if (sortUsing === 'email') {
+        orderBy = 'usr.email_address';
+    } else {
+        orderBy = 'usa.date_of_activity';
+    }
+
+    const userInfoQueryString = `
+    SELECT 
+        usr.id_user, 
+        CASE usr.state
+            WHEN 0 THEN 'Nieaktywny'
+            WHEN 1 THEN 'Aktywny'
+            WHEN 2 THEN 'Zbanowany'
+            WHEN 3 THEN 'Usunięty'
+        END AS state,
+        usr.nickname, 
+        usr.email_address, 
+        MAX(usa.date_of_activity) AS date_of_login
+    FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
+    WHERE usr.nickname LIKE $1 && usr.state = $2 && usa.activity_name = 'Logowanie'
+    GROUP BY usr.nickname, usr.id_user
+    ORDER BY $3 $4;`;
+    pgClient.query(userInfoQueryString, [nameSearch, activeParam, sortUsing, sortType], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
         }
