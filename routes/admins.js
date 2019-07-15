@@ -21,7 +21,7 @@ router.get('/user_management', (req, res) => {
         usr.email_address, 
         MAX(usa.date_of_activity) AS date_of_login
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
-    WHERE usa.date_of_activity = 'Logowanie'
+    WHERE usa.activity_name = 'Logowanie'
     GROUP BY usr.nickname, usr.id_user;`;
     pgClient.query(userInfoQueryString, (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
