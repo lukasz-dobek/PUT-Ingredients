@@ -62,10 +62,10 @@ router.post('/user_management', (req, res) => {
         usr.email_address, 
         MAX(usa.date_of_activity) AS date_of_login
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
-    WHERE usr.nickname LIKE $1 && usr.state = $2 && usa.activity_name = 'Logowanie'
+    WHERE usr.nickname LIKE $1 AND usr.state = $2 AND usa.activity_name = 'Logowanie'
     GROUP BY usr.nickname, usr.id_user
-    ORDER BY $3 $4;`;
-    pgClient.query(userInfoQueryString, [nameSearch, activeParam, sortUsing, sortType], (userInfoQueryError, userInfoQueryResult) => {
+    ORDER BY $3;`;
+    pgClient.query(userInfoQueryString, [nameSearch, activeParam, orderBy], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
         }
@@ -97,12 +97,12 @@ router.get('/user_management/:nickname', (req, res) => {
 
     const userActivitiesQueryString = `
     SELECT 
-        date_of_activity,
-        activity_name,
-        link,
-        details
-    FROM user_activities
-    WHERE nickname = $1`
+        usa.date_of_activity,
+        usa.activity_name,
+        usa.link,
+        usa.details
+    FROM user_activities usa INNER JOIN users usr ON usa.user_id = usr.id_user
+    WHERE usr.nickname = $1`
     pgClient.query(userInfoQueryString, [nickname], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
