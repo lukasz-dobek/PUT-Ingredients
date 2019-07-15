@@ -79,7 +79,7 @@ router.get('/recipe_management', (req, res) => {
 });
 
 router.get('/user_management/details', (req, res) => {
-    res.render('./admin_panel/recipe_management_details', { layout: 'layout_admin_panel'});
+    res.render('./admin_panel/user_management_details', { layout: 'layout_admin_panel'});
 });
 
 module.exports = router;
