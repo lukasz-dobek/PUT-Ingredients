@@ -64,4 +64,8 @@ router.get('/recipe_management', (req, res) => {
     res.render('./admin_panel/recipe_management', { layout: 'layout_admin_panel'});
 });
 
+router.get('/user_management/details', (req, res) => {
+    res.render('./admin_panel/recipe_management_details', { layout: 'layout_admin_panel'});
+});
+
 module.exports = router;
