@@ -15,12 +15,22 @@ CREATE TABLE IF NOT EXISTS users (
 	reset_password_url TEXT
 );
 
+-- -- User_activities table
+-- CREATE TABLE IF NOT EXISTS user_activities (
+-- 	id_user_activity SERIAL PRIMARY KEY,
+-- 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
+-- 	date_of_login TIMESTAMP NOT NULL,
+-- 	browser_info VARCHAR(150) NOT NULL
+-- );
+
 -- User_activities table
 CREATE TABLE IF NOT EXISTS user_activities (
 	id_user_activity SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
-	date_of_login TIMESTAMP NOT NULL,
-	browser_info VARCHAR(150) NOT NULL
+	date_of_activity TIMESTAMP NOT NULL,
+	activity_name VARCHAR(50) NOT NULL,
+	link VARCHAR(100), 
+	details VARCHAR(150)
 );
 
 -- Categories table

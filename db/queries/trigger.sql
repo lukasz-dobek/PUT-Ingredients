@@ -40,3 +40,78 @@ ON shop_lists
 FOR EACH ROW
 EXECUTE PROCEDURE add_ingredients_to_shopping_list();
 
+CREATE OR REPLACE FUNCTION favourites_to_activities()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO user_activities (user_id, date_of_activity, activity_name, link)
+    VALUES(NEW.user_id, NEW.date_of_favourite, 'Dodanie do ulubionych', (SELECT rec.link_to_recipe FROM recipes rec WHERE rec.id_recipe = NEW.recipe_id));
+   RETURN NEW;
+END;
+$BODY$
+language plpgsql;
+
+CREATE TRIGGER favourites_to_activities
+AFTER INSERT 
+ON favourites
+FOR EACH ROW
+EXECUTE PROCEDURE favourites_to_activities();
+
+CREATE OR REPLACE FUNCTION reports_to_activities()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO user_activities (user_id, date_of_activity, activity_name, link)
+    VALUES(NEW.reportee_id, NEW.date_of_report, 'Zgłoszenie', (SELECT rec.link_to_recipe FROM recipes rec WHERE rec.id_recipe = NEW.recipe_id));
+   RETURN NEW;
+END;
+$BODY$
+language plpgsql;
+
+CREATE TRIGGER reports_to_activities
+AFTER INSERT 
+ON reports
+FOR EACH ROW
+EXECUTE PROCEDURE reports_to_activities();
+
+CREATE OR REPLACE FUNCTION votes_to_activities()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO user_activities (user_id, date_of_activity, activity_name, link, details)
+    VALUES(NEW.user_id, 
+    NEW.date_of_vote, 
+    'Ocena', 
+    (SELECT rec.link_to_recipe 
+      FROM recipes rec 
+      WHERE rec.id_recipe = NEW.recipe_id), 'Ocena:' || NEW.score);
+   RETURN NEW;
+END;
+$BODY$
+language plpgsql;
+
+CREATE TRIGGER votes_to_activities
+AFTER INSERT 
+ON user_votes
+FOR EACH ROW
+EXECUTE PROCEDURE votes_to_activities();
+
+CREATE OR REPLACE FUNCTION recipes_to_activities()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO user_activities (user_id, date_of_activity, activity_name, link)
+    VALUES(NEW.user_id, 
+    NEW.date_of_creation, 
+    'Dodanie przepisu', 
+    NEW.link_to_recipe);
+   RETURN NEW;
+END;
+$BODY$
+language plpgsql;
+
+CREATE TRIGGER recipes_to_activities
+AFTER INSERT 
+ON recipes
+FOR EACH ROW
+EXECUTE PROCEDURE recipes_to_activities();
