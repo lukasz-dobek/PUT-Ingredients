@@ -17,7 +17,6 @@
                     <h4 style="margin-top: 1vw; margin-bottom: 1.5vw">{{email_address}}</h4>
                 </div>
             </div>
-
             <div>
                 <div class="row">
                     <div class="col-2">
@@ -90,11 +89,11 @@
                     <tbody>
                         {{#each userActivities}}
                         <tr>
-                            <td>{{data}}</td>
-                            <td>{{godzina}}</td>
-                            <td>{{activity_name}}</td>
-                            <td><a href="{{link}}">{{link}}</a></td>
-                            <td>{{details}}</td>
+                            <td style="width:8vw">{{data}}</td>
+                            <td style="width:8vw">{{godzina}}</td>
+                            <td style="width:10vw">{{activity_name}}</td>
+                            <td style="width:18vw"><a href="{{link}}">{{link}}</a></td>
+                            <td style="width:12vw">{{details}}</td>
                         </tr>
                         {{/each}}
                     </tbody>

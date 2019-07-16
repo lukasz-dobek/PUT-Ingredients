@@ -16,9 +16,9 @@
                 <div class="col">
                     <p>Parametry:</p>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle admin-filter" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             wybierz 
+                        <button class="btn btn-secondary dropdown-toggle admin-filter" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            wybierz
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item admin-filter" href="#">tylko aktywne</a>
@@ -31,9 +31,9 @@
                 <div class="col">
                     <p>Sortowanie według:</p>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle admin-filter" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                             wybierz 
+                        <button class="btn btn-secondary dropdown-toggle admin-filter" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            wybierz
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item admin-filter" href="#">nazwa</a>
@@ -47,9 +47,9 @@
                 <div class="col">
                     <p>Sortowanie typ:</p>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle admin-filter" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                             wybierz 
+                        <button class="btn btn-secondary dropdown-toggle admin-filter" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            wybierz
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item admin-filter" href="#">rosnąco</a>
@@ -59,7 +59,8 @@
                 </div>
                 <div class="col-1">
                     <p>&nbsp;</p>
-                    <button type="submit" class="btn btn-success ml-3 float-right" style="color:black; background-color:#27AE60; width: 7vw; ">SZUKAJ</button>
+                    <button type="submit" class="btn btn-success ml-3 float-right"
+                        style="color:black; background-color:#27AE60; width: 7vw; ">SZUKAJ</button>
                 </div>
             </div>
             <p>&nbsp</p>
@@ -106,165 +107,41 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1,001</td>
-                            <td>Lorem</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
+                            <td class="align-middle">1,001</td>
+                            <td class="align-middle">Lorem</td>
+                            <td class="align-middle">ipsum</td>
+                            <td class="align-middle">dolor</td>
+                            <td class="align-middle">sit</td>
+                            <td class="align-middle">ipsum</td>
+                            <td class="align-middle">dolor</td>
+                            <td>
+                                <div class="row" style="margin-right:0.2vw; margin-top:0.2vw; margin-bottom: 0.2vw">
+                                    <div class="col">
+                                        <button type="button"
+                                            class="btn btn-secondary btn-block rounded-0"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalLong"
+                                            style="font-size:0.7vw; height: 3.8vw; width: 6vw; text-align:center; margin-right:0vw">WIADOMOŚĆ <br />DO AUTORA</button>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                                <button type="button"
+                                                    onclick="location.href='/administrator_panel/user_management/{{nickname}}'"
+                                                    class="btn btn-secondary btn-block rounded-0"
+                                                    style="font-size:0.7vw; background-color:#919191; border-color: #919191">PUSTE</button>
+                                        </div>
+                                        <div class="row" style="margin-top: 0.2vw ">
+                                                <button type="button" class="btn btn-danger btn-block rounded-0"
+                                            style="font-size:0.7vw" data-toggle="modal"
+                                            data-target="#banUserModal">USUŃ PRZEPIS</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </td>
                         </tr>
-                        <tr>
-                            <td>1,002</td>
-                            <td>amet</td>
-                            <td>consectetur</td>
-                            <td>adipiscing</td>
-                            <td>elit</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,003</td>
-                            <td>Integer</td>
-                            <td>nec</td>
-                            <td>odio</td>
-                            <td>Praesent</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,003</td>
-                            <td>libero</td>
-                            <td>Sed</td>
-                            <td>cursus</td>
-                            <td>ante</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,004</td>
-                            <td>dapibus</td>
-                            <td>diam</td>
-                            <td>Sed</td>
-                            <td>nisi</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,005</td>
-                            <td>Nulla</td>
-                            <td>quis</td>
-                            <td>sem</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                            <td>at</td>
-                        </tr>
-                        <tr>
-                            <td>1,006</td>
-                            <td>nibh</td>
-                            <td>elementum</td>
-                            <td>imperdiet</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                            <td>Duis</td>
-                        </tr>
-                        <tr>
-                            <td>1,007</td>
-                            <td>sagittis</td>
-                            <td>ipsum</td>
-                            <td>Praesent</td>
-                            <td>mauris</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,008</td>
-                            <td>Fusce</td>
-                            <td>nec</td>
-                            <td>tellus</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                            <td>sed</td>
-                        </tr>
-                        <tr>
-                            <td>1,009</td>
-                            <td>augue</td>
-                            <td>semper</td>
-                            <td>porta</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                            <td>Mauris</td>
-                        </tr>
-                        <tr>
-                            <td>1,010</td>
-                            <td>massa</td>
-                            <td>Vestibulum</td>
-                            <td>lacinia</td>
-                            <td>arcu</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,011</td>
-                            <td>eget</td>
-                            <td>nulla</td>
-                            <td>Class</td>
-                            <td>aptent</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,012</td>
-                            <td>taciti</td>
-                            <td>sociosqu</td>
-                            <td>ad</td>
-                            <td>litora</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,013</td>
-                            <td>torquent</td>
-                            <td>per</td>
-                            <td>conubia</td>
-                            <td>nostra</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,014</td>
-                            <td>per</td>
-                            <td>inceptos</td>
-                            <td>himenaeos</td>
-                            <td>Curabitur</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,015</td>
-                            <td>sodales</td>
-                            <td>ligula</td>
-                            <td>in</td>
-                            <td>libero</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
