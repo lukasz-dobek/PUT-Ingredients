@@ -19,7 +19,7 @@ router.get('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MM:SS') AS date_of_activity
+        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MI:SS') AS date_of_activity
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
     GROUP BY usr.nickname, usr.id_user;`;
     pgClient.query(userInfoQueryString, (userInfoQueryError, userInfoQueryResult) => {
@@ -63,7 +63,7 @@ router.post('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MM:SS') AS date_of_activity
+        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MI:SS') AS date_of_activity
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
     WHERE usr.nickname LIKE $1 AND usr.state = $2
     GROUP BY usr.nickname, usr.id_user`;
@@ -103,7 +103,8 @@ router.get('/user_management/:nickname', (req, res) => {
 
     const userActivitiesQueryString = `
     SELECT 
-        usa.date_of_activity,
+        TO_CHAR(usa.date_of_activity, 'YY/MM/DD') AS data,
+        TO_CHAR(usa.date_of_activity, 'HH:MI:SS') AS godzina,
         usa.activity_name,
         usa.link,
         usa.details

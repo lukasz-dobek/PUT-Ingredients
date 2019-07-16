@@ -38,6 +38,16 @@ router.get('/id/:id', (req, res) => {
     });
 });
 
+router.post('/send_email', (req, res, next) => {
+    // TODO
+    console.log(req.body);
+});
+
+router.post('/block_user', (req, res, next) => {
+    // TODO
+    console.log(req.body);
+});
+
 router.get('/shopping_list',(req, res)=>{
     const userShoppingListQueryString=`
     SELECT

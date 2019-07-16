@@ -7,63 +7,64 @@
 
     <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black; margin-top:1.3vw">
         {{!-- tabelka --}}
+        {{#each userInfo}}
         <div class="admin-width-container">
             <div class="row">
                 <div class="col-3">
-                   <h4 style="margin-top: 1vw; margin-bottom: 1.5vw">SZCZEGÓŁY UŻYTKOWNIKA: </h4>
+                    <h4 style="margin-top: 1vw; margin-bottom: 1.5vw">SZCZEGÓŁY UŻYTKOWNIKA: </h4>
                 </div>
                 <div class="col">
-                    <h4 style="margin-top: 1vw; margin-bottom: 1.5vw">EXAMPLE qetbhc@wp.pl</h4>
+                    <h4 style="margin-top: 1vw; margin-bottom: 1.5vw">{{email_address}}</h4>
                 </div>
             </div>
-            
+
             <div>
                 <div class="row">
                     <div class="col-2">
                         <p class="about-user">pseudonim:</p>
                     </div>
-                    <div class="col">example</div>
+                    <div class="col">{{nickname}}</div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <p class="about-user">imię:</p>
                     </div>
-                    <div class="col">example</div>
+                    <div class="col">{{name}}</div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <p class="about-user">nazwisko:</p>
                     </div>
-                    <div class="col">example</div>
+                    <div class="col">{{surname}}</div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <p class="about-user">data dołączenia:</p>
                     </div>
-                    <div class="col">example</div>
+                    <div class="col">{{date_of_join}}</div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <p class="about-user">administrator:</p>
                     </div>
-                    <div class="col">example</div>
+                    <div class="col">{{is_admin}}</div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <p class="about-user">status aktywności:</p>
                     </div>
-                    <div class="col">example</div>
+                    <div class="col">{{state}}</div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <p class="about-user">ID użytkownika:</p>
                     </div>
-                    <div class="col">example</div>
+                    <div class="col">{{id_user}}</div>
                 </div>
             </div>
+            {{/each}}
+
             <h4 style="margin-top:2.8vw; margin-bottom:1.2vw">HISTORIA AKTYWNOŚCI</h4>
-
-
 
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
@@ -87,118 +88,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each userActivities}}
                         <tr>
-                            <td>1,001</td>
-                            <td>Lorem</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
+                            <td>{{data}}</td>
+                            <td>{{godzina}}</td>
+                            <td>{{activity_name}}</td>
+                            <td><a href="{{link}}">{{link}}</a></td>
+                            <td>{{details}}</td>
                         </tr>
-                        <tr>
-                            <td>1,002</td>
-                            <td>amet</td>
-                            <td>consectetur</td>
-                            <td>adipiscing</td>
-                            <td>elit</td>
-                        </tr>
-                        <tr>
-                            <td>1,003</td>
-                            <td>Integer</td>
-                            <td>nec</td>
-                            <td>odio</td>
-                            <td>Praesent</td>
-                        </tr>
-                        <tr>
-                            <td>1,003</td>
-                            <td>libero</td>
-                            <td>Sed</td>
-                            <td>cursus</td>
-                            <td>ante</td>
-                        </tr>
-                        <tr>
-                            <td>1,004</td>
-                            <td>dapibus</td>
-                            <td>diam</td>
-                            <td>Sed</td>
-                            <td>nisi</td>
-                        </tr>
-                        <tr>
-                            <td>1,005</td>
-                            <td>Nulla</td>
-                            <td>quis</td>
-                            <td>sem</td>
-                            <td>at</td>
-                        </tr>
-                        <tr>
-                            <td>1,006</td>
-                            <td>nibh</td>
-                            <td>elementum</td>
-                            <td>imperdiet</td>
-                            <td>Duis</td>
-                        </tr>
-                        <tr>
-                            <td>1,007</td>
-                            <td>sagittis</td>
-                            <td>ipsum</td>
-                            <td>Praesent</td>
-                            <td>mauris</td>
-                        </tr>
-                        <tr>
-                            <td>1,008</td>
-                            <td>Fusce</td>
-                            <td>nec</td>
-                            <td>tellus</td>
-                            <td>sed</td>
-                        </tr>
-                        <tr>
-                            <td>1,009</td>
-                            <td>augue</td>
-                            <td>semper</td>
-                            <td>porta</td>
-                            <td>Mauris</td>
-                        </tr>
-                        <tr>
-                            <td>1,010</td>
-                            <td>massa</td>
-                            <td>Vestibulum</td>
-                            <td>lacinia</td>
-                            <td>arcu</td>
-                        </tr>
-                        <tr>
-                            <td>1,011</td>
-                            <td>eget</td>
-                            <td>nulla</td>
-                            <td>Class</td>
-                            <td>aptent</td>
-                        </tr>
-                        <tr>
-                            <td>1,012</td>
-                            <td>taciti</td>
-                            <td>sociosqu</td>
-                            <td>ad</td>
-                            <td>litora</td>
-                        </tr>
-                        <tr>
-                            <td>1,013</td>
-                            <td>torquent</td>
-                            <td>per</td>
-                            <td>conubia</td>
-                            <td>nostra</td>
-                        </tr>
-                        <tr>
-                            <td>1,014</td>
-                            <td>per</td>
-                            <td>inceptos</td>
-                            <td>himenaeos</td>
-                            <td>Curabitur</td>
-                        </tr>
-                        <tr>
-                            <td>1,015</td>
-                            <td>sodales</td>
-                            <td>ligula</td>
-                            <td>in</td>
-                            <td>libero</td>
-                        </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -206,9 +104,4 @@
 
     </div>
 
-
-
-
-    </div>
-    </div>
 </main>
