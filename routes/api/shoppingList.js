@@ -20,15 +20,32 @@ router.post('/', (req, res) => {
     });
 });
 
+router.get('/recipe/:recipe',(req,res)=>{
+   const queryString = `SELECT isl.ingredient_id, i.ingredient_name,t.name,isl.amount,u.unit_name from ingredients i
+    JOIN types t ON t.id_type=i.type_id
+    JOIN ingredients_used_in_shop_list isl ON isl.ingredient_id=i.id_ingredient
+    JOIN units u ON u.id_unit=isl.unit_id
+    JOIN shop_lists sl ON sl.id_shop_list=isl.shop_list_id
+    JOIN recipes r ON r.id_recipe=sl.recipe_id
+    WHERE r.recipe_name like $1; `
+    const recipeName = req.params.recipe;
+   console.log(recipeName);
+   pgClient.query(queryString,[recipeName],(err,result)=>{
+       if(err) throw err;
 
-router.delete('/', (req, res) => {
+       res.json(result.rows);
+   });
+});
+
+
+router.delete('/ingredient', (req, res) => {
     const removeFromShoppingListQueryString = `
-    DELETE FROM shop_lists
-    WHERE user_id = $1 AND recipe_id = $2;
+    DELETE FROM ingredients_used_in_shop_list
+    WHERE ingredient_id = $1;
     `
-    const userId = req.body.userId;
-    const recipeId = req.body.recipeId;
-    pgClient.query(removeFromShoppingListQueryString, [userId, recipeId], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
+    const ingredientId = req.body.ingredient_id;
+    console.log(ingredientId);
+    pgClient.query(removeFromShoppingListQueryString, [ingredientId], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
         if (removeFromShoppingListQueryError) {
             throw removeFromShoppingListQueryError;
         }
