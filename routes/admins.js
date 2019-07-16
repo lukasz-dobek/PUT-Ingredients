@@ -48,7 +48,11 @@ router.post('/user_management', (req, res) => {
         orderBy = 'usa.date_of_activity';
     }
 
-    const userInfoQueryString = `
+    console.log(orderBy);
+
+    let orderPart = ` ORDER BY ${orderBy} ${sortType};`;
+
+    let userInfoQueryString = `
     SELECT 
         usr.id_user, 
         CASE usr.state
@@ -59,15 +63,20 @@ router.post('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        MAX(usa.date_of_activity) AS last_login
+        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MM:SS') AS date_of_activity
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
-    WHERE usr.nickname LIKE $1 AND usr.state = $2 AND usa.activity_name = 'Logowanie'
-    GROUP BY usr.nickname, usr.id_user
-    ORDER BY $3;`;
-    pgClient.query(userInfoQueryString, [nameSearch, activeParam, orderBy], (userInfoQueryError, userInfoQueryResult) => {
+    WHERE usr.nickname LIKE $1 AND usr.state = $2
+    GROUP BY usr.nickname, usr.id_user`;
+
+    userInfoQueryString += orderPart;
+
+    console.log(userInfoQueryString);
+
+    pgClient.query(userInfoQueryString, [nameSearch, activeParam], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
         }
+        console.log(userInfoQueryResult.rows);
         res.render('./admin_panel/user_management', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows });
     });
 });
