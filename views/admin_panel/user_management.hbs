@@ -123,13 +123,13 @@
                         <tr>
                             <td class="align-middle">{{id_user}}</td>
                             <td class="align-middle">{{state}}</td>
-                            <td class="align-middle"><a href="/administrator_panel/user_management/{{nickname}}">{{nickname}}</a></td>
+                            <td class="align-middle">{{nickname}}</td>
                             <td class="align-middle">{{email_address}}</td>
                             <td class="align-middle">{{date_of_activity}}</td>
                             <td>
                                 <div class="row" style="margin-right:0.2vw; margin-top:0.2vw">
                                     <div class="col" style="width:4.7vw">
-                                        <button type="submit"
+                                        <button type="button" onclick="location.href='/administrator_panel/user_management/{{nickname}}'"
                                             style="background-color: #747272; width:10vw; font-size:0.7vw; color: white">SZCZEGÓŁY</button>
                                     </div>
                                     <div class="col" style="width:4.7vw">

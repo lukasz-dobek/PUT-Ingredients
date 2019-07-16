@@ -70,8 +70,6 @@ router.post('/user_management', (req, res) => {
 
     userInfoQueryString += orderPart;
 
-    console.log(userInfoQueryString);
-
     pgClient.query(userInfoQueryString, [nameSearch, activeParam], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
