@@ -1,5 +1,4 @@
 const express = require('express');
-const argon2 = require('argon2');
 const router = express.Router();
 const pgClient = require('./../db/pg-controller');
 
@@ -123,9 +122,27 @@ router.get('/user_management/:nickname', (req, res) => {
     });
 });
 
-
 router.get('/recipe_management', (req, res) => {
-    res.render('./admin_panel/recipe_management', { layout: 'layout_admin_panel'});
+    const recipeQueryString = `
+    SELECT
+        rec.id_recipe,
+        rec.state,
+        rec.recipe_name,
+        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS'),
+        rec.score,
+        CASE (SELECT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
+            WHEN 1 THEN 'TAK' 
+            ELSE 'NIE' 
+        END AS reported,
+        usr.email_address
+    FROM recipes rec INNER JOIN users usr ON rec.user_id = usr.id_user;`;
+    pgClient.query(recipeQueryString, (recipeQueryError, recipeQueryResult) => {
+        if (recipeQueryError) {
+            throw recipeQueryError;
+        }
+        console.log(recipeQueryResult.rows);
+        res.render('./admin_panel/recipe_management', { layout: 'layout_admin_panel', recipeInfo: recipeQueryResult.rows });
+    });
 });
 
 router.get('/user_management/details', (req, res) => {
