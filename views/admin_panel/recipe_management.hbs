@@ -116,14 +116,40 @@
                             <td class="align-middle">dolor</td>
                             <td>
                                 <div class="row" style="margin-right:0.2vw; margin-top:0.2vw; margin-bottom: 0.2vw">
-                                    <div class="col">
+                                    <div class="col-3">
                                         <button type="button"
                                             class="btn btn-secondary btn-block rounded-0"
                                             data-toggle="modal"
                                             data-target="#exampleModalLong"
                                             style="font-size:0.7vw; height: 3.8vw; width: 6vw; text-align:center; margin-right:0vw">WIADOMOŚĆ <br />DO AUTORA</button>
+                                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Wyślij
+                                                            wiadomość
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body text-justify">
+                                                        <textarea name="userMessage" id="userMessage_{{email_address}}"
+                                                            cols="45" rows="10"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-danger"
+                                                            onclick="sendMail('{{email_address}}')">Wyślij</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Zamknij</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-4">
                                         <div class="row">
                                                 <button type="button"
                                                     onclick="location.href='/administrator_panel/user_management/{{nickname}}'"
@@ -136,6 +162,7 @@
                                             data-target="#banUserModal">USUŃ PRZEPIS</button>
                                         </div>
                                     </div>
+                                    
                                 </div>
 
 
