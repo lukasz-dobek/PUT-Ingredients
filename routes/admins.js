@@ -19,9 +19,8 @@ router.get('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        MAX(usa.date_of_activity) AS date_of_login
+        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MM:SS') AS date_of_activity
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
-    WHERE usa.activity_name = 'Logowanie'
     GROUP BY usr.nickname, usr.id_user;`;
     pgClient.query(userInfoQueryString, (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
@@ -60,7 +59,7 @@ router.post('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        MAX(usa.date_of_activity) AS date_of_login
+        MAX(usa.date_of_activity) AS last_login
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
     WHERE usr.nickname LIKE $1 AND usr.state = $2 AND usa.activity_name = 'Logowanie'
     GROUP BY usr.nickname, usr.id_user
@@ -111,7 +110,7 @@ router.get('/user_management/:nickname', (req, res) => {
             if (userActivitiesQueryError) {
                 throw userActivitiesQueryError;
             }
-            res.render('temp', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows, userActivities: userActivitiesQueryResult.rows });
+            res.render('./admin_panel/user_management_details', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows, userActivities: userActivitiesQueryResult.rows });
         });
     });
 });
