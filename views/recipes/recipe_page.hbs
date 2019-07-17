@@ -35,7 +35,8 @@
           <div class="col">
             <div class="container" style="background-color:#7BCE9E; color:black;">
               <p style="text-align:left; font-size: 0.8vw; padding-top: 0.22vw; padding-bottom: 0.22vw; padding-top: 0.01vw; padding-bottom: 0.01vw; text-align: center;"
-                id="test">Dodano przez: <a href="/users/user_recipes/{{nickname}}" style="text-decoration: none">{{nickname}}</a>
+                id="test">Dodano przez: <a href="/users/user_recipes/{{nickname}}"
+                  style="text-decoration: none">{{nickname}}</a>
                 {{#if visible_email}}
                 {{email_address}}
                 {{/if}}
@@ -173,7 +174,7 @@
           <a href="{{link_to_recipe}}"><img src="{{photo_two}}" alt="" class="card-img-top" style="height: 12vw"></a>
           {{else}}
           <div class="container brak-zdj"
-            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
+            style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
           </div>
           {{/if}}
@@ -183,7 +184,7 @@
           <a href="{{link_to_recipe}}"><img src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw"></a>
           {{else}}
           <div class="container brak-zdj"
-            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
+            style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
           </div>
           {{/if}}
@@ -193,21 +194,67 @@
           <a href="{{link_to_recipe}}"><img src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw"></a>
           {{else}}
           <div class="container brak-zdj"
-            style="background-color:#eeeeee; padding: 15px; color:black; height:15vw; text-align: center; height: 12vw">
+            style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
           </div>
           {{/if}}
         </div>
       </div>
+
       <div class="row" style="margin-top:2.5vw">
         <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
           style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.6vw" id="shopListButton_{{id_recipe}}"
           onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
           ZAKUPÓW</button>
       </div>
+      {{#if @root.userIsAdmin}}
+
+      <div class="row" style="margin-top:2.5vw;">
+        <div class="col">
+          <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
+            style="color:black; background-color:#27AE60; height: 2.7vw; width: 10vw">AKCEPTUJ PRZEPIS</button>
+        </div>
+        <div class="col">
+          <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
+            style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.3vw;" data-toggle="modal"
+            data-target="#exampleModalLong">POPROŚ AUTORA O KOREKTĘ</button>
+
+          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Wyślij
+                    wiadomość do autora <p style="font-size: 0.8vw"> Wyjaśnij co jest niepoprawne, jakie elementy wymagają poprawy
+                    </p>
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-justify">
+                  <textarea name="userMessage" id="userMessage_{{email_address}}" cols="45" rows="10"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-danger" onclick="sendMail('{{email_address}}')">Wyślij</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col">
+          <button type="stworz-liste-zakupow" class="btn btn-danger ml-3"
+            style="color:black;  height: 2.7vw; width: 10vw">ODRZUĆ PRZEPIS</button>
+        </div>
+      </div>
+
+      {{/if}}
     </div>
   </div>
-  <p style="margin-top:2vw">Przepis narusza regulamin, zawiera treści niestosowne, nieadekwatne lub jest nie kompletny?
+  <p style="margin-top:2vw">Przepis narusza regulamin, zawiera treści niestosowne, nieadekwatne lub jest nie
+    kompletny?
     <a href="#" type="button" style="color: red" data-toggle="modal" data-target="#exampleModalLong">Zgłoś przepis</a>
   </p>
 
