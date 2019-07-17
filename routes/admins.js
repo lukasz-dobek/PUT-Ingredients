@@ -130,6 +130,7 @@ router.get('/recipe_management', (req, res) => {
         rec.recipe_name,
         TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS'),
         rec.score,
+        rec.link_to_recipe,
         CASE (SELECT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
             WHEN 1 THEN 'TAK' 
             ELSE 'NIE' 
