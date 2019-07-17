@@ -1,9 +1,12 @@
 function sendMail(email) {
+    console.log(email);
     let id = 'userMessage_'+email;
     let elValue = document.getElementById(id).value;
+    let adminEmailValue = document.getElementById('adminEmail').value;
     $.post("/api/users/send_email", {
         message: elValue,
-        send_to: email
+        send_to: email,
+        sent_from: adminEmailValue
     });
     alert('Wiadomość została wysłana!');
     eraseText(id);

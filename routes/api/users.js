@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pgClient = require('../../db/pg-controller');
+const mailClient = require('../../MailController');
 
 router.get('/all', (req, res) => {
     pgClient.query('SELECT * FROM users', (err, result) => {
@@ -26,7 +27,6 @@ router.get('/nickname/:nickname',(req,res)=>{
     })
 });
 
-
 router.get('/id/:id', (req, res) => {
     const queryString = 'SELECT * FROM users WHERE id_user = $1';
     const value = [parseInt(req.params.id)];
@@ -38,9 +38,16 @@ router.get('/id/:id', (req, res) => {
     });
 });
 
-router.post('/send_email', (req, res, next) => {
-    // TODO
-    console.log(req.body);
+router.post('/send_email', (req, res) => {
+    let messageContent = req.body.message;
+    let userEmail = req.body.send_to;
+    let adminEmail = req.body.sent_from;
+
+    let subject = 'Ingredients - Otrzymałeś wiadomość od administratora!';
+    let message = `${messageContent} <br><br> Wiadomość została wysłana za pomocą panelu administracyjnego. W celu bezkonfliktowego kontaktu proszę odpowiedz na aders ${adminEmail}.`;
+
+    mailClient.sendEmail(userEmail, subject, message);
+    res.send('Mail sent.');
 });
 
 router.post('/block_user', (req, res, next) => {
@@ -89,4 +96,5 @@ router.get('/shopping_list',(req, res)=>{
         res.json(userShoppingListQueryResult.rows);
     });
 });
+
 module.exports = router;

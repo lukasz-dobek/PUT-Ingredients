@@ -107,15 +107,15 @@
                                     <div class="col-5">
                                         <button type="button" class="btn btn-secondary btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
-                                            data-target="#exampleModalLong">WYŚLIJ
+                                            data-target="#exampleModalLong{{id_user}}">WYŚLIJ
                                             WIADOMOŚĆ</button>
 
-                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
+                                        <div class="modal fade bd-example-modal-lg" id="exampleModalLong{{id_user}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLongTitle{{id_user}}" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Wyślij
+                                                        <h5 class="modal-title" id="exampleModalLongTitle{{id_user}}">Wyślij
                                                             wiadomość
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -125,11 +125,17 @@
                                                     </div>
                                                     <div class="modal-body text-justify">
                                                         <textarea name="userMessage" id="userMessage_{{email_address}}"
-                                                            cols="45" rows="10"></textarea>
+                                                            cols="70" rows="10"></textarea>
+                                                            <label for="adminEmail" class="col-form-label">Adres e-mail
+                                                                do
+                                                                korespondencji:</label>
+                                                            <input type="text" class="form-control" name="adminEmail"
+                                                                id="adminEmail" value="{{@root.userEmail}}">
                                                     </div>
                                                     <div class="modal-footer">
+
                                                         <button type="submit" class="btn btn-danger"
-                                                            onclick="sendMail('{{email_address}}')">Wyślij</button>
+                                                            onclick="sendMail('{{email_address}}')">Wyślij do: {{email_address}}</button>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Zamknij</button>
                                                     </div>
