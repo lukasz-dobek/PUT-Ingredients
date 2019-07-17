@@ -128,7 +128,7 @@ router.get('/recipe_management', (req, res) => {
         rec.id_recipe,
         rec.state,
         rec.recipe_name,
-        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS'),
+        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS') as date_of_creation,
         rec.score,
         rec.link_to_recipe,
         CASE (SELECT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
