@@ -44,8 +44,31 @@ router.post('/send_email', (req, res, next) => {
 });
 
 router.post('/block_user', (req, res, next) => {
-    // TODO
-    console.log(req.body);
+    const blockUserQueryString = `
+    UPDATE users SET state = 2 WHERE nickname = $1;`;
+
+    pgClient.query(blockUserQueryString, [req.body.blockedNickname], (blockUserQueryError, blockUserQueryResult) => {
+        if (blockUserQueryError) {
+            throw blockUserQueryError;
+        }
+        console.log(`Blocked user ${req.body.blockedNickname} - updated rows - ${blockUserQueryResult.rowCount}`);
+        res.json(blockUserQueryResult.rows);
+    });
+});
+
+router.post('/unblock_user', (req, res, next) => {
+    const unblockUserQueryString = `
+    UPDATE users SET state = 1 WHERE nickname = $1;`;
+
+    console.log(req.body.unblockedNickname);
+
+    pgClient.query(unblockUserQueryString, [req.body.unblockedNickname], (unblockUserQueryError, unblockUserQueryResult) => {
+        if (unblockUserQueryError) {
+            throw unblockUserQueryError;
+        }
+        console.log(`Unblocked user ${req.body.unblockedNickname} - updated rows - ${unblockUserQueryResult.rowCount}`);
+        res.json(unblockUserQueryResult.rows);
+    });
 });
 
 router.get('/shopping_list',(req, res)=>{

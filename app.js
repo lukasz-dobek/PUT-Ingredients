@@ -44,6 +44,14 @@ handlebars.registerHelper('listItem', function (from, to, context, options) {
   return item;
 });
 
+handlebars.registerHelper('isBanned', (state, options) => {
+  if (state === 'Zbanowany'){
+    return options.inverse(this);
+  } else {
+    return options.fn(this);
+  }
+});
+
 handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });

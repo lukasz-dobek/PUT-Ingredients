@@ -18,4 +18,14 @@ function blockUser(nickname) {
     $.post("/api/users/block_user", {
         blockedNickname: nickname
     });
+    alert(`Zablokowano użytkownika ${nickname}`);
+    location.reload();
+}
+
+function unblockUser(nickname) {
+    $.post("/api/users/unblock_user", {
+        unblockedNickname: nickname
+    });
+    alert(`Odblokowano użytkownika ${nickname}`);
+    location.reload();
 }
