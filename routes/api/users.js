@@ -19,7 +19,7 @@ router.get('/email/:email',(req,res)=>{
 });
 
 router.get('/nickname/:nickname',(req,res)=>{
-    const  queryString = `SELECT * FROM users WHERE nickname = $1`;
+    const  queryString = `SELECT LOWER(nickname) FROM users WHERE LOWER(nickname) = $1`;
     const nicknameValue = req.params.nickname;
     pgClient.query(queryString,[nicknameValue],(err,result)=>{
         if(err) throw err;

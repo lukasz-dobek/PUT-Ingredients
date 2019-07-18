@@ -205,7 +205,7 @@ document.addEventListener('blur', function (event) {
         }
 
     if (event.target.name === 'nickname') {
-        let customNickname = document.getElementById('nickForm1').value;
+        let customNickname = document.getElementById('nickForm1').value.toLowerCase();
         if(customNickname) {
             $.getJSON(`/api/users/nickname/${customNickname}`, (jsonData) => {
                 if (jsonData === 1) {
