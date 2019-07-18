@@ -54,4 +54,28 @@ router.delete('/ingredient', (req, res) => {
     });
 });
 
+router.delete('/shoppingList', (req, res) => {
+
+    const queryString = `DELETE FROM ingredients_used_in_shop_list WHERE shop_list_id = (SELECT id_shop_list
+    FROM shop_lists sl INNER JOIN recipes r ON sl.recipe_id = r.id_recipe WHERE r.recipe_name = $1)`;
+    const removeFromShoppingListQueryString = `
+    DELETE FROM shop_lists
+    WHERE  user_id = (SELECT id_user FROM users WHERE email_address =$1) and recipe_id = (SELECT id_recipe FROM recipes WHERE recipe_name = $2);
+    `
+    const email_address = req.body.email_address;
+    const recipeName = req.body.recipe_name;
+    console.log(recipeName);
+    pgClient.query(queryString, [recipeName], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
+        if (removeFromShoppingListQueryError) {
+            throw removeFromShoppingListQueryError;
+        }
+        pgClient.query(removeFromShoppingListQueryString,[email_address,recipeName],(err,result)=>{
+           if (err) {throw err;}
+            console.log(`DELETE /shoppingList - query successful - ${removeFromShoppingListQueryResult.rowCount} removed`);
+            res.json(result.rows);
+        });
+    });
+});
+
+
 module.exports = router;
