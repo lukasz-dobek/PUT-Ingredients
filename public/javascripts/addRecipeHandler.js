@@ -232,7 +232,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientQuantityCol.classList.add('col');
 
         let ingredientQuantity = document.createElement('input');
-        ingredientQuantity.type = 'text';
+        ingredientQuantity.type = 'number';
         ingredientQuantity.name = 'ingredientQuantity';
         ingredientQuantity.id = `ingredientQuantity${numberOfIngredients}`
         ingredientQuantity.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
@@ -368,6 +368,8 @@ $.getJSON("/api/recipes/all", (data) => {
         }
 
         if (field.type === 'number') {
+            if(field.id.includes("ingredientQuantity") && field.value >2000) return 'Wartość nie może być większa niż 2000';
+            if(field.id === 'numberOfPortions' && field.value >20) return 'Wartość nie może być większa niż 20';
             if (field.value <= 0) return "Wartość nie może być zerowa, lub ujemna."
         }
         // Get validity
@@ -488,9 +490,9 @@ $.getJSON("/api/recipes/all", (data) => {
             let customIngredient = event.target.value;
 
             if (customIngredient) {
-                if (!ingredientsNames.includes(customIngredient)) {
-                    error = "Taki składnik nie występuje w bazie."
-                } else {
+                // if (!ingredientsNames.includes(customIngredient)) {
+                //     error = "Taki składnik nie występuje w bazie."
+                // } else {
                     let selectedIngredients = document.querySelectorAll("[id^=ingredientName]");
                     let usedIngredients = [];
                     selectedIngredients.forEach(item => {
@@ -513,7 +515,7 @@ $.getJSON("/api/recipes/all", (data) => {
                             }
                         }
                     }
-                }
+                //}
             }
         }
         // If there's an error, show it
@@ -539,8 +541,35 @@ $.getJSON("/api/recipes/all", (data) => {
         // Store the first field with an error to a letiable so we can bring it into focus leter
         let error, hasErrors;
         for (let i = 0; i < fields.length; i++) {
-            if(fields[i].parentElement.outerText === 'Taki składnik został już dodany'){
-                error ='Taki składnik został już dodany.'
+            if(fields[i].id.includes("ingredientName")) {
+                let customIngredient = fields[i].value;
+                if (customIngredient) {
+                    if (!ingredientsNames.includes(customIngredient)) {
+                        error = "Taki składnik nie występuje w bazie."
+                    } else {
+                        let selectedIngredients = document.querySelectorAll("[id^=ingredientName]");
+                        let usedIngredients = [];
+                        selectedIngredients.forEach(item => {
+                            usedIngredients.push(item['value']);
+                        });
+                        console.log(usedIngredients);
+                        let num = event.target.id.replace(/^\D+/g, "");
+                        let index = usedIngredients.indexOf(customIngredient);
+                        console.log(index);
+                        usedIngredients.splice(index, 1);
+                        console.log(usedIngredients);
+                        for (let i = 1; i <= usedIngredients.length; i++) {
+                            if (i != num) {
+                                if (usedIngredients[num - 1] === customIngredient) {
+                                    break;
+                                } else if (usedIngredients.includes(customIngredient)) {
+                                    error = "Taki składnik został już dodany";
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             else{
                 error = hasError(fields[i]);
