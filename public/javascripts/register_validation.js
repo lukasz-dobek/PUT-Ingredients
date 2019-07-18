@@ -90,7 +90,7 @@ let hasError = function (field) {
 
     // If too short
     if (validity.tooShort) {
-        if (field.name === 'password') return 'Hasło musi składać się z co najmniej 6 znaków.'
+        if (field.name === 'password') return 'Hasło musi składać się z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego..'
         if (field.name === 'nickname') return 'Pseudonim musi składać się z co najmniej 3 znaków.'
     }
 
@@ -101,7 +101,7 @@ let hasError = function (field) {
 
     // If pattern doesn't match
     if (validity.patternMismatch) {
-        if (field.name === 'password') return 'Podane hasło nie spełnia wymagań. Musi składać się ono z co najmniej 6 znaków, w tym jednej litery i jednej cyfry.';
+        if (field.name === 'password') return 'Podane hasło nie spełnia wymagań. Musi składać się ono z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego.';
         if (field.type === 'email') return 'Podany e-mail jest nieprawidłowy.'
     }
 
