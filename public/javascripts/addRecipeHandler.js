@@ -346,7 +346,7 @@ $.getJSON("/api/recipes/all", (data) => {
             console.log(items);
 
             for (let i = 0; i < recipeNames.length; i++) {
-                if (customRecipeName.value != recipeNames[i]) {
+                if (customRecipeName.value.toUpperCase() != recipeNames[i].toUpperCase()) {
                     recipeNameTaken = false;
                 } else {
                     recipeNameTaken = true;
