@@ -7,7 +7,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/recipes/:linkToRecipe', (req, res) => {
-    console.log('lol');
     const recipeQueryString = `
     SELECT 
         rec.id_recipe, 
