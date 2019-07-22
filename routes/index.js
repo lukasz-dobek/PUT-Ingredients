@@ -126,7 +126,7 @@ router.post('/reset_password/:hash', (req, res) => {
             }
 
             if (password.length < 6) {
-                errors.push({ msg: "Hasło powinno składać się z przynajmniej 6 znaków." });
+                errors.push({ msg: "Hasło powinno składać się z przynajmniej 8 znaków." });
             }
 
             const updatePasswordQueryString = "UPDATE users SET password = $1, reset_password_url = '' WHERE reset_password_url = $2;";

@@ -16,8 +16,8 @@ router.post('/', (req, res) => {
             throw addToShoppingListQueryError;
         }
         console.log(`POST /shoppingList - query successful - ${addToShoppingListQueryResult.rowCount} added`);
+        // res.redirect('/users/shopping_lists')
         res.json(addToShoppingListQueryResult.rows);
-        //res.json(addToShoppingListQueryResult.rows);
     });
 });
 
