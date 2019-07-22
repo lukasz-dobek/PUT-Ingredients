@@ -36,4 +36,19 @@ router.get('/name/:name', (req, res) => {
     });
 });
 
+router.delete('/:id', (req, res) => {
+    const removeFromRecipesQueryString = `
+    DELETE FROM recipes 
+    WHERE id_recipe = $1;
+    `;
+    const recipeId = req.params.id;
+    pgClient.query(removeFromRecipesQueryString, [recipeId], (removeFromRecipesQueryError, removeFromRecipesQueryResult) => {
+        if (removeFromRecipesQueryError) {
+            throw removeFromRecipesQueryError;
+        }
+        console.log(`DELETE /recipes - query successful - ${removeFromRecipesQueryResult.rowCount} removed`);
+        res.json(removeFromRecipesQueryResult.rows);
+    });
+});
+
 module.exports = router;

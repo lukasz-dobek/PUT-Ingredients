@@ -110,7 +110,8 @@
                         <tr>
                             <td class="align-middle" style="width: 3vw;">&nbsp&nbsp{{id_recipe}}</td>
                             <td class="align-middle" style="width: 9vw">{{state}}</td>
-                            <td class="align-middle" style="width: 14vw"><a href="/administrator_panel{{link_to_recipe}}">{{recipe_name}}</a></td>
+                            <td class="align-middle" style="width: 14vw"><a
+                                    href="/administrator_panel{{link_to_recipe}}">{{recipe_name}}</a></td>
                             <td class="align-middle" style="width: 11vw">{{date_of_creation}}</td>
                             <td class="align-middle" style="width: 6vw">{{score}}</td>
                             <td class="align-middle" style="width: 7.5vw">{{reported}}</td>
@@ -119,16 +120,17 @@
                                 <div class="row" style="margin-right:0.2vw; margin-top:0.2vw; margin-bottom: 0.2vw">
                                     <div class="col-3" style="margin-left: 3vw">
                                         <button type="button" class="btn btn-secondary btn-block rounded-0"
-                                            data-toggle="modal" data-target="#exampleModalLong"
+                                            data-toggle="modal" data-target="#messageModal{{id_user}}"
                                             style="font-size:0.7vw; height: 3.8vw; width: 6vw; text-align:center; margin-right:0vw">WIADOMOŚĆ
                                             <br />DO AUTORA</button>
 
-                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
+                                        <div class="modal fade bd-example-modal-lg" id="messageModal{{id_user}}"
+                                            tabindex="-1" role="dialog" aria-labelledby="messageModalTitle{{id_user}}"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Wyślij
+                                                        <h5 class="modal-title" id="messageModalTitle{{id_user}}">Wyślij
                                                             wiadomość
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -138,11 +140,18 @@
                                                     </div>
                                                     <div class="modal-body text-justify">
                                                         <textarea name="userMessage" id="userMessage_{{email_address}}"
-                                                            cols="45" rows="10"></textarea>
+                                                            cols="70" rows="10"></textarea>
+                                                        <label for="adminEmail" class="col-form-label">Adres e-mail
+                                                            do
+                                                            korespondencji:</label>
+                                                        <input type="text" class="form-control" name="adminEmail"
+                                                            id="adminEmail" value="{{@root.userEmail}}">
                                                     </div>
                                                     <div class="modal-footer">
+
                                                         <button type="submit" class="btn btn-danger"
-                                                            onclick="sendMail('{{email_address}}')">Wyślij</button>
+                                                            onclick="sendMail('{{email_address}}')">Wyślij do:
+                                                            {{email_address}}</button>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Zamknij</button>
                                                     </div>
@@ -153,21 +162,24 @@
 
                                     <div class="col-6" style="margin-left: 2vw">
                                         <div class="row">
-                                            <button type="button" onclick="location.href='#'"
+                                            <a type="button" href="/administrator_panel/reports/{{id_recipe}}"
                                                 class="btn btn-secondary btn-block rounded-0"
-                                                style="font-size:0.7vw; background-color:#919191; border-color: #919191;">PUSTE</button>
+                                                style="font-size:0.7vw; background-color:#919191; border-color: #919191;">ZOBACZ
+                                                ZGŁOSZENIA</a>
                                         </div>
                                         <div class="row" style="margin-top: 0.2vw ">
                                             <button type="button" class="btn btn-danger btn-block rounded-0"
                                                 style="font-size:0.7vw" data-toggle="modal"
-                                                data-target="#banUserModal">USUŃ PRZEPIS</button>
+                                                data-target="#deleteRecipeModal{{id_recipe}}">USUŃ PRZEPIS</button>
 
-                                            <div class="modal fade" id="banUserModal" tabindex="-1" role="dialog"
-                                                aria-labelledby="banUserModalTitle" aria-hidden="true">
+                                            <div class="modal fade" id="deleteRecipeModal{{id_recipe}}" tabindex="-1"
+                                                role="dialog" aria-labelledby="deleteRecipeModalTitle{{id_recipe}}"
+                                                aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="banUserModalTitle">Usuń przepis
+                                                            <h5 class="modal-title"
+                                                                id="deleteRecipeModalTitle{{id_recipe}}">Usuń przepis
                                                             </h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -184,7 +196,8 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-danger"
-                                                                onclick="blockUser('{{nickname}}')">Usuń</button>
+                                                                onclick="removeRecipe('{{id_recipe}}')">Usuń przepis o
+                                                                id: {{id_recipe}}</button>
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Zamknij</button>
                                                         </div>
@@ -207,13 +220,19 @@
 
     </div>
 
-
-
-
-
-
-
-
-    </div>
-    </div>
 </main>
+
+<script src="/javascripts/sendEmail.js"></script>
+<script>
+    function removeRecipe(idRecipe) {
+        $.ajax({
+            url: `/api/recipes/${idRecipe}`,
+            type: 'DELETE'
+        }).then(() => {
+            console.log('Usunieto przepis.');
+            location.reload();
+        }, () => {
+            console.log('Nie udalo sie usunac przepisu.');
+        });
+    }
+</script>

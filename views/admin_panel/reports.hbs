@@ -1,0 +1,46 @@
+<main role="main" class="col">
+    <h4 style="margin-top:2.8vw; margin-bottom:1.2vw">ZGŁOSZENIA PRZEPISU</h4>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <p>DATA</p>
+                    </th>
+                    <th scope="col">
+                        <p>GODZINA</p>
+                    </th>
+                    <th scope="col">
+                        <p>ZGŁASZAJĄCY UŻYTKOWNIK</p>
+                    </th>
+                    <th scope="col">
+                        <p>ZGŁOSZONY UŻYTKOWNIK</p>
+                    </th>
+                    <th scope="col">
+                        <p>NAZWA PRZEPISU</p>
+                    </th>
+                    <th scope="col">
+                        <p>OPIS</p>
+                    </th>
+                    <th scope="col">
+                        <p>STATUS</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each reportsInfo}}
+                <tr>
+                    <td>{{data}}</td>
+                    <td>{{godzina}}</td>
+                    <td>{{reportee_nickname}}</td>
+                    <td>{{reported_nickname}}</td>
+                    <td>{{recipe_name}}</td>
+                    <td>{{description}}</td>
+                    <td>{{status}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
