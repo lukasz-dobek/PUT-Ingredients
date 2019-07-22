@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS recipes (
 -- Categories per recipe
 CREATE TABLE IF NOT EXISTS categories_per_recipe (
 	id_link SERIAL PRIMARY KEY,
-	recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL,
+	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL,
 	category_id INTEGER REFERENCES categories(id_category) NOT NULL
 );	
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS categories_per_recipe (
 CREATE TABLE IF NOT EXISTS favourites (
 	id_favourite SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
-	recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL,
+	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL,
 	date_of_favourite DATE NOT NULL
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS favourites (
 CREATE TABLE IF NOT EXISTS user_votes (
 	id_user_vote SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
-	recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL,
+	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL,
 	score NUMERIC NOT NULL,
 	date_of_vote TIMESTAMP NOT NULL
 );
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS reports (
 	reportee_id INTEGER REFERENCES users(id_user) NOT NULL,
 	reported_id INTEGER REFERENCES users(id_user) NOT NULL CONSTRAINT reported_validator CHECK(reportee_id <> reported_id),
 	assigned_admin_id INTEGER REFERENCES users(id_user) NOT NULL,
-	recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL,
+	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL,
 	description TEXT NOT NULL,
 	status INTEGER NOT NULL,
 	date_of_report DATE
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS units (
 -- Ingredients_used_in_recipe table
 CREATE TABLE IF NOT EXISTS ingredients_used_in_recipe (
 	id_connection SERIAL PRIMARY KEY,
-	recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL,
+	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL,
 	ingredient_id INTEGER REFERENCES ingredients(id_ingredient) NOT NULL,
 	unit_id INTEGER REFERENCES units(id_unit) NOT NULL,
 	amount VARCHAR(50) NOT NULL
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS ingredients_used_in_recipe (
 CREATE TABLE IF NOT EXISTS shop_lists (
 	id_shop_list SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
-	recipe_id INTEGER REFERENCES recipes(id_recipe) NOT NULL
+	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS ingredients_used_in_shop_list (
