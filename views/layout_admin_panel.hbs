@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height:100%;">
 
 <head>
   <meta charset="UTF-8">
@@ -20,7 +20,7 @@
   <title>Ingredients</title>
 </head>
 
-<body>
+<body style="height: 100%">
   <header class="container-fluid head-fluid">
     <a href="/" style="color: white; text-decoration:none;">Ingredients</a>
     <div class="dropdown show float-right" style="top: 0;">
@@ -47,9 +47,9 @@
   </header>
   <a href="/recipes/"><img src="/images/logo.png" alt="logo" width="250"></a>
   <hr class="mt-3 mb-0">
-  <div class="container-fluid">
+  <div class="container-fluid" style="height: 100%;">
     <div class="row">
-      <nav class="col-md-1.8  sidebar" style="background-color: #333333">
+      <nav class="col-sm-auto sidebar" style="background-color: #333333; min-height: 100vh">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
@@ -58,12 +58,14 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/administrator_panel/user_management" style="text-decoration: none; color: white;">
+              <a class="nav-link" href="/administrator_panel/user_management"
+                style="text-decoration: none; color: white;">
                 <i class="fas fa-user-friends" style="margin-right: 0.7vw; margin-top: 0.5vw"></i>ZARZĄDZANIE KONTAMI
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/administrator_panel/recipe_management" style="text-decoration: none; color: white;">
+              <a class="nav-link" href="/administrator_panel/recipe_management"
+                style="text-decoration: none; color: white;">
                 <i class="far fa-list-alt" style="margin-right: 0.7vw; margin-top: 0.6vw"></i>ZARZĄDZANIE PRZEPISAMI
               </a>
             </li>
@@ -71,12 +73,19 @@
         </div>
       </nav>
 
-  {{>messages}}
-  {{{body}}}
+      {{>messages}}
+      <div class="col" style="min-height: 100vh">
+        {{{body}}}
+
+      </div>
+    </div>
+  </div>
+
   {{#if scriptName}}
   {{!-- TODO --}}
   <script src="{{scriptName}}"></script>
   {{/if}}
-  
+
 </body>
+
 </html>

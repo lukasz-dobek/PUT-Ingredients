@@ -3,11 +3,10 @@ const router = express.Router();
 const pgClient = require('./../db/pg-controller');
 
 router.get('/', (req, res) => {
-    res.render('./admin_panel/main', { layout: 'layout_admin_panel'});
+    res.render('./admin_panel/main', { layout: 'layout_admin_panel' });
 });
 
 router.get('/recipes/:linkToRecipe', (req, res) => {
-    console.log('lol');
     const recipeQueryString = `
     SELECT 
         rec.id_recipe, 
@@ -80,6 +79,34 @@ router.get('/recipes/:linkToRecipe', (req, res) => {
                 });
             });
         });
+    });
+});
+
+router.get('/reports/:id', (req, res) => {
+    const reportsQueryString = `
+    SELECT 
+        rep.id_report,
+        rep.reportee_id,
+        usr_a.nickname as reportee_nickname,
+        rep.reported_id,
+        usr_b.nickname as reported_nickname,
+        rec.recipe_name,
+        rep.description,
+        TO_CHAR(rep.date_of_report, 'DD/MM/YY') AS data,
+        TO_CHAR(rep.date_of_report, 'HH:MI:SS') AS godzina,
+        rep.status
+    FROM reports rep
+        INNER JOIN users usr_a ON rep.reportee_id = usr_a.id_user
+        INNER JOIN users usr_b ON rep.reported_id = usr_b.id_user
+        INNER JOIN recipes rec ON rep.recipe_id = rec.id_recipe
+    WHERE rep.recipe_id = $1;`
+
+    let recipeId = req.params.id;
+    pgClient.query(reportsQueryString, [recipeId], (reportsQueryError, reportsQueryResult) => {
+        if (reportsQueryError) {
+            throw reportsQueryError;
+        }
+        res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows });
     });
 });
 
@@ -213,19 +240,19 @@ router.get('/recipe_management', (req, res) => {
             WHEN 1 THEN 'TAK' 
             ELSE 'NIE' 
         END AS reported,
+        usr.id_user,
         usr.email_address
     FROM recipes rec INNER JOIN users usr ON rec.user_id = usr.id_user;`;
     pgClient.query(recipeQueryString, (recipeQueryError, recipeQueryResult) => {
         if (recipeQueryError) {
             throw recipeQueryError;
         }
-        console.log(recipeQueryResult.rows);
         res.render('./admin_panel/recipe_management', { layout: 'layout_admin_panel', recipeInfo: recipeQueryResult.rows });
     });
 });
 
 router.get('/user_management/details', (req, res) => {
-    res.render('./admin_panel/user_management_details', { layout: 'layout_admin_panel'});
+    res.render('./admin_panel/user_management_details', { layout: 'layout_admin_panel' });
 });
 
 module.exports = router;
