@@ -144,8 +144,8 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (12,'Koncentrat pomidorowy'),
 (9,'Kasza jaglana'),
 (4,'Mleko roślinne'),
-(12,'Kako'),
-(14,'Cziemna czekolada'),
+(12,'Kakao'),
+(14,'Ciemna czekolada'),
 (14,'Czekolada mleczna'),
 (2,'Maliny'),
 (2,'Maliny mrożone'),
@@ -283,7 +283,7 @@ INSERT INTO units (unit_name) VALUES
 ('łyżeczki'),
 ('łyżki'),
 ('szklanki'),
-('plastery'),
+('plastry'),
 ('szczypty'),
 ('sztuki');
 
