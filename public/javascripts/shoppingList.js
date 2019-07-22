@@ -4,6 +4,7 @@ $.ajaxSetup({
 
 let chosenShopList;
 let numberOfIngredients = 0;
+let numberofTypeDivs =0;
 const email_address = document.getElementById('userProfileDropdown').textContent.trim();
 
 function splitIngredientId(elementId) {
@@ -94,7 +95,7 @@ function ingredientsInShoppingList(name) {
                 let ingredientRow = document.createElement("div");
                 ingredientRow.classList.add("row");
                 ingredientRow.style.marginTop = '3%';
-                ingredientRow.id = ingredient + '_' + element['ingredient_id'];
+                ingredientRow.id = ingredient + '_' + element['ingredient_id']+'_'+chosenShopList;
                 ingredientTypeDivExists.appendChild(ingredientRow);
                 let buttonCol = document.createElement("div");
                 buttonCol.classList.add("col");
@@ -230,7 +231,8 @@ function deleteFromShoppingList(e) {
     let ingredientId = splitIngredientId(parentId);
     let rowToDelete = document.getElementById(parentId);
     let typeId = rowToDelete.parentNode.id;
-    let typeDiv = document.getElementById(typeId);
+    let typeDiv = rowToDelete.parentNode;
+    console.log(typeDiv);
     let ingredientsDivs = false;
     rowToDelete.remove();
     typeDiv.childNodes.forEach(node => {
@@ -243,7 +245,7 @@ function deleteFromShoppingList(e) {
     if (ingredientsDivs) {
         typeDiv.remove();
     }
-    numberOfIngredients = numberOfIngredients - 1;
+    //numberOfIngredients = numberOfIngredients - 1;
     // $.ajax({
     //     url: '/api/shoppingList/ingredient',
     //     type: 'DELETE',
