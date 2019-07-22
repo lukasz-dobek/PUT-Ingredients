@@ -105,12 +105,19 @@ router.get('/reports/:id', (req, res) => {
         INNER JOIN recipes rec ON rep.recipe_id = rec.id_recipe
     WHERE rep.recipe_id = $1;`
 
+    const recipeQueryString = `SELECT recipe_name FROM recipes WHERE id_recipe = $1;`;
+
     let recipeId = req.params.id;
     pgClient.query(reportsQueryString, [recipeId], (reportsQueryError, reportsQueryResult) => {
         if (reportsQueryError) {
             throw reportsQueryError;
         }
-        res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows });
+        pgClient.query(recipeQueryString, [recipeId], (recipeQueryError, recipeQueryResult) => {
+            if (recipeQueryError) {
+                throw recipeQueryError;
+            }
+            res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows, recipeName: recipeQueryResult.rows[0]["recipe_name"]});
+        });
     });
 });
 
