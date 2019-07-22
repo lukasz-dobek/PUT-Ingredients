@@ -104,6 +104,7 @@ router.get('/shopping_list/:recipeId',(req, res)=>{
 
     const userId = res.locals.userId;
     const recipeId = req.params.recipeId;
+
     pgClient.query(queryString, [userId,recipeId], (userShoppingListQueryError, userShoppingListQueryResult) => {
         if(userShoppingListQueryError) {
             throw userShoppingListQueryError;
