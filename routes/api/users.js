@@ -44,7 +44,7 @@ router.post('/send_email', (req, res) => {
     let adminEmail = req.body.sent_from;
 
     let subject = 'Ingredients - Otrzymałeś wiadomość od administratora!';
-    let message = `${messageContent} <br><br> Wiadomość została wysłana za pomocą panelu administracyjnego. W celu bezkonfliktowego kontaktu proszę odpowiedz na aders ${adminEmail}.`;
+    let message = `${messageContent} <br><br> Wiadomość została wysłana za pomocą panelu administracyjnego. W celu bezkonfliktowego kontaktu proszę odpowiedz na adres ${adminEmail}.`;
 
     mailClient.sendEmail(userEmail, subject, message);
     res.send('Mail sent.');

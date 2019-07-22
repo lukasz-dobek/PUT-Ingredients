@@ -84,43 +84,48 @@ router.post('/change_password', (req, res) => {
     const newPassword = req.body.newPassword;
     const passwordConfirm = req.body.passwordConfirm;
 
-    const veryfiOldPasswordQueryString = `
-    SELECT password FROM users WHERE email_address = $1;
-    `;
+    if (newPassword !== passwordConfirm) {
+        req.flash('error_msg', 'Podane hasła się nie zgadzają.');
+        res.redirect('/users/settings');
+    } else {
+        const veryfiOldPasswordQueryString = `
+        SELECT password FROM users WHERE email_address = $1;
+        `;
 
-    const updateQueryString = `
-    UPDATE users SET password = $1 WHERE email_address = $2;
-    `;
+        const updateQueryString = `
+        UPDATE users SET password = $1 WHERE email_address = $2;
+        `;
 
-    pgClient.query(veryfiOldPasswordQueryString, [email], (veryfiOldPasswordQueryError, veryfiOldPasswordQueryResult) => {
-        if (veryfiOldPasswordQueryError) {
-            throw veryfiOldPasswordQueryError;
-        }
-        console.log('Veryfying...');
-        argon2.verify(veryfiOldPasswordQueryResult.rows[0].password, oldPassword).then((isAuthorised) => {
-            if (isAuthorised) {
-                try {
-                    console.log('Authorised...');
-                    argon2.hash(newPassword).then(hash => {
-                        pgClient.query(updateQueryString, [hash, email], (updateQueryError, updateQueryResult) => {
-                            console.log('Updating...');
-                            if (updateQueryError) {
-                                throw updateQueryError;
-                            };
-                            req.flash('success_msg', 'Hasło zmienione poprawnie.');
-                            res.redirect('/users/settings');
-                        });
-                    });
-                } catch (err) {
-                    throw err;
-                }
-            } else {
-                console.log('Not authorised...');
-                req.flash('error_msg', 'Podano niepoprawne stare hasło.');
-                res.redirect('/users/settings');
+        pgClient.query(veryfiOldPasswordQueryString, [email], (veryfiOldPasswordQueryError, veryfiOldPasswordQueryResult) => {
+            if (veryfiOldPasswordQueryError) {
+                throw veryfiOldPasswordQueryError;
             }
+            console.log('Veryfying...');
+            argon2.verify(veryfiOldPasswordQueryResult.rows[0].password, oldPassword).then((isAuthorised) => {
+                if (isAuthorised) {
+                    try {
+                        console.log('Authorised...');
+                        argon2.hash(newPassword).then(hash => {
+                            pgClient.query(updateQueryString, [hash, email], (updateQueryError, updateQueryResult) => {
+                                console.log('Updating...');
+                                if (updateQueryError) {
+                                    throw updateQueryError;
+                                };
+                                req.flash('success_msg', 'Hasło zmienione poprawnie.');
+                                res.redirect('/users/settings');
+                            });
+                        });
+                    } catch (err) {
+                        throw err;
+                    }
+                } else {
+                    console.log('Not authorised...');
+                    req.flash('error_msg', 'Podano niepoprawne stare hasło.');
+                    res.redirect('/users/settings');
+                }
+            });
         });
-    });
+    }
 });
 
 router.post('/change_names', (req, res) => {
@@ -136,18 +141,9 @@ router.post('/change_names', (req, res) => {
             throw updateUserInfoQueryString;
         }
         console.log(`Updated ${updateUserInfoQueryResult.rowCount} row`);
+        req.flash('success_msg', 'Poprawnie zmieniono imię i/lub nazwisko.');
+        res.redirect('/users/settings');
     });
-
-    if (name && !surname) {
-
-        res.send('Name was defined, but surname wasnt!');
-    } else if (!name && surname) {
-        res.send('Name wasnt defined, but surname was!');
-    } else if (name && surname) {
-        res.send("Both name and surname were defined!");
-    } else {
-        res.send('Nothing was supplied!');
-    }
 });
 
 router.get('/delete_account', (req, res) => {

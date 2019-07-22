@@ -148,15 +148,15 @@
                                         {{#isBanned state}}
                                         <button type="button" class="btn btn-danger btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
-                                            data-target="#banUserModal">ZABLOKUJ
+                                            data-target="#banUserModal{{../id_user}}">ZABLOKUJ
                                             KONTO</button>
 
-                                        <div class="modal fade" id="banUserModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="banUserModalTitle" aria-hidden="true">
+                                        <div class="modal fade" id="banUserModal{{../id_user}}" tabindex="-1" role="dialog"
+                                            aria-labelledby="banUserModalTitle{{../id_user}}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="banUserModalTitle">Zablokuj
+                                                        <h5 class="modal-title" id="banUserModalTitle{{../id_user}}">Zablokuj
                                                             użytkownika
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -170,7 +170,7 @@
                                                             jego przepisy staną się 'anonimowe'.
                                                         </p>
                                                         <p>
-                                                            Czy na pewno chcesz zablokować tego użytkownika?
+                                                            Czy na pewno chcesz zablokować tego użytkownika? {{../nickname}}
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
@@ -185,14 +185,14 @@
                                         {{else}}
                                         <button type="button" class="btn btn-success btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
-                                            data-target="#unbanUserModal">ODBLOKUJ KONTO</button>
+                                            data-target="#unbanUserModal{{../id_user}}">ODBLOKUJ KONTO</button>
 
-                                        <div class="modal fade" id="unbanUserModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="unbanUserModalTitle" aria-hidden="true">
+                                        <div class="modal fade" id="unbanUserModal{{../id_user}}" tabindex="-1" role="dialog"
+                                            aria-labelledby="unbanUserModalTitle{{../id_user}}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="unbanUserModalTitle">Odblokuj
+                                                        <h5 class="modal-title" id="unbanUserModalTitle{{../id_user}}">Odblokuj
                                                             użytkownika
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -206,7 +206,7 @@
                                                             jego przepisy zostaną przywrócone.
                                                         </p>
                                                         <p>
-                                                            Czy na pewno chcesz odblokować tego użytkownika?
+                                                            Czy na pewno chcesz odblokować tego użytkownika? {{../nickname}}
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">

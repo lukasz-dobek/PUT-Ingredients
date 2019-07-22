@@ -37,7 +37,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-success rounded-0" type="submit" style="color:black; background-color:#27AE60;">Zmień hasło</button>
+                <button class="btn btn-success rounded-0" type="submit"
+                    style="color:black; background-color:#27AE60;">Zmień hasło</button>
             </div>
         </form>
     </div>
@@ -67,7 +68,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-success rounded-0" type="submit" style="color:black; background-color:#27AE60;">Zapisz</button>
+                <button class="btn btn-success rounded-0" type="submit"
+                    style="color:black; background-color:#27AE60;">Zapisz</button>
             </div>
         </form>
     </div>
@@ -76,7 +78,70 @@
         <h2>Usuwanie konta:</h2>
         <hr>
         <div class="text-center">
-            <a href="/users/delete_account" class="btn btn-success rounded-0" style="color:black; background-color:#27AE60;">Usuń konto</a>
+            {{!-- <a href="/users/delete_account" class="btn btn-success rounded-0" style="color:black; background-color:#27AE60;">Usuń konto</a> --}}
+            <a href="#" class="btn btn-success rounded-0" style="color:black; background-color:#27AE60;" type="button"
+                data-toggle="modal" data-target="#deleteAccountModal">Usuń konto</a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog"
+                aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteAccountModalLabel">Usuwanie konta</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/users/delete_account" method="GET" onsubmit="return validateForm()">
+                            <div class="modal-body text-left">
+                                Czy jesteś pewien że chcesz usunąć konto? Jeśli tak, potwierdź akcję wpisując swój adres
+                                e-mail poniżej.
+                                <input type="text" class="form-control mt-3" name="emailConfirm" id="emailConfirm"
+                                    required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger"
+                                    style="color:black; background-color:#27AE60;">Usuń konto</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+<script>
+    let errors = 0;
+
+    let emailInput = document.getElementById('emailConfirm');
+
+    emailInput.addEventListener("blur", checkEmail);
+
+    function checkEmail() {
+        let emailValue = emailInput.value;
+        let userEmail = document.getElementById('userProfileDropdown').textContent.trim();
+        if (emailValue !== userEmail) {
+            emailInput.style = "border: 2px solid red;";
+            errors++;
+            return false;
+        } else {
+            emailInput.style = "border: 2px solid #27AE60;";
+            errors = 0;
+            return true;
+        }
+    }
+
+    function validateForm() {
+        if (errors === 0) {
+            console.log('Form correct.');
+            return true;
+        } else {
+            console.log('Errors in form exist.')
+            return false;
+        }
+    }
+
+</script>
