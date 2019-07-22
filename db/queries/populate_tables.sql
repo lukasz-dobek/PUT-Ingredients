@@ -1,14 +1,14 @@
 INSERT INTO users (email_address,password,nickname,date_of_join,name,surname,is_admin,state,activation_url) VALUES
-('ingredients@op.pl','$argon2i$v=19$m=4096,t=3,p=1$+l2YsT0n/bnO1SaL74/5Vg$VR+izSUIQ7+7QDZGroVnjVF68rN30szkuWBpPL1KK4k','Marek','2019-07-01 20:11:20.331','Marek','Drzewo',true,1,null),
-('fzm99349@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$QKMZ2KtLB8s0uwsYy68Cig$dIoyqoV4ZjpI1GYh6B585wwGt+y262JEmSRqUADAfWU','RóżowaPantera','2019-07-01 20:40:01.206','Małgorzata','Koperek',false,1,null),
-('rtd30603@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$MmX1XLXN6pFlNNMFH8hJEg$Z+QD8lxuMAbJvoTApkF96d2veD5gq0+7FT7Feuy2KlQ','Hanka','2019-07-01 20:43:20.871','Hanna','Mikołajczyk',false,1,null),
-('ymv54842@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$PhsoTYCj2G1a3iZL7UYT6A$anR+yjUeUkDkzDO0wdeL2L4XRJnDkgHI0L0Fxi4/PYo','Szalono-oki','2019-07-01 20:48:45.527','Szymon','Kęsy',false,1,null),
-('detko.olga@gmail.com','$argon2i$v=19$m=4096,t=3,p=1$bnc/gRhPsZkO38ZnYkXkHA$jAeUrZbmeFZr160YXUAoKKHUTkMfUtO3ame7g4CLuZE','Ola','2019-07-01 20:50:33','Olga','Detko',false,1,null),
-('hhc73140@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$gLKVfjl4eHI2i666KMMcgQ$rqu/7UReQSTJWvky31Ev8hdM32MP6MtP+UedFO6PrgI','Pawlo','2019-07-01 20:52:08.839','Paweł','Nosek',false,1,null),
-('cth05124@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$BmV0AtcMECsNZuvvCHXj+g$ypO5m3ZL/SOTnhLjP0pylyxAVa+uDAHF7XMOGRMEq0k','MaTYlda','2019-07-01 20:53:41.948','Matylda','Dobierała',false,1,null),
-('del48851@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$lsIkrJdJWsmCkyrIvvjiOQ$VhA5o6nNu8D+8ET/M6aQZh0nEbeDcszF0/Y5Uklb73o','samuraj','2019-07-01 20:55:46.454','Kinga','Bartłomiej',false,1,null),
-('jfq23989@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$5Z6sleuhvp1FLzrm8Nr6bg$3XNIYuhNp+1/hrMo/hAdy+D6/tqeWIWibDrX1Llq+J4','NoneOne','2019-07-01 20:58:10.237','Kamil','Nowal',false,0,'61aff79bbff3ddbdbc7ac6bdda4ac722356aa36bd902d2a1d0e290e56f7824b4616b116ab41c4e091fda4af07182ae2c'),
-('adepcio@gmail.com','$argon2i$v=19$m=4096,t=3,p=1$QQwvDUGaIWmp/hxUy8F/7A$O9RTi42j+4146zqFN/n5TAaGpjMZAz3NGFy4Vci8xeU','Łukasz','2019-07-01 20:59:48.111','Łukasz','Dobek',false,1,null);
+('ingredients@op.pl','$argon2i$v=19$m=4096,t=3,p=1$+l2YsT0n/bnO1SaL74/5Vg$VR+izSUIQ7+7QDZGroVnjVF68rN30szkuWBpPL1KK4k','Marek','2019-02-18 20:11:20.331','Marek','Drzewo',true,1,null),
+('fzm99349@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$QKMZ2KtLB8s0uwsYy68Cig$dIoyqoV4ZjpI1GYh6B585wwGt+y262JEmSRqUADAfWU','RóżowaPantera','2019-02-14 20:40:01.206','Małgorzata','Koperek',false,1,null),
+('rtd30603@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$MmX1XLXN6pFlNNMFH8hJEg$Z+QD8lxuMAbJvoTApkF96d2veD5gq0+7FT7Feuy2KlQ','Hanka','2019-02-21 20:43:20.871','Hanna','Mikołajczyk',false,1,null),
+('ymv54842@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$PhsoTYCj2G1a3iZL7UYT6A$anR+yjUeUkDkzDO0wdeL2L4XRJnDkgHI0L0Fxi4/PYo','Szalono-oki','2019-03-02 20:48:45.527','Szymon','Kęsy',false,1,null),
+('detko.olga@gmail.com','$argon2i$v=19$m=4096,t=3,p=1$bnc/gRhPsZkO38ZnYkXkHA$jAeUrZbmeFZr160YXUAoKKHUTkMfUtO3ame7g4CLuZE','Ola','2019-03-19 20:50:33','Olga','Detko',false,1,null),
+('hhc73140@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$gLKVfjl4eHI2i666KMMcgQ$rqu/7UReQSTJWvky31Ev8hdM32MP6MtP+UedFO6PrgI','Pawlo','2019-03-14 20:52:08.839','Paweł','Nosek',false,1,null),
+('cth05124@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$BmV0AtcMECsNZuvvCHXj+g$ypO5m3ZL/SOTnhLjP0pylyxAVa+uDAHF7XMOGRMEq0k','MaTYlda','2019-03-29 20:53:41.948','Matylda','Dobierała',false,1,null),
+('del48851@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$lsIkrJdJWsmCkyrIvvjiOQ$VhA5o6nNu8D+8ET/M6aQZh0nEbeDcszF0/Y5Uklb73o','samuraj','2019-03-21 20:55:46.454','Kinga','Bartłomiej',false,1,null),
+('jfq23989@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$5Z6sleuhvp1FLzrm8Nr6bg$3XNIYuhNp+1/hrMo/hAdy+D6/tqeWIWibDrX1Llq+J4','NoneOne','2019-03-06 20:58:10.237','Kamil','Nowal',false,0,'61aff79bbff3ddbdbc7ac6bdda4ac722356aa36bd902d2a1d0e290e56f7824b4616b116ab41c4e091fda4af07182ae2c'),
+('adepcio@gmail.com','$argon2i$v=19$m=4096,t=3,p=1$QQwvDUGaIWmp/hxUy8F/7A$O9RTi42j+4146zqFN/n5TAaGpjMZAz3NGFy4Vci8xeU','Łukasz','2019-03-11 20:59:48.111','Łukasz','Dobek',false,1,null);
 
 
 -- INSERT INTO user_activities (user_id,date_of_login,browser_info) VALUES

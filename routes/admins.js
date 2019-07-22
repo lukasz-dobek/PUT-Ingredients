@@ -12,8 +12,12 @@ router.get('/recipes/:linkToRecipe', (req, res) => {
         rec.id_recipe, 
         rec.recipe_name, 
         rec.score, 
-        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation, 
-        rec.complicity, 
+        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation,
+        CASE rec.complicity
+            WHEN 1 THEN 'Łatwe'
+            WHEN 2 THEN 'Średnie'
+            WHEN 3 THEN 'Trudne'
+        END AS complicity,
         rec.preparation_time, 
         rec.description, 
         rec.number_of_people, 
@@ -219,7 +223,8 @@ router.get('/user_management/:nickname', (req, res) => {
         usa.link,
         usa.details
     FROM user_activities usa INNER JOIN users usr ON usa.user_id = usr.id_user
-    WHERE usr.nickname = $1`
+    WHERE usr.nickname = $1
+    ORDER BY data`
     pgClient.query(userInfoQueryString, [nickname], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;

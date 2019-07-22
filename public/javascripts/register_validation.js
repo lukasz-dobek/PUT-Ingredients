@@ -136,7 +136,8 @@ document.addEventListener('blur', function (event) {
             let customEmail = document.getElementById('emailForm1').value;
             if(customEmail) {
                 $.getJSON(`/api/users/email/${customEmail}`, (jsonData) => {
-                    if (jsonData === 1) {
+                    console.log(jsonData[0].email_address);
+                    if (jsonData[0].email_address === customEmail) {
                         error = 'Podany adres email jest już zajęty.';
                     }
                     if (error) {
