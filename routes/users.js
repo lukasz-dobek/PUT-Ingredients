@@ -17,8 +17,12 @@ router.get('/user_recipes/:user', (req, res) => {
         rec.id_recipe, 
         rec.recipe_name, 
         rec.score, 
-        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation, 
-        rec.complicity, 
+        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation,
+        CASE rec.complicity
+            WHEN 1 THEN 'Łatwe'
+            WHEN 2 THEN 'Średnie'
+            WHEN 3 THEN 'Trudne'
+        END AS complicity,
         rec.preparation_time, 
         rec.description, 
         rec.number_of_people, 
@@ -49,8 +53,12 @@ router.get('/favourites', (req, res) => {
         rec.id_recipe, 
         rec.recipe_name, 
         rec.score, 
-        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation, 
-        rec.complicity, 
+        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation,
+        CASE rec.complicity
+            WHEN 1 THEN 'Łatwe'
+            WHEN 2 THEN 'Średnie'
+            WHEN 3 THEN 'Trudne'
+        END AS complicity,        
         rec.preparation_time, 
         rec.description, 
         rec.number_of_people, 

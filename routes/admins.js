@@ -12,8 +12,12 @@ router.get('/recipes/:linkToRecipe', (req, res) => {
         rec.id_recipe, 
         rec.recipe_name, 
         rec.score, 
-        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation, 
-        rec.complicity, 
+        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation,
+        CASE rec.complicity
+            WHEN 1 THEN 'Łatwe'
+            WHEN 2 THEN 'Średnie'
+            WHEN 3 THEN 'Trudne'
+        END AS complicity,
         rec.preparation_time, 
         rec.description, 
         rec.number_of_people, 
@@ -101,12 +105,19 @@ router.get('/reports/:id', (req, res) => {
         INNER JOIN recipes rec ON rep.recipe_id = rec.id_recipe
     WHERE rep.recipe_id = $1;`
 
+    const recipeQueryString = `SELECT recipe_name FROM recipes WHERE id_recipe = $1;`;
+
     let recipeId = req.params.id;
     pgClient.query(reportsQueryString, [recipeId], (reportsQueryError, reportsQueryResult) => {
         if (reportsQueryError) {
             throw reportsQueryError;
         }
-        res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows });
+        pgClient.query(recipeQueryString, [recipeId], (recipeQueryError, recipeQueryResult) => {
+            if (recipeQueryError) {
+                throw recipeQueryError;
+            }
+            res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows, recipeName: recipeQueryResult.rows[0]["recipe_name"]});
+        });
     });
 });
 
