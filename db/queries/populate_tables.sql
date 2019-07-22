@@ -224,7 +224,7 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 
 
 INSERT INTO recipes (user_id,recipe_name,state,score,date_of_creation,date_of_modification,complicity,preparation_time,description,number_of_people,photo_one, photo_two, photo_three, photo_four, link_to_recipe, visible_email) VALUES
-(5,'Zielone Pesto','Zweryfikowany',0.0,'2019-03-12 21:00:00',null,1,'30min','Wszystkie składniki utrzeć w moździerzu lub zmiksować rozdrabniaczem (lub mini melakserem lub blenderem), tak aby powstały małe drobinki składników, na koniec doprawić solą morską i pieprzem.',6,'/images/pesto_1.jpeg','/images/pesto_2.jpeg',NULL,NULL, '/recipes/zielone_pesto', true),
+(5,'Zielone Pesto','Zweryfikowany',0.0,'2019-03-12 21:00:00',null,1,'30min','Wszystkie składniki utrzeć w moździerzu lub zmiksować rozdrabniaczem (lub mini melakserem lub blenderem), tak aby powstały małe drobinki składników, na koniec doprawić solą morską i pieprzem.',6,'/images/pesto_1.jpeg','/images/pesto_2.jpeg','/images/pesto_3.jpeg',NULL, '/recipes/zielone_pesto', true),
 (1,'Sałatka cheddar','Zweryfikowany',0.0,'2019-05-15 21:00:00',null,1,'30min','Na talerzach ułożyć sałatę, dodać ugotowane jajka pokrojone na ćwiartki, posypać pokrojonymi pomidorkami koktajlowymi, zrumienionym na suchej patelni słonecznikiem i startym na tarce serem cheddar. Wymieszać składniki winegretu i polać do sałatce. Posypać szczypiorkiem i udekorować listkami bazylii.',2,'/images/salatka-cheddar_1.jpeg',NULL,NULL,NULL, '/recipes/salatka_cheddar', true),
 (2,'Makaron z łososiem wędzonym','Zweryfikowany',0.0,'2019-05-10 23:00:00',null,2,'1h','Ugotować makaron w osolonej wodzie, odcedzić i wsypać do miski.
 Garnek po makaronie postawić z powrotem na palniku, wlać oliwę i zeszklić pokrojoną w kosteczkę cebulę.
@@ -266,7 +266,7 @@ Podgrzaną z jednej strony pizzadillę przełożyć na drugą stronę** i ponown
 (6,'Ciasteczka owsiane z ziarnami','Zweryfikowany',0.0,'2019-06-19 21:00:00',null,1,'45min','Masło roztopić. Do czystej miski wsypać płatki owsiane, mąkę, cukier, proszek do pieczenia i ziarna.
 Wlać roztopione masło i wymieszać. Dodać jajka oraz miód jeśli używamy i wymieszać. Jeśli mamy czas, dobrze jest odstawić masę na ok. 1/2 - 1 godzinę.
 Piekarnik nagrzać do 180 stopni C. Blachę wyłożyć papierem do pieczenia. Nabierać łyżkę stołową masy i nakładać na blaszkę formując okręgi i delikatnie je płaszczając.
-Piec przez ok. 15 minut na złoty kolor.',2,'/images/ciasteczka-owsiane-z-ziarnami_1.jpeg',NULL,NULL,NULL, '/recipes/ciasteczka_owsiane_z_ziarnami', false),
+Piec przez ok. 15 minut na złoty kolor.',2,'/images/ciasteczka-owsiane-z-ziarnami_1.jpeg','/images/ciasteczka-owsiane-z-ziarnami_2.jpeg','/images/ciasteczka-owsiane-z-ziarnami_3.jpeg','/images/ciasteczka-owsiane-z-ziarnami_4.jpeg', '/recipes/ciasteczka_owsiane_z_ziarnami', false),
 (6,'Koktajl z borówek','Zweryfikowany',0.0,'2019-06-19 21:00:00',null,1,'15min','Do pojemnika blendera włożyć wszystkie składniki: umytą borówkę, mleko, maślankę, obranego banana, miód i pastę tahini jeśli jej używamy.
 Zmiksować na płynny koktajl.',1,'/images/koktajl-z-borowek_1.jpeg',NULL,NULL,NULL, '/recipes/koktajl_z_borowek', true),
 (10,'Placki serowe z truskawkami','Zweryfikowany',0.0,'2019-06-19 21:00:00',null,1,'30min','Do miski włożyć twaróg i rozgnieść go praską do ziemniaków. Dodać jajka, cukier i wymieszać rózgą, następnie wlać olej oraz mleko i ponownie wymieszać.

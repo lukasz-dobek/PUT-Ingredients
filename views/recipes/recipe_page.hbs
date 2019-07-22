@@ -13,8 +13,7 @@
         </div>
         <div class="col">
           <p style="text-align:right;">
-            <i class="far fa-edit"
-            style="font-size: 1.6vw; position: absolute; bottom:0.5vw; right:0.4vw;"></i>
+            <i class="far fa-edit" style="font-size: 1.6vw; position: absolute; bottom:0.5vw; right:0.4vw;"></i>
           </p>
         </div>
         <div class="col">
@@ -177,7 +176,15 @@
 
         <div class="col">
           {{#if photo_two}}
-          <a href="{{link_to_recipe}}"><img src="{{photo_two}}" alt="" class="card-img-top" style="height: 12vw"></a>
+
+          <a href="#"><img id="myImg" src="{{photo_two}}" alt="" class="card-img-top"
+              style="height: 12vw"></a>
+          <div id="myModal" class="modal display">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+          </div>
+
           {{else}}
           <div class="container brak-zdj"
             style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
@@ -187,8 +194,16 @@
         </div>
         <div class="col">
           {{#if photo_three}}
-          <a href="{{link_to_recipe}}"><img src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw"></a>
+
+          <a href="#"><img id="myImg" src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw"></a>
+          <div id="myModal" class="modal display">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img02">
+            <div id="caption"></div>
+          </div>
+
           {{else}}
+
           <div class="container brak-zdj"
             style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
             <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
@@ -255,3 +270,29 @@
 <script src="/javascripts/favouritesHandler.js"></script>
 <script src="/javascripts/scoreStarsHandler.js"></script>
 <script src="/javascripts/shopListHandler.js"></script>
+
+
+<script>
+  // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("myImg");
+var modalImg = document.getElementById("img01");
+var modalImg2 = document.getElementById("img02");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  modalImg2.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+</script>
