@@ -4,39 +4,42 @@
         {{#listItem 0 3 recipes}}
         <div class="col-sm">
             <div class="card">
-                <img src="{{photo_one}}" alt="" class="card-img-top">
-                <div class="card-body">
-                    <a href="{{link_to_recipe}}" style="color: black">
-                    <p class="card-text">{{recipe_name}} </p> </a>
-                </div>
+                <a href="{{link_to_recipe}}" style="color: black">
+                    <img src="{{photo_one}}" alt="" class="card-img-top">
+                    <div class="card-body">
+                        <p class="card-text">{{recipe_name}} </p>
+                </a>
             </div>
         </div>
-        {{/listItem}}
     </div>
-    <div class="row mt-2">
-        {{#listItem 3 6 recipes}}
-        <div class="col-sm">
-            <div class="card">
+    {{/listItem}}
+</div>
+<div class="row mt-2">
+    {{#listItem 3 6 recipes}}
+    <div class="col-sm">
+        <div class="card">
+            <a href="{{link_to_recipe}}" style="color: black">
                 <img src="{{photo_one}}" alt="" class="card-img-top">
                 <div class="card-body">
-                   <a href="{{link_to_recipe}}" style="color: black">
-                    <p class="card-text">{{recipe_name}} </p> </a>
-                </div>
-            </div>
+                    <p class="card-text">{{recipe_name}} </p>
+            </a>
         </div>
-        {{/listItem}}
     </div>
-    <div class="row mt-2">
-        {{#listItem 6 9 recipes}}
-        <div class="col-sm">
-            <div class="card">
+</div>
+{{/listItem}}
+</div>
+<div class="row mt-2">
+    {{#listItem 6 9 recipes}}
+    <div class="col-sm">
+        <div class="card">
+            <a href="{{link_to_recipe}}" style="color: black">
                 <img src="{{photo_one}}" alt="" class="card-img-top">
                 <div class="card-body">
-                    <a href="{{link_to_recipe}}" style="color: black">
-                    <p class="card-text">{{recipe_name}} </p> </a>
-                </div>
-            </div>
+                    <p class="card-text">{{recipe_name}} </p>
+            </a>
         </div>
-        {{/listItem}}
     </div>
+</div>
+{{/listItem}}
+</div>
 </div>

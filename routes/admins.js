@@ -190,7 +190,7 @@ router.get('/user_management/:nickname', (req, res) => {
         nickname, 
         name, 
         surname, 
-        date_of_join, 
+        TO_CHAR(date_of_join, 'DD/MM/YYYY') AS date_of_join,
         CASE is_admin
             WHEN true THEN 'tak'
             WHEN false THEN 'nie'
