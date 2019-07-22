@@ -185,7 +185,8 @@ router.get('/user_management/:nickname', (req, res) => {
         usa.link,
         usa.details
     FROM user_activities usa INNER JOIN users usr ON usa.user_id = usr.id_user
-    WHERE usr.nickname = $1`
+    WHERE usr.nickname = $1
+    ORDER BY data`
     pgClient.query(userInfoQueryString, [nickname], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
