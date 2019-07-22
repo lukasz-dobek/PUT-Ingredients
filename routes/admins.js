@@ -6,6 +6,83 @@ router.get('/', (req, res) => {
     res.render('./admin_panel/main', { layout: 'layout_admin_panel'});
 });
 
+router.get('/recipes/:linkToRecipe', (req, res) => {
+    console.log('lol');
+    const recipeQueryString = `
+    SELECT 
+        rec.id_recipe, 
+        rec.recipe_name, 
+        rec.score, 
+        TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation, 
+        rec.complicity, 
+        rec.preparation_time, 
+        rec.description, 
+        rec.number_of_people, 
+        rec.link_to_recipe, 
+        rec.photo_one, 
+        rec.photo_two, 
+        rec.photo_three, 
+        rec.photo_four,
+        rec.visible_email,
+        usr.email_address,
+        usr.nickname
+    FROM recipes rec 
+        INNER JOIN users usr ON rec.user_id = usr.id_user 
+    WHERE rec.link_to_recipe LIKE $1;`;
+
+    const ingredientsQueryString = `
+    SELECT 
+        ing.ingredient_name,
+        iur.amount, 
+        unt.unit_name 
+    FROM ingredients_used_in_recipe iur 
+	    INNER JOIN ingredients ing ON iur.ingredient_id = ing.id_ingredient 
+	    INNER JOIN units unt ON iur.unit_id = unt.id_unit 
+    WHERE iur.recipe_id = $1;`
+
+    const alternativeIngredientsQueryString = `
+    SELECT 
+    ing.ingredient_name,
+    string_agg(ing_a.ingredient_name, ', ') AS alternative_ingredients
+    FROM ingredients_used_in_recipe iur 
+        INNER JOIN ingredients ing ON iur.ingredient_id = ing.id_ingredient 
+        INNER JOIN units unt ON iur.unit_id = unt.id_unit
+        INNER JOIN alternative_ingredients ai ON ing.id_ingredient = ai.ingredient_id
+        INNER JOIN ingredients ing_a ON ai.replacement_id = ing_a.id_ingredient
+    WHERE iur.recipe_id = $1
+    GROUP BY ing.ingredient_name;
+    `;
+
+    const linkToRecipe = '/recipes/'.concat(req.params.linkToRecipe);
+
+    pgClient.query(recipeQueryString, [linkToRecipe], (recipeQueryError, recipeQueryResult) => {
+        if (recipeQueryError) throw recipeQueryError;
+        const recipeId = recipeQueryResult.rows[0]["id_recipe"];
+        pgClient.query(ingredientsQueryString, [recipeId], (ingredientsQueryError, ingredientsQueryResult) => {
+            if (ingredientsQueryError) throw ingredientsQueryError;
+            /* 
+            
+            Recipe fields: id_recipe, recipe_name, score, date_of_creation, complicity, preparation_time, description
+            number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname.
+
+            Ingredients fields: ingredient_name, amount, unit_name.
+
+            */
+            pgClient.query(alternativeIngredientsQueryString, [recipeId], (alternativeIngredientsQueryError, alternativeIngredientsQueryResult) => {
+                if (alternativeIngredientsQueryError) {
+                    throw alternativeIngredientsQueryError;
+                }
+                res.render('./admin_panel/recipe_page_admin', {
+                    layout: 'layout_admin_panel',
+                    recipe: recipeQueryResult.rows,
+                    ingredients: ingredientsQueryResult.rows,
+                    alternative_ingredients: alternativeIngredientsQueryResult.rows
+                });
+            });
+        });
+    });
+});
+
 router.get('/user_management', (req, res) => {
     const userInfoQueryString = `
     SELECT 

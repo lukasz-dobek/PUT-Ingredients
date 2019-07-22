@@ -207,50 +207,6 @@
           onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
           ZAKUPÓW</button>
       </div>
-      {{#if @root.userIsAdmin}}
-
-      <div class="row" style="margin-top:2.5vw;">
-        <div class="col">
-          <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
-            style="color:black; background-color:#27AE60; height: 2.7vw; width: 10vw">AKCEPTUJ PRZEPIS</button>
-        </div>
-        <div class="col">
-          <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
-            style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.3vw;" data-toggle="modal"
-            data-target="#exampleModalLong">POPROŚ AUTORA O KOREKTĘ</button>
-
-          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Wyślij
-                    wiadomość do autora <p style="font-size: 0.8vw"> Wyjaśnij co jest niepoprawne, jakie elementy wymagają poprawy
-                    </p>
-                  </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body text-justify">
-                  <textarea name="userMessage" id="userMessage_{{email_address}}" cols="45" rows="10"></textarea>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-danger" onclick="sendMail('{{email_address}}')">Wyślij</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="col">
-          <button type="stworz-liste-zakupow" class="btn btn-danger ml-3"
-            style="color:black;  height: 2.7vw; width: 10vw">ODRZUĆ PRZEPIS</button>
-        </div>
-      </div>
-
-      {{/if}}
     </div>
   </div>
   <p style="margin-top:2vw">Przepis narusza regulamin, zawiera treści niestosowne, nieadekwatne lub jest nie
