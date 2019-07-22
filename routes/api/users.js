@@ -14,7 +14,7 @@ router.get('/email/:email',(req,res)=>{
     const emailValue = req.params.email;
     pgClient.query(queryString,[emailValue],(err,result)=>{
         if(err) throw err;
-        res.json(result.rowCount);
+        res.json(result.rows);
     })
 });
 

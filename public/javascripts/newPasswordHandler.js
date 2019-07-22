@@ -5,6 +5,15 @@ let hasError = function (field) {
     // Don't validate submits, buttons, file and reset inputs, and disabled fields
     if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
 
+    // if(field.name === 'oldPassword'){
+    //     let email_address = field.value;
+    //     if(email_address) {
+    //         // $.getJSON(`/api/users/email/${email_address}`, (jsonData) => {
+    //         //     if(arg)
+    //         // });
+    //     }
+    // }
+
     if (checkPassw()) {
         if (field.name === 'passwordConfirm') return 'Hasła nie zgadzają się.';
     }
@@ -16,14 +25,14 @@ let hasError = function (field) {
     if (validity.valueMissing) {
         return 'To pole jest obowiązkowe.';
     }
-    if (validity.tooShort) {
-        if (field.name === 'password') return 'Hasło musi składać się z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego..'
-    }
 
+    if (validity.tooShort) {
+        if (field.name === 'newPassword') return 'Hasło musi składać się z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego..'
+    }
 
     // If pattern doesn't match
     if (validity.patternMismatch) {
-        if (field.name === 'password') return 'Podane hasło nie spełnia wymagań. Musi składać się ono z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego.';
+        if (field.name === 'newPassword') return 'Podane hasło nie spełnia wymagań. Musi składać się ono z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego.';
     }
 
     return 'Podana wartość jest błędna.';
@@ -45,6 +54,7 @@ let showError = function (field, error) {
     if (!message) {
         message = document.createElement('div');
         message.className = 'error-message';
+        //message.style.wordWrap = 'normal;'
         message.id = 'error-for-' + id;
 
         // If the field is a radio button or checkbox, insert error after the label
@@ -70,6 +80,7 @@ let showError = function (field, error) {
     message.innerHTML = error;
 
     // Show error message
+    message.style.marginLeft = '2%';
     message.style.display = 'block';
     message.style.visibility = 'visible';
     //   }
@@ -97,6 +108,7 @@ let removeError = function (field) {
     message.innerHTML = '';
     message.style.display = 'none';
     message.style.visibility = 'hidden';
+
 
 };
 
@@ -144,8 +156,8 @@ document.addEventListener('submit', function (event) {
 
 
 let checkPassw = function () {
-    let password = document.getElementById('passwordForm1');
-    let confirmPass = document.getElementById('passwordForm2');
+    let password = document.getElementById('passwordForm2');
+    let confirmPass = document.getElementById('passwordForm3');
     if (confirmPass.value) {
         if (password.value !== confirmPass.value) {
             return true;

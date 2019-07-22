@@ -10,24 +10,30 @@ function addToShopList(e, userId) {
         if (jsonData >= 1) {
             e.target.classList.add('error');
             let id = e.target.id || e.target.name;
+            console.log(e.target);
             if (!id) return;
+            console.log(!e.target.parentNode.parentNode.querySelector('.error-message#error-for-' + id));
 
-            let message = document.createElement('div');
-            message.className = 'error-message';
-            message.id = 'error-for-' + id;
+            if(!e.target.parentNode.parentNode.querySelector('[id^=error]')){
+                let message = document.createElement('div');
+                message.className = 'error-message';
+                message.id = 'error-for-' + id;
 
-            $(message).insertAfter(e.target.parentNode);
+                $(message).insertAfter(e.target.parentNode);
 
-            e.target.setAttribute('aria-describedby', 'error-for-' + id);
+                e.target.setAttribute('aria-describedby', 'error-for-' + id);
 
-            message.innerHTML = "Istnieje już lista zakupów stworzona dla tego przepisu.";
+                message.innerHTML = "Istnieje już lista zakupów stworzona dla tego przepisu.";
 
-            message.style.display = 'block';
-            message.style.visibility = 'visible';
+                message.style.display = 'block';
+                message.style.visibility = 'visible';            }
+
         } else {
             $.post("/api/shoppingList/", {
                 userId: userId,
                 recipeId: recipeId,
+            }).done(() =>{
+                window.location.replace('/users/shopping_lists');
             });
         }
         // Otherwise, remove any existing error message
