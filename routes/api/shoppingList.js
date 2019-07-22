@@ -16,7 +16,8 @@ router.post('/', (req, res) => {
             throw addToShoppingListQueryError;
         }
         console.log(`POST /shoppingList - query successful - ${addToShoppingListQueryResult.rowCount} added`);
-        res.json(addToShoppingListQueryResult.rows);
+        res.redirect('/users/shopping_lists');
+        //res.json(addToShoppingListQueryResult.rows);
     });
 });
 
@@ -49,7 +50,7 @@ router.delete('/ingredient', (req, res) => {
         if (removeFromShoppingListQueryError) {
             throw removeFromShoppingListQueryError;
         }
-        console.log(`DELETE /favourites - query successful - ${removeFromShoppingListQueryResult.rowCount} removed`);
+        console.log(`DELETE /ingredient - query successful - ${removeFromShoppingListQueryResult.rowCount} removed`);
         res.json(removeFromShoppingListQueryResult.rows);
     });
 });

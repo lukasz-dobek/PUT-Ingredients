@@ -19,7 +19,7 @@ router.get('/email/:email',(req,res)=>{
 });
 
 router.get('/nickname/:nickname',(req,res)=>{
-    const  queryString = `SELECT * FROM users WHERE nickname = $1`;
+    const  queryString = `SELECT LOWER(nickname) FROM users WHERE LOWER(nickname) = $1`;
     const nicknameValue = req.params.nickname;
     pgClient.query(queryString,[nicknameValue],(err,result)=>{
         if(err) throw err;
@@ -95,6 +95,23 @@ router.get('/shopping_list',(req, res)=>{
         console.log(userShoppingListQueryResult.rows);
         res.json(userShoppingListQueryResult.rows);
     });
+});
+
+router.get('/shopping_list/:recipeId',(req, res)=>{
+    const queryString=`
+        SELECT * FROM shop_lists sl JOIN recipes r on r.id_recipe=sl.recipe_id
+        WHERE sl.user_id = $1 and sl.recipe_id = $2`
+
+    const userId = res.locals.userId;
+    const recipeId = req.params.recipeId;
+    pgClient.query(queryString, [userId,recipeId], (userShoppingListQueryError, userShoppingListQueryResult) => {
+        if(userShoppingListQueryError) {
+            throw userShoppingListQueryError;
+        }
+        console.log(userShoppingListQueryResult.rows);
+        res.json(userShoppingListQueryResult.rowCount);
+    });
+
 });
 
 module.exports = router;
