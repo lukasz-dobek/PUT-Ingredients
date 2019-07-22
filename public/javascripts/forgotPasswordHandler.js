@@ -8,50 +8,20 @@ let hasError = function (field) {
     if (checkPassw()) {
         if (field.name === 'passwordConfirm') return 'Hasła nie zgadzają się.';
     }
-
-    // if (checkNickname()) {
-    //   if (field.name === 'nickname') return 'Pseudonim jest już zajęty.';
-    // }
-    //
-    // if (checkEmail()) {
-    //   if (field.name === 'email') return 'Konto dla danego adresu e-mail już istnieje.';
-    // }
-    // Get validity
     let validity = field.validity;
 
-    // If valid, return null
     if (validity.valid) return;
-
-    // If field is required and empty
-    if (validity.valueMissing) {
-        if (field.name === 'check') return 'Musisz zaakceptować regulamin.';
-        return 'To pole jest obowiązkowe.';
-    }
-
-    // If not the right type
-    if (validity.typeMismatch) {
-        // Email
-        if (field.type === 'email') return 'Wprowadź poprawny adres e-mail.';
-    }
-
     // If too short
     if (validity.tooShort) {
         if (field.name === 'password') return 'Hasło musi składać się z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego..'
-        if (field.name === 'nickname') return 'Pseudonim musi składać się z co najmniej 3 znaków.'
     }
 
-    // If too long
-    if (validity.tooLong) {
-        if (field.name === 'nickname') return 'Pseudonim może składać się z maksymalnie 50 znaków.'
-    }
 
     // If pattern doesn't match
     if (validity.patternMismatch) {
         if (field.name === 'password') return 'Podane hasło nie spełnia wymagań. Musi składać się ono z co najmniej 8 znaków, w tym co najmniej jednej małej litery, jednej litery wielkiej, jednej cyfry oraz znaku specjalnego.';
-        if (field.type === 'email') return 'Podany e-mail jest nieprawidłowy.'
     }
 
-    // If all else fails, return a generic catchall error
     return 'Podana wartość jest błędna.';
 
 };
@@ -66,7 +36,6 @@ let showError = function (field, error) {
     let id = field.id || field.name;
     if (!id) return;
 
-    // Check if error message field already exists
     // If not, create one
     let message = field.form.querySelector('.error-message#error-for-' + id);
     if (!message) {
@@ -129,51 +98,15 @@ let removeError = function (field) {
 
 document.addEventListener('blur', function (event) {
 
-        console.log(event.target.name);
-        let error = hasError(event.target);
-
-        if (event.target.name === 'email') {
-            let customEmail = document.getElementById('emailForm1').value;
-            if(customEmail) {
-                $.getJSON(`/api/users/email/${customEmail}`, (jsonData) => {
-                    if (jsonData === 1) {
-                        error = 'Podany adres email jest już zajęty.';
-                    }
-                    if (error) {
-                        showError(event.target, error);
-                        return;
-                    }
-                    // Otherwise, remove any existing error message
-                    removeError(event.target);
-                });
-            }
-            //error = 'Podany adres email jest już zajęty.'
-        }
-
-    if (event.target.name === 'nickname') {
-        let customNickname = document.getElementById('nickForm1').value.toLowerCase();
-        if(customNickname) {
-            $.getJSON(`/api/users/nickname/${customNickname}`, (jsonData) => {
-                if (jsonData === 1) {
-                    error = 'Podany pseudonim jest już zajęty.';
-                }
-                if (error) {
-                    showError(event.target, error);
-                    return;
-                }
-                // Otherwise, remove any existing error message
-                removeError(event.target);
-            });
-        }
+    console.log(event.target.name);
+    let error = hasError(event.target);
+    if (error) {
+        showError(event.target, error);
+        return;
     }
 
-        if (error) {
-            showError(event.target, error);
-            return;
-        }
-
-        // Otherwise, remove any existing error message
-        removeError(event.target);
+    // Otherwise, remove any existing error message
+    removeError(event.target);
 }, true);
 
 // Check all fields on submit
@@ -188,13 +121,7 @@ document.addEventListener('submit', function (event) {
 
     console.log(fields);
     for (let i = 0; i < fields.length; i++) {
-        if(fields[i].parentElement.nextSibling.textContent === 'Podany adres email jest już zajęty.'){
-            error ='Podany adres email jest już zajęty.'
-        }
-        else if(fields[i].parentElement.nextSibling.textContent === 'Podany pseudonim jest już zajęty.'){
-            error = 'Podany pseudonim jest już zajęty.'
-        }
-        else {error = hasError(fields[i])}
+        error = hasError(fields[i])
         if (error) {
             showError(fields[i], error);
             if (!hasErrors) {
@@ -202,8 +129,7 @@ document.addEventListener('submit', function (event) {
             }
         }
     }
-
-    // If there are errrors, don't submit form and focus on first element with error
+    // Ifthere are errrors, don't submit form and focus on first element with error
     if (hasErrors) {
         event.preventDefault();
         hasErrors.focus();
@@ -217,7 +143,7 @@ let checkPassw = function () {
     let password = document.getElementById('passwordForm1');
     let confirmPass = document.getElementById('passwordForm2');
     if (confirmPass.value) {
-        if (password.value != confirmPass.value) {
+        if (password.value !== confirmPass.value) {
             return true;
         } else {
             return false;
