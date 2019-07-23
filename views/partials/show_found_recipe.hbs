@@ -3,7 +3,7 @@
   <div class="row ">
     <div class="col col-md-4">
       <a href="{{link_to_recipe}}" style="color: black;  text-decoration: none;">
-      <img src="{{photo_one}}" alt="" class="card-img-top" style="height: 14.1vw">
+        <img src="{{photo_one}}" alt="" class="card-img-top" style="height: 14.1vw">
       </a>
     </div>
 
@@ -14,18 +14,20 @@
             <h3 style="color: black;">{{toUpperCase recipe_name}}</h3>
           </a>
         </div>
-        {{!-- IF to moj przpeis to moge --}}
+        {{#isRecipeMine @root.userEmail email_address}}
         <div class="col">
           <p style="text-align:right;">
-            <i class="far fa-edit"
-            style="font-size: 1.2vw; position: absolute; bottom:0.5vw; right:0vw;"></i>
+            <a href="#">
+              <i class="far fa-edit" style="font-size: 1.2vw; position: absolute; bottom:0.5vw; right:0vw;"></i>
+            </a>
           </p>
         </div>
-        {{!-- EDN IF --}}
+        {{/isRecipeMine}}
         <div class="col">
           <p style="text-align:right;">
             <i id="favouritesButton_{{id_recipe}}" class="far fa-heart"
-              style="font-size: 1.3vw; position: absolute; bottom:0.4vw; right:1vw" onClick="addToFavourites(event, {{@root.userId}})"></i>
+              style="font-size: 1.3vw; position: absolute; bottom:0.4vw; right:1vw"
+              onClick="addToFavourites(event, {{@root.userId}})"></i>
           </p>
         </div>
       </div>
