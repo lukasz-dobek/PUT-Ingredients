@@ -18,7 +18,7 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 function createLinkToRecipe(recipeName) {
-    return '/recipes/'.concat(latinize(recipeName.replace(' ', '_')));
+    return '/recipes/'.concat(latinize(recipeName.replace(/ /g, '_').toLowerCase()));
 }
 
 router.get('/', ensureAuthenticated, (req, res) => {
@@ -97,6 +97,8 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
     // }
     // addIngredientsQueryString = addIngredientsQueryString.slice(0,-1);
     // to_timestamp(${Date.now() / 1000.0})
+    console.log(req.body.recipeName);
+    console.log(createLinkToRecipe(req.body.recipeName));
     const recipeBody = {
         user_id: res.locals.userId,
         recipe_name: req.body.recipeName,
