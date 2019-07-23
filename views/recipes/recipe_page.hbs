@@ -3,7 +3,14 @@
 
   <div class="row ">
     <div class="col col-md-4">
-      <img src="{{photo_one}}" alt="" class="card-img-top" style="height: 14.9vw">
+
+      <img id="myImg" src="{{photo_one}}" alt="" class="card-img-top" style="height: 14.9vw">
+      <div id="myModal" class="modal display">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+      </div>
+
     </div>
 
     <div class="col">
@@ -177,12 +184,11 @@
         <div class="col">
           {{#if photo_two}}
 
-          <a href="#"><img id="myImg" src="{{photo_two}}" alt="" class="card-img-top"
-              style="height: 12vw"></a>
-          <div id="myModal" class="modal display">
+          <img id="myImg02" src="{{photo_two}}" alt="" class="card-img-top" style="height: 12vw"></a>
+          <div id="myModal02" class="modal display">
             <span class="close">&times;</span>
-            <img class="modal-content" id="img01">
-            <div id="caption"></div>
+            <img class="modal-content" id="img02">
+            <div id="caption02"></div>
           </div>
 
           {{else}}
@@ -195,11 +201,11 @@
         <div class="col">
           {{#if photo_three}}
 
-          <a href="#"><img id="myImg" src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw"></a>
-          <div id="myModal" class="modal display">
+          <img id="myImg03" src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw"></a>
+          <div id="myModal03" class="modal display">
             <span class="close">&times;</span>
-            <img class="modal-content" id="img02">
-            <div id="caption"></div>
+            <img class="modal-content" id="img03">
+            <div id="caption03"></div>
           </div>
 
           {{else}}
@@ -212,7 +218,14 @@
         </div>
         <div class="col">
           {{#if photo_four}}
-          <a href="{{link_to_recipe}}"><img src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw"></a>
+
+          <img img id="myImg04" src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw"></a>
+          <div id="myModal04" class="modal display">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img04">
+            <div id="caption04"></div>
+          </div>
+
           {{else}}
           <div class="container brak-zdj"
             style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
@@ -274,25 +287,70 @@
 
 <script>
   // Get the modal
-var modal = document.getElementById("myModal");
+  var modal = document.getElementById("myModal");
+  var modal02 = document.getElementById("myModal02");
+  var modal03 = document.getElementById("myModal03");
+  var modal04 = document.getElementById("myModal04");
 
-// Get the image and insert it inside the modal - use its "alt" text as a caption
-var img = document.getElementById("myImg");
-var modalImg = document.getElementById("img01");
-var modalImg2 = document.getElementById("img02");
-var captionText = document.getElementById("caption");
-img.onclick = function(){
-  modal.style.display = "block";
-  modalImg.src = this.src;
-  modalImg2.src = this.src;
-  captionText.innerHTML = this.alt;
-}
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var img = document.getElementById("myImg");
+  var img02 = document.getElementById("myImg02")
+  var img03 = document.getElementById("myImg03")
+  var img04 = document.getElementById("myImg04")
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+  var modalImg = document.getElementById("img01");
+  var modalImg02 = document.getElementById("img02");
+  var modalImg03 = document.getElementById("img03");
+  var modalImg04 = document.getElementById("img04");
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() { 
-  modal.style.display = "none";
-}
+  var captionText = document.getElementById("caption");
+  var captionText02 = document.getElementById("caption02");
+  var captionText03 = document.getElementById("caption03");
+  var captionText04 = document.getElementById("caption04");
+
+  img.onclick = function () {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+  }
+  img02.onclick = function () {
+    modal02.style.display = "block";
+    modalImg02.src = this.src;
+    captionText02.innerHTML = this.alt;
+  }
+  img03.onclick = function () {
+    modal03.style.display = "block";
+    modalImg03.src = this.src;
+    captionText03.innerHTML = this.alt;
+  }
+  img04.onclick = function () {
+    modal04.style.display = "block";
+    modalImg04.src = this.src;
+    captionText04.innerHTML = this.alt;
+  }
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  var span02 = document.getElementsByClassName("close")[1];
+  var span03 = document.getElementsByClassName("close")[2];
+  var span04 = document.getElementsByClassName("close")[3];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+  span02.onclick = function () {
+    modal02.style.display = "none";
+  }
+  span03.onclick = function () {
+    modal03.style.display = "none";
+  }
+  span04.onclick = function () {
+    modal04.style.display = "none";
+  }
+
+
+
+
+
 </script>

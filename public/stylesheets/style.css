@@ -248,7 +248,7 @@ div.main p {
 
 
 /* Style the Image Used to Trigger the Modal */
-#myImg {
+#myImg, #myImg02, #myImg03, #myImg04 {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
