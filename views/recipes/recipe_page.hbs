@@ -272,14 +272,11 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
 </div>
 {{/each}}
+
+
+
 <script src="/javascripts/favouritesHandler.js"></script>
 <script src="/javascripts/scoreStarsHandler.js"></script>
 <script src="/javascripts/shopListHandler.js"></script>
@@ -287,70 +284,73 @@
 
 <script>
   // Get the modal
-  var modal = document.getElementById("myModal");
-  var modal02 = document.getElementById("myModal02");
-  var modal03 = document.getElementById("myModal03");
-  var modal04 = document.getElementById("myModal04");
+  let modal = document.getElementById("myModal");
+  let modal02 = document.getElementById("myModal02");
+  let modal03 = document.getElementById("myModal03");
+  let modal04 = document.getElementById("myModal04");
 
   // Get the image and insert it inside the modal - use its "alt" text as a caption
-  var img = document.getElementById("myImg");
-  var img02 = document.getElementById("myImg02")
-  var img03 = document.getElementById("myImg03")
-  var img04 = document.getElementById("myImg04")
+  let img = document.getElementById("myImg");
+  let img02 = document.getElementById("myImg02")
+  let img03 = document.getElementById("myImg03")
+  let img04 = document.getElementById("myImg04")
 
-  var modalImg = document.getElementById("img01");
-  var modalImg02 = document.getElementById("img02");
-  var modalImg03 = document.getElementById("img03");
-  var modalImg04 = document.getElementById("img04");
 
-  var captionText = document.getElementById("caption");
-  var captionText02 = document.getElementById("caption02");
-  var captionText03 = document.getElementById("caption03");
-  var captionText04 = document.getElementById("caption04");
-
+  let modalImg = document.getElementById("img01");
+  let captionText = document.getElementById("caption");
   img.onclick = function () {
     modal.style.display = "block";
     modalImg.src = this.src;
     captionText.innerHTML = this.alt;
   }
-  img02.onclick = function () {
-    modal02.style.display = "block";
-    modalImg02.src = this.src;
-    captionText02.innerHTML = this.alt;
-  }
-  img03.onclick = function () {
-    modal03.style.display = "block";
-    modalImg03.src = this.src;
-    captionText03.innerHTML = this.alt;
-  }
-  img04.onclick = function () {
-    modal04.style.display = "block";
-    modalImg04.src = this.src;
-    captionText04.innerHTML = this.alt;
-  }
-
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-  var span02 = document.getElementsByClassName("close")[1];
-  var span03 = document.getElementsByClassName("close")[2];
-  var span04 = document.getElementsByClassName("close")[3];
-
+  let span = document.getElementsByClassName("close")[0];
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
     modal.style.display = "none";
   }
-  span02.onclick = function () {
-    modal02.style.display = "none";
+
+
+  if (img02 !== null) {
+    let modalImg02 = document.getElementById("img02");
+    let captionText02 = document.getElementById("caption02");
+    img02.onclick = function () {
+      modal02.style.display = "block";
+      modalImg02.src = this.src;
+      captionText02.innerHTML = this.alt;
+    }
+    let span02 = document.getElementsByClassName("close")[1];
+    span02.onclick = function () {
+      modal02.style.display = "none";
+    }
   }
-  span03.onclick = function () {
-    modal03.style.display = "none";
+
+  if (img03 !== null) {
+    let modalImg03 = document.getElementById("img03");
+    let captionText03 = document.getElementById("caption03");
+    img03.onclick = function () {
+      modal03.style.display = "block";
+      modalImg03.src = this.src;
+      captionText03.innerHTML = this.alt;
+    }
+    let span03 = document.getElementsByClassName("close")[2];
+    span03.onclick = function () {
+      modal03.style.display = "none";
+    }
   }
-  span04.onclick = function () {
-    modal04.style.display = "none";
+
+  if (img04 !== null) {
+    let modalImg04 = document.getElementById("img04");
+    let captionText04 = document.getElementById("caption04");
+    img04.onclick = function () {
+      modal04.style.display = "block";
+      modalImg04.src = this.src;
+      captionText04.innerHTML = this.alt;
+    }
+    let span04 = document.getElementsByClassName("close")[3];
+    span04.onclick = function () {
+      modal04.style.display = "none";
+    }
   }
-
-
-
-
 
 </script>

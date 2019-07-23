@@ -247,7 +247,7 @@ Dodać plasterki cytryny, całość skropić pozostałą oliwą i wstawić do pi
 Pomidory sparzyć wrzątkiem, obrać, pokroić na ćwiartki, odciąć szypułki, miąższ pokroić w kostkę. Odłożyć ok. pół szklanki pokrojonych pomidorów a resztę włożyć do garnka. 
 Dodać ocet i cukier oraz składniki opcjonalne jeśli ich używamy (sos worcestershire, ajvar, chili), zagotować. Wlać gorący bulion i znów zagotować. Przykryć i gotować przez ok. 5 minut.
 Zmiksować ręcznym blenderem (żyrafą), ale niekoniecznie na idealnie gładki krem, i gotować przez 1 minutę.
-Dodać odłożone świeże pomidory i po zagotowaniu odstawić z ognia. Wymieszć z posiekaną bazylią, następnie w razie potrzeby doprawić solą oraz pieprzem i skropić oliwą extra vergine.',4,'/images/krem-pomidorowy_1.jpeg',NULL,NULL,NULL, '/recipes/krem_pomidorowy', true),
+Dodać odłożone świeże pomidory i po zagotowaniu odstawić z ognia. Wymieszć z posiekaną bazylią, następnie w razie potrzeby doprawić solą oraz pieprzem i skropić oliwą extra vergine.',4,'/images/krem-pomidorowy_1.jpeg','/images/krem-pomidorowy_2.jpeg','/images/krem-pomidorowy_3.jpeg',NULL, '/recipes/krem_pomidorowy', true),
 (2,'Koreczki imprezowe','Zweryfikowany',0.0,'2019-06-17 23:00:00',null,1,'15min','Melona obrać i pokroić w kostkę. Suszoną szynkę pokroić w paski.
 Kawałki melona nadziać na patyczki razem z kulką mozzarelli, bazylią oraz złożonym paseczkiem suszonej szynki.
 Ułożyć na półmisku, przed podaniem skropić zagęszczonym octem balsamicznym.',4,'/images/koreczki-imprezowe_1.jpeg',NULL,NULL,NULL, '/recipes/koreczki_imprezowe', false),
@@ -268,7 +268,7 @@ Wlać roztopione masło i wymieszać. Dodać jajka oraz miód jeśli używamy i 
 Piekarnik nagrzać do 180 stopni C. Blachę wyłożyć papierem do pieczenia. Nabierać łyżkę stołową masy i nakładać na blaszkę formując okręgi i delikatnie je płaszczając.
 Piec przez ok. 15 minut na złoty kolor.',2,'/images/ciasteczka-owsiane-z-ziarnami_1.jpeg','/images/ciasteczka-owsiane-z-ziarnami_2.jpeg','/images/ciasteczka-owsiane-z-ziarnami_3.jpeg','/images/ciasteczka-owsiane-z-ziarnami_4.jpeg', '/recipes/ciasteczka_owsiane_z_ziarnami', false),
 (6,'Koktajl z borówek','Zweryfikowany',0.0,'2019-06-19 21:00:00',null,1,'15min','Do pojemnika blendera włożyć wszystkie składniki: umytą borówkę, mleko, maślankę, obranego banana, miód i pastę tahini jeśli jej używamy.
-Zmiksować na płynny koktajl.',1,'/images/koktajl-z-borowek_1.jpeg',NULL,NULL,NULL, '/recipes/koktajl_z_borowek', true),
+Zmiksować na płynny koktajl.',1,'/images/koktajl-z-borowek_1.jpeg','/images/koktajl-z-borowek_2.jpeg','/images/koktajl-z-borowek_3.jpeg',NULL, '/recipes/koktajl_z_borowek', true),
 (10,'Placki serowe z truskawkami','Zweryfikowany',0.0,'2019-06-19 21:00:00',null,1,'30min','Do miski włożyć twaróg i rozgnieść go praską do ziemniaków. Dodać jajka, cukier i wymieszać rózgą, następnie wlać olej oraz mleko i ponownie wymieszać.
 W drugiej misce wymieszać mąkę z proszkiem do pieczenia. Krótko połączyć składniki z dwóch misek za pomocą łyżki na dość gęstą masę.
 Rozgrzać patelnię (np. naleśnikową lub inną z nieprzywierającą powłoką), nakładać po 2 łyżki ciasta na jednego placka, wyrównać powierzchnię i smażyć na średnim ogniu do czasu aż urosną i będą ładnie zrumienione przez około 2,5 minuty.
