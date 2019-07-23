@@ -14,7 +14,7 @@ function splitIngredientId(elementId) {
 function ingredientsInShoppingList(name) {
     let shopList = document.getElementById(name);
     chosenShopList = shopList.id;
-    shopList.style.backgroundColor = "green";
+    //shopList.style.backgroundColor = "green";
     console.log(shopList);
     console.log(chosenShopList);
     let parent = shopList.parentNode;
@@ -324,8 +324,14 @@ $.ajax({
 }
 });
 
-jQuery('.btn-secondary').click(function (e) {
+jQuery('#panel > button').click(function (e) {
     jQuery('.collapse').collapse('hide');
+    let temp = document.querySelectorAll('#panel > button');
+
+    temp.forEach(item=>{
+        item.style.backgroundColor = '';
+    });
+    e.target.style.backgroundColor = 'green';
 });
 
 
