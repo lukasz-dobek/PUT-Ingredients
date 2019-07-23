@@ -14,7 +14,7 @@ function splitIngredientId(elementId) {
 function ingredientsInShoppingList(name) {
     let shopList = document.getElementById(name);
     chosenShopList = shopList.id;
-    shopList.style.backgroundColor = "green";
+    //shopList.style.backgroundColor = "green";
     console.log(shopList);
     console.log(chosenShopList);
     let parent = shopList.parentNode;
@@ -95,6 +95,7 @@ function ingredientsInShoppingList(name) {
                 let ingredientRow = document.createElement("div");
                 ingredientRow.classList.add("row");
                 ingredientRow.style.marginTop = '3%';
+                ingredientRow.style.paddingBottom = '2%';
                 ingredientRow.id = ingredient + '_' + element['ingredient_id']+'_'+chosenShopList;
                 ingredientTypeDivExists.appendChild(ingredientRow);
                 let buttonCol = document.createElement("div");
@@ -112,18 +113,22 @@ function ingredientsInShoppingList(name) {
                 let nameCol = document.createElement("div");
                 nameCol.classList.add("col");
                 ingredientRow.appendChild(nameCol);
-                let nameOfIngredient = document.createElement("h6");
+                let nameOfIngredient = document.createElement("input");
                 nameOfIngredient.style.textAlign = 'left';
-                nameOfIngredient.style.marginTop = '5%';
-                nameOfIngredient.style.marginLeft = '10%';
-                nameOfIngredient.textContent = ingredient;
+                nameOfIngredient.style.marginTop = '2%';
+                nameOfIngredient.style.backgroundColor = '#eeeeee';
+                nameOfIngredient.value = ingredient;
+                nameOfIngredient.readOnly = 'readonly';
+                nameOfIngredient.style.borderWidth = '0px';
+                nameOfIngredient.style.border = 'none';
+                nameOfIngredient.name = typeName+'[nazwa]';
                 nameCol.appendChild(nameOfIngredient);
                 let quantityCol = document.createElement("div");
                 quantityCol.classList.add("col");
                 ingredientRow.appendChild(quantityCol);
                 let quantityInput = document.createElement("input");
                 quantityInput.type = 'text';
-                quantityInput.name = 'quantityInput';
+                quantityInput.name = typeName+'[ilosc]';
                 quantityInput.id = 'quantityForm';
                 quantityInput.classList.add('form-control');
                 quantityInput.style.backgroundColor = '#eeeeee';
@@ -134,16 +139,40 @@ function ingredientsInShoppingList(name) {
                 let unitCol = document.createElement("div");
                 unitCol.classList.add("col");
                 ingredientRow.appendChild(unitCol);
-                let unitInput = document.createElement("input");
-                unitInput.type = 'text';
-                unitInput.name = 'unitInput';
-                unitInput.id = 'unitForm';
-                unitInput.classList.add('form-control');
-                unitInput.style.backgroundColor = '#eeeeee';
-                unitInput.style.width = '80%';
-                unitInput.style.borderRadius = '0';
-                unitInput.value = element['unit_name'];
-                unitCol.appendChild(unitInput);
+                let ingredientUnitSelect = document.createElement('select');
+                ingredientUnitSelect.name = typeName+'[jednostka]';
+                ingredientUnitSelect.id = `ingredientUnit${numberOfIngredients}`
+                ingredientUnitSelect.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
+                ingredientUnitSelect.style.backgroundColor = '#eeeeee';
+                ingredientUnitSelect.setAttribute('required', '');
+                unitCol.appendChild(ingredientUnitSelect);
+                let ingredientUnitOption = document.createElement('option');
+                ingredientUnitOption.disabled = true;
+                ingredientUnitOption.selected = true;
+                ingredientUnitOption.hidden = true;
+                ingredientUnitOption.value = '';
+                ingredientUnitOption.textContent = element['unit_name'];
+                ingredientUnitSelect.appendChild(ingredientUnitOption);
+                $.getJSON('/api/units/namesandId',(jsonData)=>{
+                    jsonData.forEach(element => {
+                        let unitOption = document.createElement('option');
+                        unitOption.value = element["id_unit"];
+                        unitOption.textContent = element["unit_name"];
+                        ingredientUnitSelect.appendChild(unitOption);
+                    });
+                });
+
+
+                // let unitInput = document.createElement("input");
+                // unitInput.type = 'text';
+                // unitInput.name = 'unitInput';
+                // unitInput.id = 'unitForm';
+                // unitInput.classList.add('form-control');
+                // unitInput.style.backgroundColor = '#eeeeee';
+                // unitInput.style.width = '80%';
+                // unitInput.style.borderRadius = '0';
+                // unitInput.value = element['unit_name'];
+                // unitCol.appendChild(unitInput);
             });
 
             let buttonRow = document.createElement("div");
@@ -225,6 +254,8 @@ function deleteShoppingList(e) {
     location.reload();
 }
 
+
+
 function deleteFromShoppingList(e) {
     let clicked = document.getElementById(e.target.id);
     let parentId = clicked.parentNode.parentNode.id;
@@ -269,7 +300,7 @@ $.ajax({
 
     console.log(items);
 
-    let listOfRecipes = document.getElementById("allRecipesShoppingList");
+    let listOfRecipes = document.getElementById("panel");
     console.log(listOfRecipes);
     items.forEach(item => {
         let button = document.createElement('button');
@@ -291,6 +322,16 @@ $.ajax({
         ingredientsInShoppingList(button.id);
     });
 }
+});
+
+jQuery('#panel > button').click(function (e) {
+    jQuery('.collapse').collapse('hide');
+    let temp = document.querySelectorAll('#panel > button');
+
+    temp.forEach(item=>{
+        item.style.backgroundColor = '';
+    });
+    e.target.style.backgroundColor = 'green';
 });
 
 

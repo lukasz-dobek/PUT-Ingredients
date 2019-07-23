@@ -12,4 +12,14 @@ router.get('/names', (req, res) => {
     });
 });
 
+router.get('/namesandId', (req, res) => {
+    const unitsNamesQueryString = "SELECT id_unit,unit_name FROM units;";
+    pgClient.query(unitsNamesQueryString, (unitsNamesQueryError, unitsNamesQueryResult) => {
+        if(unitsNamesQueryError) {
+            throw unitsNamesQueryError;
+        }
+        res.json(unitsNamesQueryResult.rows);
+    });
+});
+
 module.exports = router;
