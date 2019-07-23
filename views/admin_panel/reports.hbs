@@ -44,10 +44,45 @@
                     <td>{{description}}</td>
                     <td>{{status}}</td>
                     <td>
-                        <button class="btn btn-danger rounded-0" onclick="revokeReport({{id_report}})">Unieważnij <br>
+                        <button class="btn btn-danger rounded-0" onclick="revokeReport({{id_report}}, {{recipe_id}})">Unieważnij <br>
                             zgłoszenie</button>
-                        <button class="btn btn-warning rounded-0" onclick="acceptReport({{id_report}})">Zaakceptuj <br>
+                        <button class="btn btn-warning rounded-0" type="button" data-toggle="modal"
+                            data-target="#messageModal{{id_report}}"
+                            onclick="acceptReport({{id_report}}, {{recipe_id}})">Zaakceptuj <br>
                             zgłoszenie</button>
+
+                        <div class="modal fade bd-example-modal-lg" id="messageModal{{id_report}}" tabindex="-1"
+                            role="dialog" aria-labelledby="messageModalTitle{{id_report}}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="messageModalTitle{{id_report}}">Wyślij
+                                            wiadomość
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-justify">
+                                        <textarea name="userMessage" id="userMessage_{{reported_email}}" cols="70"
+                                            rows="10"></textarea>
+                                        <label for="adminEmail" class="col-form-label">Adres e-mail
+                                            do
+                                            korespondencji:</label>
+                                        <input type="text" class="form-control" name="adminEmail" id="adminEmail"
+                                            value="{{@root.userEmail}}">
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="sendMail('{{reported_email}}')">Wyślij do:
+                                            {{reported_email}}</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Zamknij</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 {{/each}}
@@ -59,11 +94,23 @@
     </div>
 </main>
 <script>
-    function revokeReport(reportId) {
-        console.log(reportId);
+    function revokeReport(reportId, recipeId) {
+        $.post('/api/reports/revoke_report', {
+            reportId: reportId,
+            recipeId: recipeId
+        }).done(() => {
+            console.log('Unieważniono zgłoszenie.');
+            location.reload();
+        });
     }
 
-    function acceptReport(reportId) {
-        console.log(reportId);
+    function acceptReport(reportId, recipeId) {
+        $.post('/api/reports/accept_report', {
+            reportId: reportId,
+            recipeId: recipeId
+        }).done(() => {
+            console.log('Zaakceptowano zgłoszenie.');
+        });
     }
 </script>
+<script src="/javascripts/sendEmail.js"></script>

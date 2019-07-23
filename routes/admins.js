@@ -94,11 +94,17 @@ router.get('/reports/:id', (req, res) => {
         usr_a.nickname as reportee_nickname,
         rep.reported_id,
         usr_b.nickname as reported_nickname,
+        usr_b.email_address as reported_email,
         rec.recipe_name,
+        rep.recipe_id,
         rep.description,
         TO_CHAR(rep.date_of_report, 'DD/MM/YY') AS data,
         TO_CHAR(rep.date_of_report, 'HH:MI:SS') AS godzina,
-        rep.status
+        CASE rep.status
+            WHEN 0 THEN 'Aktywne'
+            WHEN 1 THEN 'Unieważnione'
+            WHEN 2 THEN 'Zweryfikowane'
+        END AS status
     FROM reports rep
         INNER JOIN users usr_a ON rep.reportee_id = usr_a.id_user
         INNER JOIN users usr_b ON rep.reported_id = usr_b.id_user
@@ -116,6 +122,7 @@ router.get('/reports/:id', (req, res) => {
             if (recipeQueryError) {
                 throw recipeQueryError;
             }
+            console.log(reportsQueryResult.rows);
             res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows, recipeName: recipeQueryResult.rows[0]["recipe_name"]});
         });
     });
@@ -247,7 +254,7 @@ router.get('/recipe_management', (req, res) => {
         TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS') as date_of_creation,
         rec.score,
         rec.link_to_recipe,
-        CASE (SELECT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
+        CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
             WHEN 1 THEN 'TAK' 
             ELSE 'NIE' 
         END AS reported,
