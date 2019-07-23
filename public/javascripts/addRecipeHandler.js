@@ -306,53 +306,47 @@ function readURL(input) {
 
         for (let file of input.files) {
             let reader = new FileReader();
-
             if (counter == 0) {
                 reader.onload = function (e) {
-                    while (selectMainPhotoElement.firstChild) {
-                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
-                    }
+
                     let photoOneOption = document.createElement('option');
                     photoOneOption.value = "0";
                     photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
-
+                    
                     selectMainPhotoElement.appendChild(photoOneOption);
                     $('#photoOne').attr('src', e.target.result);
-
+                    console.log('jestem' + counter);
                 }
             } else if (counter == 1) {
                 reader.onload = function (e) {
-                    while (selectMainPhotoElement.firstChild) {
-                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
-                    }
-                    let photoOneOption = document.createElement('option');
-                    photoOneOption.value = "0";
-                    photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
 
-                    selectMainPhotoElement.appendChild(photoOneOption);
+                    // let photoOneOption = document.createElement('option');
+                    // photoOneOption.value = "0";
+                    // photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
+
+                    // selectMainPhotoElement.appendChild(photoOneOption);
                     let photoTwoOption = document.createElement('option');
                     photoTwoOption.value = "1";
                     photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
 
                     selectMainPhotoElement.appendChild(photoTwoOption);
                     $('#photoTwo').attr('src', e.target.result);
+                    console.log('jestem' + counter);
                 }
             } else if (counter == 2) {
                 reader.onload = function (e) {
-                    while (selectMainPhotoElement.firstChild) {
-                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
-                    }
-                    let photoOneOption = document.createElement('option');
-                    photoOneOption.value = "0";
-                    photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
 
-                    selectMainPhotoElement.appendChild(photoOneOption);
+                    // let photoOneOption = document.createElement('option');
+                    // photoOneOption.value = "0";
+                    // photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
 
-                    let photoTwoOption = document.createElement('option');
-                    photoTwoOption.value = "1";
-                    photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
+                    // selectMainPhotoElement.appendChild(photoOneOption);
 
-                    selectMainPhotoElement.appendChild(photoTwoOption);
+                    // let photoTwoOption = document.createElement('option');
+                    // photoTwoOption.value = "1";
+                    // photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
+
+                    // selectMainPhotoElement.appendChild(photoTwoOption);
 
                     let photoThreeOption = document.createElement('option');
                     photoThreeOption.value = "2";
@@ -360,29 +354,28 @@ function readURL(input) {
 
                     selectMainPhotoElement.appendChild(photoThreeOption);
                     $('#photoThree').attr('src', e.target.result);
+                    console.log('jestem' + counter);
                 }
             } else if (counter == 3) {
                 reader.onload = function (e) {
-                    while (selectMainPhotoElement.firstChild) {
-                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
-                    }
-                    let photoOneOption = document.createElement('option');
-                    photoOneOption.value = "0";
-                    photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
 
-                    selectMainPhotoElement.appendChild(photoOneOption);
+                    // let photoOneOption = document.createElement('option');
+                    // photoOneOption.value = "0";
+                    // photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
 
-                    let photoTwoOption = document.createElement('option');
-                    photoTwoOption.value = "1";
-                    photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
+                    // selectMainPhotoElement.appendChild(photoOneOption);
 
-                    selectMainPhotoElement.appendChild(photoTwoOption);
+                    // let photoTwoOption = document.createElement('option');
+                    // photoTwoOption.value = "1";
+                    // photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
 
-                    let photoThreeOption = document.createElement('option');
-                    photoThreeOption.value = "2";
-                    photoThreeOption.textContent = "Zdjęcie trzecie (lewo-dół)";
+                    // selectMainPhotoElement.appendChild(photoTwoOption);
 
-                    selectMainPhotoElement.appendChild(photoThreeOption);
+                    // let photoThreeOption = document.createElement('option');
+                    // photoThreeOption.value = "2";
+                    // photoThreeOption.textContent = "Zdjęcie trzecie (lewo-dół)";
+
+                    // selectMainPhotoElement.appendChild(photoThreeOption);
 
                     let photoFourOption = document.createElement('option');
                     photoFourOption.value = "3";
@@ -390,10 +383,12 @@ function readURL(input) {
 
                     selectMainPhotoElement.appendChild(photoFourOption);
                     $('#photoFour').attr('src', e.target.result);
+                    console.log('jestem' + counter);
                 }
             }
-            reader.readAsDataURL(file);
             counter++;
+
+            reader.readAsDataURL(file);
         }
 
     }
