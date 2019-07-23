@@ -42,6 +42,8 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         filepathsArray.push('/' + file.path.substring(7).replace('\\', '/'));
     }
 
+    [filepathsArray[0], filepathsArray[req.body.mainPhotoSelect]] = [filepathsArray[req.body.mainPhotoSelect], filepathsArray[0]];
+
     // Fill array with nulls
     for (let i = filepathsArray.length; i < 4; i++) {
         filepathsArray.push(null);

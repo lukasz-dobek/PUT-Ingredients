@@ -287,25 +287,108 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
 });
 
 function readURL(input) {
+    let selectMainPhotoElement = document.getElementById('mainPhotoSelect');
+    while (selectMainPhotoElement.firstChild) {
+        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
+    }
+
     if (input.files) {
+        $('#photoOne').attr('src', "");
+
+        $('#photoTwo').attr('src', "");
+
+        $('#photoThree').attr('src', "");
+
+        $('#photoFour').attr('src', "");
+
+
         let counter = 0;
+
         for (let file of input.files) {
             let reader = new FileReader();
 
             if (counter == 0) {
                 reader.onload = function (e) {
+                    while (selectMainPhotoElement.firstChild) {
+                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
+                    }
+                    let photoOneOption = document.createElement('option');
+                    photoOneOption.value = "0";
+                    photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
+
+                    selectMainPhotoElement.appendChild(photoOneOption);
                     $('#photoOne').attr('src', e.target.result);
+
                 }
             } else if (counter == 1) {
                 reader.onload = function (e) {
+                    while (selectMainPhotoElement.firstChild) {
+                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
+                    }
+                    let photoOneOption = document.createElement('option');
+                    photoOneOption.value = "0";
+                    photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
+
+                    selectMainPhotoElement.appendChild(photoOneOption);
+                    let photoTwoOption = document.createElement('option');
+                    photoTwoOption.value = "1";
+                    photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
+
+                    selectMainPhotoElement.appendChild(photoTwoOption);
                     $('#photoTwo').attr('src', e.target.result);
                 }
             } else if (counter == 2) {
                 reader.onload = function (e) {
+                    while (selectMainPhotoElement.firstChild) {
+                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
+                    }
+                    let photoOneOption = document.createElement('option');
+                    photoOneOption.value = "0";
+                    photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
+
+                    selectMainPhotoElement.appendChild(photoOneOption);
+
+                    let photoTwoOption = document.createElement('option');
+                    photoTwoOption.value = "1";
+                    photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
+
+                    selectMainPhotoElement.appendChild(photoTwoOption);
+
+                    let photoThreeOption = document.createElement('option');
+                    photoThreeOption.value = "2";
+                    photoThreeOption.textContent = "Zdjęcie trzecie (lewo-dół)";
+
+                    selectMainPhotoElement.appendChild(photoThreeOption);
                     $('#photoThree').attr('src', e.target.result);
                 }
             } else if (counter == 3) {
                 reader.onload = function (e) {
+                    while (selectMainPhotoElement.firstChild) {
+                        selectMainPhotoElement.removeChild(selectMainPhotoElement.firstChild);
+                    }
+                    let photoOneOption = document.createElement('option');
+                    photoOneOption.value = "0";
+                    photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
+
+                    selectMainPhotoElement.appendChild(photoOneOption);
+
+                    let photoTwoOption = document.createElement('option');
+                    photoTwoOption.value = "1";
+                    photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
+
+                    selectMainPhotoElement.appendChild(photoTwoOption);
+
+                    let photoThreeOption = document.createElement('option');
+                    photoThreeOption.value = "2";
+                    photoThreeOption.textContent = "Zdjęcie trzecie (lewo-dół)";
+
+                    selectMainPhotoElement.appendChild(photoThreeOption);
+
+                    let photoFourOption = document.createElement('option');
+                    photoFourOption.value = "3";
+                    photoFourOption.textContent = "Zdjęcie czwarte (prawo-dół)";
+
+                    selectMainPhotoElement.appendChild(photoFourOption);
                     $('#photoFour').attr('src', e.target.result);
                 }
             }
@@ -368,8 +451,8 @@ $.getJSON("/api/recipes/all", (data) => {
         }
 
         if (field.type === 'number') {
-            if(field.id.includes("ingredientQuantity") && field.value >2000) return 'Wartość nie może być większa niż 2000';
-            if(field.id === 'numberOfPortions' && field.value >20) return 'Wartość nie może być większa niż 20';
+            if (field.id.includes("ingredientQuantity") && field.value > 2000) return 'Wartość nie może być większa niż 2000';
+            if (field.id === 'numberOfPortions' && field.value > 20) return 'Wartość nie może być większa niż 20';
             if (field.value <= 0) return "Wartość nie może być zerowa, lub ujemna."
         }
         // Get validity
@@ -493,28 +576,26 @@ $.getJSON("/api/recipes/all", (data) => {
                 // if (!ingredientsNames.includes(customIngredient)) {
                 //     error = "Taki składnik nie występuje w bazie."
                 // } else {
-                    let selectedIngredients = document.querySelectorAll("[id^=ingredientName]");
-                    let usedIngredients = [];
-                    selectedIngredients.forEach(item => {
-                        usedIngredients.push(item['value']);
-                    });
-                    console.log(usedIngredients);
-                    let num = event.target.id.replace(/^\D+/g, "");
-                    let index = usedIngredients.indexOf(customIngredient);
-                    console.log(index);
-                    usedIngredients.splice(index,1);
-                    console.log(usedIngredients);
-                    for (let i = 1; i <= usedIngredients.length; i++) {
-                        if (i != num) {
-                            if (usedIngredients[num-1] === customIngredient)
-                            {break;}
-                            else if(usedIngredients.includes(customIngredient))
-                            {
-                                error = "Taki składnik został już dodany";
-                                break;
-                            }
+                let selectedIngredients = document.querySelectorAll("[id^=ingredientName]");
+                let usedIngredients = [];
+                selectedIngredients.forEach(item => {
+                    usedIngredients.push(item['value']);
+                });
+                console.log(usedIngredients);
+                let num = event.target.id.replace(/^\D+/g, "");
+                let index = usedIngredients.indexOf(customIngredient);
+                console.log(index);
+                usedIngredients.splice(index, 1);
+                console.log(usedIngredients);
+                for (let i = 1; i <= usedIngredients.length; i++) {
+                    if (i != num) {
+                        if (usedIngredients[num - 1] === customIngredient) { break; }
+                        else if (usedIngredients.includes(customIngredient)) {
+                            error = "Taki składnik został już dodany";
+                            break;
                         }
                     }
+                }
                 //}
             }
         }
@@ -541,7 +622,7 @@ $.getJSON("/api/recipes/all", (data) => {
         // Store the first field with an error to a letiable so we can bring it into focus leter
         let error, hasErrors;
         for (let i = 0; i < fields.length; i++) {
-            if(fields[i].id.includes("ingredientName")) {
+            if (fields[i].id.includes("ingredientName")) {
                 let customIngredient = fields[i].value;
                 if (customIngredient) {
                     if (!ingredientsNames.includes(customIngredient)) {
@@ -571,7 +652,7 @@ $.getJSON("/api/recipes/all", (data) => {
                     }
                 }
             }
-            else{
+            else {
                 error = hasError(fields[i]);
             }
             if (error) {
