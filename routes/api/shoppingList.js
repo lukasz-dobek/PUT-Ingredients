@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 });
 
 router.get('/recipe/:recipe',(req,res)=>{
-   const queryString = `SELECT isl.ingredient_id, i.ingredient_name,t.name,isl.amount,u.unit_name from ingredients i
+   const queryString = `SELECT isl.ingredient_id, i.ingredient_name,t.name,isl.amount,u.unit_name,u.id_unit from ingredients i
     JOIN types t ON t.id_type=i.type_id
     JOIN ingredients_used_in_shop_list isl ON isl.ingredient_id=i.id_ingredient
     JOIN units u ON u.id_unit=isl.unit_id
@@ -38,15 +38,41 @@ router.get('/recipe/:recipe',(req,res)=>{
    });
 });
 
+router.post('/update', (req, res) => {
+    const removeFromShoppingListQueryString = `
+UPDATE ingredients_used_in_shop_list isl SET unit_id = $1, amount = $2 WHERE isl.ingredient_id = $3 AND isl.shop_list_id = (SELECT id_shop_list
+    FROM shop_lists sl INNER JOIN recipes r ON sl.recipe_id = r.id_recipe INNER JOIN users u ON u.id_user=sl.user_id WHERE r.recipe_name = $4 AND u.email_address = $5)
+    `;
+    const unit_id = req.body.unit_id;
+    const amount = req.body.quantity;
+    const ingredientId = req.body.ingredient_id;
+    const recipe_name = req.body.recipe_name;
+    const email_address = req.body.email_address;
+    console.log(ingredientId);
+    pgClient.query(removeFromShoppingListQueryString, [unit_id,amount,ingredientId,recipe_name,email_address], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
+        if (removeFromShoppingListQueryError) {
+            throw removeFromShoppingListQueryError;
+        }
+        console.log(`DELETE /ingredient - query successful - ${removeFromShoppingListQueryResult.rowCount} removed`);
+        res.json(removeFromShoppingListQueryResult.rows);
+    });
+});
+
+
 
 router.delete('/ingredient', (req, res) => {
     const removeFromShoppingListQueryString = `
-    DELETE FROM ingredients_used_in_shop_list
-    WHERE ingredient_id = $1;
+        DELETE FROM ingredients_used_in_shop_list isl WHERE isl.ingredient_id = $1 AND isl.shop_list_id = (SELECT id_shop_list
+        FROM shop_lists sl INNER JOIN recipes r ON sl.recipe_id = r.id_recipe 
+            INNER JOIN users u ON u.id_user=sl.user_id 
+        WHERE r.recipe_name = $2
+        AND u.email_address = $3 )
     `
     const ingredientId = req.body.ingredient_id;
+    const recipe_name = req.body.recipe_name;
+    const email_address = req.body.email_address;
     console.log(ingredientId);
-    pgClient.query(removeFromShoppingListQueryString, [ingredientId], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
+    pgClient.query(removeFromShoppingListQueryString, [ingredientId,recipe_name,email_address], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
         if (removeFromShoppingListQueryError) {
             throw removeFromShoppingListQueryError;
         }

@@ -4,7 +4,8 @@ $.ajaxSetup({
 
 let chosenShopList;
 let numberOfIngredients = 0;
-let numberofTypeDivs =0;
+let updatedIngredients = {"ingredient": []};
+
 const email_address = document.getElementById('userProfileDropdown').textContent.trim();
 
 function splitIngredientId(elementId) {
@@ -31,7 +32,7 @@ function ingredientsInShoppingList(name) {
     let container = document.createElement("div");
     container.classList.add("container");
     container.classList.add("text-center");
-    container.id = 'container_'+chosenShopList;
+    container.id = 'container_' + chosenShopList;
     formField.appendChild(container);
     let header = document.createElement("h2");
     let pom = chosenShopList.split("_").join(" ");
@@ -40,12 +41,12 @@ function ingredientsInShoppingList(name) {
     container.appendChild(header);
     let recipeName = chosenShopList.split("_").join(" ");
 
-   // $.getJSON(`/api/shoppingList/recipe/${recipeName}`, (data) => {
+    // $.getJSON(`/api/shoppingList/recipe/${recipeName}`, (data) => {
     $.ajax({
-    url:`/api/shoppingList/recipe/${recipeName}`,
+        url: `/api/shoppingList/recipe/${recipeName}`,
         dataType: 'json',
-        async:false,
-        success: function(data) {
+        async: false,
+        success: function (data) {
 
             let items = [];
             data.forEach(element => {
@@ -63,10 +64,10 @@ function ingredientsInShoppingList(name) {
                 numberOfIngredients = numberOfIngredients + 1;
                 let typeName = element['name'];
                 typeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
-                typeName= typeName.split(" ").join('_');
-                let mainDiv = document.getElementById('container_'+chosenShopList);
+                typeName = typeName.split(" ").join('_');
+                let mainDiv = document.getElementById('container_' + chosenShopList);
                 console.log(mainDiv);
-                let ingredientTypeDivExists = mainDiv.querySelector('#'+typeName);
+                let ingredientTypeDivExists = mainDiv.querySelector('#' + typeName);
                 console.log(ingredientTypeDivExists);
                 if (ingredientTypeDivExists === null) {
                     let typeDiv = document.createElement("div");
@@ -90,13 +91,13 @@ function ingredientsInShoppingList(name) {
                     // typeDiv.appendChild(ingredientsDiv);
                 }
                 let ingredient = element['ingredient_name'];
-                ingredientTypeDivExists = mainDiv.querySelector('#'+typeName);
+                ingredientTypeDivExists = mainDiv.querySelector('#' + typeName);
                 console.log(ingredientTypeDivExists);
                 let ingredientRow = document.createElement("div");
                 ingredientRow.classList.add("row");
                 ingredientRow.style.marginTop = '3%';
                 ingredientRow.style.paddingBottom = '2%';
-                ingredientRow.id = ingredient + '_' + element['ingredient_id']+'_'+chosenShopList;
+                ingredientRow.id = ingredient + '_' + element['ingredient_id'] + '_' + chosenShopList;
                 ingredientTypeDivExists.appendChild(ingredientRow);
                 let buttonCol = document.createElement("div");
                 buttonCol.classList.add("col");
@@ -121,39 +122,43 @@ function ingredientsInShoppingList(name) {
                 nameOfIngredient.readOnly = 'readonly';
                 nameOfIngredient.style.borderWidth = '0px';
                 nameOfIngredient.style.border = 'none';
-                nameOfIngredient.name = typeName+'[nazwa]';
+                nameOfIngredient.name = typeName + '[nazwa]';
                 nameCol.appendChild(nameOfIngredient);
                 let quantityCol = document.createElement("div");
                 quantityCol.classList.add("col");
                 ingredientRow.appendChild(quantityCol);
                 let quantityInput = document.createElement("input");
                 quantityInput.type = 'text';
-                quantityInput.name = typeName+'[ilosc]';
+                quantityInput.name = typeName + '[ilosc]';
                 quantityInput.id = 'quantityForm';
                 quantityInput.classList.add('form-control');
                 quantityInput.style.backgroundColor = '#eeeeee';
                 quantityInput.style.width = '80%';
                 quantityInput.style.borderRadius = '0';
                 quantityInput.value = element['amount'];
+                quantityInput.addEventListener('change',function (e) {
+                   addToUpdated(e);
+                });
                 quantityCol.appendChild(quantityInput);
                 let unitCol = document.createElement("div");
                 unitCol.classList.add("col");
                 ingredientRow.appendChild(unitCol);
                 let ingredientUnitSelect = document.createElement('select');
-                ingredientUnitSelect.name = typeName+'[jednostka]';
+                ingredientUnitSelect.name = typeName + '[jednostka]';
                 ingredientUnitSelect.id = `ingredientUnit${numberOfIngredients}`
                 ingredientUnitSelect.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
                 ingredientUnitSelect.style.backgroundColor = '#eeeeee';
-                ingredientUnitSelect.setAttribute('required', '');
+                ingredientUnitSelect.addEventListener('change',function (e) {
+                    addToUpdated(e);
+                });
                 unitCol.appendChild(ingredientUnitSelect);
                 let ingredientUnitOption = document.createElement('option');
-                ingredientUnitOption.disabled = true;
                 ingredientUnitOption.selected = true;
                 ingredientUnitOption.hidden = true;
-                ingredientUnitOption.value = '';
+                ingredientUnitOption.value = element["id_unit"];
                 ingredientUnitOption.textContent = element['unit_name'];
                 ingredientUnitSelect.appendChild(ingredientUnitOption);
-                $.getJSON('/api/units/namesandId',(jsonData)=>{
+                $.getJSON('/api/units/namesandId', (jsonData) => {
                     jsonData.forEach(element => {
                         let unitOption = document.createElement('option');
                         unitOption.value = element["id_unit"];
@@ -199,7 +204,7 @@ function ingredientsInShoppingList(name) {
             saveDiv.style.marginLeft = "5.4vw";
             buttonRow.appendChild(saveDiv);
             let saveButton = document.createElement("button");
-            saveButton.type = "submit";
+            saveButton.type = "button";
             saveButton.classList.add("btn");
             saveButton.classList.add("btn-success");
             saveButton.classList.add("mt-4");
@@ -209,6 +214,10 @@ function ingredientsInShoppingList(name) {
             saveButton.style.height = "2.7vw";
             saveButton.style.width = "15vw";
             saveButton.textContent = "ZAPISZ ZMIANY";
+            saveButton.id = 'saveButton' + chosenShopList;
+            saveButton.addEventListener("click", (e) => {
+                saveChanges(e);
+            });
             saveDiv.appendChild(saveButton);
             let deleteDiv = document.createElement("div");
             deleteDiv.classList.add("col-auto");
@@ -235,6 +244,71 @@ function ingredientsInShoppingList(name) {
 
 }
 
+function addToUpdated(e) {
+    let clicked = document.getElementById(e.target.id);
+    console.log(clicked);
+    let quantity;
+    let unit;
+    let ingredientId;
+    if(e.target.tagName.toUpperCase() === 'SELECT'){
+        unit = clicked.value;
+        let nameDiv = clicked.parentNode.parentNode;
+        ingredientId = splitIngredientId(nameDiv.id);
+        quantity = nameDiv.querySelector('.col > #quantityForm').value;
+    }
+    if(e.target.tagName.toUpperCase() === 'INPUT'){
+        quantity= clicked.value;
+        let nameDiv = clicked.parentNode.parentNode;
+        ingredientId = splitIngredientId(nameDiv.id);
+        unit = nameDiv.querySelector('.col > select').value;
+    }
+    updatedIngredients['ingredient'].push({"id": ingredientId, "quantity": quantity, "unit": unit});
+
+}
+
+function saveChanges(e) {
+    let clicked = document.getElementById(e.target.id);
+    console.log(clicked);
+    let recipeHeader = clicked.parentNode.parentNode.parentNode.querySelector('h2')
+    console.log(recipeHeader);
+    let string = recipeHeader.textContent;
+    let recipe = string.substr(string.indexOf(' ') + 1);
+
+
+    for (let i = 0; i < deletedIngredients.length; i++) {
+        let ingredientId = deletedIngredients[i];
+
+        $.ajax({
+            url: '/api/shoppingList/ingredient',
+            type: 'DELETE',
+            data: {
+                ingredient_id: ingredientId,
+                recipe_name: recipe,
+                email_address: email_address,
+            }
+        });
+    }
+    for (let i =0;i<updatedIngredients['ingredient'].length;i++){
+        let ingredientId = updatedIngredients['ingredient'][i]['id'];
+        let unit_id = updatedIngredients['ingredient'][i]['unit'];
+        let quantity = updatedIngredients['ingredient'][i]['quantity'];
+        $.ajax({
+            url: '/api/shoppingList/update',
+            type: 'POST',
+            data: {
+                unit_id: unit_id,
+                quantity: quantity,
+                ingredient_id: ingredientId,
+                recipe_name: recipe,
+                email_address: email_address,
+            }
+        });
+
+    }
+    location.reload();
+}
+
+
 function deleteShoppingList(e) {
     let clicked = document.getElementById(e.target.id);
     console.log(clicked);
@@ -254,16 +328,14 @@ function deleteShoppingList(e) {
     location.reload();
 }
 
-
+let deletedIngredients = [];
 
 function deleteFromShoppingList(e) {
     let clicked = document.getElementById(e.target.id);
     let parentId = clicked.parentNode.parentNode.id;
     let ingredientId = splitIngredientId(parentId);
     let rowToDelete = document.getElementById(parentId);
-    let typeId = rowToDelete.parentNode.id;
     let typeDiv = rowToDelete.parentNode;
-    console.log(typeDiv);
     let ingredientsDivs = false;
     rowToDelete.remove();
     typeDiv.childNodes.forEach(node => {
@@ -276,62 +348,55 @@ function deleteFromShoppingList(e) {
     if (ingredientsDivs) {
         typeDiv.remove();
     }
-    //numberOfIngredients = numberOfIngredients - 1;
-    // $.ajax({
-    //     url: '/api/shoppingList/ingredient',
-    //     type: 'DELETE',
-    //     data: {
-    //         ingredient_id: ingredientId,
-    //     }
-    // });
+    numberOfIngredients = numberOfIngredients - 1;
+    deletedIngredients.push(ingredientId);
+
 }
 
 //$.getJSON("/api/users/shopping_list", (data) => {
 $.ajax({
     url: '/api/users/shopping_list',
     dataType: 'json',
-    async:false,
-    success: function(data) {
-    let items = [];
+    async: false,
+    success: function (data) {
+        let items = [];
 
-    data.forEach(element => {
-        items.push(element);
-    });
+        data.forEach(element => {
+            items.push(element);
+        });
 
-    console.log(items);
+        console.log(items);
 
-    let listOfRecipes = document.getElementById("panel");
-    console.log(listOfRecipes);
-    items.forEach(item => {
-        let button = document.createElement('button');
-        button.type = "button";
-        button.classList.add("btn");
-        button.classList.add("btn-secondary");
-        button.classList.add("btn-shoppingList", "toggle");
-        button.setAttribute("data-toggle", "collapse");
-        button.setAttribute("data-target", "#div_" + item['recipe_name'].split(" ").join("_"));
-        button.setAttribute("aria-expanded", "false");
-        button.setAttribute("aria-controls", "div_" + item['recipe_name'].split(" ").join("_"));
-        button.setAttribute("data-parent", "#allRecipesShoppingList");
-        //button.style='width: 75%; margin-top: 1%; margin-bottom: 1%;';
+        let listOfRecipes = document.getElementById("panel");
+        console.log(listOfRecipes);
+        items.forEach(item => {
+            let button = document.createElement('button');
+            button.type = "button";
+            button.classList.add("btn");
+            button.classList.add("btn-secondary");
+            button.classList.add("btn-shoppingList", "toggle");
+            button.setAttribute("data-toggle", "collapse");
+            button.setAttribute("data-target", "#div_" + item['recipe_name'].split(" ").join("_"));
+            button.setAttribute("aria-expanded", "false");
+            button.setAttribute("aria-controls", "div_" + item['recipe_name'].split(" ").join("_"));
+            button.setAttribute("data-parent", "#allRecipesShoppingList");
+            //button.style='width: 75%; margin-top: 1%; margin-bottom: 1%;';
 
-        button.id = item['recipe_name'].split(" ").join("_");
-        button.textContent = item['recipe_name'];
-        listOfRecipes.appendChild(button);
+            button.id = item['recipe_name'].split(" ").join("_");
+            button.textContent = item['recipe_name'];
+            listOfRecipes.appendChild(button);
 
-        ingredientsInShoppingList(button.id);
-    });
-}
+            ingredientsInShoppingList(button.id);
+        });
+    }
 });
 
 jQuery('#panel > button').click(function (e) {
     jQuery('.collapse').collapse('hide');
     let temp = document.querySelectorAll('#panel > button');
-
-    temp.forEach(item=>{
+    deletedIngredients = [];
+    temp.forEach(item => {
         item.style.backgroundColor = '';
     });
     e.target.style.backgroundColor = 'green';
 });
-
-
