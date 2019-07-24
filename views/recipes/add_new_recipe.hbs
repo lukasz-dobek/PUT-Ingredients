@@ -147,24 +147,43 @@
         <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
             <h2>Wybór zdjęcia:</h2>
             <hr>
-            <p style="font-size: 0.75vw; padding-top:0vw; margin-top:0vw">Pamiętaj, aby dodać co najmniej jedno zdjęcie.</p>
+            <p style="font-size: 0.75vw; padding-top:0vw; margin-top:0vw">Pamiętaj, aby dodać co najmniej jedno zdjęcie.
+            </p>
             <div style="margin-left:1vw; margin-top:1.5vw">
-           <p style="padding-bottom:0vws"> Wybierz główne zdjęcie:</p>
-            <select name="mainPhotoSelect" id="mainPhotoSelect"
-                class="form-control border-top-0 border-left-0 border-right-0 rounded-0 w-25">
-            </select>
+                <p style="padding-bottom:0vws"> Wybierz główne zdjęcie:</p>
+                <select name="mainPhotoSelect" id="mainPhotoSelect"
+                    class="form-control border-top-0 border-left-0 border-right-0 rounded-0 w-25">
+                </select>
             </div>
             <div class="row p-3">
                 <div class="col-md">
-                    <div class="image-upload h-50">
+                    <div class="image-upload text-center mt-5">
                         <label for="file-input">
-                            <img src="/images/inputPhoto4.png" />
+                            <img src="/images/inputPhoto.png" style="width: 20vw;"  />
                         </label>
 
                         <input id="file-input" type="file" name="imageInput" id="imageInput" multiple="multiple" />
                     </div>
                 </div>
-                <div class="col-md text-center" style="background-color:#AFD2B9; height:33.25vw">
+
+                <div class="col-md pt-3"
+                    style="display:grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 8vw); grid-gap: 10px; background-color:#AFD2B9;">
+                    <figure class="gallery__item gallery__item--1">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoOne" style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
+                    <figure class="gallery__item gallery__item--2">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoTwo" style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
+                    <figure class="gallery__item gallery__item--3">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoThree" style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
+                    <figure class="gallery__item gallery__item--4">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoFour" style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
+                </div>
+
+
+                {{!-- <div class="col-md text-center" style="background-color:#AFD2B9; height:33.25vw">
                     <div class="row h-50 mt-2 mb-0" style="overflow: hidden; width: 100%; height:100%; margin-top:3vw">
                         <div class="col" style="margin-left: 1.1vw;  margin-top:0.8vw">
                             <img id="photoOne"  class="card-img-top center" alt="Brak zdjęcia" style=" object-fit: cover; width:11vw; height: 15vw" />
@@ -182,7 +201,7 @@
                             <img id="photoFour" class="card-img-top center" alt="Brak zdjęcia" style=" object-fit: cover; width:11vw; height: 15vw" />
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
