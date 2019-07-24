@@ -15,8 +15,6 @@ router.get('/all', (req, res) => {
 router.get('/recipe/:id', (req, res) => {
     const catPerRecipeQueryString = `
     SELECT 
-        rec.recipe_name,
-        cpr.recipe_id,
         cat.category_name
     FROM recipes rec 
         INNER JOIN categories_per_recipe cpr ON rec.id_recipe = cpr.recipe_id

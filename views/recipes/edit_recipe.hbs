@@ -1,0 +1,205 @@
+{{#each recipe}}
+<div class="container">
+    <h1 class="mb-5 text-center">EDYCJA PRZEPISU O ID: <span id="recipeId">{{id_recipe}}</span></h1>
+    <form action="{{link_to_recipe}}/edit" enctype="multipart/form-data" method="post" novalidate>
+        {{!-- Informacje ogolne --}}
+        <div class="container w-100 p-3" style="background-color: #eeeeee">
+
+            <h2>Informacje ogólne:</h2>
+            <hr>
+            <input type="text" name="recipeId" id="recipeId" style="display:none;" value="{{id_recipe}}">
+            <div>
+                <input type="text" name="recipeNameBlank" id="recipeNameBlank"
+                    class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                    style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
+                    value="{{recipe_name}}"
+                    maxlength="35" disabled>
+            </div>
+            <div class="row mt-4" id="categoryRow">
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="category1"
+                        name="category" style="background: #eeeeee" required>
+                        <option disabled selected hidden value="">* Kategoria</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="category2"
+                        name="category" style="background: #eeeeee">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="category3"
+                        name="category" style="background: #eeeeee">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="category4"
+                        name="category" style="background: #eeeeee">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="category5"
+                        name="category" style="background: #eeeeee">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="category6"
+                        name="category" style="background: #eeeeee">
+                        <option disabled selected hidden value="">Kategoria</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-4" id="generalInfo">
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="complicity"
+                        style="background: #eeeeee;" name="complicity" required>
+                        <option selected hidden value="{{complicity}}">{{complicity_name}}</option>
+                        <option value="1">Łatwe</option>
+                        <option value="2">Średnie</option>
+                        <option value="3">Trudne</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="number" name="numberOfPeople" id="numberOfPortions"
+                        class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                        style="background-color: #eeeeee;" placeholder="* Ilość porcji" value={{number_of_people}} required>
+                </div>
+                <div class="col">
+                    <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="timeToMake"
+                        style="background: #eeeeee" name="preparationTime" required>
+                        <option selected hidden value="{{preparation_time}}">{{preparation_time}}</option>
+                        <option value="15 min">15 min</option>
+                        <option value="30 min">60 min</option>
+                        <option value="45 min">45 min</option>
+                        <option value="1 h">1 h</option>
+                        <option value="1,5 h">1,5 h</option>
+                        <option value="2 h">2,5 h</option>
+                        <option value="2+ h">2+ h</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
+            <h2>Składniki:</h2>
+            <hr>
+            <div class="" id="ingredients">
+
+                <div class="row">
+                    <div class="col-6 autocomplete">
+                        <input type="text" name="ingredientName" id="ingredientName1"
+                            class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                            style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
+                            maxlength="50">
+                    </div>
+                    <div class="col">
+                        <input type="number" name="ingredientQuantity" id="ingredientQuantity1"
+                            class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                            style="background-color: #eeeeee;" placeholder="* Ilość" required>
+                    </div>
+                    <div class="col">
+                        <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="ingredientUnit1" name="ingredientUnit" style="background: #eeeeee" required>
+                            <option disabled selected hidden value="">* Jednostka</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6 autocomplete">
+                        <input type="text" name="ingredientName" id="ingredientName2"
+                            class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                            style="background-color: #eeeeee;" placeholder="* Składnik" autocomplete="off" required
+                            maxlength="50">
+                    </div>
+                    <div class="col">
+                        <input type="number" name="ingredientQuantity" id="ingredientQuantity2"
+                            class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                            style="background-color: #eeeeee;" placeholder="* Ilość" required>
+                    </div>
+                    <div class="col">
+                        <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
+                            id="ingredientUnit2" name="ingredientUnit" style="background: #eeeeee" required>
+                            <option disabled selected hidden value="">* Jednostka</option>
+                        </select>
+                    </div>
+
+                    {{!-- reszta --}}
+
+                </div>
+            </div>
+            <button type="button" class="btn btn-success mt-3" id="addNewIngredient" onclick="createIngredient()"
+                style="color:black; background-color:#27AE60;">Dodaj kolejną pozycję
+            </button>
+        </div>
+
+        <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
+            <h2>Sposób przygotowania:</h2>
+            <hr>
+            <div class="form-group">
+                <textarea class="form-control" id="recipeDescription" name="description" rows="10" required >{{description}}</textarea>
+            </div>
+        </div>
+
+        <div class="container w-100 p-3 mt-3" style="background-color: #eeeeee">
+            <h2>Wybór zdjęcia:</h2>
+            <hr>
+            <h6>Na nowo dobierz pożądane zdjęcia. Pamiętaj, aby wybrać co najmniej jedno.</h6>
+            Wybierz główne zdjęcie:
+            <select name="mainPhotoSelect" id="mainPhotoSelect"
+                class="form-control border-top-0 border-left-0 border-right-0 rounded-0 w-25">
+            </select>
+            <div class="row p-3">
+                <div class="col-md">
+                    <div class="image-upload h-50">
+                        <label for="file-input">
+                            <img src="/images/inputPhoto.png" />
+                        </label>
+
+                        <input id="file-input" type="file" name="imageInput" id="imageInput" multiple="multiple" />
+                    </div>
+                </div>
+                <div class="col-md text-center" style="background-color:palegreen">
+                    <div class="row h-50 mt-2 mb-0" style="overflow: hidden; width: 100%; height:100%;">
+                        <div class="col">
+                            <img id="photoOne" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
+                        </div>
+                        <div class="col">
+                            <img id="photoTwo" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
+
+                        </div>
+                    </div>
+                    <div class="row h-50 mt-0" style="overflow: hidden; width: 100%; height:100%;">
+                        <div class="col">
+                            <img id="photoThree" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
+                        </div>
+                        <div class="col">
+                            <img id="photoFour" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container w-25 p-3 mt-3 text-center">
+            <div class="form-group form-check" style="margin-left: 0.8vw">
+                <input type="checkbox" name="emailAccepted" id="emailAccepted" class="form-check-input" value={{visible_email}}>
+                <label for="emailAccepted" class="form-check-label text-left"
+                    style="font-size: 0.8vw; width:13.6vw;">Chcę aby mój adres email był
+                    widoczny dla użytkowników korzystających z przepisu.</label>
+            </div>
+
+            <button type="submit" class="btn btn-success" style="color:black; background-color:#27AE60;">Edytuj
+                przepis
+            </button>
+        </div>
+    </form>
+</div>
+{{/each}}
+<script src="/javascripts/editRecipeHandler.js"></script>
