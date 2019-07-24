@@ -493,7 +493,8 @@ router.get('/search/categories', (req, res) => {
         usr.email_address,
         usr.nickname, 
         cpr.category_id, 
-        cat.category_name 
+        cat.category_name,
+        cat.category_photo
     FROM recipes rec 
         INNER JOIN categories_per_recipe cpr ON cpr.recipe_id = rec.id_recipe
         INNER JOIN categories cat ON cpr.category_id = cat.id_category
@@ -503,10 +504,20 @@ router.get('/search/categories', (req, res) => {
     // Query PostgreSQL - ops have to be an array (even if there is only one value within)
     pgClient.query(searchCategoriesQueryString, categoriesFromRequestAsArray, (searchCategoriesQueryError, searchCategoriesQueryResult) => {
         if (searchCategoriesQueryError) throw searchCategoriesQueryError;
-        res.render('./recipes/recipe_search_categories', {
-            searchedCategories: categoriesFromRequestAsArray,
-            recipes: searchCategoriesQueryResult.rows
-        });
+        console.log(searchCategoriesQueryResult.rows[0]["category_photo"]);
+        if (categoriesFromRequestAsArray.length === 1) {
+            res.render('./recipes/recipe_search_categories', {
+                searchedCategories: categoriesFromRequestAsArray,
+                recipes: searchCategoriesQueryResult.rows,
+                catPhoto: searchCategoriesQueryResult.rows[0]["category_photo"],
+                oneCategory: true
+            });
+        } else {
+            res.render('./recipes/recipe_search_categories', {
+                searchedCategories: categoriesFromRequestAsArray,
+                recipes: searchCategoriesQueryResult.rows
+            });
+        }
     });
 });
 
