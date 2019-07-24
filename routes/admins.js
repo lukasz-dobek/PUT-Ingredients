@@ -269,6 +269,54 @@ router.get('/recipe_management', (req, res) => {
     });
 });
 
+router.post('/recipe_management', (req, res) => {
+    let activeParam = req.body.state;
+    let sortUsing = req.body.sortUsing;
+    let sortType = req.body.sortType;
+    let nameSearch = req.body.nameSearch ? req.body.nameSearch : '%';
+
+    let orderBy;
+
+    if (sortUsing === 'date_of_creation') {
+        orderBy = 'rec.date_of_creation';
+    } else if (sortUsing === 'score') {
+        orderBy = 'rec.score';
+    } else {
+        orderBy = 'rec.id_recipe';
+    }
+
+    console.log(orderBy);
+
+    let orderPart = ` ORDER BY ${orderBy} ${sortType};`;
+
+    let recipeInfoQueryString = `
+    SELECT
+        rec.id_recipe,
+        rec.state,
+        rec.recipe_name,
+        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS') as date_of_creation,
+        rec.score,
+        rec.link_to_recipe,
+        CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
+            WHEN 1 THEN 'TAK' 
+            ELSE 'NIE' 
+        END AS reported,
+        usr.id_user,
+        usr.email_address
+    FROM recipes rec INNER JOIN users usr ON rec.user_id = usr.id_user
+    WHERE rec.recipe_name LIKE $1 AND rec.state = $2
+    GROUP BY rec.recipe_name, rec.id_recipe, usr.id_user`;
+
+    recipeInfoQueryString += orderPart;
+
+    pgClient.query(recipeInfoQueryString, [nameSearch, activeParam], (recipeInfoQueryError, recipeInfoQueryResult) => {
+        if (recipeInfoQueryError) {
+            throw recipeInfoQueryError;
+        }
+        res.render('./admin_panel/recipe_management', { layout: 'layout_admin_panel', recipeInfo: recipeInfoQueryResult.rows });
+    });
+});
+
 router.get('/user_management/details', (req, res) => {
     res.render('./admin_panel/user_management_details', { layout: 'layout_admin_panel' });
 });
