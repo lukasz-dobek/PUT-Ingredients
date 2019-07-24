@@ -54,30 +54,30 @@ INSERT INTO users (email_address,password,nickname,date_of_join,name,surname,is_
 -- (6,'2019-06-14 18:47:00.205','Google Chrome');
 
 
-INSERT INTO categories (category_name) VALUES
-('Śniadanie'),
-('Obiad'),
-('Kolacja'),
-('Przystawka'),
-('Przekąska'),
-('Deser'),
-('Napoje'),
-('Smoothies'),
-('Zupy'),
-('Sałatki'),
-('Makaron'),
-('Owoce morza'),
-('Fit'),
-('Kuchnia włoska'),
-('Kuchnia japońska'),
-('Kuchnia polska'),
-('Kuchnia amerykańska'),
-('Kuchnia meksykańska'),
-('Kuchnia tajska'),
-('Kuchnia chińska'),
-('Kuchnia francuska'),
-('Kuchnia angielska'),
-('Kuchnia orientalna');
+INSERT INTO categories (category_name, category_photo) VALUES
+('Śniadanie', '/images/sniadanie.jpeg'),
+('Obiad', '/images/obiad.jpeg'),
+('Kolacja', '/images/obiad.jpeg'),
+('Przystawka', '/images/przystawka.jpeg'),
+('Przekąska', '/images/przekąska.jpeg'),
+('Deser', '/images/deser.jpeg'),
+('Napoje', '/images/napoje.jpeg'),
+('Smoothies', '/images/smoothie.jpeg'),
+('Zupy', '/images/zupa.jpeg'),
+('Sałatki', '/images/sałatki.jpeg'),
+('Makaron', '/images/makarony.jpeg'),
+('Owoce morza', '/images/owoce-morza.jpeg'),
+('Fit', '/images/fit.jpeg'),
+('Kuchnia włoska', '/images/kuchnia-wloska.jpeg'),
+('Kuchnia japońska', '/images/kuchnia-japońska.jpeg'),
+('Kuchnia polska', '/images/kuchnia-polska.jpeg'),
+('Kuchnia amerykańska', '/images/koreckuchnia-amerykanskazki.jpeg'),
+('Kuchnia meksykańska', '/images/kuchnia-meksykanska.jpeg'),
+('Kuchnia tajska', '/images/kuchnia-tajska.jpeg'),
+('Kuchnia chińska', '/images/kuchnia-chinska.jpeg'),
+('Kuchnia francuska', '/images/kuchnia-francuska.jpeg'),
+('Kuchnia angielska', '/images/kuchnia-angielska.jpeg'),
+('Kuchnia orientalna', '/images/kuchnia-orientalna.jpeg');
 
 
 INSERT INTO types (name) VALUES

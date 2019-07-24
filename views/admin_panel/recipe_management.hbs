@@ -5,17 +5,18 @@
     </div>
 
     <div class="admin-width-container" style="background-color:#eeeeee; padding: 5px; color:black; margin-top:1.3vw">
-        {{!-- tabelka --}}
+
         <div class="admin-width-container">
             <h4 style="margin-top: 1vw; margin-bottom: 1.5vw">LISTA PRZEPISÓW</h4>
-            <div class="row">
-                <div class="col">
-                    <p>Szukaj:</p>
-                    <input class="form-control admin-filter" type="text" placeholder="Search" aria-label="Search">
-                </div>
-                <div class="col">
-                    <p>Parametry:</p>
-                    <div class="dropdown">
+            <form action="/admin_panel/recipe_management" method="post">
+                <div class="row">
+                    <div class="col">
+                        <p>Szukaj:</p>
+                        <input class="form-control admin-filter" type="text" placeholder="Search" aria-label="Search">
+                    </div>
+                    <div class="col">
+                        <p>Parametry:</p>
+                        {{!-- <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle admin-filter" type="button"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             wybierz
@@ -26,11 +27,20 @@
                             <a class="dropdown-item admin-filter" href="#">tylko zgłoszone</a>
                             <a class="dropdown-item admin-filter" href="#">tylko niezgłoszone</a>
                         </div>
+                    </div> --}}
+
+                        <select name="active" id="" class="custom-select">
+                            <option value="1">tylko zweryfikowane</option>
+                            <option value="0">tylko niezweryfikowane</option>
+                            <option value="3">tylko usunięte</option>
+                            <option value="2">tylko zbanowane</option>
+                        </select>
                     </div>
                 </div>
+
                 <div class="col">
                     <p>Sortowanie według:</p>
-                    <div class="dropdown">
+                    {{!-- <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle admin-filter" type="button"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             wybierz
@@ -42,11 +52,18 @@
                             <a class="dropdown-item admin-filter" href="#">ostatnie logowanie</a>
                             <a class="dropdown-item admin-filter" href="#">ID</a>
                         </div>
-                    </div>
+                    </div> --}}
+                    <select name="sortUsing" id="" class="custom-select">
+                        <option value="ID">ID</option>
+                        <option value="date_of_creation">data dodania</option>
+                        <option value="score">ocena</option>
+                        <option value="email">e-mail</option>
+                        <option value="lastLogin">ostatnie logowanie</option>
+                    </select>
                 </div>
                 <div class="col">
                     <p>Sortowanie typ:</p>
-                    <div class="dropdown">
+                    {{!-- <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle admin-filter" type="button"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             wybierz
@@ -55,83 +72,136 @@
                             <a class="dropdown-item admin-filter" href="#">rosnąco</a>
                             <a class="dropdown-item admin-filter" href="#">malejąco</a>
                         </div>
-                    </div>
+                    </div> --}}
+                    <select name="sortType" id="" class="custom-select">
+                        <option value="asc">rosnąco</option>
+                        <option value="desc">malejąco</option>
+                    </select>
                 </div>
-                <div class="col-1">
+                <div class="col">
                     <p>&nbsp;</p>
                     <button type="submit" class="btn btn-success ml-3 float-right"
                         style="color:black; background-color:#27AE60; width: 7vw; ">SZUKAJ</button>
                 </div>
-            </div>
-            <p>&nbsp</p>
+        </div>
+        </form>
+        <p>&nbsp</p>
 
 
 
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th>
-                                <p>&nbsp</p>
-                                <p>&nbsp&nbspID</p>
-                            </th>
-                            <th>
-                                <p>&nbsp</p>
-                                <p>STATUS</p>
-                            </th>
-                            <th>
-                                <p>&nbsp</p>
-                                <p>NAZWA</p>
-                            </th>
-                            <th>
-                                <p style="padding: 0; margin: 0">DATA</p>
-                                <p>DODANIA</p>
-                            </th>
-                            <th>
-                                <p>&nbsp</p>
-                                <p>OCENA</p>
-                            </th>
-                            <th>
-                                <p>&nbsp</p>
-                                <p>ZGŁOSZONY</p>
-                            </th>
-                            <th>
-                                <p>&nbsp</p>
-                                <p>AUTOR</p>
-                            </th>
-                            <th>
-                                <p>&nbsp</p>
-                                <p style="margin-left: 3vw">DZIAŁANIA</p>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each recipeInfo}}
-                        <tr>
-                            <td class="align-middle" style="width: 3vw;">&nbsp&nbsp{{id_recipe}}</td>
-                            <td class="align-middle" style="width: 9vw">{{state}}</td>
-                            <td class="align-middle" style="width: 14vw"><a
-                                    href="/administrator_panel{{link_to_recipe}}">{{recipe_name}}</a></td>
-                            <td class="align-middle" style="width: 11vw">{{date_of_creation}}</td>
-                            <td class="align-middle" style="width: 6vw">{{score}}</td>
-                            <td class="align-middle" style="width: 7.5vw">{{reported}}</td>
-                            <td class="align-middle">{{email_address}}</td>
-                            <td>
-                                <div class="row" style="margin-right:0.2vw; margin-top:0.2vw; margin-bottom: 0.2vw;">
-                                    <div class="col-3" style="margin-left: 3vw">
-                                        <button type="button" class="btn btn-secondary btn-block rounded-0"
-                                            data-toggle="modal" data-target="#messageModal{{id_user}}"
-                                            style="font-size:0.7vw; height: 3.8vw; width: 5vw; padding-left:0.3vw;">WIADOMOŚĆ
-                                            <br />&nbspDO AUTORA</button>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>
+                            <p>&nbsp</p>
+                            <p>&nbsp&nbspID</p>
+                        </th>
+                        <th>
+                            <p>&nbsp</p>
+                            <p>STATUS</p>
+                        </th>
+                        <th>
+                            <p>&nbsp</p>
+                            <p>NAZWA</p>
+                        </th>
+                        <th>
+                            <p style="padding: 0; margin: 0">DATA</p>
+                            <p>DODANIA</p>
+                        </th>
+                        <th>
+                            <p>&nbsp</p>
+                            <p>OCENA</p>
+                        </th>
+                        <th>
+                            <p>&nbsp</p>
+                            <p>ZGŁOSZONY</p>
+                        </th>
+                        <th>
+                            <p>&nbsp</p>
+                            <p>AUTOR</p>
+                        </th>
+                        <th>
+                            <p>&nbsp</p>
+                            <p style="margin-left: 3vw">DZIAŁANIA</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each recipeInfo}}
+                    <tr>
+                        <td class="align-middle" style="width: 3vw;">&nbsp&nbsp{{id_recipe}}</td>
+                        <td class="align-middle" style="width: 9vw">{{state}}</td>
+                        <td class="align-middle" style="width: 14vw"><a
+                                href="/administrator_panel{{link_to_recipe}}">{{recipe_name}}</a></td>
+                        <td class="align-middle" style="width: 11vw">{{date_of_creation}}</td>
+                        <td class="align-middle" style="width: 6vw">{{score}}</td>
+                        <td class="align-middle" style="width: 7.5vw">{{reported}}</td>
+                        <td class="align-middle">{{email_address}}</td>
+                        <td>
+                            <div class="row" style="margin-right:0.2vw; margin-top:0.2vw; margin-bottom: 0.2vw;">
+                                <div class="col-3" style="margin-left: 3vw">
+                                    <button type="button" class="btn btn-secondary btn-block rounded-0"
+                                        data-toggle="modal" data-target="#messageModal{{id_user}}"
+                                        style="font-size:0.7vw; height: 3.8vw; width: 5vw; padding-left:0.3vw;">WIADOMOŚĆ
+                                        <br />&nbspDO AUTORA</button>
 
-                                        <div class="modal fade bd-example-modal-lg" id="messageModal{{id_user}}"
-                                            tabindex="-1" role="dialog" aria-labelledby="messageModalTitle{{id_user}}"
+                                    <div class="modal fade bd-example-modal-lg" id="messageModal{{id_user}}"
+                                        tabindex="-1" role="dialog" aria-labelledby="messageModalTitle{{id_user}}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="messageModalTitle{{id_user}}">Wyślij
+                                                        wiadomość
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-justify">
+                                                    <textarea name="userMessage" id="userMessage_{{email_address}}"
+                                                        cols="70" rows="10"></textarea>
+                                                    <label for="adminEmail" class="col-form-label">Adres e-mail
+                                                        do
+                                                        korespondencji:</label>
+                                                    <input type="text" class="form-control" name="adminEmail"
+                                                        id="adminEmail" value="{{@root.userEmail}}">
+                                                </div>
+                                                <div class="modal-footer">
+
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="sendMail('{{email_address}}')">Wyślij do:
+                                                        {{email_address}}</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Zamknij</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6" style="margin-left: 1.2vw">
+                                    <div class="row">
+                                        <a type="button" href="/administrator_panel/reports/{{id_recipe}}"
+                                            class="btn btn-secondary btn-block rounded-0"
+                                            style="font-size:0.7vw; background-color:#919191; border-color: #919191; width: 18.4vw">ZOBACZ
+                                            ZGŁOSZENIA</a>
+                                    </div>
+                                    <div class="row" style="margin-top: 0.2vw ">
+                                        <button type="button" class="btn btn-danger btn-block rounded-0"
+                                            style="font-size:0.7vw" data-toggle="modal"
+                                            data-target="#deleteRecipeModal{{id_recipe}}">USUŃ PRZEPIS</button>
+
+                                        <div class="modal fade" id="deleteRecipeModal{{id_recipe}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="deleteRecipeModalTitle{{id_recipe}}"
                                             aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="messageModalTitle{{id_user}}">Wyślij
-                                                            wiadomość
+                                                        <h5 class="modal-title"
+                                                            id="deleteRecipeModalTitle{{id_recipe}}">Usuń przepis
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
@@ -139,19 +209,17 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body text-justify">
-                                                        <textarea name="userMessage" id="userMessage_{{email_address}}"
-                                                            cols="70" rows="10"></textarea>
-                                                        <label for="adminEmail" class="col-form-label">Adres e-mail
-                                                            do
-                                                            korespondencji:</label>
-                                                        <input type="text" class="form-control" name="adminEmail"
-                                                            id="adminEmail" value="{{@root.userEmail}}">
+                                                        <p>
+                                                            Po wykonaniu tej akcji przepis zostanie usunięty.
+                                                        </p>
+                                                        <p>
+                                                            Czy na pewno chcesz usunąć ten przepis?
+                                                        </p>
                                                     </div>
                                                     <div class="modal-footer">
-
                                                         <button type="submit" class="btn btn-danger"
-                                                            onclick="sendMail('{{email_address}}')">Wyślij do:
-                                                            {{email_address}}</button>
+                                                            onclick="removeRecipe('{{id_recipe}}')">Usuń przepis o
+                                                            id: {{id_recipe}}</button>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Zamknij</button>
                                                     </div>
@@ -159,64 +227,18 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-6" style="margin-left: 1.2vw">
-                                        <div class="row">
-                                            <a type="button" href="/administrator_panel/reports/{{id_recipe}}"
-                                                class="btn btn-secondary btn-block rounded-0"
-                                                style="font-size:0.7vw; background-color:#919191; border-color: #919191; width: 18.4vw">ZOBACZ
-                                                ZGŁOSZENIA</a>
-                                        </div>
-                                        <div class="row" style="margin-top: 0.2vw ">
-                                            <button type="button" class="btn btn-danger btn-block rounded-0"
-                                                style="font-size:0.7vw" data-toggle="modal"
-                                                data-target="#deleteRecipeModal{{id_recipe}}">USUŃ PRZEPIS</button>
-
-                                            <div class="modal fade" id="deleteRecipeModal{{id_recipe}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="deleteRecipeModalTitle{{id_recipe}}"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="deleteRecipeModalTitle{{id_recipe}}">Usuń przepis
-                                                            </h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body text-justify">
-                                                            <p>
-                                                                Po wykonaniu tej akcji przepis zostanie usunięty.
-                                                            </p>
-                                                            <p>
-                                                                Czy na pewno chcesz usunąć ten przepis?
-                                                            </p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-danger"
-                                                                onclick="removeRecipe('{{id_recipe}}')">Usuń przepis o
-                                                                id: {{id_recipe}}</button>
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Zamknij</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
 
+                            </div>
 
-                            </td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
+
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
+    </div>
 
     </div>
 

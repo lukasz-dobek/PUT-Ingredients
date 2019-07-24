@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS user_activities (
 -- Categories table
 CREATE TABLE IF NOT EXISTS categories (
 	id_category SERIAL PRIMARY KEY,
-	category_name VARCHAR(50) NOT NULL
+	category_name VARCHAR(50) NOT NULL,
+	category_photo VARCHAR(100)
 );
 
 -- Recipes table
