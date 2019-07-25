@@ -4,7 +4,8 @@ $.ajaxSetup({
 
 let chosenShopList;
 let numberOfIngredients = 0;
-let updatedIngredients = {"ingredient": []};
+let deletedIngredients = {};
+let updatedIngredients = {};
 
 const email_address = document.getElementById('userProfileDropdown').textContent.trim();
 
@@ -15,9 +16,6 @@ function splitIngredientId(elementId) {
 function ingredientsInShoppingList(name) {
     let shopList = document.getElementById(name);
     chosenShopList = shopList.id;
-    //shopList.style.backgroundColor = "green";
-    console.log(shopList);
-    console.log(chosenShopList);
     let parent = shopList.parentNode;
     let megaDiv = document.createElement("div");
     megaDiv.classList.add("collapse");
@@ -36,12 +34,10 @@ function ingredientsInShoppingList(name) {
     formField.appendChild(container);
     let header = document.createElement("h2");
     let pom = chosenShopList.split("_").join(" ");
-    console.log(pom);
     header.textContent = "Wybrano: " + pom;
     container.appendChild(header);
     let recipeName = chosenShopList.split("_").join(" ");
 
-    // $.getJSON(`/api/shoppingList/recipe/${recipeName}`, (data) => {
     $.ajax({
         url: `/api/shoppingList/recipe/${recipeName}`,
         dataType: 'json',
@@ -52,23 +48,19 @@ function ingredientsInShoppingList(name) {
             data.forEach(element => {
                 items.push(element);
             });
-            console.log(items);
             let ingredientsTypes = [];
             items.forEach(element => {
                 if (!ingredientsTypes.includes(element['name'])) {
                     ingredientsTypes.push(element['name']);
                 }
             });
-            console.log(ingredientsTypes);
             items.forEach(element => {
                 numberOfIngredients = numberOfIngredients + 1;
                 let typeName = element['name'];
                 typeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
                 typeName = typeName.split(" ").join('_');
                 let mainDiv = document.getElementById('container_' + chosenShopList);
-                console.log(mainDiv);
                 let ingredientTypeDivExists = mainDiv.querySelector('#' + typeName);
-                console.log(ingredientTypeDivExists);
                 if (ingredientTypeDivExists === null) {
                     let typeDiv = document.createElement("div");
                     typeDiv.style.width = '100%';
@@ -86,13 +78,9 @@ function ingredientsInShoppingList(name) {
                     line.style.backgroundColor = 'black';
                     line.style.width = '95%';
                     typeDiv.appendChild(line);
-                    // let ingredientsDiv = document.createElement("div");
-                    // ingredientsDiv.style.width = '100%';
-                    // typeDiv.appendChild(ingredientsDiv);
                 }
                 let ingredient = element['ingredient_name'];
                 ingredientTypeDivExists = mainDiv.querySelector('#' + typeName);
-                console.log(ingredientTypeDivExists);
                 let ingredientRow = document.createElement("div");
                 ingredientRow.classList.add("row");
                 ingredientRow.style.marginTop = '3%';
@@ -136,8 +124,8 @@ function ingredientsInShoppingList(name) {
                 quantityInput.style.width = '80%';
                 quantityInput.style.borderRadius = '0';
                 quantityInput.value = element['amount'];
-                quantityInput.addEventListener('change',function (e) {
-                   addToUpdated(e);
+                quantityInput.addEventListener('change', function (e) {
+                    addToUpdated(e);
                 });
                 quantityCol.appendChild(quantityInput);
                 let unitCol = document.createElement("div");
@@ -148,7 +136,7 @@ function ingredientsInShoppingList(name) {
                 ingredientUnitSelect.id = `ingredientUnit${numberOfIngredients}`
                 ingredientUnitSelect.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
                 ingredientUnitSelect.style.backgroundColor = '#eeeeee';
-                ingredientUnitSelect.addEventListener('change',function (e) {
+                ingredientUnitSelect.addEventListener('change', function (e) {
                     addToUpdated(e);
                 });
                 unitCol.appendChild(ingredientUnitSelect);
@@ -166,18 +154,6 @@ function ingredientsInShoppingList(name) {
                         ingredientUnitSelect.appendChild(unitOption);
                     });
                 });
-
-
-                // let unitInput = document.createElement("input");
-                // unitInput.type = 'text';
-                // unitInput.name = 'unitInput';
-                // unitInput.id = 'unitForm';
-                // unitInput.classList.add('form-control');
-                // unitInput.style.backgroundColor = '#eeeeee';
-                // unitInput.style.width = '80%';
-                // unitInput.style.borderRadius = '0';
-                // unitInput.value = element['unit_name'];
-                // unitCol.appendChild(unitInput);
             });
 
             let buttonRow = document.createElement("div");
@@ -214,7 +190,7 @@ function ingredientsInShoppingList(name) {
             saveButton.style.height = "2.7vw";
             saveButton.style.width = "15vw";
             saveButton.textContent = "ZAPISZ ZMIANY";
-            saveButton.id = 'saveButton' + chosenShopList;
+            saveButton.id = 'saveButton_' + chosenShopList;
             saveButton.addEventListener("click", (e) => {
                 saveChanges(e);
             });
@@ -245,75 +221,128 @@ function ingredientsInShoppingList(name) {
 }
 
 function addToUpdated(e) {
-    let clicked = document.getElementById(e.target.id);
-    console.log(clicked);
+    let clicked = e.target;
+    let recipeDiv = clicked.parentNode.parentNode.parentNode.parentNode;
+    let recipeHeader = recipeDiv.querySelector('h2');
+    let string = recipeHeader.textContent;
+    let recipe = string.substr(string.indexOf(' ') + 1);
     let quantity;
     let unit;
     let ingredientId;
-    if(e.target.tagName.toUpperCase() === 'SELECT'){
+    if (e.target.tagName.toUpperCase() === 'SELECT') {
         unit = clicked.value;
         let nameDiv = clicked.parentNode.parentNode;
         ingredientId = splitIngredientId(nameDiv.id);
         quantity = nameDiv.querySelector('.col > #quantityForm').value;
     }
-    if(e.target.tagName.toUpperCase() === 'INPUT'){
-        quantity= clicked.value;
+    if (e.target.tagName.toUpperCase() === 'INPUT') {
+        quantity = clicked.value;
         let nameDiv = clicked.parentNode.parentNode;
         ingredientId = splitIngredientId(nameDiv.id);
         unit = nameDiv.querySelector('.col > select').value;
     }
-    updatedIngredients['ingredient'].push({"id": ingredientId, "quantity": quantity, "unit": unit});
-
+    let ingredientOnList = false;
+    let counter = 0;
+    for (let i = 0; i < updatedIngredients[recipe]['ingredients'].length; i++) {
+        if (ingredientId == updatedIngredients[recipe]['ingredients'][i]['id']) {
+            ingredientOnList = true;
+            break;
+        }
+        counter++;
+    }
+    if (ingredientOnList === false) {
+        updatedIngredients[recipe]["ingredients"].push({"id": ingredientId, "quantity": quantity, "unit": unit});
+    } else {
+        updatedIngredients[recipe]["ingredients"][counter]['quantity'] = quantity;
+        updatedIngredients[recipe]["ingredients"][counter]['unit'] = unit;
+    }
 }
 
 function saveChanges(e) {
-    let clicked = document.getElementById(e.target.id);
-    console.log(clicked);
-    let recipeHeader = clicked.parentNode.parentNode.parentNode.querySelector('h2')
-    console.log(recipeHeader);
+    let clicked = e.target;
+    let recipeHeader = clicked.parentNode.parentNode.parentNode.querySelector('h2');
     let string = recipeHeader.textContent;
     let recipe = string.substr(string.indexOf(' ') + 1);
+    let emptyLists = false;
+    if (Object.keys(deletedIngredients[recipe]['ingredients']).length === 0  && Object.keys(updatedIngredients[recipe]['ingredients']).length === 0) {
+        emptyLists = true;
 
+        clicked.classList.add('error');
+        // Get field id or name
+        let id = clicked.id || clicked.name;
+        if (!id) return;
+        if(!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
+            let message = document.createElement('div');
+            message.className = 'error-message';
+            message.id = 'error-for-' + id;
 
-    for (let i = 0; i < deletedIngredients.length; i++) {
-        let ingredientId = deletedIngredients[i];
+            clicked.parentNode.insertBefore(message, clicked.nextSibling);
 
-        $.ajax({
-            url: '/api/shoppingList/ingredient',
-            type: 'DELETE',
-            data: {
-                ingredient_id: ingredientId,
-                recipe_name: recipe,
-                email_address: email_address,
-            }
-        });
+            clicked.setAttribute('aria-describedby', 'error-for-' + id);
+
+            message.innerHTML = "Brak zmian w liście zakupów";
+
+            message.style.display = 'block';
+            message.style.visibility = 'visible';
+        }
     }
-    for (let i =0;i<updatedIngredients['ingredient'].length;i++){
-        let ingredientId = updatedIngredients['ingredient'][i]['id'];
-        let unit_id = updatedIngredients['ingredient'][i]['unit'];
-        let quantity = updatedIngredients['ingredient'][i]['quantity'];
-        $.ajax({
-            url: '/api/shoppingList/update',
-            type: 'POST',
-            data: {
-                unit_id: unit_id,
-                quantity: quantity,
-                ingredient_id: ingredientId,
-                recipe_name: recipe,
-                email_address: email_address,
+    if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 && Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
+        for (let i = 0; i < updatedIngredients[recipe]['ingredients'].length; i++) {
+            let id = updatedIngredients[recipe]['ingredients'][i]['id'];
+            if (deletedIngredients[recipe]['ingredients'].includes(id)) {
+                updatedIngredients[recipe]['ingredients'].splice(i, 1);
             }
-        });
-
+        }
     }
-    location.reload();
+    if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 && !emptyLists) {
+        for (let i = 0; i < deletedIngredients[recipe]['ingredients'].length; i++) {
+            let ingredientId = deletedIngredients[recipe]['ingredients'][i];
+            $.ajax({
+                url: '/api/shoppingList/ingredient',
+                type: 'DELETE',
+                data: {
+                    ingredient_id: ingredientId,
+                    recipe_name: recipe,
+                    email_address: email_address,
+                }
+            });
+        }
+    }
+    if (Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
+        for (let i = 0; i < updatedIngredients[recipe]['ingredients'].length; i++) {
+            let ingredientId = updatedIngredients[recipe]['ingredients'][i]['id'];
+            let unit_id = updatedIngredients [recipe]['ingredients'][i]['unit'];
+            let quantity = updatedIngredients [recipe]['ingredients'][i]['quantity'];
+            $.ajax({
+                url: '/api/shoppingList/update',
+                type: 'POST',
+                data: {
+                    unit_id: unit_id,
+                    quantity: quantity,
+                    ingredient_id: ingredientId,
+                    recipe_name: recipe,
+                    email_address: email_address,
+                }
+            });
+        }
+    }
+    if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 || Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
+        let pom = confirm("Czy chcesz odświeżyć stronę, aby pokazać zmiany? UWAGA! Zmiany w innych przepisach nie zostaną zapisane.");
+        if (pom) {
+            location.reload();
+        }
+        else{
+            delete deletedIngredients[recipe];
+            delete updatedIngredients[recipe];
+        }
+    }
+
 }
 
 
 function deleteShoppingList(e) {
     let clicked = document.getElementById(e.target.id);
-    console.log(clicked);
     let shopListToDelete = clicked.parentNode.parentNode.parentNode.querySelector('h2')
-    console.log(shopListToDelete);
     let string = shopListToDelete.textContent;
     let recipe = string.substr(string.indexOf(' ') + 1);
 
@@ -328,13 +357,15 @@ function deleteShoppingList(e) {
     location.reload();
 }
 
-let deletedIngredients = [];
-
 function deleteFromShoppingList(e) {
     let clicked = document.getElementById(e.target.id);
-    let parentId = clicked.parentNode.parentNode.id;
-    let ingredientId = splitIngredientId(parentId);
-    let rowToDelete = document.getElementById(parentId);
+    let parentDiv = clicked.parentNode.parentNode;
+    let recipeDiv = parentDiv.parentNode.parentNode;
+    let recipeHeader = recipeDiv.querySelector('h2');
+    let string = recipeHeader.textContent;
+    let recipe = string.substr(string.indexOf(' ') + 1);
+    let ingredientId = splitIngredientId(parentDiv.id);
+    let rowToDelete = document.getElementById(parentDiv.id);
     let typeDiv = rowToDelete.parentNode;
     let ingredientsDivs = false;
     rowToDelete.remove();
@@ -349,7 +380,7 @@ function deleteFromShoppingList(e) {
         typeDiv.remove();
     }
     numberOfIngredients = numberOfIngredients - 1;
-    deletedIngredients.push(ingredientId);
+    deletedIngredients[recipe]["ingredients"].push(ingredientId);
 
 }
 
@@ -365,10 +396,8 @@ $.ajax({
             items.push(element);
         });
 
-        console.log(items);
 
         let listOfRecipes = document.getElementById("panel");
-        console.log(listOfRecipes);
         items.forEach(item => {
             let button = document.createElement('button');
             button.type = "button";
@@ -385,7 +414,8 @@ $.ajax({
             button.id = item['recipe_name'].split(" ").join("_");
             button.textContent = item['recipe_name'];
             listOfRecipes.appendChild(button);
-
+            updatedIngredients[item['recipe_name']] = {"ingredients": []};
+            deletedIngredients[item['recipe_name']] = {"ingredients": []};
             ingredientsInShoppingList(button.id);
         });
     }
@@ -394,7 +424,6 @@ $.ajax({
 jQuery('#panel > button').click(function (e) {
     jQuery('.collapse').collapse('hide');
     let temp = document.querySelectorAll('#panel > button');
-    deletedIngredients = [];
     temp.forEach(item => {
         item.style.backgroundColor = '';
     });
