@@ -9,10 +9,10 @@
             <hr>
             <input type="text" name="recipeId" id="recipeId" style="display:none;" value="{{id_recipe}}">
             <div>
-                <input type="text" name="recipeNameBlank" id="recipeNameBlank"
+                <input type="text" name="recipeNameBlank" id="recipeName_{{id_recipe}}"
                     class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
                     style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
-                    value="{{recipe_name}}" maxlength="35" disabled>
+                    value="{{recipe_name}}" maxlength="35" >
             </div>
             <div class="row mt-4" id="categoryRow">
                 <div class="col">

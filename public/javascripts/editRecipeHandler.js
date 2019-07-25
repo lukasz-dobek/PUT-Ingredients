@@ -458,9 +458,13 @@ $("#file-input").change(function () {
 //
 // }
 
+function splitRecipeId(elementId) {
+    return elementId.split('_')[1];
+}
 
 $.getJSON("/api/recipes/all", (data) => {
-    let customRecipeName = document.getElementById('recipeName');
+    let customRecipeName = document.querySelector('[id^=recipeName]');
+    let recipeId = splitRecipeId(customRecipeName.id);
     let recipeNameTaken = false;
     let items = [];
 
@@ -472,18 +476,24 @@ $.getJSON("/api/recipes/all", (data) => {
     items.forEach(item => {
         recipeNames.push(item['recipe_name']);
     });
-    console.log(recipeNames);
+    let recipeIds = [];
+    items.forEach(item => {
+        recipeIds.push(item['id_recipe']);
+    });
+
 
     let checkRecipeName = function () {
         if (customRecipeName.value) {
-            console.log(items);
-
             for (let i = 0; i < recipeNames.length; i++) {
-                if (customRecipeName.value.toUpperCase() != recipeNames[i].toUpperCase()) {
-                    recipeNameTaken = false;
+                if (recipeIds[i] == recipeId) {
+                    continue;
                 } else {
-                    recipeNameTaken = true;
-                    break;
+                    if (customRecipeName.value.toUpperCase() != recipeNames[i].toUpperCase()) {
+                        recipeNameTaken = false;
+                    } else {
+                        recipeNameTaken = true;
+                        break;
+                    }
                 }
             }
         }
@@ -497,7 +507,7 @@ $.getJSON("/api/recipes/all", (data) => {
         if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
 
         if (checkRecipeName()) {
-            if (field.name === 'recipeName') return 'Podany przepis juz istnieje.';
+            if (field.name === 'recipeNameBlank') return 'Podany przepis juz istnieje.';
         }
 
         if (field.type === 'number') {
