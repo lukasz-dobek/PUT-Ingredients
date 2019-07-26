@@ -283,7 +283,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         let ingredientToGetDeleted = document.getElementById(rowId);
         ingredientToGetDeleted.remove();
         numberOfIngredients--;
-    }
+    };
 
     let recipeId = document.getElementById('recipeId').textContent;
     let categoriesPerRecipePromise = $.getJSON(`/api/categories/recipe/${recipeId}`);
@@ -367,7 +367,7 @@ function readURL(input) {
                     let photoOneOption = document.createElement('option');
                     photoOneOption.value = "0";
                     photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
-                    
+
                     selectMainPhotoElement.appendChild(photoOneOption);
                     $('#photoOne').attr('src', e.target.result);
                     console.log('jestem' + counter);
@@ -525,6 +525,10 @@ $.getJSON("/api/recipes/all", (data) => {
             // Email
             if (field.type === 'number') return 'Wprowadzone dane muszą być liczbą.';
         }
+
+        if(field.id==="mainPhotoSelect"){
+                return "Musisz dodać co najmniej jedno zdjęcie i wybrać, które ma być główne";
+        }
         // If field is required and empty
         if (validity.valueMissing) {
             if (field.id === "categorySelect1") return 'Musi zostać wybrana co najmniej jedna kategoria.';
@@ -575,7 +579,9 @@ $.getJSON("/api/recipes/all", (data) => {
                     lastChild.parentNode.insertBefore(message, lastChild.nextSibling);
                 } else if (label.parentNode.parentNode.id === 'ingredients' || label.parentNode.id === 'generalInfo') {
                     field.parentNode.appendChild(message);
-                } else {
+                } else if(id === 'mainPhotoSelect'){
+                    $(message).insertAfter(field);
+                } else  {
                     label.parentNode.insertBefore(message, label.nextSibling);
                 }
 
@@ -628,60 +634,29 @@ $.getJSON("/api/recipes/all", (data) => {
 
     document.addEventListener('blur', function (event) {
         let error = hasError(event.target);
-
-        if (event.target.name === 'ingredientName') {
-            let customIngredient = event.target.value;
-
-            if (customIngredient) {
-                // if (!ingredientsNames.includes(customIngredient)) {
-                //     error = "Taki składnik nie występuje w bazie."
-                // } else {
-                let selectedIngredients = document.querySelectorAll("[id^=ingredientName]");
-                let usedIngredients = [];
-                selectedIngredients.forEach(item => {
-                    usedIngredients.push(item['value']);
-                });
-                console.log(usedIngredients);
-                let num = event.target.id.replace(/^\D+/g, "");
-                let index = usedIngredients.indexOf(customIngredient);
-                console.log(index);
-                usedIngredients.splice(index, 1);
-                console.log(usedIngredients);
-                for (let i = 1; i <= usedIngredients.length; i++) {
-                    if (i != num) {
-                        if (usedIngredients[num - 1] === customIngredient) { break; }
-                        else if (usedIngredients.includes(customIngredient)) {
-                            error = "Taki składnik został już dodany";
-                            break;
-                        }
-                    }
-                }
-                //}
-            }
+        if(event.target.id === 'mainPhotoSelect'){
+            error ="";
         }
-        // If there's an error, show it
         if (error) {
             showError(event.target, error);
             return;
         }
-
-        // Otherwise, remove any existing error message
         removeError(event.target);
 
     }, true);
 
 
-    // Check all fields on submit
     document.addEventListener('submit', function (event) {
-
-        // Only run on forms flagged for validation
-        // Get all of the form elements
         let fields = event.target.elements;
-
-        // Validate each field
-        // Store the first field with an error to a letiable so we can bring it into focus leter
         let error, hasErrors;
         for (let i = 0; i < fields.length; i++) {
+            if(fields[i].id.includes("mainPhotoSelect")){
+                if(fields[i].value === ""){
+                    error = "Musisz dodać co najmniej jedno zdjęcie i wybrać, które ma być główne";
+                } else{
+                    removeError(fields[i]);
+                }
+            }
             if (fields[i].id.includes("ingredientName")) {
                 let customIngredient = fields[i].value;
                 if (customIngredient) {
@@ -722,15 +697,10 @@ $.getJSON("/api/recipes/all", (data) => {
                 }
             }
         }
-
-        // If there are errrors, don't submit form and focus on first element with error
         if (hasErrors) {
             event.preventDefault();
             hasErrors.focus();
         }
-
-        // Otherwise, let the form submit normally
-        // You could also bolt in an Ajax form submit process here
 
     }, false);
 
