@@ -22,7 +22,7 @@ router.get('/recipes_in_month', (req, res) => {
 
 router.get('/recipes_in_year', (req, res) => {
     const recipesInYearQueryString = `
-    SELECT 
+    SELECT date_part('month', date_trunc('month', date_of_creation)) AS month_nr,
     CASE date_part('month', date_trunc('month', date_of_creation))
         WHEN 1 THEN 'Styczeń'
         WHEN 2 THEN 'Luty'
@@ -48,9 +48,10 @@ router.get('/recipes_in_year', (req, res) => {
         }
         res.json(recipesInYearQueryResult.rows)
     });
+});
 
-    router.get('/recipes_per_week', (req, res) => {
-        const recipesPerWeekQueryString = `
+router.get('/recipes_per_week', (req, res) => {
+    const recipesPerWeekQueryString = `
     SELECT
     CASE extract(dow from date_of_creation)
       WHEN 0 THEN 'Niedziela'
@@ -65,13 +66,13 @@ router.get('/recipes_in_year', (req, res) => {
     FROM recipes
     WHERE date_of_creation::date BETWEEN now()::date -7 AND now()::date
     GROUP BY dzien_tygodnia;`;
-        pgClient.query(recipesPerWeekQueryString, (recipesPerWeekQueryError, recipesPerWeekQueryResult) => {
-            if (recipesPerWeekQueryError) {
-                throw recipesPerWeekQueryError;
-            }
-            res.json(recipesPerWeekQueryResult.rows)
-        });
+    pgClient.query(recipesPerWeekQueryString, (recipesPerWeekQueryError, recipesPerWeekQueryResult) => {
+        if (recipesPerWeekQueryError) {
+            throw recipesPerWeekQueryError;
+        }
+        res.json(recipesPerWeekQueryResult.rows)
     });
+});
 
 router.get('/user_activities_in_month', (req, res) => {
     const recipesInMonthsQueryString = `
@@ -119,7 +120,8 @@ router.get('/user_activities_in_week', (req, res) => {
 
 router.get('/user_activities_in_year', (req, res) => {
     const recipesInMonthsQueryString = `
-    SELECT CASE date_part('month', date_trunc('month', date_of_activity))
+    SELECT date_part('month', date_trunc('month', date_of_activity)) AS month_nr,
+    CASE date_part('month', date_trunc('month', date_of_activity))
         WHEN 1 THEN 'Styczeń'
          WHEN 2 THEN 'Luty'
         WHEN 3 THEN 'Marzec'
@@ -144,7 +146,6 @@ router.get('/user_activities_in_year', (req, res) => {
         res.json(recipesInMonthsQueryResult.rows)
     });
 
-});
 });
 
 router.get('/users_in_month', (req, res) => {
@@ -193,7 +194,7 @@ router.get('/users_per_week', (req, res) => {
 
 router.get('/users_in_year', (req, res) => {
     const usersInYearQueryString = `
-    SELECT 
+    SELECT date_part('month', date_trunc('month', date_of_join)) AS month_nr,
     CASE date_part('month', date_trunc('month', date_of_join))
         WHEN 1 THEN 'Styczeń'
         WHEN 2 THEN 'Luty'
