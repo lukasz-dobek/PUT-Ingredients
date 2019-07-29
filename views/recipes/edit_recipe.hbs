@@ -1,6 +1,7 @@
 {{#each recipe}}
 <div class="container">
-    <h1 class="mb-5 text-center">EDYCJA PRZEPISU O ID: <span id="recipeId">{{id_recipe}}</span></h1>
+    <h1 class="mb-5 text-center" style="display: none">EDYCJA PRZEPISU O ID: <span id="recipeId">{{id_recipe}}</span></h1>
+    <h1 class="mb-5 text-center" >EDYCJA PRZEPISU O NAZWIE: <span id="recipeId">{{recipe_name}}</span></h1>
     <form action="{{link_to_recipe}}/edit" enctype="multipart/form-data" method="post" novalidate>
         {{!-- Informacje ogolne --}}
         <div class="container w-100 p-3" style="background-color: #eeeeee">
@@ -9,10 +10,10 @@
             <hr>
             <input type="text" name="recipeId" id="recipeId" style="display:none;" value="{{id_recipe}}">
             <div>
-                <input type="text" name="recipeNameBlank" id="recipeNameBlank"
+                <input type="text" name="recipeNameBlank" id="recipeName_{{id_recipe}}"
                     class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
                     style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
-                    value="{{recipe_name}}" maxlength="35" disabled>
+                    value="{{recipe_name}}" maxlength="35" >
             </div>
             <div class="row mt-4" id="categoryRow">
                 <div class="col">
@@ -152,9 +153,10 @@
             <h2>Wybór zdjęcia:</h2>
             <hr>
             <h6>Na nowo dobierz pożądane zdjęcia. Pamiętaj, aby wybrać co najmniej jedno.</h6>
-            Wybierz główne zdjęcie:
+
             <select name="mainPhotoSelect" id="mainPhotoSelect"
-                class="form-control border-top-0 border-left-0 border-right-0 rounded-0 w-25">
+                class="form-control border-top-0 border-left-0 border-right-0 rounded-0 w-25" required>
+                <option  selected="" hidden="" value="">Wybierz główne zdjęcie</option>
             </select>
             <div class="row p-3">
                 <div class="col-md">

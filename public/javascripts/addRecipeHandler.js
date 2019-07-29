@@ -460,6 +460,10 @@ $.getJSON("/api/recipes/all", (data) => {
             // Email
             if (field.type === 'number') return 'Wprowadzone dane muszą być liczbą.';
         }
+
+        if(field.id==="mainPhotoSelect"){
+            return "Musisz dodać co najmniej jedno zdjęcie i wybrać, które ma być główne";
+        }
         // If field is required and empty
         if (validity.valueMissing) {
             if (field.id === "categorySelect1") return 'Musi zostać wybrana co najmniej jedna kategoria.';
@@ -510,6 +514,8 @@ $.getJSON("/api/recipes/all", (data) => {
                     lastChild.parentNode.insertBefore(message, lastChild.nextSibling);
                 } else if (label.parentNode.parentNode.id === 'ingredients' || label.parentNode.id === 'generalInfo') {
                     field.parentNode.appendChild(message);
+                } else if(id === 'mainPhotoSelect'){
+                    $(message).insertAfter(field);
                 } else {
                     label.parentNode.insertBefore(message, label.nextSibling);
                 }
@@ -566,32 +572,8 @@ $.getJSON("/api/recipes/all", (data) => {
 
         if (event.target.name === 'ingredientName') {
             let customIngredient = event.target.value;
-
-            if (customIngredient) {
-                // if (!ingredientsNames.includes(customIngredient)) {
-                //     error = "Taki składnik nie występuje w bazie."
-                // } else {
-                let selectedIngredients = document.querySelectorAll("[id^=ingredientName]");
-                let usedIngredients = [];
-                selectedIngredients.forEach(item => {
-                    usedIngredients.push(item['value']);
-                });
-                console.log(usedIngredients);
-                let num = event.target.id.replace(/^\D+/g, "");
-                let index = usedIngredients.indexOf(customIngredient);
-                console.log(index);
-                usedIngredients.splice(index, 1);
-                console.log(usedIngredients);
-                for (let i = 1; i <= usedIngredients.length; i++) {
-                    if (i != num) {
-                        if (usedIngredients[num - 1] === customIngredient) { break; }
-                        else if (usedIngredients.includes(customIngredient)) {
-                            error = "Taki składnik został już dodany";
-                            break;
-                        }
-                    }
-                }
-                //}
+            if(event.target.id === 'mainPhotoSelect'){
+                error ="";
             }
         }
         // If there's an error, show it
@@ -617,6 +599,13 @@ $.getJSON("/api/recipes/all", (data) => {
         // Store the first field with an error to a letiable so we can bring it into focus leter
         let error, hasErrors;
         for (let i = 0; i < fields.length; i++) {
+            if(fields[i].id.includes("mainPhotoSelect")){
+                if(fields[i].value === ""){
+                    error = "Musisz dodać co najmniej jedno zdjęcie i wybrać, które ma być główne";
+                } else{
+                    removeError(fields[i]);
+                }
+            }
             if (fields[i].id.includes("ingredientName")) {
                 let customIngredient = fields[i].value;
                 if (customIngredient) {

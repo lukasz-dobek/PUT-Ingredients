@@ -10,9 +10,7 @@ function addToShopList(e, userId) {
         if (jsonData >= 1) {
             e.target.classList.add('error');
             let id = e.target.id || e.target.name;
-            console.log(e.target);
             if (!id) return;
-            console.log(!e.target.parentNode.parentNode.querySelector('.error-message#error-for-' + id));
 
             if(!e.target.parentNode.parentNode.querySelector('[id^=error]')){
                 let message = document.createElement('div');
