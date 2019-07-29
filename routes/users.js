@@ -177,8 +177,8 @@ router.get('/delete_account', (req, res) => {
 
 router.post('/report_recipe', (req, res) => {
 
-    let reportedRecipeUrl = req.get('Referer').match(/\/recipes\/[a-z_]+/)[0];
-
+    let reportedRecipeUrl = req.get('Referer').match(/\/recipes\/[a-z_0-9]+/)[0];
+    console.log(reportedRecipeUrl);
     const getRecipeInfoQueryString = `
     SELECT 
         rec.id_recipe, 
@@ -186,11 +186,13 @@ router.post('/report_recipe', (req, res) => {
     FROM recipes rec  
     WHERE rec.link_to_recipe = $1;`;
 
+    
+
     pgClient.query(getRecipeInfoQueryString, [reportedRecipeUrl], (getRecipeInfoQueryError, getRecipeInfoQueryResult) => {
-        console.log(getRecipeInfoQueryResult);
         if (getRecipeInfoQueryError) {
             throw getRecipeInfoQueryError;
         }
+        console.log(getRecipeInfoQueryResult.rows[0]);
         let reporteeId = res.locals.userId;
         let reportedId = getRecipeInfoQueryResult.rows[0]["user_id"];
         let reportedRecipeId = getRecipeInfoQueryResult.rows[0]["id_recipe"];

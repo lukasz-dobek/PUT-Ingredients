@@ -32,6 +32,7 @@ const apiFavouritesRouter = require('./routes/api/favourites');
 const apiIngredientsRouter = require('./routes/api/ingredients');
 const apiShoppingListRouter = require('./routes/api/shoppingList');
 const apiReportsRouter = require('./routes/api/reports');
+const apiGraphsRouter = require('./routes/api/graphs');
 
 var app = express();
 
@@ -150,6 +151,7 @@ app.use('/api/shoppingList',apiShoppingListRouter);
 app.use('/api/votes', apiVotesRouter);
 app.use('/api/ingredients', apiIngredientsRouter);
 app.use('/api/reports', apiReportsRouter);
+app.use('/api/graphs', apiGraphsRouter);
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
