@@ -50,6 +50,18 @@ router.post('/send_email', (req, res) => {
     res.send('Mail sent.');
 });
 
+router.post('/send_shopping_list', (req, res) => {
+    let messageContent = req.body.message;
+    let userEmail = req.body.send_to;
+    let recipe = req.body.recipe;
+
+    let subject = 'Ingredients - Lista zakupów dla:'+recipe+'!';
+    let message = `${messageContent}`;
+
+    mailClient.sendEmail(userEmail, subject, message);
+    res.send('Mail sent.');
+});
+
 router.post('/block_user', (req, res, next) => {
     const blockUserQueryString = `
     UPDATE users SET state = 2 WHERE nickname = $1;`;
