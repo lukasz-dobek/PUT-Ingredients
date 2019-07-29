@@ -90,21 +90,21 @@
                             <td class="align-middle">{{email_address}}</td>
                             <td class="align-middle">{{date_of_activity}}</td>
                             <td>
-                                <div class="row" style="margin-right:0.2vw; margin-top:0.2vw">
-                                    <div class="col-5">
+                                <div class="row" style="margin-right:0vw; margin-top:0.2vw">
+                                    <div class="col-6">
                                         <button type="button"
                                             onclick="location.href='/administrator_panel/user_management/{{nickname}}'"
                                             class="btn btn-secondary btn-block rounded-0"
                                             style="font-size:0.7vw">SZCZEGÓŁY</button>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-6">
                                         <button type="submit" onclick="location.href='/users/user_recipes/{{nickname}}'"
                                             class="btn btn-success btn-block rounded-0" style="font-size:0.7vw">PRZEPISY
                                             UŻYTKOWNIKA</button>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-top: 0.2vw; margin-right:0.2vw; margin-bottom: 0.2vw">
-                                    <div class="col-5">
+                                <div class="row" style="margin-top: 0.2vw; margin-right:0vw; margin-bottom: 0.2vw">
+                                    <div class="col-6">
                                         <button type="button" class="btn btn-secondary btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
                                             data-target="#exampleModalLong{{id_user}}">WYŚLIJ
@@ -144,7 +144,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-6">
                                         {{#isBanned state}}
                                         <button type="button" class="btn btn-danger btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
