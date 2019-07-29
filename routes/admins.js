@@ -282,6 +282,8 @@ router.post('/recipe_management', (req, res) => {
         orderBy = 'rec.date_of_creation';
     } else if (sortUsing === 'score') {
         orderBy = 'rec.score';
+    } else if (sortUsing === 'name') {
+        orderBy = 'rec.recipe_name';
     } else {
         orderBy = 'rec.id_recipe';
     }
