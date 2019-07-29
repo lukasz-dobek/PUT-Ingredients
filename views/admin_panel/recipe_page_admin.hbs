@@ -211,9 +211,17 @@
 
             <div class="row" style="margin-top:2.5vw;">
                 <div class="col">
-                    <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
-                        style="color:black; background-color:#27AE60; height: 2.7vw;">AKCEPTUJ
+                    {{#isRecipeAccepted state}}
+                    <button type="button" class="btn btn-success ml-3"
+                        style="color:black; background-color:#27AE60; height: 2.7vw;"
+                        onclick='acceptRecipe({{../id_recipe}})'>AKCEPTUJ
                         PRZEPIS</button>
+                    {{else}}
+                    <button type="button" class="btn btn-success ml-3"
+                        style="color:black; background-color:#444444; height: 2.7vw;"
+                        onclick='acceptRecipe({{../id_recipe}})' disabled>AKCEPTUJ
+                        PRZEPIS</button>
+                    {{/isRecipeAccepted}}
                 </div>
                 <div class="col">
                     <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
@@ -250,14 +258,20 @@
 
                 </div>
                 <div class="col">
-                    <button type="stworz-liste-zakupow" class="btn btn-danger ml-3"
-                        style="color:black;  height: 2.7vw">ODRZUĆ PRZEPIS</button>
+                    {{#isRecipeNotAccepted state}}
+                    <button type="button" class="btn btn-danger ml-3" style="color:black;  height: 2.7vw"
+                        onclick='rejectRecipe({{../id_recipe}})'>ODRZUĆ PRZEPIS</button>
+                    {{else}}
+                    <button type="button" class="btn btn-danger ml-3"
+                        style="color:black;  background-color: #444444; height: 2.7vw"
+                        onclick='rejectRecipe({{../id_recipe}})' disabled>ODRZUĆ PRZEPIS</button>
+                    {{/isRecipeNotAccepted}}
                 </div>
             </div>
 
         </div>
     </div>
-    
+
 
 
 
@@ -268,3 +282,4 @@
 <script src="/javascripts/favouritesHandler.js"></script>
 <script src="/javascripts/scoreStarsHandler.js"></script>
 <script src="/javascripts/shoppingList.js"></script>
+<script src="/javascripts/adminRecipePage.js"></script>

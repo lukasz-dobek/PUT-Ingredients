@@ -12,6 +12,7 @@ router.get('/recipes/:linkToRecipe', (req, res) => {
         rec.id_recipe, 
         rec.recipe_name, 
         rec.score, 
+        rec.state, 
         TO_CHAR(rec.date_of_creation, 'DD/MM/YYYY') AS date_of_creation,
         CASE rec.complicity
             WHEN 1 THEN 'Łatwe'

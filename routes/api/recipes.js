@@ -51,4 +51,28 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+router.post('/accept_recipe', (req, res) => {
+    const acceptRecipeQueryString = `UPDATE recipes SET state = 'Zweryfikowany' WHERE id_recipe = $1`;
+    const recipeId = req.body.recipeId;
+
+    pgClient.query(acceptRecipeQueryString, [recipeId], (acceptRecipeQueryError, acceptRecipeQueryResult) => {
+        if (acceptRecipeQueryError) {
+            acceptRecipeQueryError;
+        }
+        res.json(acceptRecipeQueryResult.rows);
+    });
+});
+
+router.post('/reject_recipe', (req, res) => {
+    const acceptRecipeQueryString = `UPDATE recipes SET state = 'Niezaakceptowany' WHERE id_recipe = $1`;
+    const recipeId = req.body.recipeId;
+
+    pgClient.query(acceptRecipeQueryString, [recipeId], (acceptRecipeQueryError, acceptRecipeQueryResult) => {
+        if (acceptRecipeQueryError) {
+            acceptRecipeQueryError;
+        }
+        res.json(acceptRecipeQueryResult.rows);
+    });
+});
+
 module.exports = router;

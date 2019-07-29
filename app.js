@@ -61,6 +61,22 @@ handlebars.registerHelper('isBanned', (state, options) => {
   }
 });
 
+handlebars.registerHelper('isRecipeAccepted', (state, options) => {
+  if (state === 'Zweryfikowany'){
+    return options.inverse(this);
+  } else {
+    return options.fn(this);
+  }
+});
+
+handlebars.registerHelper('isRecipeNotAccepted', (state, options) => {
+  if (state === 'Niezaakceptowany'){
+    return options.inverse(this);
+  } else {
+    return options.fn(this);
+  }
+});
+
 handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });

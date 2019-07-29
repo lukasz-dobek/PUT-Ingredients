@@ -168,6 +168,9 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
 router.get('/add_recipe_confirmation', (req, res) => {
     res.render('./recipes/add_recipe_confirmation');
 });
+router.get('/edit_recipe_confirmation', (req, res) => {
+    res.render('./recipes/edit_recipe_confirmation');
+});
 
 router.get('/ingredients', (req, res) => {
     res.render('./recipes/ingredients_search_screen');
@@ -414,7 +417,7 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
                 console.log(insertCategoriesQueryResult.command, insertCategoriesQueryResult.rowCount);
             });
         }
-        res.redirect('/recipes/add_recipe_confirmation');
+        res.redirect('/recipes/edit_recipe_confirmation');
     });
 });
 
