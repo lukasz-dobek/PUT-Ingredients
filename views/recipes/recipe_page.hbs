@@ -5,9 +5,9 @@
     <div class="col col-md-4">
 
       <img id="myImg" src="{{photo_one}}" alt="" class="card-img-top" style="height: 14.9vw">
-      <div id="myModal" class="modal display">
+      <div id="myModal" class="modal-img display">
         <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
+        <img class="modal-content-img" id="img01">
         <div id="caption"></div>
       </div>
 
@@ -188,10 +188,10 @@
         <div class="col">
           {{#if photo_two}}
 
-          <img id="myImg02" src="{{photo_two}}" alt="" class="card-img-top" style="height: 12vw"></a>
-          <div id="myModal02" class="modal display">
+          <img id="myImg02" src="{{photo_two}}" alt="" class="card-img-top" style="height: 12vw">
+          <div id="myModal02" class="modal-img display">
             <span class="close">&times;</span>
-            <img class="modal-content" id="img02">
+            <img class="modal-content-img" id="img02">
             <div id="caption02"></div>
           </div>
 
@@ -205,10 +205,10 @@
         <div class="col">
           {{#if photo_three}}
 
-          <img id="myImg03" src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw"></a>
-          <div id="myModal03" class="modal display">
+          <img id="myImg03" src="{{photo_three}}" alt="" class="card-img-top" style="height: 12vw">
+          <div id="myModal03" class="modal-img display">
             <span class="close">&times;</span>
-            <img class="modal-content" id="img03">
+            <img class="modal-content-img" id="img03">
             <div id="caption03"></div>
           </div>
 
@@ -223,10 +223,10 @@
         <div class="col">
           {{#if photo_four}}
 
-          <img img id="myImg04" src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw"></a>
-          <div id="myModal04" class="modal display">
+          <img img id="myImg04" src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw">
+          <div id="myModal04" class="modal-img display">
             <span class="close">&times;</span>
-            <img class="modal-content" id="img04">
+            <img class="modal-content-img" id="img04">
             <div id="caption04"></div>
           </div>
 
@@ -265,7 +265,7 @@
         <form action="/users/report_recipe" method="post">
 
           <div class="modal-body text-justify">
-            <textarea name="reportRecipeDescription" id="reportRecipe" cols="45" rows="10"></textarea>
+            <textarea name="reportRecipeDescription" id="reportRecipe" cols="55" rows="10"></textarea>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-danger">Wyślij</button>
