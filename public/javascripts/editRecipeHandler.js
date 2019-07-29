@@ -310,8 +310,8 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
             categoriesSelects[i].childNodes[1].value = categoriesNames[i];
             categoriesSelects[i].childNodes[1].textContent = categoriesNames[i];  
             categoriesSelects[i].childNodes[1].hidden = false;    
-            categoriesSelects[i].childNodes[1].selected = true;    
-            categoriesSelects[i].childNodes[1].disabled = false;    
+            categoriesSelects[i].childNodes[1].setAttribute('selected','selected');
+            categoriesSelects[i].childNodes[1].disabled = false;
 
             console.log(categoriesSelects[i].childNodes[1]);
 
