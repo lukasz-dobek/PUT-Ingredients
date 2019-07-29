@@ -61,8 +61,8 @@ router.get('/recipes_per_week', (req, res) => {
       WHEN 4 THEN 'Czwartek'
       WHEN 5 THEN 'Piątek'
       WHEN 6 THEN 'Sobota'
-    END AS dzien_tygodnia,
-    count(id_recipe) AS new_recipe_per_day
+    END AS day_of_week,
+    count(id_recipe) AS number_of_recipes
     FROM recipes
     WHERE date_of_creation::date BETWEEN now()::date -7 AND now()::date
     GROUP BY day_nr;`;
@@ -104,8 +104,8 @@ router.get('/user_activities_in_week', (req, res) => {
         WHEN 5 THEN 'Piątek'
         WHEN 6 THEN 'Sobota'
 
-    END AS dzien_tygodnia,
-    count(id_user_activity) AS new_activity_per_day
+    END AS day_of_week,
+    count(id_user_activity) AS number_of_activities
     from user_activities
     WHERE date_of_activity::date BETWEEN now()::date -7 AND now()::date
     group by day_nr`;
@@ -178,7 +178,7 @@ router.get('/users_per_week', (req, res) => {
         WHEN 6 THEN 'Sobota'
         WHEN 0 THEN 'Niedziela'
     END AS day_of_week,
-    count(id_user) AS new_users_per_day
+    count(id_user) AS number_of_users
     FROM users
     WHERE date_of_join::date BETWEEN now()::date-7 AND now()::date 
     GROUP BY day_nr;`;
