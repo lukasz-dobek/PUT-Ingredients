@@ -112,6 +112,35 @@
 <!-- Graphs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script>
+
+  function daysInMonth(month, year) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  let recipesInMonthPromise = $.getJSON('/api/graphs/recipes_in_month');
+
+  $.when(recipesInMonthPromise).then(recipesInMonthData => {
+    let daysArrayObj = [];
+
+    recipesInMonthData.forEach(obj => {
+      daysArrayObj.push(obj);
+      console.log(`Dzien: ${obj.day}, liczba: ${obj.number_of_recipes}`);
+    });
+    let daysInJuly = daysInMonth(7, 2019);
+    for (let i = 0; i < daysInJuly; i++) {
+      let tempObj = {
+        day: i,
+        number_of_recipes: 0
+      }
+      daysArrayObj.push(tempObj);
+    }
+
+    console.log(daysArrayObj);
+  });
+
+
+
+
   var ctx = document.getElementById("nowe_przepisy_tydzien");
   var nowe_przepisy_tydzien = new Chart(ctx, {
     type: 'line',
