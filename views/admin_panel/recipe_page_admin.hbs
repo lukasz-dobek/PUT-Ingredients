@@ -237,53 +237,68 @@
                     ZAKUPÓW</button>
             </div> --}}
 
-    <div class="row" style="margin-top:2.5vw;">
-        <div class="col">
-            <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
-                style="color:black; background-color:#27AE60; height: 2.7vw;">AKCEPTUJ
-                PRZEPIS</button>
-        </div>
-        <div class="col">
-            <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
-                style="color:black; background-color:#27AE60; height: 2.7vw;" data-toggle="modal"
-                data-target="#exampleModalLong">POPROŚ AUTORA O KOREKTĘ</button>
+            <div class="row" style="margin-top:2.5vw;">
+                <div class="col">
+                    {{#isRecipeAccepted state}}
+                    <button type="button" class="btn btn-success ml-3"
+                        style="color:black; background-color:#27AE60; height: 2.7vw;"
+                        onclick='acceptRecipe({{../id_recipe}})'>AKCEPTUJ
+                        PRZEPIS</button>
+                    {{else}}
+                    <button type="button" class="btn btn-success ml-3"
+                        style="color:black; background-color:#444444; height: 2.7vw;"
+                        onclick='acceptRecipe({{../id_recipe}})' disabled>AKCEPTUJ
+                        PRZEPIS</button>
+                    {{/isRecipeAccepted}}
+                </div>
+                <div class="col">
+                    <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
+                        style="color:black; background-color:#27AE60; height: 2.7vw;" data-toggle="modal"
+                        data-target="#exampleModalLong">POPROŚ AUTORA O KOREKTĘ</button>
 
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Wyślij
-                                wiadomość do autora <p style="font-size: 0.8vw"> Wyjaśnij co jest niepoprawne,
-                                    jakie elementy wymagają poprawy
-                                </p>
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body text-justify">
-                            <textarea name="userMessage" id="userMessage_{{email_address}}" cols="45"
-                                rows="10"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger"
-                                onclick="sendMail('{{email_address}}')">Wyślij</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Wyślij
+                                        wiadomość do autora <p style="font-size: 0.8vw"> Wyjaśnij co jest niepoprawne,
+                                            jakie elementy wymagają poprawy
+                                        </p>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-justify">
+                                    <textarea name="userMessage" id="userMessage_{{email_address}}" cols="45"
+                                        rows="10"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="sendMail('{{email_address}}')">Wyślij</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Zamknij</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="col">
+                    {{#isRecipeNotAccepted state}}
+                    <button type="button" class="btn btn-danger ml-3" style="color:black;  height: 2.7vw"
+                        onclick='rejectRecipe({{../id_recipe}})'>ODRZUĆ PRZEPIS</button>
+                    {{else}}
+                    <button type="button" class="btn btn-danger ml-3"
+                        style="color:black;  background-color: #444444; height: 2.7vw"
+                        onclick='rejectRecipe({{../id_recipe}})' disabled>ODRZUĆ PRZEPIS</button>
+                    {{/isRecipeNotAccepted}}
                 </div>
             </div>
 
         </div>
-        <div class="col">
-            <button type="stworz-liste-zakupow" class="btn btn-danger ml-3" style="color:black;  height: 2.7vw">ODRZUĆ
-                PRZEPIS</button>
-        </div>
     </div>
-
-</div>
-</div>
 
 
 
@@ -295,7 +310,7 @@
 <script src="/javascripts/favouritesHandler.js"></script>
 <script src="/javascripts/scoreStarsHandler.js"></script>
 <script src="/javascripts/shoppingList.js"></script>
-
+<script src="/javascripts/adminRecipePage.js"></script>
 
 <script>
     // Get the modal
@@ -369,3 +384,4 @@
     }
 
 </script>
+

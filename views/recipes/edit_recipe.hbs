@@ -1,6 +1,7 @@
 {{#each recipe}}
 <div class="container">
-    <h1 class="mb-5 text-center">EDYCJA PRZEPISU O ID: <span id="recipeId">{{id_recipe}}</span></h1>
+    <h1 class="mb-5 text-center" style="display: none">EDYCJA PRZEPISU O ID: <span id="recipeId">{{id_recipe}}</span></h1>
+    <h1 class="mb-5 text-center" >EDYCJA PRZEPISU O NAZWIE: <span id="recipeId">{{recipe_name}}</span></h1>
     <form action="{{link_to_recipe}}/edit" enctype="multipart/form-data" method="post" novalidate>
         {{!-- Informacje ogolne --}}
         <div class="container w-100 p-3" style="background-color: #eeeeee">
@@ -9,11 +10,10 @@
             <hr>
             <input type="text" name="recipeId" id="recipeId" style="display:none;" value="{{id_recipe}}">
             <div>
-                <input type="text" name="recipeNameBlank" id="recipeNameBlank"
+                <input type="text" name="recipeNameBlank" id="recipeName_{{id_recipe}}"
                     class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
                     style="background-color: #eeeeee" placeholder="* Nazwa potrawy..." required minlength="5"
-                    value="{{recipe_name}}"
-                    maxlength="35" disabled>
+                    value="{{recipe_name}}" maxlength="35" >
             </div>
             <div class="row mt-4" id="categoryRow">
                 <div class="col">
@@ -58,7 +58,7 @@
                 <div class="col">
                     <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="complicity"
                         style="background: #eeeeee;" name="complicity" required>
-                        <option selected hidden value="{{complicity}}">{{complicity_name}}</option>
+                        <option selected hidden value={{complicity}}>{{complicity_name}}</option>
                         <option value="1">Łatwe</option>
                         <option value="2">Średnie</option>
                         <option value="3">Trudne</option>
@@ -67,7 +67,8 @@
                 <div class="col">
                     <input type="number" name="numberOfPeople" id="numberOfPortions"
                         class="form-control border-top-0 border-left-0 border-right-0 rounded-0"
-                        style="background-color: #eeeeee;" placeholder="* Ilość porcji" value={{number_of_people}} required>
+                        style="background-color: #eeeeee;" placeholder="* Ilość porcji" value={{number_of_people}}
+                        required>
                 </div>
                 <div class="col">
                     <select class="form-control border-top-0 border-left-0 border-right-0 rounded-0" id="timeToMake"
@@ -143,7 +144,8 @@
             <h2>Sposób przygotowania:</h2>
             <hr>
             <div class="form-group">
-                <textarea class="form-control" id="recipeDescription" name="description" rows="10" required >{{description}}</textarea>
+                <textarea class="form-control" id="recipeDescription" name="description" rows="10"
+                    required>{{description}}</textarea>
             </div>
         </div>
 
@@ -151,45 +153,48 @@
             <h2>Wybór zdjęcia:</h2>
             <hr>
             <h6>Na nowo dobierz pożądane zdjęcia. Pamiętaj, aby wybrać co najmniej jedno.</h6>
-            Wybierz główne zdjęcie:
+
             <select name="mainPhotoSelect" id="mainPhotoSelect"
                 class="form-control border-top-0 border-left-0 border-right-0 rounded-0 w-25">
+                <option  selected="" hidden="" value="">Wybierz główne zdjęcie</option>
             </select>
             <div class="row p-3">
                 <div class="col-md">
-                    <div class="image-upload h-50">
+                    <div class="image-upload text-center mt-5">
                         <label for="file-input">
-                            <img src="/images/inputPhoto.png" style="width: 500px" />
+                            <img src="/images/inputPhoto.png" style="width: 20vw;" />
                         </label>
 
                         <input id="file-input" type="file" name="imageInput" id="imageInput" multiple="multiple" />
                     </div>
                 </div>
-                <div class="col-md text-center" style="background-color:palegreen">
-                    <div class="row h-50 mt-2 mb-0" style="overflow: hidden; width: 100%; height:100%;">
-                        <div class="col">
-                            <img id="photoOne" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
-                        </div>
-                        <div class="col">
-                            <img id="photoTwo" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
-
-                        </div>
-                    </div>
-                    <div class="row h-50 mt-0" style="overflow: hidden; width: 100%; height:100%;">
-                        <div class="col">
-                            <img id="photoThree" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
-                        </div>
-                        <div class="col">
-                            <img id="photoFour" class="w-75 h-75" alt="Brak zdjęcia" style=" object-fit: cover;" />
-                        </div>
-                    </div>
+                <div class="col-md pt-3 text-center"
+                    style="display:grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 8vw); grid-gap: 10px; background-color:#AFD2B9; line-height:6vw">
+                    <figure class="gallery__item gallery__item--1">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoOne" src="{{photo_one}}"
+                            style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
+                    <figure class="gallery__item gallery__item--2">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoTwo" src="{{photo_two}}"
+                            style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
+                    <figure class="gallery__item gallery__item--3">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoThree" src="{{photo_three}}"
+                            style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
+                    <figure class="gallery__item gallery__item--4">
+                        <img class="gallery__img" alt="Brak zdjęcia" id="photoFour" src="{{photo_four}}"
+                            style="width: 100%; height:100%; object-fit:cover;">
+                    </figure>
                 </div>
+
             </div>
         </div>
 
         <div class="container w-25 p-3 mt-3 text-center">
             <div class="form-group form-check" style="margin-left: 0.8vw">
-                <input type="checkbox" name="emailAccepted" id="emailAccepted" class="form-check-input" value={{visible_email}}>
+                <input type="checkbox" name="emailAccepted" id="emailAccepted" class="form-check-input"
+                    value={{visible_email}}>
                 <label for="emailAccepted" class="form-check-label text-left"
                     style="font-size: 0.8vw; width:13.6vw;">Chcę aby mój adres email był
                     widoczny dla użytkowników korzystających z przepisu.</label>

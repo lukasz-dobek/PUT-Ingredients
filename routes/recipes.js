@@ -168,6 +168,9 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
 router.get('/add_recipe_confirmation', (req, res) => {
     res.render('./recipes/add_recipe_confirmation');
 });
+router.get('/edit_recipe_confirmation', (req, res) => {
+    res.render('./recipes/edit_recipe_confirmation');
+});
 
 router.get('/ingredients', (req, res) => {
     res.render('./recipes/ingredients_search_screen');
@@ -258,6 +261,10 @@ router.get('/:linkToRecipe/edit', (req, res) => {
     SELECT 
         rec.id_recipe, 
         rec.recipe_name, 
+        rec.photo_one,
+        rec.photo_two,
+        rec.photo_three,
+        rec.photo_four,
         rec.complicity,
         CASE rec.complicity
             WHEN 1 THEN 'Łatwe'
@@ -309,10 +316,10 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
         preparation_time = $4,
         description = $5,
         number_of_people = $6,
-        photo_one = $7,
-        photo_two = $8,
-        photo_three = $9,
-        photo_four = $10,
+        photo_one = COALESCE($7, photo_one),
+        photo_two = COALESCE($8, photo_two),
+        photo_three = COALESCE($9, photo_three),
+        photo_four = COALESCE($10, photo_four),
         visible_email = $11
     WHERE id_recipe = $12;`;
 
@@ -411,7 +418,7 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
                 console.log(insertCategoriesQueryResult.command, insertCategoriesQueryResult.rowCount);
             });
         }
-        res.redirect('/recipes/add_recipe_confirmation');
+        res.redirect('/recipes/edit_recipe_confirmation');
     });
 });
 
