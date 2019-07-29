@@ -265,6 +265,7 @@ router.get('/:linkToRecipe/edit', (req, res) => {
         rec.photo_two,
         rec.photo_three,
         rec.photo_four,
+        rec.complicity,
         CASE rec.complicity
             WHEN 1 THEN 'Łatwe'
             WHEN 2 THEN 'Średnie'
