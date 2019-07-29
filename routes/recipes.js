@@ -258,7 +258,10 @@ router.get('/:linkToRecipe/edit', (req, res) => {
     SELECT 
         rec.id_recipe, 
         rec.recipe_name, 
-        rec.complicity,
+        rec.photo_one,
+        rec.photo_two,
+        rec.photo_three,
+        rec.photo_four,
         CASE rec.complicity
             WHEN 1 THEN 'Łatwe'
             WHEN 2 THEN 'Średnie'
@@ -309,10 +312,10 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
         preparation_time = $4,
         description = $5,
         number_of_people = $6,
-        photo_one = $7,
-        photo_two = $8,
-        photo_three = $9,
-        photo_four = $10,
+        photo_one = COALESCE($7, photo_one),
+        photo_two = COALESCE($8, photo_two),
+        photo_three = COALESCE($9, photo_three),
+        photo_four = COALESCE($10, photo_four),
         visible_email = $11
     WHERE id_recipe = $12;`;
 
