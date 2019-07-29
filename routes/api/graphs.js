@@ -52,7 +52,7 @@ router.get('/recipes_in_year', (req, res) => {
 
 router.get('/recipes_per_week', (req, res) => {
     const recipesPerWeekQueryString = `
-    SELECT
+    SELECT extract(dow from date_of_creation) as day_nr,
     CASE extract(dow from date_of_creation)
       WHEN 0 THEN 'Niedziela'
       WHEN 1 THEN 'Poniedziałek'
@@ -65,7 +65,7 @@ router.get('/recipes_per_week', (req, res) => {
     count(id_recipe) AS new_recipe_per_day
     FROM recipes
     WHERE date_of_creation::date BETWEEN now()::date -7 AND now()::date
-    GROUP BY dzien_tygodnia;`;
+    GROUP BY day_nr;`;
     pgClient.query(recipesPerWeekQueryString, (recipesPerWeekQueryError, recipesPerWeekQueryResult) => {
         if (recipesPerWeekQueryError) {
             throw recipesPerWeekQueryError;
@@ -93,7 +93,7 @@ router.get('/user_activities_in_month', (req, res) => {
 
 router.get('/user_activities_in_week', (req, res) => {
     const recipesInMonthsQueryString = `
-    select
+    SELECT extract(dow from date_of_activity) as day_nr,
     CASE extract(dow from date_of_activity)
       
         WHEN 0 THEN 'Niedziela'
@@ -108,7 +108,7 @@ router.get('/user_activities_in_week', (req, res) => {
     count(id_user_activity) AS new_activity_per_day
     from user_activities
     WHERE date_of_activity::date BETWEEN now()::date -7 AND now()::date
-    group by dzien_tygodnia`;
+    group by day_nr`;
     pgClient.query(recipesInMonthsQueryString, (recipesInMonthsQueryError, recipesInMonthsQueryResult) => {
         if (recipesInMonthsQueryError) {
             throw recipesInMonthsQueryError;
@@ -168,7 +168,7 @@ router.get('/users_in_month', (req, res) => {
 
 router.get('/users_per_week', (req, res) => {
     const usersPerWeekQueryString = `
-    SELECT
+    SELECT extract(dow from date_of_join) as day_nr,
     CASE extract(dow FROM date_of_join)
         WHEN 1 THEN 'Poniedziałek'
         WHEN 2 THEN 'Wtorek'
@@ -181,7 +181,7 @@ router.get('/users_per_week', (req, res) => {
     count(id_user) AS new_users_per_day
     FROM users
     WHERE date_of_join::date BETWEEN now()::date-7 AND now()::date 
-    GROUP BY day_of_week;`;
+    GROUP BY day_nr;`;
     pgClient.query(usersPerWeekQueryString, (usersPerWeekQueryError, usersPerWeekQueryResult) => {
         if (usersPerWeekQueryError) {
             throw usersPerWeekQueryError;
