@@ -74,7 +74,7 @@ router.get('/recipes_per_week', (req, res) => {
     });
 });
 
-router.get('/user_activities_in_month', (req, res) => {
+router.get('/activities_in_month', (req, res) => {
     const recipesInMonthsQueryString = `
     SELECT date_part('day', date_trunc('day', date_of_activity)) AS day , 
     count(*) AS number_of_activities
@@ -91,7 +91,7 @@ router.get('/user_activities_in_month', (req, res) => {
 
 });
 
-router.get('/user_activities_in_week', (req, res) => {
+router.get('/activities_per_week', (req, res) => {
     const recipesInMonthsQueryString = `
     SELECT extract(dow from date_of_activity) as day_nr,
     CASE extract(dow from date_of_activity)
@@ -118,7 +118,7 @@ router.get('/user_activities_in_week', (req, res) => {
 
 });
 
-router.get('/user_activities_in_year', (req, res) => {
+router.get('/activities_in_year', (req, res) => {
     const recipesInMonthsQueryString = `
     SELECT date_part('month', date_trunc('month', date_of_activity)) AS month_nr,
     CASE date_part('month', date_trunc('month', date_of_activity))
@@ -134,7 +134,7 @@ router.get('/user_activities_in_year', (req, res) => {
         WHEN 10 THEN 'Październik'
         WHEN 11 THEN 'Listopad'
         WHEN 12 THEN 'Grudzień'
-    END AS month , count(*) AS number_of_activites
+    END AS month , count(*) AS number_of_activities
     FROM user_activities
     WHERE date_of_activity > now() - interval '1 year' 
     GROUP BY 1
