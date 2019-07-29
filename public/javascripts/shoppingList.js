@@ -111,6 +111,7 @@ function ingredientsInShoppingList(name) {
                 nameOfIngredient.style.borderWidth = '0px';
                 nameOfIngredient.style.border = 'none';
                 nameOfIngredient.name = typeName + '[nazwa]';
+                nameOfIngredient.id = 'nameForm';
                 nameCol.appendChild(nameOfIngredient);
                 let quantityCol = document.createElement("div");
                 quantityCol.classList.add("col");
@@ -174,6 +175,9 @@ function ingredientsInShoppingList(name) {
             emailButton.style.height = "2.7vw";
             emailButton.style.width = "15vw";
             emailButton.textContent = "PRZEŚLIJ NA E-MAIL";
+            emailButton.addEventListener("click", function (e) {
+                sendMail(email_address,e)
+            });
             emailDiv.appendChild(emailButton);
             let saveDiv = document.createElement("div");
             saveDiv.classList.add("col-auto");
@@ -218,6 +222,44 @@ function ingredientsInShoppingList(name) {
         }
     });
 
+}
+
+function sendMail(email,e) {
+    let id = 'userMessage_'+email;
+    let recipeHeader = e.target.parentNode.parentNode.parentNode.querySelector('h2');
+    let string = recipeHeader.textContent;
+    let recipe = string.substr(string.indexOf(' ') + 1);
+    let message = "Oto Twoja lista zakupów dla przepisu: "+ recipe+'<br><br>\n';
+    let mainContainer = e.target.parentNode.parentNode.parentNode;
+    let typeDivs = mainContainer.querySelectorAll('#'+mainContainer.id+' > div[id]');
+    for(let i=0; i<typeDivs.length;i++){
+        let typeName = typeDivs[i].id.split("_").join(" ");
+        let ingredinetRows = typeDivs[i].querySelectorAll('#'+typeDivs[i].id+' > div[id] > div > input,select');
+        message=message+' '+typeName+':\n<br>';
+        for (let j = 0;j<ingredinetRows.length;j++){
+            if(ingredinetRows[j].id === 'nameForm'){
+                message = message + '<p style="padding-left: 3%;">' + ingredinetRows[j].value;
+            }
+            else if(ingredinetRows[j].id === 'quantityForm'){
+                message = message + ' ' + ingredinetRows[j].value;
+            }
+            else if (ingredinetRows[j].id.includes("ingredientUnit")){
+                message = message + ' ' + ingredinetRows[j].options[ingredinetRows[j].selectedIndex].textContent+'</p>\n';
+            }
+
+            if(j===ingredinetRows.length-1){
+                message=message+'\n';
+            }
+        }
+        console.log(message);
+    }
+    $.post("/api/users/send_shopping_list", {
+        message: message,
+        send_to: email,
+        recipe: recipe
+    });
+    alert('Wiadomość została wysłana!');
+    eraseText(id);
 }
 
 function addToUpdated(e) {
