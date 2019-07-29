@@ -304,18 +304,22 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
             let tempNode = document.getElementById(`category${i+1}`);
             categoriesSelects.push(tempNode);
         }
-        
+
+        let categoriesNamesCopy = [...categoriesNames];
+        namesLoop:
         for(let i = 0; i < categoriesNumber; i++ ){
-            
-            categoriesSelects[i].childNodes[1].value = categoriesNames[i];
-            categoriesSelects[i].childNodes[1].textContent = categoriesNames[i];  
-            categoriesSelects[i].childNodes[1].hidden = false;    
-            categoriesSelects[i].childNodes[1].setAttribute('selected','selected');
-            categoriesSelects[i].childNodes[1].disabled = false;
-
-            console.log(categoriesSelects[i].childNodes[1]);
-
-  
+            nodesLoop:
+            for(node of categoriesSelects[i].childNodes) {
+                if (categoriesNamesCopy.includes(node.value)) {
+                    node.selected = true;
+                    categoriesNamesCopy = categoriesNamesCopy.filter(value => {
+                        return value !== node.value;
+                    });
+                continue namesLoop;
+                } else {
+                    node.selected = false;
+                }
+            };        
         }
         
         console.log(ingredients[0]);
