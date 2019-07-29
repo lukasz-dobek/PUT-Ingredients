@@ -20,6 +20,58 @@ router.get('/recipes_in_month', (req, res) => {
 
 });
 
+router.get('/recipes_in_year', (req, res) => {
+    const recipesInYearQueryString = `
+    SELECT 
+    CASE date_part('month', date_trunc('month', date_of_creation))
+        WHEN 1 THEN 'Styczeń'
+        WHEN 2 THEN 'Luty'
+        WHEN 3 THEN 'Marzec'
+        WHEN 4 THEN 'Kwiecień'
+        WHEN 5 THEN 'Maj'
+        WHEN 6 THEN 'Czerwiec'
+        WHEN 7 THEN 'Lipiec'
+        WHEN 8 THEN 'Sierpień'
+        WHEN 9 THEN 'Wrzesień'
+        WHEN 10 THEN 'Październik'
+         WHEN 11 THEN 'Listopad'
+         WHEN 12 THEN 'Grudzień'
+    END AS month,
+    count(*) AS number_of_recipes
+    FROM recipes
+    WHERE date_of_creation > now() - interval '1 year' 
+    GROUP BY 1
+    ORDER BY 1;`;
+    pgClient.query(recipesInYearQueryString, (recipesInYearQueryError, recipesInYearQueryResult) => {
+        if (recipesInYearQueryError) {
+            throw recipesInYearQueryError;
+        }
+        res.json(recipesInYearQueryResult.rows)
+    });
+
+    router.get('/recipes_per_week', (req, res) => {
+        const recipesPerWeekQueryString = `
+    SELECT
+    CASE extract(dow from date_of_creation)
+      WHEN 0 THEN 'Niedziela'
+      WHEN 1 THEN 'Poniedziałek'
+      WHEN 2 THEN 'Wtorek'
+      WHEN 3 THEN 'Środa'
+      WHEN 4 THEN 'Czwartek'
+      WHEN 5 THEN 'Piątek'
+      WHEN 6 THEN 'Sobota'
+    END AS dzien_tygodnia,
+    count(id_recipe) AS new_recipe_per_day
+    FROM recipes
+    WHERE date_of_creation::date BETWEEN now()::date -7 AND now()::date
+    GROUP BY dzien_tygodnia;`;
+        pgClient.query(recipesPerWeekQueryString, (recipesPerWeekQueryError, recipesPerWeekQueryResult) => {
+            if (recipesPerWeekQueryError) {
+                throw recipesPerWeekQueryError;
+            }
+            res.json(recipesPerWeekQueryResult.rows)
+        });
+    });
 
 router.get('/user_activities_in_month', (req, res) => {
     const recipesInMonthsQueryString = `
@@ -92,6 +144,7 @@ router.get('/user_activities_in_year', (req, res) => {
         res.json(recipesInMonthsQueryResult.rows)
     });
 
+});
 });
 
 router.get('/users_in_month', (req, res) => {
