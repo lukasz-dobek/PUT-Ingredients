@@ -22,7 +22,8 @@
 
         <div class="col">
           <p style="text-align:right;">
-            <a href="{{../link_to_recipe}}/edit"><i class="far fa-edit" style="font-size: 1.6vw; position: absolute; bottom:0.5vw; right:0.4vw;"></i></a>
+            <a href="{{../link_to_recipe}}/edit"><i class="far fa-edit"
+                style="font-size: 1.6vw; position: absolute; bottom:0.5vw; right:0.4vw;"></i></a>
           </p>
         </div>
         {{/isRecipeMine}}
@@ -141,7 +142,7 @@
         </hr>
 
         {{#each ../ingredients}}
-        <div class="row ">
+        <div class="row">
           <div class="col">
             <p>{{ingredient_name}}</p>
           </div>
@@ -240,7 +241,7 @@
       </div>
 
       <div class="row" style="margin-top:2.5vw">
-        <button type="button" class="btn btn-success ml-3"
+        <button type="button" class="btn btn-success ml-3 rounded-0"
           style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.6vw" id="shopListButton_{{id_recipe}}"
           onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
           ZAKUPÓW</button>

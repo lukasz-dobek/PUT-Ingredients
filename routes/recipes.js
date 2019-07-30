@@ -511,13 +511,15 @@ router.get('/search/categories', (req, res) => {
     // Query PostgreSQL - ops have to be an array (even if there is only one value within)
     pgClient.query(searchCategoriesQueryString, categoriesFromRequestAsArray, (searchCategoriesQueryError, searchCategoriesQueryResult) => {
         if (searchCategoriesQueryError) throw searchCategoriesQueryError;
-        console.log(searchCategoriesQueryResult.rows[0]["category_photo"]);
         if (categoriesFromRequestAsArray.length === 1) {
-            res.render('./recipes/recipe_search_categories', {
-                searchedCategories: categoriesFromRequestAsArray,
-                recipes: searchCategoriesQueryResult.rows,
-                catPhoto: searchCategoriesQueryResult.rows[0]["category_photo"],
-                oneCategory: true
+            pgClient.query(`SELECT category_photo FROM categories WHERE category_name = $1`, categoriesFromRequestAsArray, (photoErr, photoRes) => {
+                if (photoErr) throw photoErr;
+                res.render('./recipes/recipe_search_categories', {
+                    searchedCategories: categoriesFromRequestAsArray,
+                    recipes: searchCategoriesQueryResult.rows,
+                    catPhoto: photoRes.rows[0]["category_photo"],
+                    oneCategory: true
+                });
             });
         } else {
             res.render('./recipes/recipe_search_categories', {
