@@ -57,7 +57,7 @@ INSERT INTO users (email_address,password,nickname,date_of_join,name,surname,is_
 INSERT INTO categories (category_name, category_photo) VALUES
 ('Śniadanie', '/images/sniadanie.jpeg'),
 ('Obiad', '/images/obiad.jpeg'),
-('Kolacja', '/images/obiad.jpeg'),
+('Kolacja', '/images/kolacja.jpeg'),
 ('Przystawka', '/images/przystawka.jpeg'),
 ('Przekąska', '/images/przekąska.jpeg'),
 ('Deser', '/images/deser.jpeg'),
