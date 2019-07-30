@@ -285,7 +285,7 @@ router.get('/recipe_management', (req, res) => {
 });
 
 router.post('/recipe_management', (req, res) => {
-    let activeParam = req.body.state;
+    let activeParam = req.body.state === "Wszystkie" ? '%' : req.body.state;
     let sortUsing = req.body.sortUsing;
     let sortType = req.body.sortType;
     let nameSearch = req.body.nameSearch ? req.body.nameSearch : '%';
@@ -321,7 +321,7 @@ router.post('/recipe_management', (req, res) => {
         usr.id_user,
         usr.email_address
     FROM recipes rec INNER JOIN users usr ON rec.user_id = usr.id_user
-    WHERE rec.recipe_name LIKE $1 AND rec.state = $2
+    WHERE rec.recipe_name LIKE $1 AND rec.state LIKE $2
     GROUP BY rec.recipe_name, rec.id_recipe, usr.id_user`;
 
     recipeInfoQueryString += orderPart;
