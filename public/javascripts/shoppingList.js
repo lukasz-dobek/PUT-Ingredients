@@ -701,9 +701,18 @@ $.ajax({
 
 jQuery('#panel > button').click(function (e) {
     jQuery('.collapse').collapse('hide');
-    let temp = document.querySelectorAll('#panel > button');
-    temp.forEach(item => {
-        item.style.backgroundColor = '';
-    });
-    e.target.style.backgroundColor = 'green';
+    let disabledButtons = document.querySelectorAll('#panel > button[aria-expanded="false"]');
+    for (let i = 0; i<disabledButtons.length;i++){
+        if (disabledButtons[i] === e.target){
+            continue;
+        }
+        disabledButtons[i].style.backgroundColor = '';
+    }
+
+    if (e.target.style.backgroundColor === 'green'){
+        e.target.style.backgroundColor = '';
+    }
+    else{
+        e.target.style.backgroundColor = 'green';
+    }
 });
