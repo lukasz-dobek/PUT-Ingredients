@@ -164,7 +164,7 @@ router.get('/delete_account', (req, res) => {
     });
 
     const userDeleteQueryString = `
-    UPDATE users SET state=3 WHERE email_address = $1;`;
+    UPDATE users SET state=3, date_of_deletion = TO_TIMESTAMP(${Date.now()} / 1000.0) WHERE email_address = $1;`;
     pgClient.query(userDeleteQueryString, [res.locals.userEmail], (userDeleteQueryError, userDeleteQueryResult) => {
         if (userDeleteQueryError) {
             throw userDeleteQueryError;

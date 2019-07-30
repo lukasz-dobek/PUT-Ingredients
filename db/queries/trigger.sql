@@ -136,6 +136,19 @@ ON users
 FOR EACH ROW
 EXECUTE PROCEDURE register_to_activities();
 
+CREATE OR REPLACE FUNCTION delete_account_to_activities()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO user_activities (user_id, date_of_activity, activity_name)
+    VALUES(NEW.id_user, 
+    NEW.date_of_deletion, 
+    'Usunięcie konta'
+    );
+   RETURN NEW;
+END;
+$BODY$
+language plpgsql;
 
 CREATE OR REPLACE FUNCTION recipe_modification_to_activities()
   RETURNS trigger AS
@@ -151,6 +164,12 @@ BEGIN
 END;
 $BODY$
 language plpgsql;
+
+CREATE TRIGGER delete_account_to_activities
+AFTER UPDATE OF date_of_deletion 
+ON users
+FOR EACH ROW
+EXECUTE PROCEDURE delete_account_to_activities();
 
 CREATE TRIGGER recipe_modification_to_activities
 AFTER UPDATE 

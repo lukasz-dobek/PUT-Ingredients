@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
 	password VARCHAR(128) NOT NULL,
 	nickname VARCHAR(50) UNIQUE NOT NULL,
 	date_of_join TIMESTAMP NOT NULL,
+	date_of_deletion TIMESTAMP,
 	name VARCHAR(50),
 	surname VARCHAR(50),
 	is_admin BOOLEAN NOT NULL,

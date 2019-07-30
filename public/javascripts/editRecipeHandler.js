@@ -1,24 +1,7 @@
-// Wypełnianie pól z kategoriami
-$.getJSON('/api/categories/all').then((categoriesJSON) => {
-    let categoriesInputs = [
-        document.getElementById('category1'),
-        document.getElementById('category2'),
-        document.getElementById('category3'),
-        document.getElementById('category4'),
-        document.getElementById('category5'),
-        document.getElementById('category6')
-    ];
-    categoriesJSON.forEach(categoryRow => {
-        categoriesInputs.forEach(categoryInput => {
-            let categoryOption = document.createElement('option');
-            categoryOption.value = categoryRow["category_name"];
-            categoryOption.textContent = categoryRow["category_name"];
-            categoryInput.appendChild(categoryOption);
-        });
-    });
-});
 
-$("[id^=category]").on('change', function () {
+// Wypełnianie pól z kategoriami
+
+function categoriesHandler() {
     let selects = document.querySelectorAll("[id^=category]");
     let oneSelect = document.getElementById("category1");
     let allCategories = [];
@@ -40,7 +23,29 @@ $("[id^=category]").on('change', function () {
             $("[id^=category]").find('option[value="' + allCategories[i] + '"]').show();
         }
     }
+}
 
+$("[id^=category]").on('change', function () {
+    categoriesHandler();
+});
+
+$.getJSON('/api/categories/all').then((categoriesJSON) => {
+    let categoriesInputs = [
+        document.getElementById('category1'),
+        document.getElementById('category2'),
+        document.getElementById('category3'),
+        document.getElementById('category4'),
+        document.getElementById('category5'),
+        document.getElementById('category6')
+    ];
+    categoriesJSON.forEach(categoryRow => {
+        categoriesInputs.forEach(categoryInput => {
+            let categoryOption = document.createElement('option');
+            categoryOption.value = categoryRow["category_name"];
+            categoryOption.textContent = categoryRow["category_name"];
+            categoryInput.appendChild(categoryOption);
+        });
+    });
 });
 
 let numberOfIngredients = 2;
@@ -308,6 +313,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
             for(node of categoriesSelects[i].childNodes) {
                 if (categoriesNamesCopy.includes(node.value)) {
                     node.selected = true;
+                    categoriesHandler();
                     categoriesNamesCopy = categoriesNamesCopy.filter(value => {
                         return value !== node.value;
                     });
@@ -317,6 +323,8 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
                 }
             };        
         }
+
+
 
         for (let i = 0; i<ingredients[0].length; i++ ){
             if ( i === 0 || i === 1 ) {
