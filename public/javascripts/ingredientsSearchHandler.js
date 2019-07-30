@@ -117,7 +117,7 @@ $.getJSON('/api/ingredients/names', (ingredientData) => {
     let ingredientsNumber = 16;
     let quickIngredientsSearch = ["Marchew",
         "Pomidor",
-        "Jablko",
+        "Jabłko",
         "Wołowina",
         "Pieczarki",
         "Krewetki",
@@ -125,7 +125,7 @@ $.getJSON('/api/ingredients/names', (ingredientData) => {
         "Cukier",
         "Pierś z kurczaka",
         "Pieczywo",
-        "Miod",
+        "Miód",
         "Twaróg",
         "Jajka",
         "Mleko",

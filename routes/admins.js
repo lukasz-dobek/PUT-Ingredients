@@ -188,7 +188,7 @@ router.post('/user_management', (req, res) => {
         TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MI:SS') AS date_of_activity
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
     WHERE usr.nickname LIKE $1 AND usr.state = $2
-    GROUP BY usr.nickname, usr.id_user`;
+    GROUP BY usr.nickname, usr.id_user, usa.date_of_activity`;
 
     userInfoQueryString += orderPart;
 
