@@ -135,3 +135,25 @@ AFTER INSERT
 ON users
 FOR EACH ROW
 EXECUTE PROCEDURE register_to_activities();
+
+
+CREATE OR REPLACE FUNCTION recipe_modification_to_activities()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO user_activities (user_id, date_of_activity, activity_name, link)
+    VALUES(NEW.user_id, 
+    NEW.date_of_modification, 
+    'Modyfikacja przepisu',
+    NEW.link_to_recipe
+    );
+   RETURN NEW;
+END;
+$BODY$
+language plpgsql;
+
+CREATE TRIGGER recipe_modification_to_activities
+AFTER UPDATE 
+ON recipes
+FOR EACH ROW
+EXECUTE PROCEDURE recipe_modification_to_activities();
