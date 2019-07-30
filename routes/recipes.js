@@ -337,7 +337,14 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
         queryParametersList.push('$' + (i * i) + 3);
     }
     let isCategoryAnArray = Array.isArray(req.body.category);
+    if(isCategoryAnArray){
+        req.body.category= req.body.category.filter(value =>{
+            return value != "";
+        });
+    }
+
     let categoriesNumber = isCategoryAnArray ? req.body.category.length : 1;
+
 
     const recipeBody = {
         recipe_name: req.body.recipeName,
