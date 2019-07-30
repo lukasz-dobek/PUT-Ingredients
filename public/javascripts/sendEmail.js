@@ -3,7 +3,6 @@ let adminEmailValue = document.getElementById('adminEmail').value;
 function sendMail(email) {
     let id = 'userMessage_' + email;
     let elValue = document.getElementById(id).value;
-
     if (elValue === '') {
         alert('Nie wolno wysłać pustej wiadomości!');
     } else {

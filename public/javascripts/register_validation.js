@@ -128,15 +128,12 @@ let removeError = function (field) {
 };
 
 document.addEventListener('blur', function (event) {
-
-        console.log(event.target.name);
-        let error = hasError(event.target);
+     let error = hasError(event.target);
 
         if (event.target.name === 'email') {
             let customEmail = document.getElementById('emailForm1').value;
             if(customEmail) {
                 $.getJSON(`/api/users/email/${customEmail}`, (jsonData) => {
-                    console.log(jsonData[0].email_address);
                     if (jsonData[0].email_address === customEmail) {
                         error = 'Podany adres email jest już zajęty.';
                     }
@@ -187,7 +184,6 @@ document.addEventListener('submit', function (event) {
     // Store the first field with an error to a letiable so we can bring it into focus leter
     let error, hasErrors;
 
-    console.log(fields);
     for (let i = 0; i < fields.length; i++) {
         if(fields[i].parentElement.nextSibling.textContent === 'Podany adres email jest już zajęty.'){
             error ='Podany adres email jest już zajęty.'

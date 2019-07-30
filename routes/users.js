@@ -81,7 +81,6 @@ router.get('/favourites', (req, res) => {
         if (userFavouritesQueryError) {
             throw userFavouritesQueryError;
         }
-        console.log(userFavouritesQueryResult.rows);
         res.render('./users/favourites', { recipes: userFavouritesQueryResult.rows });
     });
 });
@@ -178,7 +177,6 @@ router.get('/delete_account', (req, res) => {
 router.post('/report_recipe', (req, res) => {
 
     let reportedRecipeUrl = req.get('Referer').match(/\/recipes\/[a-z_0-9]+/)[0];
-    console.log(reportedRecipeUrl);
     const getRecipeInfoQueryString = `
     SELECT 
         rec.id_recipe, 
@@ -192,7 +190,6 @@ router.post('/report_recipe', (req, res) => {
         if (getRecipeInfoQueryError) {
             throw getRecipeInfoQueryError;
         }
-        console.log(getRecipeInfoQueryResult.rows[0]);
         let reporteeId = res.locals.userId;
         let reportedId = getRecipeInfoQueryResult.rows[0]["user_id"];
         let reportedRecipeId = getRecipeInfoQueryResult.rows[0]["id_recipe"];
@@ -209,8 +206,6 @@ router.post('/report_recipe', (req, res) => {
             status,
             date_of_report
         ) VALUES ($1, $2, $3, $4, $5, $6, TO_TIMESTAMP($7 / 1000.0));`;
-
-        console.log(reporteeId, reportedId);
 
         if (reporteeId === reportedId) {
             req.flash('error_msg', 'Nie można zgłosić swojego przepisu!');

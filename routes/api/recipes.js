@@ -26,12 +26,10 @@ router.get('/id/:id', (req, res) => {
 
 router.get('/name/:name', (req, res) => {
     const queryString = "SELECT * FROM recipes WHERE LOWER(recipe_name) LIKE $1";
-    console.log([req.params.name]);
     const value = req.params.name;
 
     pgClient.query(queryString, ['%' + value + '%'], (err, result) => {
         if (err) throw err;
-        console.log(result.rows);
         res.json(result.rows);
     });
 });

@@ -5,7 +5,6 @@ $.getJSON("/api/categories/all", (data) => {
         items.push(element);
     });
 
-    console.log(items);
 
     let dropdownCategories = document.getElementById('dropdownCategories');
     let dropdownUnorderedList = document.createElement('ul');

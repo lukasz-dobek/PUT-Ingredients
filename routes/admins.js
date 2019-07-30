@@ -123,7 +123,6 @@ router.get('/reports/:id', (req, res) => {
             if (recipeQueryError) {
                 throw recipeQueryError;
             }
-            console.log(reportsQueryResult.rows);
             res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows, recipeName: recipeQueryResult.rows[0]["recipe_name"]});
         });
     });
@@ -183,9 +182,6 @@ router.post('/user_management', (req, res) => {
     } else {
         stateLike = '[0-9]';
     }
-
-    console.log(orderBy);
-
     let orderPart = ` ORDER BY ${orderBy} ${sortType};`;
 
 
@@ -210,7 +206,6 @@ router.post('/user_management', (req, res) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
         }
-        console.log(userInfoQueryResult.rows);
         res.render('./admin_panel/user_management', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows });
     });
 });
@@ -302,7 +297,6 @@ router.post('/recipe_management', (req, res) => {
     } else {
         orderBy = 'rec.id_recipe';
     }
-
     let orderPart = ` ORDER BY ${orderBy} ${sortType};`;
 
     let recipeInfoQueryString = `
