@@ -26,14 +26,10 @@ $("[id^=category]").on('change', function () {
     for (i = 0; i < oneSelect.length; i++) {
         allCategories.push(oneSelect.options[i].value);
     }
-    // console.log(allCategories);
-    // console.log(allCategories.length);
     let values = [];
     for (i = 0; i < selects.length; i++) {
         values.push($(selects[i]).children("option:selected").val());
     }
-    console.log(values);
-    console.log(values.length);
     for (i = 0; i < values.length; i++) {
         if ($("[id^=category]").find('option[value="' + values[i] + '"]')) {
             $("[id^=category]").find('option[value="' + values[i] + '"]').hide();
@@ -238,6 +234,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientQuantity.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
         ingredientQuantity.style.backgroundColor = '#eeeeee';
         ingredientQuantity.placeholder = '*Ilość';
+        ingredientQuantity.step = '0.25';
         ingredientQuantity.setAttribute('required', '');
 
         ingredientQuantityCol.appendChild(ingredientQuantity);
@@ -315,7 +312,6 @@ function readURL(input) {
                     
                     selectMainPhotoElement.appendChild(photoOneOption);
                     $('#photoOne').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             } else if (counter == 1) {
                 reader.onload = function (e) {
@@ -331,7 +327,6 @@ function readURL(input) {
 
                     selectMainPhotoElement.appendChild(photoTwoOption);
                     $('#photoTwo').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             } else if (counter == 2) {
                 reader.onload = function (e) {
@@ -354,7 +349,6 @@ function readURL(input) {
 
                     selectMainPhotoElement.appendChild(photoThreeOption);
                     $('#photoThree').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             } else if (counter == 3) {
                 reader.onload = function (e) {
@@ -383,7 +377,6 @@ function readURL(input) {
 
                     selectMainPhotoElement.appendChild(photoFourOption);
                     $('#photoFour').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             }
             counter++;
@@ -417,12 +410,9 @@ $.getJSON("/api/recipes/all", (data) => {
     items.forEach(item => {
         recipeNames.push(item['recipe_name']);
     });
-    console.log(recipeNames);
 
     let checkRecipeName = function () {
         if (customRecipeName.value) {
-            console.log(items);
-
             for (let i = 0; i < recipeNames.length; i++) {
                 if (customRecipeName.value.toUpperCase() != recipeNames[i].toUpperCase()) {
                     recipeNameTaken = false;
@@ -617,12 +607,9 @@ $.getJSON("/api/recipes/all", (data) => {
                         selectedIngredients.forEach(item => {
                             usedIngredients.push(item['value']);
                         });
-                        console.log(usedIngredients);
                         let num = event.target.id.replace(/^\D+/g, "");
                         let index = usedIngredients.indexOf(customIngredient);
-                        console.log(index);
                         usedIngredients.splice(index, 1);
-                        console.log(usedIngredients);
                         for (let i = 1; i <= usedIngredients.length; i++) {
                             if (i != num) {
                                 if (usedIngredients[num - 1] === customIngredient) {

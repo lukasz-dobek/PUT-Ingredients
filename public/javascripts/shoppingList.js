@@ -117,7 +117,8 @@ function ingredientsInShoppingList(name) {
                 quantityCol.classList.add("col");
                 ingredientRow.appendChild(quantityCol);
                 let quantityInput = document.createElement("input");
-                quantityInput.type = 'text';
+                quantityInput.type = 'number';
+                quantityInput.step = '0.25';
                 quantityInput.name = typeName + '[ilosc]';
                 quantityInput.id = 'quantityForm';
                 quantityInput.classList.add('form-control');
@@ -276,6 +277,27 @@ function addToUpdated(e) {
         let nameDiv = clicked.parentNode.parentNode;
         ingredientId = splitIngredientId(nameDiv.id);
         quantity = nameDiv.querySelector('.col > #quantityForm').value;
+        if (quantity <= 0) {
+            let errorField = nameDiv.querySelector('.col > #quantityForm');
+            errorField.classList.add('error');
+            // Get field id or name
+            let id = errorField.id || errorField.name;
+            if (!id) return;
+            if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
+                let message = document.createElement('div');
+                message.className = 'error-message';
+                message.id = 'error-for-' + id;
+
+                errorField.parentNode.insertBefore(message, errorField.nextSibling);
+
+                errorField.setAttribute('aria-describedby', 'error-for-' + id);
+
+                message.innerHTML = "Wartosć nie może być mniejsza, lub równa 0.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            }
+        }
     }
     if (e.target.tagName.toUpperCase() === 'INPUT') {
         quantity = clicked.value;
