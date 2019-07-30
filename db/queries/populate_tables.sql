@@ -1,5 +1,5 @@
 INSERT INTO users (email_address,password,nickname,date_of_join,name,surname,is_admin,state,activation_url) VALUES
-('ingredients@op.pl','$argon2i$v=19$m=4096,t=3,p=1$+l2YsT0n/bnO1SaL74/5Vg$VR+izSUIQ7+7QDZGroVnjVF68rN30szkuWBpPL1KK4k','Marek','2019-02-18 20:11:20.331','Marek','Drzewo',true,1,null),
+('ingredients@op.pl','$argon2i$v=19$m=4096,t=3,p=1$+l2YsT0n/bnO1SaL74/5Vg$VR+izSUIQ7+7QDZGroVnjVF68rN30szkuWBpPL1KK4k','Administrator','2019-02-18 20:11:20.331','Marek','Drzewo',true,1,null),
 ('fzm99349@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$QKMZ2KtLB8s0uwsYy68Cig$dIoyqoV4ZjpI1GYh6B585wwGt+y262JEmSRqUADAfWU','RóżowaPantera','2019-02-14 20:40:01.206','Małgorzata','Koperek',false,1,null),
 ('rtd30603@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$MmX1XLXN6pFlNNMFH8hJEg$Z+QD8lxuMAbJvoTApkF96d2veD5gq0+7FT7Feuy2KlQ','Hanka','2019-02-21 20:43:20.871','Hanna','Mikołajczyk',false,1,null),
 ('ymv54842@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$PhsoTYCj2G1a3iZL7UYT6A$anR+yjUeUkDkzDO0wdeL2L4XRJnDkgHI0L0Fxi4/PYo','Szalono-oki','2019-03-02 20:48:45.527','Szymon','Kęsy',false,1,null),
