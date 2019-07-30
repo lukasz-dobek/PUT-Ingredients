@@ -175,8 +175,7 @@
 
                 <div class="col">
                     {{#if photo_two}}
-                    <img id="myImg02" src="{{photo_two}}" alt="" class="card-img-top"
-                        style="height: 12vw;">
+                    <img id="myImg02" src="{{photo_two}}" alt="" class="card-img-top" style="height: 12vw;">
                     <div id="myModal02" class="modal-img display">
                         <span class="close">&times;</span>
                         <img class="modal-content-img" id="img02">
@@ -209,28 +208,28 @@
                     </div>
                     {{/if}}
                 </div>
-            
-            <div class="col">
-                {{#if photo_four}}
 
-                <img img id="myImg04" src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw;">
-                <div id="myModal04" class="modal-img display">
-                    <span class="close">&times;</span>
-                    <img class="modal-content-img" id="img04">
-                    <div id="caption04"></div>
+                <div class="col">
+                    {{#if photo_four}}
+
+                    <img img id="myImg04" src="{{photo_four}}" alt="" class="card-img-top" style="height: 12vw;">
+                    <div id="myModal04" class="modal-img display">
+                        <span class="close">&times;</span>
+                        <img class="modal-content-img" id="img04">
+                        <div id="caption04"></div>
+                    </div>
+
+                    {{else}}
+                    <div class="container brak-zdj"
+                        style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
+                        <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
+                    </div>
+                    {{/if}}
+
                 </div>
-
-                {{else}}
-                <div class="container brak-zdj"
-                    style="background-color:#eeeeee; padding: 15px; color:black; text-align: center; height: 12vw">
-                    <p style="color: #B7B7B7; font-size: 1.3vw">BRAK ZDJĘCIA</p>
-                </div>
-                {{/if}}
-
             </div>
-        </div>
 
-    {{!-- <div class="row" style="margin-top:2.5vw">
+            {{!-- <div class="row" style="margin-top:2.5vw">
                 <button type="stworz-liste-zakupow" class="btn btn-success ml-3"
                     style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.6vw"
                     id="shopListButton_{{id_recipe}}" onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
@@ -273,10 +272,17 @@
                                 <div class="modal-body text-justify">
                                     <textarea name="userMessage" id="userMessage_{{email_address}}" cols="45"
                                         rows="10"></textarea>
+                                    <label for="adminEmail" class="col-form-label">Adres e-mail
+                                        do
+                                        korespondencji:</label>
+                                    <input type="text" class="form-control" name="adminEmail" id="adminEmail"
+                                        value="{{@root.userEmail}}">
                                 </div>
                                 <div class="modal-footer">
+
                                     <button type="submit" class="btn btn-danger"
-                                        onclick="sendMail('{{email_address}}')">Wyślij</button>
+                                        onclick="sendMail('{{email_address}}')">Wyślij do:
+                                        {{email_address}}</button>
                                     <button type="button" class="btn btn-secondary"
                                         data-dismiss="modal">Zamknij</button>
                                 </div>
@@ -384,4 +390,3 @@
     }
 
 </script>
-
