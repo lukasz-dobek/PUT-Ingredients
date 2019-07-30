@@ -238,6 +238,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientQuantity.classList.add('form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'rounded-0');
         ingredientQuantity.style.backgroundColor = '#eeeeee';
         ingredientQuantity.placeholder = '*Ilość';
+        ingredientQuantity.step = '0.25';
         ingredientQuantity.setAttribute('required', '');
 
         ingredientQuantityCol.appendChild(ingredientQuantity);
