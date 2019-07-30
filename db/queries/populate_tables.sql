@@ -71,7 +71,7 @@ INSERT INTO categories (category_name, category_photo) VALUES
 ('Kuchnia włoska', '/images/kuchnia-wloska.jpeg'),
 ('Kuchnia japońska', '/images/kuchnia-japońska.jpeg'),
 ('Kuchnia polska', '/images/kuchnia-polska.jpeg'),
-('Kuchnia amerykańska', '/images/koreckuchnia-amerykanskazki.jpeg'),
+('Kuchnia amerykańska', '/images/kuchnia-amerykanska.jpeg'),
 ('Kuchnia meksykańska', '/images/kuchnia-meksykanska.jpeg'),
 ('Kuchnia tajska', '/images/kuchnia-tajska.jpeg'),
 ('Kuchnia chińska', '/images/kuchnia-chinska.jpeg'),
