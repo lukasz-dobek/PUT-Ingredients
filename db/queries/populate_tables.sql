@@ -398,7 +398,7 @@ INSERT INTO ingredients_used_in_recipe (recipe_id,ingredient_id,unit_id,amount) 
 (1,81,9,'4'),
 (2,13,10,'2'),
 (2,108,1,'100'),
-(2,69,1,'1150'),
+(2,69,1,'150'),
 (2,109,1,'40'),
 (2,39,6,'2'),
 (2,58,6,'1'),
