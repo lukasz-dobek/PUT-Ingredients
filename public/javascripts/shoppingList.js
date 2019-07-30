@@ -13,6 +13,11 @@ function splitIngredientId(elementId) {
     return elementId.split('_')[1];
 }
 
+function eraseText(id) {
+    let el = document.getElementById(id);
+    el.value = "";
+}
+
 function ingredientsInShoppingList(name) {
     let shopList = document.getElementById(name);
     chosenShopList = shopList.id;
@@ -118,7 +123,7 @@ function ingredientsInShoppingList(name) {
                 ingredientRow.appendChild(quantityCol);
                 let quantityInput = document.createElement("input");
                 quantityInput.type = 'number';
-                quantityInput.step = '0.25';
+                quantityInput.step = '0.01';
                 quantityInput.name = typeName + '[ilosc]';
                 quantityInput.id = 'quantityForm';
                 quantityInput.classList.add('form-control');
@@ -176,8 +181,9 @@ function ingredientsInShoppingList(name) {
             emailButton.style.height = "2.7vw";
             emailButton.style.width = "15vw";
             emailButton.textContent = "PRZEŚLIJ NA E-MAIL";
+            emailButton.id = 'emailButton_'+chosenShopList;
             emailButton.addEventListener("click", function (e) {
-                sendMail(email_address,e)
+                sendMail(email_address, e)
             });
             emailDiv.appendChild(emailButton);
             let saveDiv = document.createElement("div");
@@ -225,42 +231,95 @@ function ingredientsInShoppingList(name) {
 
 }
 
-function sendMail(email,e) {
-    let id = 'userMessage_'+email;
-    let recipeHeader = e.target.parentNode.parentNode.parentNode.querySelector('h2');
-    let string = recipeHeader.textContent;
-    let recipe = string.substr(string.indexOf(' ') + 1);
-    let message = "Oto Twoja lista zakupów dla przepisu: "+ recipe+'<br><br>\n';
-    let mainContainer = e.target.parentNode.parentNode.parentNode;
-    let typeDivs = mainContainer.querySelectorAll('#'+mainContainer.id+' > div[id]');
-    for(let i=0; i<typeDivs.length;i++){
-        let typeName = typeDivs[i].id.split("_").join(" ");
-        let ingredinetRows = typeDivs[i].querySelectorAll('#'+typeDivs[i].id+' > div[id] > div > input,select');
-        message=message+' '+typeName+':\n<br>';
-        for (let j = 0;j<ingredinetRows.length;j++){
-            if(ingredinetRows[j].id === 'nameForm'){
-                message = message + '<p style="padding-left: 3%;">' + ingredinetRows[j].value;
-            }
-            else if(ingredinetRows[j].id === 'quantityForm'){
-                message = message + ' ' + ingredinetRows[j].value;
-            }
-            else if (ingredinetRows[j].id.includes("ingredientUnit")){
-                message = message + ' ' + ingredinetRows[j].options[ingredinetRows[j].selectedIndex].textContent+'</p>\n';
-            }
-
-            if(j===ingredinetRows.length-1){
-                message=message+'\n';
+function sendMail(email, e) {
+    let fields = e.target.parentNode.parentNode.parentNode.parentNode.elements;
+    let hasErrors = false;
+    for (let i = 0; i < fields.length; i++) {
+        if (fields[i].id.includes("quantityForm")) {
+            if(fields[i].nextSibling !== null) {
+                if (fields[i].nextSibling.classList.contains('error-message') && fields[i].nextSibling.style.display === 'block') {
+                    hasErrors = true;
+                }
             }
         }
-        console.log(message);
     }
-    $.post("/api/users/send_shopping_list", {
-        message: message,
-        send_to: email,
-        recipe: recipe
-    });
-    alert('Wiadomość została wysłana!');
-    eraseText(id);
+    if(hasErrors === false) {
+        let id = 'userMessage_' + email;
+        let recipeHeader = e.target.parentNode.parentNode.parentNode.querySelector('h2');
+        let string = recipeHeader.textContent;
+        let recipe = string.substr(string.indexOf(' ') + 1);
+        let message = "Oto Twoja lista zakupów dla przepisu: " + recipe + '<br><br>\n';
+        let mainContainer = e.target.parentNode.parentNode.parentNode;
+        let typeDivs = mainContainer.querySelectorAll('#' + mainContainer.id + ' > div[id]');
+        for (let i = 0; i < typeDivs.length; i++) {
+            let typeName = typeDivs[i].id.split("_").join(" ");
+            let ingredinetRows = typeDivs[i].querySelectorAll('#' + typeDivs[i].id + ' > div[id] > div > input,select');
+            message = message + ' ' + typeName + ':\n<br>';
+            for (let j = 0; j < ingredinetRows.length; j++) {
+                if (ingredinetRows[j].id === 'nameForm') {
+                    message = message + '<p style="padding-left: 3%;">' + ingredinetRows[j].value;
+                } else if (ingredinetRows[j].id === 'quantityForm') {
+                    message = message + ' ' + ingredinetRows[j].value;
+                } else if (ingredinetRows[j].id.includes("ingredientUnit")) {
+                    message = message + ' ' + ingredinetRows[j].options[ingredinetRows[j].selectedIndex].textContent + '</p>\n';
+                }
+
+                if (j === ingredinetRows.length - 1) {
+                    message = message + '\n';
+                }
+            }
+            console.log(message);
+        }
+        $.post("/api/users/send_shopping_list", {
+            message: message,
+            send_to: email,
+            recipe: recipe
+        });
+        alert('Wiadomość została wysłana!');
+
+            if(e.target.nextSibling !== null){
+                e.target.classList.remove('error');
+                e.target.removeAttribute('aria-describedby');
+                let id = e.target.id || e.target.name;
+                if (!id) return;
+
+
+                // Check if an error message is in the DOM
+                let message = e.target.nextSibling;
+                if (!message) return;
+
+                // If so, hide it
+                message.innerHTML = '';
+                message.style.display = 'none';
+                message.style.visibility = 'hidden';
+            }
+
+    }  else {
+        let clicked = e.target;
+        if (clicked.nextSibling !== null) {
+            clicked.nextSibling.textContent =  "Na liście znajduje się błąd. Napraw go.";
+        } else {
+            clicked.classList.add('error');
+
+            // Get field id or name
+            let id = clicked.id || clicked.name;
+            if (!id) return;
+            if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
+                let message = document.createElement('div');
+                message.className = 'error-message';
+                message.id = 'error-for-' + id;
+
+                clicked.parentNode.insertBefore(message, clicked.nextSibling);
+
+                clicked.setAttribute('aria-describedby', 'error-for-' + id);
+
+                message.innerHTML = "Na liście znajduje się błąd. Napraw go.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            }
+        }
+    }
 }
 
 function addToUpdated(e) {
@@ -269,6 +328,7 @@ function addToUpdated(e) {
     let recipeHeader = recipeDiv.querySelector('h2');
     let string = recipeHeader.textContent;
     let recipe = string.substr(string.indexOf(' ') + 1);
+    let badQuantity = false;
     let quantity;
     let unit;
     let ingredientId;
@@ -296,7 +356,36 @@ function addToUpdated(e) {
 
                 message.style.display = 'block';
                 message.style.visibility = 'visible';
+
             }
+            badQuantity = true;
+        } else if (quantity > 2000) {
+            let errorField = nameDiv.querySelector('.col > #quantityForm');
+            errorField.classList.add('error');
+            // Get field id or name
+            let id = errorField.id || errorField.name;
+            if (!id) return;
+            if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
+                let message = document.createElement('div');
+                message.className = 'error-message';
+                message.id = 'error-for-' + id;
+
+                errorField.parentNode.insertBefore(message, errorField.nextSibling);
+
+                errorField.setAttribute('aria-describedby', 'error-for-' + id);
+
+                message.innerHTML = "Wartosć nie może być większa od 2000.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            }
+            badQuantity = true;
+        }else{
+            let message = e.target.nextSibling;
+            message.innerHTML = "Wartosć nie może być mniejsza, lub równa 0.";
+
+            message.style.display = 'block';
+            message.style.visibility = 'visible';
         }
     }
     if (e.target.tagName.toUpperCase() === 'INPUT') {
@@ -304,6 +393,80 @@ function addToUpdated(e) {
         let nameDiv = clicked.parentNode.parentNode;
         ingredientId = splitIngredientId(nameDiv.id);
         unit = nameDiv.querySelector('.col > select').value;
+        if (quantity <= 0) {
+            let errorField = nameDiv.querySelector('.col > #quantityForm');
+            errorField.classList.add('error');
+            // Get field id or name
+            let id = errorField.id || errorField.name;
+            if (!id) return;
+            if (!e.target.nextSibling) {
+                let message = document.createElement('div');
+                message.className = 'error-message';
+                message.id = 'error-for-' + id;
+
+                errorField.parentNode.insertBefore(message, errorField.nextSibling);
+
+                errorField.setAttribute('aria-describedby', 'error-for-' + id);
+
+                message.innerHTML = "Wartosć nie może być mniejsza, lub równa 0.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            } else{
+                let message = e.target.nextSibling;
+                message.innerHTML = "Wartosć nie może być mniejsza, lub równa 0.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            }
+            badQuantity = true;
+        } else if (quantity > 2000) {
+            let errorField = nameDiv.querySelector('.col > #quantityForm');
+            errorField.classList.add('error');
+            // Get field id or name
+            let id = errorField.id || errorField.name;
+            if (!id) return;
+            if (!e.target.nextSibling) {
+                let message = document.createElement('div');
+                message.className = 'error-message';
+                message.id = 'error-for-' + id;
+
+                errorField.parentNode.insertBefore(message, errorField.nextSibling);
+
+                errorField.setAttribute('aria-describedby', 'error-for-' + id);
+
+                message.innerHTML = "Wartosć nie może być większa od 2000.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            }
+            else{
+                let message = e.target.nextSibling;
+                message.innerHTML = "Wartosć nie może być większa od 2000.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            }
+            badQuantity = true;
+        }
+        else{
+            if(e.target.nextSibling !== null){
+                e.target.classList.remove('error');
+                e.target.removeAttribute('aria-describedby');
+                let id = e.target.id || e.target.name;
+                if (!id) return;
+
+
+                // Check if an error message is in the DOM
+                let message = e.target.nextSibling;
+                if (!message) return;
+
+                // If so, hide it
+                message.innerHTML = '';
+                message.style.display = 'none';
+                message.style.visibility = 'hidden';
+            }
+        }
     }
     let ingredientOnList = false;
     let counter = 0;
@@ -314,11 +477,13 @@ function addToUpdated(e) {
         }
         counter++;
     }
-    if (ingredientOnList === false) {
-        updatedIngredients[recipe]["ingredients"].push({"id": ingredientId, "quantity": quantity, "unit": unit});
-    } else {
-        updatedIngredients[recipe]["ingredients"][counter]['quantity'] = quantity;
-        updatedIngredients[recipe]["ingredients"][counter]['unit'] = unit;
+    if (!badQuantity) {
+        if (ingredientOnList === false) {
+            updatedIngredients[recipe]["ingredients"].push({"id": ingredientId, "quantity": quantity, "unit": unit});
+        } else {
+            updatedIngredients[recipe]["ingredients"][counter]['quantity'] = quantity;
+            updatedIngredients[recipe]["ingredients"][counter]['unit'] = unit;
+        }
     }
 }
 
@@ -328,14 +493,14 @@ function saveChanges(e) {
     let string = recipeHeader.textContent;
     let recipe = string.substr(string.indexOf(' ') + 1);
     let emptyLists = false;
-    if (Object.keys(deletedIngredients[recipe]['ingredients']).length === 0  && Object.keys(updatedIngredients[recipe]['ingredients']).length === 0) {
+    if (Object.keys(deletedIngredients[recipe]['ingredients']).length === 0 && Object.keys(updatedIngredients[recipe]['ingredients']).length === 0) {
         emptyLists = true;
 
         clicked.classList.add('error');
         // Get field id or name
         let id = clicked.id || clicked.name;
         if (!id) return;
-        if(!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
+        if (!e.target.nextSibling) {
             let message = document.createElement('div');
             message.className = 'error-message';
             message.id = 'error-for-' + id;
@@ -350,59 +515,108 @@ function saveChanges(e) {
             message.style.visibility = 'visible';
         }
     }
-    if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 && Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
-        for (let i = 0; i < updatedIngredients[recipe]['ingredients'].length; i++) {
-            let id = updatedIngredients[recipe]['ingredients'][i]['id'];
-            if (deletedIngredients[recipe]['ingredients'].includes(id)) {
-                updatedIngredients[recipe]['ingredients'].splice(i, 1);
+
+    let fields = e.target.parentNode.parentNode.parentNode.parentNode.elements;
+    let hasErrors = false;
+    for (let i = 0; i < fields.length; i++) {
+        if (fields[i].id.includes("quantityForm")) {
+            if(fields[i].nextSibling !== null) {
+                if (fields[i].nextSibling.classList.contains('error-message') && fields[i].nextSibling.style.display === 'block') {
+                    hasErrors = true;
+                }
             }
         }
     }
-    if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 && !emptyLists) {
-        for (let i = 0; i < deletedIngredients[recipe]['ingredients'].length; i++) {
-            let ingredientId = deletedIngredients[recipe]['ingredients'][i];
-            $.ajax({
-                url: '/api/shoppingList/ingredient',
-                type: 'DELETE',
-                data: {
-                    ingredient_id: ingredientId,
-                    recipe_name: recipe,
-                    email_address: email_address,
+    if (hasErrors === false) {
+        if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 && Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
+            for (let i = 0; i < updatedIngredients[recipe]['ingredients'].length; i++) {
+                let id = updatedIngredients[recipe]['ingredients'][i]['id'];
+                if (deletedIngredients[recipe]['ingredients'].includes(id)) {
+                    updatedIngredients[recipe]['ingredients'].splice(i, 1);
                 }
-            });
+            }
         }
-    }
-    if (Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
-        for (let i = 0; i < updatedIngredients[recipe]['ingredients'].length; i++) {
-            let ingredientId = updatedIngredients[recipe]['ingredients'][i]['id'];
-            let unit_id = updatedIngredients [recipe]['ingredients'][i]['unit'];
-            let quantity = updatedIngredients [recipe]['ingredients'][i]['quantity'];
-            $.ajax({
-                url: '/api/shoppingList/update',
-                type: 'POST',
-                data: {
-                    unit_id: unit_id,
-                    quantity: quantity,
-                    ingredient_id: ingredientId,
-                    recipe_name: recipe,
-                    email_address: email_address,
-                }
-            });
+        if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 && !emptyLists) {
+            for (let i = 0; i < deletedIngredients[recipe]['ingredients'].length; i++) {
+                let ingredientId = deletedIngredients[recipe]['ingredients'][i];
+                $.ajax({
+                    url: '/api/shoppingList/ingredient',
+                    type: 'DELETE',
+                    data: {
+                        ingredient_id: ingredientId,
+                        recipe_name: recipe,
+                        email_address: email_address,
+                    }
+                });
+            }
         }
-    }
-    if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 || Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
-        let pom = confirm("Czy chcesz odświeżyć stronę, aby pokazać zmiany? UWAGA! Zmiany w innych przepisach nie zostaną zapisane.");
-        if (pom) {
-            location.reload();
+        if (Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
+            for (let i = 0; i < updatedIngredients[recipe]['ingredients'].length; i++) {
+                let ingredientId = updatedIngredients[recipe]['ingredients'][i]['id'];
+                let unit_id = updatedIngredients [recipe]['ingredients'][i]['unit'];
+                let quantity = updatedIngredients [recipe]['ingredients'][i]['quantity'];
+                $.ajax({
+                    url: '/api/shoppingList/update',
+                    type: 'POST',
+                    data: {
+                        unit_id: unit_id,
+                        quantity: quantity,
+                        ingredient_id: ingredientId,
+                        recipe_name: recipe,
+                        email_address: email_address,
+                    }
+                });
+            }
         }
-        else{
-            delete deletedIngredients[recipe];
-            delete updatedIngredients[recipe];
-        }
-    }
+        if (Object.keys(deletedIngredients[recipe]['ingredients']).length != 0 || Object.keys(updatedIngredients[recipe]['ingredients']).length != 0) {
+            let pom = confirm("Czy chcesz odświeżyć stronę, aby pokazać zmiany? UWAGA! Zmiany w innych przepisach nie zostaną zapisane.");
+            if (pom) {
+                location.reload();
+            } else{
+                if(e.target.nextSibling !== null){
+                    e.target.classList.remove('error');
+                    e.target.removeAttribute('aria-describedby');
+                    let id = e.target.id || e.target.name;
+                    if (!id) return;
 
+
+                    // Check if an error message is in the DOM
+                    let message = e.target.nextSibling;
+                    if (!message) return;
+
+                    // If so, hide it
+                    message.innerHTML = '';
+                    message.style.display = 'none';
+                    message.style.visibility = 'hidden';
+                }
+            }
+        }
+    } else {
+        if (clicked.nextSibling !== null) {
+            clicked.nextSibling.textContent =  "Na liście znajduje się błąd. Napraw go.";
+        } else {
+            clicked.classList.add('error');
+
+            // Get field id or name
+            let id = clicked.id || clicked.name;
+            if (!id) return;
+            if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
+                let message = document.createElement('div');
+                message.className = 'error-message';
+                message.id = 'error-for-' + id;
+
+                clicked.parentNode.insertBefore(message, clicked.nextSibling);
+
+                clicked.setAttribute('aria-describedby', 'error-for-' + id);
+
+                message.innerHTML = "Na liście znajduje się błąd. Napraw go.";
+
+                message.style.display = 'block';
+                message.style.visibility = 'visible';
+            }
+        }
+    }
 }
-
 
 function deleteShoppingList(e) {
     let clicked = document.getElementById(e.target.id);
