@@ -168,7 +168,7 @@ router.post('/user_management', (req, res) => {
     } else if (sortUsing === 'email') {
         orderBy = 'usr.email_address';
     } else {
-        orderBy = 'date_of_activity';
+        orderBy = 'MAX(usa.date_of_activity)';
         groupBy = `GROUP BY usr.id_user`;
     }
 
