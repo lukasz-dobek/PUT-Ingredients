@@ -113,287 +113,420 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script>
 
+  function createGraph(id, labels, numbers, color) {
+    var ctx = document.getElementById(id);
+    var nowe_przepisy_miesiac = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: numbers,
+          lineTension: 0,
+          backgroundColor: 'transparent',
+          borderColor: color,
+          borderWidth: 4,
+          pointBackgroundColor: color
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: false
+            }
+          }]
+        },
+        legend: {
+          display: false,
+        }
+      }
+    });
+  }
+
   function daysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
   }
 
+  let recipesPerWeekPromise = $.getJSON('/api/graphs/recipes_per_week');
+
+  $.when(recipesPerWeekPromise).then(recipesPerWeekData => {
+    let recipesPerWeekObj = [];
+    let daysFilled = [];
+    recipesPerWeekData.forEach(obj => {
+      recipesPerWeekObj.push(obj);
+      daysFilled.push(obj["day_of_week"]);
+    });
+    console.log(recipesPerWeekData);
+    let weekData = [
+      { day_of_week: 'Niedziela', day_nr: 0 },
+      { day_of_week: 'Poniedziałek', day_nr: 1 },
+      { day_of_week: 'Wtorek', day_nr: 2 },
+      { day_of_week: 'Środa', day_nr: 3 },
+      { day_of_week: 'Czwartek', day_nr: 4 },
+      { day_of_week: 'Piątek', day_nr: 5 },
+      { day_of_week: 'Sobota', day_nr: 6 }
+    ];
+
+    for (let i = 0; i < weekData.length; i++) {
+      let tempObj = {
+        day_of_week: weekData[i]["day_of_week"],
+        day_nr: weekData[i]["day_nr"],
+        number_of_recipes: 0
+      }
+      if (!daysFilled.includes(weekData[i]["day_of_week"])) {
+        recipesPerWeekObj.push(tempObj);
+      } else {
+        continue;
+      }
+    }
+    console.log(recipesPerWeekObj);
+    let sortedrecipesPerWeekObj = recipesPerWeekObj.sort((a, b) => (a.day_nr > b.day_nr) ? 1 : ((b.day_nr > a.day_nr) ? -1 : 0));
+
+    let weekDays = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedrecipesPerWeekObj.length; j++) {
+      weekDays.push(sortedrecipesPerWeekObj[j]["day_of_week"]);
+      numbers.push(sortedrecipesPerWeekObj[j]["number_of_recipes"]);
+    }
+    createGraph("nowe_przepisy_tydzien", weekDays, numbers, '#007bff');
+  });
+
   let recipesInMonthPromise = $.getJSON('/api/graphs/recipes_in_month');
 
   $.when(recipesInMonthPromise).then(recipesInMonthData => {
-    let daysArrayObj = [];
-
+    let recipesInMonthObj = [];
+    let daysFilled = [];
     recipesInMonthData.forEach(obj => {
-      daysArrayObj.push(obj);
-      console.log(`Dzien: ${obj.day}, liczba: ${obj.number_of_recipes}`);
+      recipesInMonthObj.push(obj);
+      daysFilled.push(obj.day);
     });
-    let daysInJuly = daysInMonth(7, 2019);
-    for (let i = 0; i < daysInJuly; i++) {
+    let daysInJuly = daysInMonth(new Date().getMonth() + 1, new Date().getFullYear());
+    for (let i = 1; i <= daysInJuly; i++) {
       let tempObj = {
         day: i,
         number_of_recipes: 0
       }
-      daysArrayObj.push(tempObj);
-    }
-
-    console.log(daysArrayObj);
-  });
-
-
-
-
-  var ctx = document.getElementById("nowe_przepisy_tydzien");
-  var nowe_przepisy_tydzien = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+      if (!daysFilled.includes(i)) {
+        recipesInMonthObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+
+    let sortedRecipesInMonthObj = recipesInMonthObj.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+
+    let days = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedRecipesInMonthObj.length; j++) {
+      days.push(sortedRecipesInMonthObj[j]["day"]);
+      numbers.push(sortedRecipesInMonthObj[j]["number_of_recipes"]);
+    }
+    createGraph("nowe_przepisy_miesiac", days, numbers, '#007bff');
   });
 
-  var ctx = document.getElementById("nowe_przepisy_rok");
-  var nowe_przepisy_rok = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrześień", "Paździer.", "Listopad", "Grudzień", "temp"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034, 13345, 18483, 24003, 22489, 24092],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  let recipesInYearPromise = $.getJSON('/api/graphs/recipes_in_year');
+
+  $.when(recipesInYearPromise).then(recipesInYearData => {
+    let recipesInYearObj = [];
+    let monthsFilled = [];
+    recipesInYearData.forEach(obj => {
+      recipesInYearObj.push(obj);
+      monthsFilled.push(obj.month);
+    });
+    let monthsData = [
+      { month: 'Styczeń', month_nr: 1 },
+      { month: 'Luty', month_nr: 2 },
+      { month: 'Marzec', month_nr: 3 },
+      { month: 'Kwiecień', month_nr: 4 },
+      { month: 'Maj', month_nr: 5 },
+      { month: 'Czerwiec', month_nr: 6 },
+      { month: 'Lipiec', month_nr: 7 },
+      { month: 'Sierpień', month_nr: 8 },
+      { month: 'Wrzesień', month_nr: 9 },
+      { month: 'Październik', month_nr: 10 },
+      { month: 'Listopad', month_nr: 11 },
+      { month: 'Grudzień', month_nr: 12 }
+    ];
+
+    for (let i = 0; i < monthsData.length; i++) {
+      let tempObj = {
+        month: monthsData[i]["month"],
+        month_nr: monthsData[i]["month_nr"],
+        number_of_recipes: 0
+      }
+      if (!monthsFilled.includes(monthsData[i]["month"])) {
+        recipesInYearObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+    let sortedRecipesInYearObj = recipesInYearObj.sort((a, b) => (a.month_nr > b.month_nr) ? 1 : ((b.month_nr > a.month_nr) ? -1 : 0));
+
+    let months = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedRecipesInYearObj.length; j++) {
+      months.push(sortedRecipesInYearObj[j]["month"]);
+      numbers.push(sortedRecipesInYearObj[j]["number_of_recipes"]);
+    }
+    createGraph("nowe_przepisy_rok", months, numbers, '#007bff');
   });
 
-  var ctx = document.getElementById("nowe_przepisy_miesiac");
-  var nowe_przepisy_miesiac = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034, 13345, 18483, 24003, 22489, 24092, 21345, 18483, 24003, 22489, 24092, 26034, 23345, 27483, 24003, 28489, 24092, 22489, 24092, 21034, 13345, 18483, 24003, 22489, 24092],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  let usersPerWeekPromise = $.getJSON('/api/graphs/users_per_week');
+
+  $.when(usersPerWeekPromise).then(usersPerWeekData => {
+    let usersPerWeekObj = [];
+    let daysFilled = [];
+    usersPerWeekData.forEach(obj => {
+      usersPerWeekObj.push(obj);
+      daysFilled.push(obj["day_of_week"]);
+    });
+    console.log(usersPerWeekData);
+    let weekData = [
+      { day_of_week: 'Niedziela', day_nr: 0 },
+      { day_of_week: 'Poniedziałek', day_nr: 1 },
+      { day_of_week: 'Wtorek', day_nr: 2 },
+      { day_of_week: 'Środa', day_nr: 3 },
+      { day_of_week: 'Czwartek', day_nr: 4 },
+      { day_of_week: 'Piątek', day_nr: 5 },
+      { day_of_week: 'Sobota', day_nr: 6 }
+    ];
+
+    for (let i = 0; i < weekData.length; i++) {
+      let tempObj = {
+        day_of_week: weekData[i]["day_of_week"],
+        day_nr: weekData[i]["day_nr"],
+        number_of_users: 0
+      }
+      if (!daysFilled.includes(weekData[i]["day_of_week"])) {
+        usersPerWeekObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+    console.log(usersPerWeekObj);
+    let sortedusersPerWeekObj = usersPerWeekObj.sort((a, b) => (a.day_nr > b.day_nr) ? 1 : ((b.day_nr > a.day_nr) ? -1 : 0));
+
+    let weekDays = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedusersPerWeekObj.length; j++) {
+      weekDays.push(sortedusersPerWeekObj[j]["day_of_week"]);
+      numbers.push(sortedusersPerWeekObj[j]["number_of_users"]);
+    }
+    createGraph("liczba_uzytkownikow_tydzien", weekDays, numbers, '#78A411');
   });
 
+  let usersInMonthPromise = $.getJSON('/api/graphs/users_in_month');
 
-  var graph_2_color = '#AB2828';
-  var ctx = document.getElementById("aktywnosc_uzytkownika_tydzien");
-  var nowe_przepisy_tydzien = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: graph_2_color,
-        borderWidth: 4,
-        pointBackgroundColor: graph_2_color
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  $.when(usersInMonthPromise).then(usersInMonthData => {
+    let usersInMonthObj = [];
+    let daysFilled = [];
+    usersInMonthData.forEach(obj => {
+      usersInMonthObj.push(obj);
+      daysFilled.push(obj.day);
+    });
+    let daysInJuly = daysInMonth(new Date().getMonth() + 1, new Date().getFullYear());
+    for (let i = 1; i <= daysInJuly; i++) {
+      let tempObj = {
+        day: i,
+        number_of_users: 0
+      }
+      if (!daysFilled.includes(i)) {
+        usersInMonthObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+
+    let sortedusersInMonthObj = usersInMonthObj.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+
+    let days = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedusersInMonthObj.length; j++) {
+      days.push(sortedusersInMonthObj[j]["day"]);
+      numbers.push(sortedusersInMonthObj[j]["number_of_users"]);
+    }
+    createGraph("liczba_uzytkownikow_miesiac", days, numbers, '#78A411');
   });
 
-  var ctx = document.getElementById("aktywnosc_uzytkownika_rok");
-  var nowe_przepisy_rok = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Paździer.", "Listopad", "Grudzień", "temp"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034, 13345, 18483, 24003, 22489, 24092],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: graph_2_color,
-        borderWidth: 4,
-        pointBackgroundColor: graph_2_color
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  let usersInYearPromise = $.getJSON('/api/graphs/users_in_year');
+
+  $.when(usersInYearPromise).then(usersInYearData => {
+    let usersInYearObj = [];
+    let monthsFilled = [];
+    usersInYearData.forEach(obj => {
+      usersInYearObj.push(obj);
+      monthsFilled.push(obj.month);
+    });
+    let monthsData = [
+      { month: 'Styczeń', month_nr: 1 },
+      { month: 'Luty', month_nr: 2 },
+      { month: 'Marzec', month_nr: 3 },
+      { month: 'Kwiecień', month_nr: 4 },
+      { month: 'Maj', month_nr: 5 },
+      { month: 'Czerwiec', month_nr: 6 },
+      { month: 'Lipiec', month_nr: 7 },
+      { month: 'Sierpień', month_nr: 8 },
+      { month: 'Wrzesień', month_nr: 9 },
+      { month: 'Październik', month_nr: 10 },
+      { month: 'Listopad', month_nr: 11 },
+      { month: 'Grudzień', month_nr: 12 }
+    ];
+
+    for (let i = 0; i < monthsData.length; i++) {
+      let tempObj = {
+        month: monthsData[i]["month"],
+        month_nr: monthsData[i]["month_nr"],
+        number_of_users: 0
+      }
+      if (!monthsFilled.includes(monthsData[i]["month"])) {
+        usersInYearObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+    let sortedusersInYearObj = usersInYearObj.sort((a, b) => (a.month_nr > b.month_nr) ? 1 : ((b.month_nr > a.month_nr) ? -1 : 0));
+
+    let months = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedusersInYearObj.length; j++) {
+      months.push(sortedusersInYearObj[j]["month"]);
+      numbers.push(sortedusersInYearObj[j]["number_of_users"]);
+    }
+    createGraph("liczba_uzytkownikow_rok", months, numbers, '#78A411');
   });
 
-  var ctx = document.getElementById("aktywnosc_uzytkownika_miesiac");
-  var nowe_przepisy_miesiac = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034, 13345, 18483, 24003, 22489, 24092, 21345, 18483, 24003, 22489, 24092, 26034, 23345, 27483, 24003, 28489, 24092, 22489, 24092, 21034, 13345, 18483, 24003, 22489, 24092],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: graph_2_color,
-        borderWidth: 4,
-        pointBackgroundColor: graph_2_color
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  let activitiesPerWeekPromise = $.getJSON('/api/graphs/activities_per_week');
+
+  $.when(activitiesPerWeekPromise).then(activitiesPerWeekData => {
+    let activitiesPerWeekObj = [];
+    let daysFilled = [];
+    activitiesPerWeekData.forEach(obj => {
+      activitiesPerWeekObj.push(obj);
+      daysFilled.push(obj["day_of_week"]);
+    });
+    console.log(activitiesPerWeekData);
+    let weekData = [
+      { day_of_week: 'Niedziela', day_nr: 0 },
+      { day_of_week: 'Poniedziałek', day_nr: 1 },
+      { day_of_week: 'Wtorek', day_nr: 2 },
+      { day_of_week: 'Środa', day_nr: 3 },
+      { day_of_week: 'Czwartek', day_nr: 4 },
+      { day_of_week: 'Piątek', day_nr: 5 },
+      { day_of_week: 'Sobota', day_nr: 6 }
+    ];
+
+    for (let i = 0; i < weekData.length; i++) {
+      let tempObj = {
+        day_of_week: weekData[i]["day_of_week"],
+        day_nr: weekData[i]["day_nr"],
+        number_of_activities: 0
+      }
+      if (!daysFilled.includes(weekData[i]["day_of_week"])) {
+        activitiesPerWeekObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+    console.log(activitiesPerWeekObj);
+    let sortedactivitiesPerWeekObj = activitiesPerWeekObj.sort((a, b) => (a.day_nr > b.day_nr) ? 1 : ((b.day_nr > a.day_nr) ? -1 : 0));
+
+    let weekDays = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedactivitiesPerWeekObj.length; j++) {
+      weekDays.push(sortedactivitiesPerWeekObj[j]["day_of_week"]);
+      numbers.push(sortedactivitiesPerWeekObj[j]["number_of_activities"]);
+    }
+    console.log(weekDays, numbers);
+    createGraph("aktywnosc_uzytkownika_tydzien", weekDays, numbers, '#AB2828');
   });
 
+  let activitiesInMonthPromise = $.getJSON('/api/graphs/activities_in_month');
 
-  var graph_3_color = '#78A411';
-  var ctx = document.getElementById("liczba_uzytkownikow_tydzien");
-  var nowe_przepisy_tydzien = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: graph_3_color,
-        borderWidth: 4,
-        pointBackgroundColor: graph_3_color
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  $.when(activitiesInMonthPromise).then(activitiesInMonthData => {
+    let activitiesInMonthObj = [];
+    let daysFilled = [];
+    activitiesInMonthData.forEach(obj => {
+      activitiesInMonthObj.push(obj);
+      daysFilled.push(obj.day);
+    });
+    let daysInJuly = daysInMonth(new Date().getMonth() + 1, new Date().getFullYear());
+    for (let i = 1; i <= daysInJuly; i++) {
+      let tempObj = {
+        day: i,
+        number_of_activities: 0
+      }
+      if (!daysFilled.includes(i)) {
+        activitiesInMonthObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+
+    let sortedactivitiesInMonthObj = activitiesInMonthObj.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+
+    let days = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedactivitiesInMonthObj.length; j++) {
+      days.push(sortedactivitiesInMonthObj[j]["day"]);
+      numbers.push(sortedactivitiesInMonthObj[j]["number_of_activities"]);
+    }
+    createGraph("aktywnosc_uzytkownika_miesiac", days, numbers, '#AB2828');
   });
 
-  var ctx = document.getElementById("liczba_uzytkownikow_rok");
-  var nowe_przepisy_rok = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Paździer.", "Listopad", "Grudzień", "temp"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034, 13345, 18483, 24003, 22489, 24092],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: graph_3_color,
-        borderWidth: 4,
-        pointBackgroundColor: graph_3_color
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  let activitiesInYearPromise = $.getJSON('/api/graphs/activities_in_year');
+
+  $.when(activitiesInYearPromise).then(activitiesInYearData => {
+    let activitiesInYearObj = [];
+    let monthsFilled = [];
+    activitiesInYearData.forEach(obj => {
+      activitiesInYearObj.push(obj);
+      monthsFilled.push(obj.month);
+    });
+    let monthsData = [
+      { month: 'Styczeń', month_nr: 1 },
+      { month: 'Luty', month_nr: 2 },
+      { month: 'Marzec', month_nr: 3 },
+      { month: 'Kwiecień', month_nr: 4 },
+      { month: 'Maj', month_nr: 5 },
+      { month: 'Czerwiec', month_nr: 6 },
+      { month: 'Lipiec', month_nr: 7 },
+      { month: 'Sierpień', month_nr: 8 },
+      { month: 'Wrzesień', month_nr: 9 },
+      { month: 'Październik', month_nr: 10 },
+      { month: 'Listopad', month_nr: 11 },
+      { month: 'Grudzień', month_nr: 12 }
+    ];
+
+    for (let i = 0; i < monthsData.length; i++) {
+      let tempObj = {
+        month: monthsData[i]["month"],
+        month_nr: monthsData[i]["month_nr"],
+        number_of_activities: 0
+      }
+      if (!monthsFilled.includes(monthsData[i]["month"])) {
+        activitiesInYearObj.push(tempObj);
+      } else {
+        continue;
       }
     }
+    let sortedactivitiesInYearObj = activitiesInYearObj.sort((a, b) => (a.month_nr > b.month_nr) ? 1 : ((b.month_nr > a.month_nr) ? -1 : 0));
+    let months = [];
+    let numbers = [];
+
+    for (let j = 0; j < sortedactivitiesInYearObj.length; j++) {
+      months.push(sortedactivitiesInYearObj[j]["month"]);
+      numbers.push(sortedactivitiesInYearObj[j]["number_of_activities"]);
+    }
+    createGraph("aktywnosc_uzytkownika_rok", months, numbers, '#AB2828');
   });
 
-  var ctx = document.getElementById("liczba_uzytkownikow_miesiac");
-  var nowe_przepisy_miesiac = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 22489, 24092, 11034, 13345, 18483, 24003, 22489, 24092, 21345, 18483, 24003, 22489, 24092, 26034, 23345, 27483, 24003, 28489, 24092, 22489, 24092, 21034, 13345, 18483, 24003, 22489, 24092],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: graph_3_color,
-        borderWidth: 4,
-        pointBackgroundColor: graph_3_color
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
-      }
-    }
-  });
+
 </script>
