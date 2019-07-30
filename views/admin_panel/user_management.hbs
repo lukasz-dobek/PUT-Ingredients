@@ -18,6 +18,7 @@
                     <div class="col">
                         <p>Parametry:</p>
                         <select name="active" id="" class="custom-select">
+                            <option value="4">wszyscy</option>
                             <option value="1">tylko aktywni</option>
                             <option value="0">tylko nieaktywni</option>
                             <option value="3">tylko usunięci</option>
@@ -99,7 +100,8 @@
                                     </div>
                                     <div class="col-6">
                                         {{#isDeleted state}}
-                                        <button type="button" onclick="location.href='/users/user_recipes/{{../nickname}}'"
+                                        <button type="button"
+                                            onclick="location.href='/users/user_recipes/{{../nickname}}'"
                                             class="btn btn-success btn-block rounded-0" style="font-size:0.7vw">PRZEPISY
                                             UŻYTKOWNIKA</button>
 
@@ -208,8 +210,7 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="unbanUserModalTitle{{../id_user}}">
+                                                        <h5 class="modal-title" id="unbanUserModalTitle{{../id_user}}">
                                                             Odblokuj
                                                             użytkownika
                                                         </h5>
