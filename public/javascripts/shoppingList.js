@@ -165,10 +165,13 @@ function ingredientsInShoppingList(name) {
 
             let buttonRow = document.createElement("div");
             buttonRow.classList.add("row");
+            buttonRow.style.marginBottom = '5%';
             container.appendChild(buttonRow);
             let emailDiv = document.createElement("div");
             emailDiv.classList.add("col-auto");
             emailDiv.style.marginLeft = "3vw";
+            emailDiv.style.setProperty("float","none");
+            emailDiv.style.setProperty("margin","0 auto");
             buttonRow.appendChild(emailDiv);
             let emailButton = document.createElement("button");
             emailButton.type = "button";
@@ -189,6 +192,8 @@ function ingredientsInShoppingList(name) {
             let saveDiv = document.createElement("div");
             saveDiv.classList.add("col-auto");
             saveDiv.style.marginLeft = "3.5vw";
+            saveDiv.style.setProperty("float","none");
+            saveDiv.style.setProperty("margin","0 auto");
             buttonRow.appendChild(saveDiv);
             let saveButton = document.createElement("button");
             saveButton.type = "button";
@@ -209,6 +214,8 @@ function ingredientsInShoppingList(name) {
             let deleteDiv = document.createElement("div");
             deleteDiv.classList.add("col-auto");
             deleteDiv.style.marginLeft = "3.5vw";
+            deleteDiv.style.setProperty("float","none");
+            deleteDiv.style.setProperty("margin","0 auto");
             buttonRow.appendChild(deleteDiv);
             let deleteButton = document.createElement("button");
             deleteButton.type = "button";
