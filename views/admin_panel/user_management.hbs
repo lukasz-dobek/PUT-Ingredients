@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="col-6">
                                         {{#isDeleted state}}
-                                        <button type="button" onclick="location.href='/users/user_recipes/{{nickname}}'"
+                                        <button type="button" onclick="location.href='/users/user_recipes/{{../nickname}}'"
                                             class="btn btn-success btn-block rounded-0" style="font-size:0.7vw">PRZEPISY
                                             UŻYTKOWNIKA</button>
 
@@ -160,16 +160,16 @@
                                         {{#isBanned ../state}}
                                         <button type="button" class="btn btn-danger btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
-                                            data-target="#banUserModal{{../../id_user}}">ZABLOKUJ
+                                            data-target="#banUserModal{{../id_user}}">ZABLOKUJ
                                             KONTO</button>
 
-                                        <div class="modal fade" id="banUserModal{{../../id_user}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="banUserModalTitle{{../../id_user}}"
+                                        <div class="modal fade" id="banUserModal{{../id_user}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="banUserModalTitle{{../id_user}}"
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="banUserModalTitle{{../../id_user}}">
+                                                        <h5 class="modal-title" id="banUserModalTitle{{../id_user}}">
                                                             Zablokuj
                                                             użytkownika
                                                         </h5>
@@ -185,12 +185,12 @@
                                                         </p>
                                                         <p>
                                                             Czy na pewno chcesz zablokować tego użytkownika?
-                                                            {{../../nickname}}
+                                                            {{../nickname}}
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-danger"
-                                                            onclick="blockUser('{{../../nickname}}')">Zablokuj</button>
+                                                            onclick="blockUser('{{../nickname}}')">Zablokuj</button>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Zamknij</button>
                                                     </div>
@@ -200,16 +200,16 @@
                                         {{else}}
                                         <button type="button" class="btn btn-success btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
-                                            data-target="#unbanUserModal{{../../id_user}}">ODBLOKUJ KONTO</button>
+                                            data-target="#unbanUserModal{{../id_user}}">ODBLOKUJ KONTO</button>
 
-                                        <div class="modal fade" id="unbanUserModal{{../../id_user}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="unbanUserModalTitle{{../../id_user}}"
+                                        <div class="modal fade" id="unbanUserModal{{../id_user}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="unbanUserModalTitle{{../id_user}}"
                                             aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title"
-                                                            id="unbanUserModalTitle{{../../id_user}}">
+                                                            id="unbanUserModalTitle{{../id_user}}">
                                                             Odblokuj
                                                             użytkownika
                                                         </h5>
@@ -225,12 +225,12 @@
                                                         </p>
                                                         <p>
                                                             Czy na pewno chcesz odblokować tego użytkownika?
-                                                            {{../../nickname}}
+                                                            {{../nickname}}
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-success"
-                                                            onclick="unblockUser('{{../../nickname}}')">Odblokuj</button>
+                                                            onclick="unblockUser('{{../nickname}}')">Odblokuj</button>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Zamknij</button>
                                                     </div>
