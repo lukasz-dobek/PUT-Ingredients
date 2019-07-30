@@ -168,7 +168,7 @@ function ingredientsInShoppingList(name) {
             container.appendChild(buttonRow);
             let emailDiv = document.createElement("div");
             emailDiv.classList.add("col-auto");
-            emailDiv.style.marginLeft = "5.4vw";
+            emailDiv.style.marginLeft = "3vw";
             buttonRow.appendChild(emailDiv);
             let emailButton = document.createElement("button");
             emailButton.type = "button";
@@ -177,9 +177,9 @@ function ingredientsInShoppingList(name) {
             emailButton.classList.add("mt-4");
             emailButton.style.color = "black";
             emailButton.style.backgroundColor = "#27AE60";
-            emailButton.style.fontSize = "1.5vw";
+            emailButton.style.fontSize = "0.7vw";
             emailButton.style.height = "2.7vw";
-            emailButton.style.width = "15vw";
+            emailButton.style.width = "10vw";
             emailButton.textContent = "PRZEŚLIJ NA E-MAIL";
             emailButton.id = 'emailButton_'+chosenShopList;
             emailButton.addEventListener("click", function (e) {
@@ -188,7 +188,7 @@ function ingredientsInShoppingList(name) {
             emailDiv.appendChild(emailButton);
             let saveDiv = document.createElement("div");
             saveDiv.classList.add("col-auto");
-            saveDiv.style.marginLeft = "5.4vw";
+            saveDiv.style.marginLeft = "3.5vw";
             buttonRow.appendChild(saveDiv);
             let saveButton = document.createElement("button");
             saveButton.type = "button";
@@ -197,9 +197,9 @@ function ingredientsInShoppingList(name) {
             saveButton.classList.add("mt-4");
             saveButton.style.color = "black";
             saveButton.style.backgroundColor = "#27AE60";
-            saveButton.style.fontSize = "1.5vw";
+            saveButton.style.fontSize = "0.7vw";
             saveButton.style.height = "2.7vw";
-            saveButton.style.width = "15vw";
+            saveButton.style.width = "10vw";
             saveButton.textContent = "ZAPISZ ZMIANY";
             saveButton.id = 'saveButton_' + chosenShopList;
             saveButton.addEventListener("click", (e) => {
@@ -208,7 +208,7 @@ function ingredientsInShoppingList(name) {
             saveDiv.appendChild(saveButton);
             let deleteDiv = document.createElement("div");
             deleteDiv.classList.add("col-auto");
-            deleteDiv.style.marginLeft = "5.4vw";
+            deleteDiv.style.marginLeft = "3.5vw";
             buttonRow.appendChild(deleteDiv);
             let deleteButton = document.createElement("button");
             deleteButton.type = "button";
@@ -217,9 +217,9 @@ function ingredientsInShoppingList(name) {
             deleteButton.classList.add("mt-4");
             deleteButton.style.color = "black";
             deleteButton.style.backgroundColor = "#27AE60";
-            deleteButton.style.fontSize = "1.5vw";
+            deleteButton.style.fontSize = "0.7vw";
             deleteButton.style.height = "2.7vw";
-            deleteButton.style.width = "15vw";
+            deleteButton.style.width = "10vw";
             deleteButton.textContent = "USUŃ LISTĘ";
             deleteButton.id = 'deleteButton' + chosenShopList;
             deleteButton.addEventListener("click", () => {
