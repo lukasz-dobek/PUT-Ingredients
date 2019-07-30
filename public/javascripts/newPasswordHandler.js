@@ -114,7 +114,6 @@ let removeError = function (field) {
 
 document.addEventListener('blur', function (event) {
 
-    console.log(event.target.name);
     let error = hasError(event.target);
     if (error) {
         showError(event.target, error);
@@ -135,7 +134,6 @@ document.addEventListener('submit', function (event) {
     // Store the first field with an error to a letiable so we can bring it into focus leter
     let error, hasErrors;
 
-    console.log(fields);
     for (let i = 0; i < fields.length; i++) {
         error = hasError(fields[i])
         if (error) {

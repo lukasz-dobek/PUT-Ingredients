@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION add_to_favourites()
   RETURNS trigger AS
 $BODY$
 BEGIN
-   IF NEW.score > 4 THEN
+   IF NEW.score > 4 AND (SELECT COUNT(1)=0 FROM favourites f WHERE f.user_id=new.user_id AND f.recipe_id=new.recipe_id )   THEN
        	INSERT INTO favourites (user_id, recipe_id, date_of_favourite)
        	VALUES(new.user_id, new.recipe_id, new.date_of_vote);
    END IF;

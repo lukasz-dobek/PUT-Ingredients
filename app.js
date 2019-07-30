@@ -39,7 +39,6 @@ var app = express();
 require('./config/passport')(passport);
 
 handlebars.registerHelper('isRecipeMine', (author, email, options) => {
-  console.log(author, email);
   if(author === email) {
     return options.fn(this);
   }

@@ -5,10 +5,8 @@ $.getJSON("/api/categories/all", (data) => {
         items.push(element);
     });
 
-    console.log(items);
 
     let selectCategories = document.querySelectorAll("[id^=categorySelect]");
-    console.log(selectCategories);
     selectCategories.forEach(select => {
         items.forEach(item => {
             let option = document.createElement('option');
@@ -27,15 +25,11 @@ $("[id^=category]").on('change', function () {
     for(i=0;i<oneSelect.length;i++){
         allCategories.push(oneSelect.options[i].value);
     }
-    // console.log(allCategories);
-    // console.log(allCategories.length);
     let values = [];
     for(i=0 ;i<selects.length;i++)
     {
         values.push($(selects[i]).children("option:selected").val());
     }
-    console.log(values);
-    console.log(values.length);
     for(i =0; i<values.length;i++){
         if($("[id^=category]").find('option[value="' + values[i] + '"]')){
             $("[id^=category]").find('option[value="' + values[i] + '"]').hide();
@@ -56,7 +50,6 @@ $.getJSON("/api/units/names", (data) => {
         items.push(element);
     });
 
-    console.log(items);
 
     let selectUnits = document.querySelectorAll("[id^=unitSelect]");
     selectUnits.forEach(select => {
@@ -83,11 +76,9 @@ $.getJSON("/api/recipes/all", (data) => {
     items.forEach(item => {
         recipeNames.push(item['recipe_name']);
     });
-    console.log(recipeNames);
 
     let checkRecipeName = function () {
         if (customRecipeName.value) {
-            console.log(items);
 
             for (let i = 0; i < recipeNames.length; i++) {
                 if (customRecipeName.value != recipeNames[i]) {

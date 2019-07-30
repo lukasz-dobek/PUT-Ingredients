@@ -97,8 +97,6 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
     // }
     // addIngredientsQueryString = addIngredientsQueryString.slice(0,-1);
     // to_timestamp(${Date.now() / 1000.0})
-    console.log(req.body.recipeName);
-    console.log(createLinkToRecipe(req.body.recipeName));
     const recipeBody = {
         user_id: res.locals.userId,
         recipe_name: req.body.recipeName,
@@ -117,7 +115,6 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         photo_four: filepathsArray[3],
         visible_email: req.body.emailAccepted ? "true" : "false"
     };
-    console.log(`numer katetgorii: ${categoriesNumber}`)
     pgClient.query(addRecipeQueryString, [
         recipeBody.user_id,
         recipeBody.recipe_name,
@@ -279,12 +276,10 @@ router.get('/:linkToRecipe/edit', (req, res) => {
     FROM recipes rec WHERE rec.link_to_recipe = $1`;
 
     const linkToRecipe = req.params.linkToRecipe;
-    console.log(req.params.linkToRecipe);
     pgClient.query(searchNameQueryString, ['/recipes/' + linkToRecipe], (searchNameQueryError, searchNameQueryResult) => {
         if (searchNameQueryError) {
             throw searchNameQueryError;
         }
-        console.log(searchNameQueryResult.rows);
         res.render('./recipes/edit_recipe', {
             recipe: searchNameQueryResult.rows
         });
@@ -294,7 +289,6 @@ router.get('/:linkToRecipe/edit', (req, res) => {
 router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => {
     let filepathsArray = [];
     // Modify filepaths so they match database format
-    console.log(req.files);
     for (let file of req.files) {
         filepathsArray.push('/' + file.path.substring(7).replace('\\', '/'));
     }
@@ -305,9 +299,6 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
     for (let i = filepathsArray.length; i < 4; i++) {
         filepathsArray.push(null);
     }
-
-    console.log(filepathsArray[0]);
-
     const addRecipeQueryString = `
     UPDATE recipes SET
         state = $1,
@@ -345,9 +336,6 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
         queryParametersList.push('$' + (i * i) + 2);
         queryParametersList.push('$' + (i * i) + 3);
     }
-
-    console.log(req.body.category);
-
     let isCategoryAnArray = Array.isArray(req.body.category);
     let categoriesNumber = isCategoryAnArray ? req.body.category.length : 1;
 
@@ -365,9 +353,6 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
         photo_four: filepathsArray[3],
         visible_email: req.body.emailAccepted ? "true" : "false"
     };
-
-    console.log(recipeBody.photo_one);
-
     pgClient.query(addRecipeQueryString, [
         recipeBody.state,
         recipeBody.date_of_modification,
@@ -385,8 +370,6 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
         if (addRecipeQueryError) {
             throw addRecipeQueryError;
         }
-
-        console.log(addRecipeQueryResult);
         pgClient.query(deleteCategoriesQueryString, [req.body.recipeId], (deleteCategoriesQueryError, deleteCategoriesQueryResult) => {
             if (deleteCategoriesQueryError) {
                 throw deleteCategoriesQueryError;

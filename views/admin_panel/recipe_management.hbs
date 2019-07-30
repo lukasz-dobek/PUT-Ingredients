@@ -220,10 +220,8 @@
             url: `/api/recipes/${idRecipe}`,
             type: 'DELETE'
         }).then(() => {
-            console.log('Usunieto przepis.');
             location.reload();
         }, () => {
-            console.log('Nie udalo sie usunac przepisu.');
         });
     }
 </script>

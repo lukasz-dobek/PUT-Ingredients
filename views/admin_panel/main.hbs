@@ -156,7 +156,6 @@
       recipesPerWeekObj.push(obj);
       daysFilled.push(obj["day_of_week"]);
     });
-    console.log(recipesPerWeekData);
     let weekData = [
       { day_of_week: 'Niedziela', day_nr: 0 },
       { day_of_week: 'Poniedziałek', day_nr: 1 },
@@ -179,7 +178,6 @@
         continue;
       }
     }
-    console.log(recipesPerWeekObj);
     let sortedrecipesPerWeekObj = recipesPerWeekObj.sort((a, b) => (a.day_nr > b.day_nr) ? 1 : ((b.day_nr > a.day_nr) ? -1 : 0));
 
     let weekDays = [];
@@ -283,7 +281,6 @@
       usersPerWeekObj.push(obj);
       daysFilled.push(obj["day_of_week"]);
     });
-    console.log(usersPerWeekData);
     let weekData = [
       { day_of_week: 'Niedziela', day_nr: 0 },
       { day_of_week: 'Poniedziałek', day_nr: 1 },
@@ -306,7 +303,6 @@
         continue;
       }
     }
-    console.log(usersPerWeekObj);
     let sortedusersPerWeekObj = usersPerWeekObj.sort((a, b) => (a.day_nr > b.day_nr) ? 1 : ((b.day_nr > a.day_nr) ? -1 : 0));
 
     let weekDays = [];
@@ -410,7 +406,6 @@
       activitiesPerWeekObj.push(obj);
       daysFilled.push(obj["day_of_week"]);
     });
-    console.log(activitiesPerWeekData);
     let weekData = [
       { day_of_week: 'Niedziela', day_nr: 0 },
       { day_of_week: 'Poniedziałek', day_nr: 1 },
@@ -433,7 +428,6 @@
         continue;
       }
     }
-    console.log(activitiesPerWeekObj);
     let sortedactivitiesPerWeekObj = activitiesPerWeekObj.sort((a, b) => (a.day_nr > b.day_nr) ? 1 : ((b.day_nr > a.day_nr) ? -1 : 0));
 
     let weekDays = [];
@@ -443,7 +437,6 @@
       weekDays.push(sortedactivitiesPerWeekObj[j]["day_of_week"]);
       numbers.push(sortedactivitiesPerWeekObj[j]["number_of_activities"]);
     }
-    console.log(weekDays, numbers);
     createGraph("aktywnosc_uzytkownika_tydzien", weekDays, numbers, '#AB2828');
   });
 

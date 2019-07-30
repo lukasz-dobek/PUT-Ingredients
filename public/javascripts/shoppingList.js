@@ -277,7 +277,6 @@ function sendMail(email, e) {
                     message = message + '\n';
                 }
             }
-            console.log(message);
         }
         $.post("/api/users/send_shopping_list", {
             message: message,

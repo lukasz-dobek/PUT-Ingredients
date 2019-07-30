@@ -30,7 +30,6 @@ router.get('/recipe/:recipe',(req,res)=>{
     JOIN recipes r ON r.id_recipe=sl.recipe_id
     WHERE r.recipe_name like $1; `
     const recipeName = req.params.recipe;
-   console.log(recipeName);
    pgClient.query(queryString,[recipeName],(err,result)=>{
        if(err) throw err;
 
@@ -48,7 +47,6 @@ UPDATE ingredients_used_in_shop_list isl SET unit_id = $1, amount = $2 WHERE isl
     const ingredientId = req.body.ingredient_id;
     const recipe_name = req.body.recipe_name;
     const email_address = req.body.email_address;
-    console.log(ingredientId);
     pgClient.query(removeFromShoppingListQueryString, [unit_id,amount,ingredientId,recipe_name,email_address], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
         if (removeFromShoppingListQueryError) {
             throw removeFromShoppingListQueryError;
@@ -71,7 +69,6 @@ router.delete('/ingredient', (req, res) => {
     const ingredientId = req.body.ingredient_id;
     const recipe_name = req.body.recipe_name;
     const email_address = req.body.email_address;
-    console.log(ingredientId);
     pgClient.query(removeFromShoppingListQueryString, [ingredientId,recipe_name,email_address], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
         if (removeFromShoppingListQueryError) {
             throw removeFromShoppingListQueryError;
@@ -91,7 +88,6 @@ router.delete('/shoppingList', (req, res) => {
     `
     const email_address = req.body.email_address;
     const recipeName = req.body.recipe_name;
-    console.log(recipeName);
     pgClient.query(queryString, [recipeName], (removeFromShoppingListQueryError, removeFromShoppingListQueryResult) => {
         if (removeFromShoppingListQueryError) {
             throw removeFromShoppingListQueryError;

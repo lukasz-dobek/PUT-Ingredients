@@ -14,8 +14,6 @@
 //         items.push(element);
 //     });
 
-//     console.log(items);
-//     console.log(data[0]);
 
 //     let iterate = 0;
 //     items.forEach(item => {

@@ -6,7 +6,6 @@ function addToShopList(e, userId) {
     let shopList = document.getElementById(e.target.id);
     let recipeId = splitRecipeId(shopList.id);
     $.getJSON(`/api/users/shopping_list/${recipeId}`, (jsonData) => {
-        console.log(jsonData);
         if (jsonData >= 1) {
             e.target.classList.add('error');
             let id = e.target.id || e.target.name;

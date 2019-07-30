@@ -1,8 +1,6 @@
 function sendMail(email) {
     let id = 'userMessage_' + email;
     let elValue = document.getElementById(id).value;
-    console.log(elValue);
-
     if (elValue === '') {
         alert('Nie wolno wysłać pustej wiadomości!');
     } else {
