@@ -123,7 +123,6 @@ router.get('/reports/:id', (req, res) => {
             if (recipeQueryError) {
                 throw recipeQueryError;
             }
-            console.log(reportsQueryResult.rows);
             res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows, recipeName: recipeQueryResult.rows[0]["recipe_name"]});
         });
     });
@@ -183,9 +182,6 @@ router.post('/user_management', (req, res) => {
     } else {
         stateLike = '[0-9]';
     }
-
-    console.log(orderBy);
-
     let orderPart = ` ORDER BY ${orderBy} ${sortType};`;
 
 
@@ -210,7 +206,6 @@ router.post('/user_management', (req, res) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
         }
-        console.log(userInfoQueryResult.rows);
         res.render('./admin_panel/user_management', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows });
     });
 });
@@ -269,7 +264,7 @@ router.get('/recipe_management', (req, res) => {
         TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH24:MI:SS') as date_of_creation,
         rec.score,
         rec.link_to_recipe,
-        CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
+        CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe AND rep.status = 0 OR rep.status = 2) 
             WHEN 1 THEN 'TAK' 
             ELSE 'NIE' 
         END AS reported,
@@ -289,7 +284,8 @@ router.post('/recipe_management', (req, res) => {
     let sortUsing = req.body.sortUsing;
     let sortType = req.body.sortType;
     let nameSearch = req.body.nameSearch ? req.body.nameSearch : '%';
-
+    let isReported = req.body.isReported == 1 ? 'NOT NULL' : 'NULL';
+    console.log(isReported);
     let orderBy;
 
     if (sortUsing === 'date_of_creation') {
@@ -301,9 +297,6 @@ router.post('/recipe_management', (req, res) => {
     } else {
         orderBy = 'rec.id_recipe';
     }
-
-    console.log(orderBy);
-
     let orderPart = ` ORDER BY ${orderBy} ${sortType};`;
 
     let recipeInfoQueryString = `
@@ -314,14 +307,14 @@ router.post('/recipe_management', (req, res) => {
         TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH24:MI:SS') as date_of_creation,
         rec.score,
         rec.link_to_recipe,
-        CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
+        CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe AND rep.status = 0 OR rep.status = 2) 
             WHEN 1 THEN 'TAK' 
             ELSE 'NIE' 
         END AS reported,
         usr.id_user,
         usr.email_address
     FROM recipes rec INNER JOIN users usr ON rec.user_id = usr.id_user
-    WHERE rec.recipe_name LIKE $1 AND rec.state LIKE $2
+    WHERE rec.recipe_name LIKE $1 AND rec.state LIKE $2 AND (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe AND rep.status = 0 OR rep.status = 2) IS ${isReported}
     GROUP BY rec.recipe_name, rec.id_recipe, usr.id_user`;
 
     recipeInfoQueryString += orderPart;

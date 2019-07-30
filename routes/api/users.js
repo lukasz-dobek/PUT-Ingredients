@@ -33,7 +33,6 @@ router.get('/id/:id', (req, res) => {
 
     pgClient.query(queryString, value, (err, result) => {
         if (err) throw err;
-        console.log(result.rows);
         res.json(result.rows);
     });
 });
@@ -79,8 +78,6 @@ router.post('/unblock_user', (req, res, next) => {
     const unblockUserQueryString = `
     UPDATE users SET state = 1 WHERE nickname = $1;`;
 
-    console.log(req.body.unblockedNickname);
-
     pgClient.query(unblockUserQueryString, [req.body.unblockedNickname], (unblockUserQueryError, unblockUserQueryResult) => {
         if (unblockUserQueryError) {
             throw unblockUserQueryError;
@@ -104,7 +101,6 @@ router.get('/shopping_list',(req, res)=>{
         if(userShoppingListQueryError) {
             throw userShoppingListQueryError;
         }
-        console.log(userShoppingListQueryResult.rows);
         res.json(userShoppingListQueryResult.rows);
     });
 });
@@ -121,7 +117,6 @@ router.get('/shopping_list/:recipeId',(req, res)=>{
         if(userShoppingListQueryError) {
             throw userShoppingListQueryError;
         }
-        console.log(userShoppingListQueryResult.rows);
         res.json(userShoppingListQueryResult.rowCount);
     });
 

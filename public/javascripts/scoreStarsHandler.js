@@ -24,7 +24,6 @@ function splitNumber(elementId) {
 function hasVoted() {
     let starBox = document.getElementById('starBox');
     let voteValue = 0;
-    console.log(voteValue);
     for (let i = 0; i < 5; i++) {
         if (starBox.childNodes[i].classList.contains('fas')) {
             voteValue++;

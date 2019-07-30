@@ -1,5 +1,4 @@
 let favourites = document.querySelectorAll('[id^="favouritesButton_"]'); // just those elements!
-console.log(favourites);
 
 function splitRecipeId(elementId) {
     return elementId.split('_')[1];
@@ -63,10 +62,6 @@ $.getJSON(`/api/favourites/user_email/${currentUserEmail}`, (jsonData) => {
     jsonData.forEach(element => {
         currentUserFavouriteRecipes.push(element["recipe_id"]);
     });
-    // console.log('Ulubione przepisy uzytkownika: ');
-    // console.log(currentUserFavouriteRecipes);
-    // console.log('Aktualne przepisy na stronie: ');
-    // console.log(recipesOnPage);
     let commonBetweenFavouritesAndOnPage = recipesOnPage.filter(value => currentUserFavouriteRecipes.includes(value));
     commonBetweenFavouritesAndOnPage.forEach(recipe => {
         let favouriteIcon = document.getElementById(`favouritesButton_${recipe}`);

@@ -26,14 +26,10 @@ $("[id^=category]").on('change', function () {
     for (i = 0; i < oneSelect.length; i++) {
         allCategories.push(oneSelect.options[i].value);
     }
-    // console.log(allCategories);
-    // console.log(allCategories.length);
     let values = [];
     for (i = 0; i < selects.length; i++) {
         values.push($(selects[i]).children("option:selected").val());
     }
-    console.log(values);
-    console.log(values.length);
     for (i = 0; i < values.length; i++) {
         if ($("[id^=category]").find('option[value="' + values[i] + '"]')) {
             $("[id^=category]").find('option[value="' + values[i] + '"]').hide();
@@ -299,7 +295,6 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         });
 
         let categoriesNumber = categories[0].length;
-        console.log(categoriesNumber);
 
         for(let i = 0; i < categoriesNumber; i++ ){
             let tempNode = document.getElementById(`category${i+1}`);
@@ -322,8 +317,6 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
                 }
             };        
         }
-        
-        console.log(ingredients[0]);
 
         for (let i = 0; i<ingredients[0].length; i++ ){
             if ( i === 0 || i === 1 ) {
@@ -375,75 +368,33 @@ function readURL(input) {
 
                     selectMainPhotoElement.appendChild(photoOneOption);
                     $('#photoOne').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             } else if (counter == 1) {
                 reader.onload = function (e) {
-
-                    // let photoOneOption = document.createElement('option');
-                    // photoOneOption.value = "0";
-                    // photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
-
-                    // selectMainPhotoElement.appendChild(photoOneOption);
                     let photoTwoOption = document.createElement('option');
                     photoTwoOption.value = "1";
                     photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
 
                     selectMainPhotoElement.appendChild(photoTwoOption);
                     $('#photoTwo').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             } else if (counter == 2) {
                 reader.onload = function (e) {
-
-                    // let photoOneOption = document.createElement('option');
-                    // photoOneOption.value = "0";
-                    // photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
-
-                    // selectMainPhotoElement.appendChild(photoOneOption);
-
-                    // let photoTwoOption = document.createElement('option');
-                    // photoTwoOption.value = "1";
-                    // photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
-
-                    // selectMainPhotoElement.appendChild(photoTwoOption);
-
                     let photoThreeOption = document.createElement('option');
                     photoThreeOption.value = "2";
                     photoThreeOption.textContent = "Zdjęcie trzecie (lewo-dół)";
 
                     selectMainPhotoElement.appendChild(photoThreeOption);
                     $('#photoThree').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             } else if (counter == 3) {
                 reader.onload = function (e) {
-
-                    // let photoOneOption = document.createElement('option');
-                    // photoOneOption.value = "0";
-                    // photoOneOption.textContent = "Zdjęcie pierwsze (lewo-góra)";
-
-                    // selectMainPhotoElement.appendChild(photoOneOption);
-
-                    // let photoTwoOption = document.createElement('option');
-                    // photoTwoOption.value = "1";
-                    // photoTwoOption.textContent = "Zdjęcie drugie (prawo-góra)";
-
-                    // selectMainPhotoElement.appendChild(photoTwoOption);
-
-                    // let photoThreeOption = document.createElement('option');
-                    // photoThreeOption.value = "2";
-                    // photoThreeOption.textContent = "Zdjęcie trzecie (lewo-dół)";
-
-                    // selectMainPhotoElement.appendChild(photoThreeOption);
-
                     let photoFourOption = document.createElement('option');
                     photoFourOption.value = "3";
                     photoFourOption.textContent = "Zdjęcie czwarte (prawo-dół)";
 
                     selectMainPhotoElement.appendChild(photoFourOption);
                     $('#photoFour').attr('src', e.target.result);
-                    console.log('jestem' + counter);
                 }
             }
             counter++;
@@ -673,12 +624,9 @@ $.getJSON("/api/recipes/all", (data) => {
                         selectedIngredients.forEach(item => {
                             usedIngredients.push(item['value']);
                         });
-                        console.log(usedIngredients);
                         let num = event.target.id.replace(/^\D+/g, "");
                         let index = usedIngredients.indexOf(customIngredient);
-                        console.log(index);
                         usedIngredients.splice(index, 1);
-                        console.log(usedIngredients);
                         for (let i = 1; i <= usedIngredients.length; i++) {
                             if (i != num) {
                                 if (usedIngredients[num - 1] === customIngredient) {

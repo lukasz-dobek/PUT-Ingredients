@@ -48,6 +48,13 @@
                         </select>
                     </div>
                     <div class="col">
+                        <p>Zgłoszone:</p>
+                        <select name="isReported" id="" class="custom-select">
+                            <option value="0">nie</option>
+                            <option value="1">tak</option>
+                        </select>
+                    </div>
+                    <div class="col">
                         <p>&nbsp;</p>
                         <button type="submit" class="btn btn-success ml-3 float-right"
                             style="color:black; background-color:#27AE60; width: 7vw; ">SZUKAJ</button>
@@ -182,13 +189,12 @@
                                                                 Po wykonaniu tej akcji przepis zostanie usunięty.
                                                             </p>
                                                             <p>
-                                                                Czy na pewno chcesz usunąć ten przepis?
+                                                                Czy na pewno chcesz usunąć: {{recipe_name}}?
                                                             </p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-danger"
-                                                                onclick="removeRecipe('{{id_recipe}}')">Usuń przepis o
-                                                                id: {{id_recipe}}</button>
+                                                                onclick="removeRecipe('{{id_recipe}}')">Usuń przepis</button>
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Zamknij</button>
                                                         </div>
@@ -220,10 +226,8 @@
             url: `/api/recipes/${idRecipe}`,
             type: 'DELETE'
         }).then(() => {
-            console.log('Usunieto przepis.');
             location.reload();
         }, () => {
-            console.log('Nie udalo sie usunac przepisu.');
         });
     }
 </script>

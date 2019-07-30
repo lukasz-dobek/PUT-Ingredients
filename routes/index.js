@@ -27,7 +27,6 @@ router.post('/login', (req, res, next) => {
         if (!user) { req.flash('error', info.message); return res.redirect('/login') }
         req.logIn(user, (err) => {
             if (err) { return next(err); }
-            console.log(req);
             const insertActivityQueryString = `
             INSERT INTO user_activities (
                 user_id,
@@ -73,7 +72,6 @@ router.post('/forgot_password', (req, res) => {
                     throw resetPasswordHashQueryError;
                     res.render('error');
                 }
-                console.log(resetPasswordHashQueryResult.rows);
                 let subject = "Ingredients - Zresetuj hasło";
                 let message = `<a href="http://localhost:3000/reset_password/${resetPasswordHash.toString('hex')}">Kliknij, aby ukończyć proces zmiany hasła!</a>`;
                 mailClient.sendEmail(email, subject, message);
@@ -86,7 +84,6 @@ router.post('/forgot_password', (req, res) => {
 
 router.get('/reset_password/:hash', (req, res) => {
     const hash = req.params.hash;
-    console.log(hash);
     const checkIfUserExistsQueryString = `SELECT email_address FROM users WHERE reset_password_url = $1`;
     pgClient.query(checkIfUserExistsQueryString, [hash], (checkIfUserExistsQueryError, checkIfUserExistsQueryResult) => {
         if (checkIfUserExistsQueryError) {
@@ -94,7 +91,6 @@ router.get('/reset_password/:hash', (req, res) => {
             res.render('error');
         }
         userRowCount = checkIfUserExistsQueryResult.rowCount;
-        console.log(checkIfUserExistsQueryResult.rows);
         if (userRowCount === 0) {
             req.flash("error_msg", "Taki link resetujący hasło nie występuje w bazie.");
             res.redirect('/login');
@@ -106,7 +102,6 @@ router.get('/reset_password/:hash', (req, res) => {
 
 router.post('/reset_password/:hash', (req, res) => {
     const hash = req.params.hash;
-    console.log(hash);
     const checkIfUserExistsQueryString = `SELECT email_address FROM users WHERE reset_password_url = $1`;
     pgClient.query(checkIfUserExistsQueryString, [hash], (checkIfUserExistsQueryError, checkIfUserExistsQueryResult) => {
         if (checkIfUserExistsQueryError) {
@@ -114,7 +109,6 @@ router.post('/reset_password/:hash', (req, res) => {
             res.render('error');
         }
         userRowCount = checkIfUserExistsQueryResult.rowCount;
-        console.log(checkIfUserExistsQueryResult.rows);
         if (userRowCount === 0) {
             req.flash("error_msg", "Taki link resetujący hasło nie występuje w bazie.");
             res.redirect('/login');
@@ -138,7 +132,6 @@ router.post('/reset_password/:hash', (req, res) => {
                             throw err;
                             res.render('error');
                         }
-                        console.log(result);
                     });
                     req.flash('success_msg', 'Hasło zmienione poprawnie!');
                     res.redirect('/login');
@@ -161,7 +154,6 @@ router.get('/after_register', ensureLoggedIn, (req, res) => {
 router.post('/register', (req, res, next) => {
 
     const { email, nickname, password, passwordConfirm, name, surname } = req.body;
-    console.log(email, nickname, password, passwordConfirm);
     let errors = [];
 
     if (!nickname || !email || !password || !passwordConfirm) {
@@ -186,20 +178,17 @@ router.post('/register', (req, res, next) => {
             res.render('error');
         }
         userRowCount = result.rowCount;
-        console.log(`Liczba kont: ${userRowCount}`);
         if (userRowCount !== 0) {
             errors.push({ msg: "Konto o podanym adresie/loginie istnieje już w bazie danych." });
         }
 
         if (errors.length > 0) {
-            console.log(errors);
             res.render('./index/register', {
                 errors: errors,
                 layout: 'layout_before_login'
             });
         } else {
             const emailConfirmHash = crypto.randomBytes(48);
-            console.log(emailConfirmHash.toString('hex'));
             const insertQueryString = `
           INSERT INTO users (
               email_address, 
@@ -225,14 +214,11 @@ router.post('/register', (req, res, next) => {
 
             try {
                 argon2.hash(password).then(hash => {
-                    console.log(hash.length);
-                    console.log(hash);
                     pgClient.query(insertQueryString, [email, hash, nickname, name, surname], (err, result) => {
                         if (err) {
                             throw err;
                             res.render('error');
                         }
-                        console.log(result);
                     })
                     let subject = 'Ingredients - Dokończ proces rejestracji';
                     let message = `<a href="http://localhost:3000/confirm_email/${emailConfirmHash.toString('hex')}">Kliknij, aby ukończyć proces rejestracji!</a>`;
