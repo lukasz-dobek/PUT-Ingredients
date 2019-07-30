@@ -100,7 +100,7 @@ router.get('/reports/:id', (req, res) => {
         rep.recipe_id,
         rep.description,
         TO_CHAR(rep.date_of_report, 'DD/MM/YY') AS data,
-        TO_CHAR(rep.date_of_report, 'HH:MI:SS') AS godzina,
+        TO_CHAR(rep.date_of_report, 'HH24:MI:SS') AS godzina,
         CASE rep.status
             WHEN 0 THEN 'Aktywne'
             WHEN 1 THEN 'Unieważnione'
@@ -141,7 +141,7 @@ router.get('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MI:SS') AS date_of_activity
+        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH24:MI:SS') AS date_of_activity
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
     GROUP BY usr.nickname, usr.id_user;`;
     pgClient.query(userInfoQueryString, (userInfoQueryError, userInfoQueryResult) => {
@@ -226,13 +226,13 @@ router.get('/user_management/:nickname', (req, res) => {
     const userActivitiesQueryString = `
     SELECT 
         TO_CHAR(usa.date_of_activity, 'YY/MM/DD') AS data,
-        TO_CHAR(usa.date_of_activity, 'HH:MI:SS') AS godzina,
+        TO_CHAR(usa.date_of_activity, 'HH24:MI:SS') AS godzina,
         usa.activity_name,
         usa.link,
         usa.details
     FROM user_activities usa INNER JOIN users usr ON usa.user_id = usr.id_user
     WHERE usr.nickname = $1
-    ORDER BY data`
+    ORDER BY date_of_activity DESC;`
     pgClient.query(userInfoQueryString, [nickname], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
@@ -252,7 +252,7 @@ router.get('/recipe_management', (req, res) => {
         rec.id_recipe,
         rec.state,
         rec.recipe_name,
-        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS') as date_of_creation,
+        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH24:MI:SS') as date_of_creation,
         rec.score,
         rec.link_to_recipe,
         CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
@@ -297,7 +297,7 @@ router.post('/recipe_management', (req, res) => {
         rec.id_recipe,
         rec.state,
         rec.recipe_name,
-        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH:MI:SS') as date_of_creation,
+        TO_CHAR(rec.date_of_creation, 'YY/MM/DD HH24:MI:SS') as date_of_creation,
         rec.score,
         rec.link_to_recipe,
         CASE (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe) 
