@@ -40,6 +40,8 @@ function ingredientsInShoppingList(name) {
     let header = document.createElement("h2");
     let pom = chosenShopList.split("_").join(" ");
     header.textContent = "Wybrano: " + pom;
+    header.style.marginTop = '2vw';
+    header.style.marginBottom = '2vw';
     container.appendChild(header);
     let recipeName = chosenShopList.split("_").join(" ");
 
