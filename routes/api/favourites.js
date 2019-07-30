@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
     // to_timestamp(${Date.now() / 1000.0})
     const userId = req.body.userId;
     const recipeId = req.body.recipeId;
-    const addedToFavouritesDate = req.body.addedToFavouritesDate;
+    const addedToFavouritesDate = Date.now();
     pgClient.query(addToFavouritesQueryString, [userId, recipeId, addedToFavouritesDate], (addToFavouritesQueryError, addToFavouritesQueryResult) => {
         if (addToFavouritesQueryError) {
             throw addToFavouritesQueryError;

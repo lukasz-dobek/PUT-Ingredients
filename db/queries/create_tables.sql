@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS favourites (
 	id_favourite SERIAL PRIMARY KEY,
 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
 	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL,
-	date_of_favourite DATE NOT NULL
+	date_of_favourite TIMESTAMP NOT NULL
 );
 
 -- User_votes table
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS reports (
 	recipe_id INTEGER REFERENCES recipes(id_recipe) ON DELETE CASCADE NOT NULL,
 	description TEXT NOT NULL,
 	status INTEGER NOT NULL,
-	date_of_report DATE
+	date_of_report TIMESTAMP
 );
 
 -- Types table
