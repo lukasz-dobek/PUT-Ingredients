@@ -98,9 +98,17 @@
                                             style="font-size:0.7vw">SZCZEGÓŁY</button>
                                     </div>
                                     <div class="col-6">
-                                        <button type="submit" onclick="location.href='/users/user_recipes/{{nickname}}'"
+                                        {{#isDeleted state}}
+                                        <button type="button" onclick="location.href='/users/user_recipes/{{../nickname}}'"
                                             class="btn btn-success btn-block rounded-0" style="font-size:0.7vw">PRZEPISY
                                             UŻYTKOWNIKA</button>
+
+                                        {{else}}
+                                        <button type="button" class="btn btn-secondary btn-block rounded-0"
+                                            style="font-size:0.7vw" disabled>PRZEPISY
+                                            UŻYTKOWNIKA</button>
+                                        {{/isDeleted}}
+
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 0.2vw; margin-right:0vw; margin-bottom: 0.2vw">
@@ -110,12 +118,14 @@
                                             data-target="#exampleModalLong{{id_user}}">WYŚLIJ
                                             WIADOMOŚĆ</button>
 
-                                        <div class="modal fade bd-example-modal-lg" id="exampleModalLong{{id_user}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLongTitle{{id_user}}" aria-hidden="true">
+                                        <div class="modal fade bd-example-modal-lg" id="exampleModalLong{{id_user}}"
+                                            tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLongTitle{{id_user}}" aria-hidden="true">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle{{id_user}}">Wyślij
+                                                        <h5 class="modal-title" id="exampleModalLongTitle{{id_user}}">
+                                                            Wyślij
                                                             wiadomość
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -126,16 +136,17 @@
                                                     <div class="modal-body text-justify">
                                                         <textarea name="userMessage" id="userMessage_{{email_address}}"
                                                             cols="70" rows="10"></textarea>
-                                                            <label for="adminEmail" class="col-form-label">Adres e-mail
-                                                                do
-                                                                korespondencji:</label>
-                                                            <input type="text" class="form-control" name="adminEmail"
-                                                                id="adminEmail" value="{{@root.userEmail}}">
+                                                        <label for="adminEmail" class="col-form-label">Adres e-mail
+                                                            do
+                                                            korespondencji:</label>
+                                                        <input type="text" class="form-control" name="adminEmail"
+                                                            id="adminEmail" value="{{@root.userEmail}}">
                                                     </div>
                                                     <div class="modal-footer">
 
                                                         <button type="submit" class="btn btn-danger"
-                                                            onclick="sendMail('{{email_address}}')">Wyślij do: {{email_address}}</button>
+                                                            onclick="sendMail('{{email_address}}')">Wyślij do:
+                                                            {{email_address}}</button>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Zamknij</button>
                                                     </div>
@@ -145,18 +156,21 @@
 
                                     </div>
                                     <div class="col-6">
-                                        {{#isBanned state}}
+                                        {{#isDeleted state}}
+                                        {{#isBanned ../state}}
                                         <button type="button" class="btn btn-danger btn-block rounded-0"
                                             style="font-size:0.7vw" data-toggle="modal"
                                             data-target="#banUserModal{{../id_user}}">ZABLOKUJ
                                             KONTO</button>
 
-                                        <div class="modal fade" id="banUserModal{{../id_user}}" tabindex="-1" role="dialog"
-                                            aria-labelledby="banUserModalTitle{{../id_user}}" aria-hidden="true">
+                                        <div class="modal fade" id="banUserModal{{../id_user}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="banUserModalTitle{{../id_user}}"
+                                            aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="banUserModalTitle{{../id_user}}">Zablokuj
+                                                        <h5 class="modal-title" id="banUserModalTitle{{../id_user}}">
+                                                            Zablokuj
                                                             użytkownika
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -170,7 +184,8 @@
                                                             jego przepisy staną się 'anonimowe'.
                                                         </p>
                                                         <p>
-                                                            Czy na pewno chcesz zablokować tego użytkownika? {{../nickname}}
+                                                            Czy na pewno chcesz zablokować tego użytkownika?
+                                                            {{../nickname}}
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
@@ -187,12 +202,15 @@
                                             style="font-size:0.7vw" data-toggle="modal"
                                             data-target="#unbanUserModal{{../id_user}}">ODBLOKUJ KONTO</button>
 
-                                        <div class="modal fade" id="unbanUserModal{{../id_user}}" tabindex="-1" role="dialog"
-                                            aria-labelledby="unbanUserModalTitle{{../id_user}}" aria-hidden="true">
+                                        <div class="modal fade" id="unbanUserModal{{../id_user}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="unbanUserModalTitle{{../id_user}}"
+                                            aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="unbanUserModalTitle{{../id_user}}">Odblokuj
+                                                        <h5 class="modal-title"
+                                                            id="unbanUserModalTitle{{../id_user}}">
+                                                            Odblokuj
                                                             użytkownika
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -206,7 +224,8 @@
                                                             jego przepisy zostaną przywrócone.
                                                         </p>
                                                         <p>
-                                                            Czy na pewno chcesz odblokować tego użytkownika? {{../nickname}}
+                                                            Czy na pewno chcesz odblokować tego użytkownika?
+                                                            {{../nickname}}
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
@@ -219,6 +238,12 @@
                                             </div>
                                         </div>
                                         {{/isBanned}}
+                                        {{else}}
+                                        <button type="button" class="btn btn-secondary btn-block rounded-0"
+                                            style="font-size:0.7vw" disabled>ZABLOKUJ
+                                            KONTO</button>
+
+                                        {{/isDeleted}}
                                     </div>
                                 </div>
                             </td>
