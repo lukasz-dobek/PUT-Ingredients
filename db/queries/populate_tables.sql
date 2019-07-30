@@ -218,7 +218,7 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (4,'Śmietanka 18%'),
 (6,'Orzechy pinii'),
 (4,'Parmezan'),
-(7,'Tortilla'),
+(9,'Tortilla'),
 (2,'Truskawki'),
 (1,'Sok z limonki');
 
