@@ -159,7 +159,8 @@ router.post('/user_management', (req, res) => {
     let nameSearch = req.body.nameSearch ? req.body.nameSearch : '%';
 
     let orderBy;
-
+    let stateLike;
+    let groupBy = `GROUP BY usr.nickname, usr.id_user`;
     if (sortUsing === 'nickname') {
         orderBy = 'usr.nickname';
     } else if (sortUsing === 'ID') {
@@ -167,12 +168,26 @@ router.post('/user_management', (req, res) => {
     } else if (sortUsing === 'email') {
         orderBy = 'usr.email_address';
     } else {
-        orderBy = 'usa.date_of_activity';
+        orderBy = 'date_of_activity';
+        groupBy = `GROUP BY usr.id_user`;
+    }
+
+    if (activeParam == 0) {
+        stateLike = '[0]';
+    } else if (activeParam == 1) {
+        stateLike = '[1]';
+    } else if (activeParam == 2) {
+        stateLike = '[2]';
+    } else if (activeParam == 3) {
+        stateLike = '[3]';
+    } else {
+        stateLike = '[0-9]';
     }
 
     console.log(orderBy);
 
     let orderPart = ` ORDER BY ${orderBy} ${sortType};`;
+
 
     let userInfoQueryString = `
     SELECT 
@@ -185,14 +200,13 @@ router.post('/user_management', (req, res) => {
         END AS state,
         usr.nickname, 
         usr.email_address, 
-        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH:MI:SS') AS date_of_activity
+        TO_CHAR(MAX(usa.date_of_activity), 'DD/MM/YYYY HH24:MI:SS') AS date_of_activity
     FROM users usr INNER JOIN user_activities usa ON usr.id_user = usa.user_id
-    WHERE usr.nickname LIKE $1 AND usr.state = $2
-    GROUP BY usr.nickname, usr.id_user, usa.date_of_activity`;
-
+    WHERE usr.nickname LIKE $1 AND usr.state::varchar ~ $2`;
+    userInfoQueryString += groupBy;
     userInfoQueryString += orderPart;
 
-    pgClient.query(userInfoQueryString, [nameSearch, activeParam], (userInfoQueryError, userInfoQueryResult) => {
+    pgClient.query(userInfoQueryString, [nameSearch, stateLike], (userInfoQueryError, userInfoQueryResult) => {
         if (userInfoQueryError) {
             throw userInfoQueryError;
         }

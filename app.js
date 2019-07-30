@@ -62,6 +62,14 @@ handlebars.registerHelper('isBanned', (state, options) => {
   }
 });
 
+handlebars.registerHelper('isDeleted', (state, options) => {
+  if (state === 'Usunięty'){
+    return options.inverse(this);
+  } else {
+    return options.fn(this);
+  }
+});
+
 handlebars.registerHelper('isRecipeAccepted', (state, options) => {
   if (state === 'Zweryfikowany'){
     return options.inverse(this);
