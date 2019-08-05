@@ -90,7 +90,7 @@
         <div class="container-statistic3">
           <p style="margin-left: 0.7vw">3. Na przestrzeni miesiąca:</p>
           <canvas class="my-4 w-100 chartjs-render-monitor border border-dark" id="liczba_uzytkownikow_miesiac"
-            width="300" height="95" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
+            width="500" height="95" style="background-color:white; padding-top: 0.8vw; margin-left: 0.7vw"></canvas>
         </div>
       </div>
     </div>
@@ -125,14 +125,16 @@
           backgroundColor: 'transparent',
           borderColor: color,
           borderWidth: 4,
-          pointBackgroundColor: color
+          pointBackgroundColor: color,
+          stepSize: 1
         }]
       },
       options: {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              callback: function(value) {if (value % 1 === 0) {return value;}}
             }
           }]
         },

@@ -14,8 +14,10 @@ function categoriesHandler() {
         values.push($(selects[i]).children("option:selected").val());
     }
     for (i = 0; i < values.length; i++) {
-        if ($("[id^=category]").find('option[value="' + values[i] + '"]')) {
-            $("[id^=category]").find('option[value="' + values[i] + '"]').hide();
+        if(values[i]!== '') {
+            if ($("[id^=category]").find('option[value="' + values[i] + '"]')) {
+                $("[id^=category]").find('option[value="' + values[i] + '"]').hide();
+            }
         }
     }
     for (i = 0; i < allCategories.length; i++) {
