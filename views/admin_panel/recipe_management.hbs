@@ -10,15 +10,15 @@
             <h4 style="margin-top: 1vw; margin-bottom: 1.5vw">LISTA PRZEPISÓW</h4>
             <form action="/administrator_panel/recipe_management" method="post">
                 <div class="row">
+
                     <div class="col">
                         <p>Szukaj:</p>
                         <input class="form-control admin-filter" type="text" placeholder="Search" name="nameSearch"
                             aria-label="Search">
                     </div>
+
                     <div class="col">
                         <p>Parametry:</p>
-
-
                         <select name="state" id="" class="custom-select">
                             <option value="Wszystkie">wszystkie</option>
                             <option value="Zweryfikowany">tylko zweryfikowane</option>
@@ -30,40 +30,40 @@
 
                     <div class="col">
                         <p>Sortowanie według:</p>
-
                         <select name="sortUsing" id="" class="custom-select">
                             <option value="ID">ID</option>
                             <option value="date_of_creation">data dodania</option>
                             <option value="name">nazwa</option>
                             <option value="score">ocena</option>
-
                         </select>
                     </div>
+
                     <div class="col">
                         <p>Sortowanie typ:</p>
-
                         <select name="sortType" id="" class="custom-select">
                             <option value="asc">rosnąco</option>
                             <option value="desc">malejąco</option>
                         </select>
                     </div>
+
                     <div class="col">
                         <p>Zgłoszone:</p>
                         <select name="isReported" id="" class="custom-select">
+                            <option value="2">wszyscy</option>
                             <option value="0">nie</option>
                             <option value="1">tak</option>
                         </select>
                     </div>
+
                     <div class="col">
                         <p>&nbsp;</p>
                         <button type="submit" class="btn btn-success ml-3 float-right"
                             style="color:black; background-color:#27AE60; width: 7vw; ">SZUKAJ</button>
                     </div>
+
                 </div>
             </form>
             <p>&nbsp</p>
-
-
 
             <div class="table-responsive">
                 <table class="table table-striped table-sm">

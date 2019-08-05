@@ -1,5 +1,3 @@
--- Think about constraints - DEFAULT and CHECK
-
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
 	id_user SERIAL PRIMARY KEY,
@@ -15,14 +13,6 @@ CREATE TABLE IF NOT EXISTS users (
 	activation_url TEXT,
 	reset_password_url TEXT
 );
-
--- -- User_activities table
--- CREATE TABLE IF NOT EXISTS user_activities (
--- 	id_user_activity SERIAL PRIMARY KEY,
--- 	user_id INTEGER REFERENCES users(id_user) NOT NULL,
--- 	date_of_login TIMESTAMP NOT NULL,
--- 	browser_info VARCHAR(150) NOT NULL
--- );
 
 -- User_activities table
 CREATE TABLE IF NOT EXISTS user_activities (

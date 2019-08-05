@@ -284,8 +284,15 @@ router.post('/recipe_management', (req, res) => {
     let sortUsing = req.body.sortUsing;
     let sortType = req.body.sortType;
     let nameSearch = req.body.nameSearch ? req.body.nameSearch : '%';
-    let isReported = req.body.isReported == 1 ? 'NOT NULL' : 'NULL';
-    console.log(isReported);
+    let isReported = req.body.isReported;
+
+    let whereReported = "";
+
+    if (isReported !== "2"){
+        isReported = req.body.isReported == 1 ? 'NOT NULL' : 'NULL';
+        whereReported = `AND (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe AND rep.status = 0 OR rep.status = 2) IS ${isReported}`;
+    }
+
     let orderBy;
 
     if (sortUsing === 'date_of_creation') {
@@ -314,7 +321,7 @@ router.post('/recipe_management', (req, res) => {
         usr.id_user,
         usr.email_address
     FROM recipes rec INNER JOIN users usr ON rec.user_id = usr.id_user
-    WHERE rec.recipe_name LIKE $1 AND rec.state LIKE $2 AND (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe AND rep.status = 0 OR rep.status = 2) IS ${isReported}
+    WHERE rec.recipe_name LIKE $1 AND rec.state LIKE $2 ${whereReported}
     GROUP BY rec.recipe_name, rec.id_recipe, usr.id_user`;
 
     recipeInfoQueryString += orderPart;
