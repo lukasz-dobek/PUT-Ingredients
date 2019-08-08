@@ -173,7 +173,7 @@ router.get('/ingredients', (req, res) => {
     res.render('./recipes/ingredients_search_screen');
 });
 
-router.get('/:linkToRecipe', (req, res) => {
+router.get('/:linkToRecipe', (req, res, next) => {
     const recipeQueryString = `
     SELECT 
         rec.id_recipe, 
@@ -227,29 +227,33 @@ router.get('/:linkToRecipe', (req, res) => {
 
     pgClient.query(recipeQueryString, [linkToRecipe], (recipeQueryError, recipeQueryResult) => {
         if (recipeQueryError) throw recipeQueryError;
-        const recipeId = recipeQueryResult.rows[0]["id_recipe"];
-        pgClient.query(ingredientsQueryString, [recipeId], (ingredientsQueryError, ingredientsQueryResult) => {
-            if (ingredientsQueryError) throw ingredientsQueryError;
-            /* 
-            
-            Recipe fields: id_recipe, recipe_name, score, date_of_creation, complicity, preparation_time, description
-            number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname.
-
-            Ingredients fields: ingredient_name, amount, unit_name.
-
-            */
-            pgClient.query(alternativeIngredientsQueryString, [recipeId], (alternativeIngredientsQueryError, alternativeIngredientsQueryResult) => {
-                if (alternativeIngredientsQueryError) {
-                    throw alternativeIngredientsQueryError;
-                }
-                res.render('./recipes/recipe_page', {
-                    recipe: recipeQueryResult.rows,
-                    ingredients: ingredientsQueryResult.rows,
-                    alternative_ingredients: alternativeIngredientsQueryResult.rows
+        if (recipeQueryResult.rowCount === 0) {
+            console.log(recipeQueryResult.rowCount);
+            res.status(404).render('error', { message: 'Przepis nie istnieje.' } );
+        } else {
+            const recipeId = recipeQueryResult.rows[0]["id_recipe"];
+            pgClient.query(ingredientsQueryString, [recipeId], (ingredientsQueryError, ingredientsQueryResult) => {
+                if (ingredientsQueryError) throw ingredientsQueryError;
+                /* 
+                
+                Recipe fields: id_recipe, recipe_name, score, date_of_creation, complicity, preparation_time, description
+                number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname.
+    
+                Ingredients fields: ingredient_name, amount, unit_name.
+    
+                */
+                pgClient.query(alternativeIngredientsQueryString, [recipeId], (alternativeIngredientsQueryError, alternativeIngredientsQueryResult) => {
+                    if (alternativeIngredientsQueryError) {
+                        throw alternativeIngredientsQueryError;
+                    }
+                    res.render('./recipes/recipe_page', {
+                        recipe: recipeQueryResult.rows,
+                        ingredients: ingredientsQueryResult.rows,
+                        alternative_ingredients: alternativeIngredientsQueryResult.rows
+                    });
                 });
             });
-
-        });
+        }
     });
 });
 
