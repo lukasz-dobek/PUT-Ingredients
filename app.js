@@ -109,7 +109,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   store: new pgSession({
     pool: pgClient,                // Connection pool
-    tableName: 'user_session'   // Use another table-name than the default "session" one
+    tableName: 'user_session',   // Use another table-name than the default "session" one
+    schemaName: 'public',
   }),
   secret: process.env.FOO_COOKIE_SECRET,
   resave: true,

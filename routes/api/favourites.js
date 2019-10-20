@@ -1,5 +1,6 @@
 const express = require('express');
 const pgClient = require('../../db/pg-controller');
+const request = require('request');
 const router = express.Router();
 
 // Get user's favourites
@@ -20,6 +21,45 @@ router.get('/user_email/:email', (req, res) => {
     });
 });
 
+const sendDataToEngine = (user, recipe) => {
+    request.post(`http://localhost:3001/users/${user}`, {
+        json: {
+            favourites: recipe,
+        }
+    }, (error, response, body) => {
+        console.log(error);
+        // console.log(response);
+    });
+
+    request.post(`http://localhost:3001/recipes/${recipe}`, {
+        json: {
+            fans: user,
+        }
+    }, (error, response, body) => {
+        console.log(error);
+        // console.log(response);
+    })
+};
+
+const removeDataFromEngine = (user, recipe) => {
+    request.delete(`http://localhost:3001/users/${user}`, {
+        json: {
+            favourites: recipe,
+        }
+    }, (error, response, body) => {
+        console.log(error);
+        // console.log(response);
+    });
+    request.delete(`http://localhost:3001/users/${recipe}`, {
+        json: {
+            fans: user,
+        }
+    }, (error, response, body) => {
+        console.log(error);
+        // console.log(response);
+    });
+};
+
 router.post('/', (req, res) => {
     const addToFavouritesQueryString = `
     INSERT INTO favourites (user_id, recipe_id, date_of_favourite) VALUES
@@ -34,6 +74,7 @@ router.post('/', (req, res) => {
             throw addToFavouritesQueryError;
         }
         console.log(`POST /favourites - query successful - ${addToFavouritesQueryResult.rowCount} added`);
+        sendDataToEngine(userId, recipeId);
         res.json(addToFavouritesQueryResult.rows);
     });
 });
