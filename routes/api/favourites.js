@@ -50,7 +50,7 @@ const removeDataFromEngine = (user, recipe) => {
         console.log(error);
         // console.log(response);
     });
-    request.delete(`http://localhost:3001/users/${recipe}`, {
+    request.delete(`http://localhost:3001/recipes/${recipe}`, {
         json: {
             fans: user,
         }
