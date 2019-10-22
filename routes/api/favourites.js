@@ -14,7 +14,7 @@ router.get('/user_email/:email', (req, res) => {
     WHERE usr.email_address = $1;`;
 
     pgClient.query(getUserFavouritesQueryString, [userEmail], (getUserFavouritesQueryError, getUserFavouritesQueryResult) => {
-        if(getUserFavouritesQueryError) {
+        if (getUserFavouritesQueryError) {
             throw getUserFavouritesQueryError;
         }
         res.json(getUserFavouritesQueryResult.rows);
@@ -60,6 +60,16 @@ const removeDataFromEngine = (user, recipe) => {
     });
 };
 
+router.get('/recommendations', (req, res) => {
+    // get recommendations for current user
+    request(`http://localhost:3001/recommendations/${res.locals.userId}`, (error, response, body) => {
+        console.error('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        console.log(JSON.parse(body)); // Print the HTML for the Google homepage.
+        res.json(JSON.parse(body));
+    });
+});
+
 router.post('/', (req, res) => {
     const addToFavouritesQueryString = `
     INSERT INTO favourites (user_id, recipe_id, date_of_favourite) VALUES
@@ -90,6 +100,7 @@ router.delete('/', (req, res) => {
         if (removeFromFavouritesQueryError) {
             throw removeFromFavouritesQueryError;
         }
+        removeDataFromEngine(userId, recipeId);
         console.log(`DELETE /favourites - query successful - ${removeFromFavouritesQueryResult.rowCount} removed`);
         res.json(removeFromFavouritesQueryResult.rows);
     });
