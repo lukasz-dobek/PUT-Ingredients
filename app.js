@@ -13,7 +13,7 @@ const favicon = require('serve-favicon');
 
 const { ensureAuthenticated } = require('./config/auth');
 const { ensureAdministrator } = require('./config/auth');
-const pgClient = require('./db/pg-controller');
+const pgClient = require('./db/PGController');
 // Favicon handler
 
 // Routers

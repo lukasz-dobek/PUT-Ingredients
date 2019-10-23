@@ -1,5 +1,5 @@
 const express = require('express');
-const pgClient = require('../../db/pg-controller');
+const pgClient = require('../../db/PGController');
 const request = require('request');
 const router = express.Router();
 

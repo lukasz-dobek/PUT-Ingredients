@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pgClient = require('./../db/pg-controller');
+const pgClient = require('../db/PGController');
 
 router.get('/', (req, res) => {
     res.render('./admin_panel/main', { layout: 'layout_admin_panel' });
