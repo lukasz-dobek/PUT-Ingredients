@@ -16,32 +16,44 @@
 
         let getRecipeData = await fetch(`http://localhost:3000/api/recipes/id/${value}`);
         let recipeJson = await getRecipeData.json();
-        let graphicalRecomm = document.createElement("p");
-        graphicalRecomm.innerHTML = `<a href="${recipeJson[0]["link_to_recipe"]}"><img class="card-img-top" style="12vw" src="${recipeJson[0]["photo_one"]}"></a>`;
 
-        recommendationsContainer.appendChild(graphicalRecomm);
+        let recommendationCard = document.createElement('div');
+        recommendationCard.classList.add('card');
+        recommendationCard.style.width = "18rem";
+        recommendationCard.style.display = 'inline-block';
+        recommendationCard.style.marginRight = '20px';
+
+        let recommendationCardImage = document.createElement('img');
+        recommendationCardImage.classList.add('card-img-top');
+        recommendationCardImage.style.height = '15vw';
+        recommendationCardImage.style.objectFit = 'cover';
+        recommendationCardImage.style.width = '100%';
+        recommendationCardImage.src = recipeJson[0]["photo_one"];
+        recommendationCardImage.alt = recipeJson[0]["recipe_name"];
+
+        let recommendationCardBody = document.createElement('div');
+        recommendationCardBody.classList.add('card-body');
+
+        let recommendationCardHeader = document.createElement('h6');
+        recommendationCardHeader.classList.add('card-title');
+        recommendationCardHeader.textContent = recipeJson[0]["recipe_name"];
+
+        let recommendationCardAnchor = document.createElement('a');
+        recommendationCardAnchor.classList.add('btn', 'btn-info');
+        recommendationCardAnchor.text = ('Sprawdź!');
+        recommendationCardAnchor.href = recipeJson[0]["link_to_recipe"];
+
+        recommendationCardBody.appendChild(recommendationCardHeader);
+        recommendationCardBody.appendChild(recommendationCardAnchor);
+
+        recommendationCard.appendChild(recommendationCardImage);
+        recommendationCard.appendChild(recommendationCardBody);
+
+        recommendationsContainer.appendChild(recommendationCard);
     }));
 })();
 
-// lel
-// const pickRandomThree = array => {
-//     if (array.length <= 3) {
-//         return array;
-//     } else {
-//         let randomIndexes = [];
-//         do {
-//             let randomNumber = Math.floor(Math.random() * array.length);
-//             if (randomIndexes.includes(randomNumber)) continue;
-//         } while (randomIndexes.length !== 3);
-//         return [
-//             array[randomIndexes[0]],
-//             array[randomIndexes[1]],
-//             array[randomIndexes[2]]
-//         ]
-//     }
-// }
-
-function shuffle(array) {
+const shuffle = array => {
     let currentIndex = array.length, temporaryValue, randomIndex;
   
     while (0 !== currentIndex) {
