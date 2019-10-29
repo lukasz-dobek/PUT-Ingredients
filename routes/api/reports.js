@@ -34,7 +34,7 @@ router.post('/accept_report', (req, res) => {
     UPDATE reports SET status = 2 WHERE id_report = $1`;
 
     const recipeStateQueryString = `
-    UPDATE recipes SET state = 'Niezaakceptowany' WHERE id_recipe = $1`;
+    UPDATE recipes SET state = 'Niezaakceptowany', date_of_modification = TO_TIMESTAMP(${Date.now()} / 1000.0) WHERE id_recipe = $1`;
 
     let reportId = req.body.reportId;
     let recipeId = req.body.recipeId;
@@ -50,6 +50,41 @@ router.post('/accept_report', (req, res) => {
             res.json(recipeStateQueryResult.rows);
         });
     });
+});
+
+
+
+router.post('/accept_report_transact', async (req, res, e) => {
+    const client = await pgClient.connect();
+
+
+    try {
+
+        const acceptReportQueryString = `
+    UPDATE reports SET status = 2 WHERE id_report = $1`;
+
+        const recipeStateQueryString = `
+    UPDATE recipes SET state = 'Niezaakceptowany', date_of_modification = TO_TIMESTAMP(${Date.now()} / 1000.0) WHERE id_recipe = $1`;
+
+        const testQS = `
+    DELETE FROM units WHERE unit_namelol = 'trolle'`;
+
+        const { reportId, recipeId } = req.body;
+
+        await client.query('BEGIN');
+        await client.query(acceptReportQueryString, [reportId]);
+        await client.query(recipeStateQueryString, [recipeId]);
+        await client.query(testQS);
+        await client.query('COMMIT');
+        res.json(result.rows);
+    } catch (e) {
+        await client.query('ROLLBACK').catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release()
+    }
 });
 
 module.exports = router;

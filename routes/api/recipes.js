@@ -73,4 +73,17 @@ router.post('/reject_recipe', (req, res) => {
     });
 });
 
+router.get('/transactions_test', (req, res) => {
+    let getAllRecipes = `SELECT r.*, u.nickname
+    FROM recipes r JOIN users u ON u.id_user = r.user_id
+    JOIN categories_per_recipe cpr ON cpr.recipe_id = r.id_recipe
+    JOIN categories c ON cpr.category_id = c.id_category
+    GROUP BY r.id_recipe, u.nickname
+    ORDER BY date_of_creation`;
+    pgClient.query(getAllRecipes, (err, result) => {
+        res.json(result.rows);
+    });
+
+});
+
 module.exports = router;
