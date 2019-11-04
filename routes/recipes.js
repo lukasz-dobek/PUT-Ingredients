@@ -17,16 +17,25 @@ let storage = multer.diskStorage({
 
 let upload = multer({ storage: storage });
 
-function createLinkToRecipe(recipeName) {
+const createLinkToRecipe = recipeName => {
     return '/recipes/'.concat(latinize(recipeName.replace(/ /g, '_').toLowerCase()));
 }
 
 router.get('/', ensureAuthenticated, (req, res) => {
-    const lastNineRecipesQueryString = "SELECT * FROM recipes WHERE state ='Zweryfikowany' ORDER BY date_of_creation DESC LIMIT 9 ";
-    pgClient.query(lastNineRecipesQueryString, (lastNineRecipesQueryError, lastNineRecipesQueryResult) => {
-        if (lastNineRecipesQueryError) throw lastNineRecipesQueryError;
+    const lastNineRecipesQS = `
+    SELECT 
+        link_to_recipe,
+        photo_one,
+        recipe_name 
+    FROM recipes
+    WHERE state = 'Zweryfikowany'
+    ORDER BY date_of_creation DESC 
+    LIMIT 9;`;
+
+    pgClient.query(lastNineRecipesQS, (lastNineRecipesQE, lastNineRecipesQR) => {
+        if (lastNineRecipesQE) throw lastNineRecipesQE;
         res.render('./recipes/front_page', {
-            recipes: lastNineRecipesQueryResult.rows
+            recipes: lastNineRecipesQR.rows
         });
     });
 });
@@ -35,7 +44,7 @@ router.get('/add_new_recipe', (req, res) => {
     res.render('./recipes/add_new_recipe');
 });
 
-router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
+router.post('/add_new_recipe', upload.array('imageInput', 4), async (req, res) => {
     let filepathsArray = [];
     // Modify filepaths so they match database format
     for (let file of req.files) {
@@ -67,7 +76,7 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
         photo_three,
         photo_four,
         visible_email
-    ) VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5 / 1000.0), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16);`;
+    ) VALUES ($1, $2, $3, $4, TO_TIMESTAMP($5 / 1000.0), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING id_recipe;`;
 
     let ingredientsNumber = req.body.ingredientName.length;
 
@@ -78,8 +87,6 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
     let insertCategoriesQueryString = `
     INSERT INTO categories_per_recipe (recipe_id, category_id) VALUES 
     ($1, (SELECT id_category FROM categories WHERE category_name = $2));`;
-
-    let selectRecipeIdQueryString = `SELECT id_recipe FROM recipes WHERE recipe_name = $1`;
 
     let queryParametersList = [];
     for (let i = 1; i <= ingredientsNumber; i++) {
@@ -92,79 +99,52 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), (req, res) => {
     let isCategoryAnArray = Array.isArray(req.body.category);
     let categoriesNumber = isCategoryAnArray ? req.body.category.length : 1;
 
-    // for (let i = 0; i < ingredientsNumber; i++){
-    //     addIngredientsQueryString+=' ($1, SELECT id_ingredient FROM ingredients WHERE ingredient_name = $2), (SELECT id_unit FROM units WHERE unit_name = $3), $4),';
-    // }
-    // addIngredientsQueryString = addIngredientsQueryString.slice(0,-1);
-    // to_timestamp(${Date.now() / 1000.0})
-    const recipeBody = {
-        user_id: res.locals.userId,
-        recipe_name: req.body.recipeName,
-        state: 'Niezweryfikowany',
-        score: 0.0,
-        date_of_creation: Date.now(),
-        date_of_modification: null,
-        complicity: req.body.complicity,
-        preparation_time: req.body.preparationTime,
-        description: req.body.description,
-        number_of_people: req.body.numberOfPeople,
-        link_to_recipe: createLinkToRecipe(req.body.recipeName),
-        photo_one: filepathsArray[0],
-        photo_two: filepathsArray[1],
-        photo_three: filepathsArray[2],
-        photo_four: filepathsArray[3],
-        visible_email: req.body.emailAccepted ? "true" : "false"
-    };
-    pgClient.query(addRecipeQueryString, [
-        recipeBody.user_id,
-        recipeBody.recipe_name,
-        recipeBody.state,
-        recipeBody.score,
-        recipeBody.date_of_creation,
-        recipeBody.date_of_modification,
-        recipeBody.complicity,
-        recipeBody.preparation_time,
-        recipeBody.description,
-        recipeBody.number_of_people,
-        recipeBody.link_to_recipe,
-        recipeBody.photo_one,
-        recipeBody.photo_two,
-        recipeBody.photo_three,
-        recipeBody.photo_four,
-        recipeBody.visible_email
-    ], (addRecipeQueryError, addRecipeQueryResult) => {
-        if (addRecipeQueryError) {
-            throw addRecipeQueryError;
+    const recipeBody = [
+        res.locals.userId,  //     user_id  
+        req.body.recipeName,    //     recipe_name
+        'Niezweryfikowany', //     state
+        0.0,    //     score
+        Date.now(), //     date_of_creation
+        null,   //     date_of_modification
+        req.body.complicity,    //     complicity
+        req.body.preparationTime,   //     preparation_time
+        req.body.description,   //     description
+        req.body.numberOfPeople,    //     number_of_people
+        createLinkToRecipe(req.body.recipeName),    //     link_to_recipe
+        filepathsArray[0],  //     photo_one
+        filepathsArray[1],  //     photo_two
+        filepathsArray[2],  //     photo_three
+        filepathsArray[3],  //     photo_four
+        req.body.emailAccepted ? "true" : "false"   //     visible_email
+    ];
+
+    const client = await pgClient.connect();
+
+    try {
+        await client.query("BEGIN;");
+        const query = await client.query(addRecipeQueryString, recipeBody);
+        for (let i = 0; i < ingredientsNumber; i++) {
+            await client.query(addIngredientsQueryString, [query.rows[0]["id_recipe"], req.body.ingredientName[i], req.body.ingredientUnit[i], req.body.ingredientQuantity[i]]);
         }
-        pgClient.query(selectRecipeIdQueryString, [recipeBody.recipe_name], (selectRecipeIdQueryError, selectRecipeIdQueryResult) => {
-            if (selectRecipeIdQueryError) {
-                throw selectRecipeIdQueryError;
-            }
-            for (let i = 0; i < ingredientsNumber; i++) {
-                pgClient.query(addIngredientsQueryString, [selectRecipeIdQueryResult.rows[0]["id_recipe"], req.body.ingredientName[i], req.body.ingredientUnit[i], req.body.ingredientQuantity[i]],
-                    (addIngredientsQueryError, addIngredientsQueryResult) => {
-                        if (addIngredientsQueryError) {
-                            throw addIngredientsQueryError;
-                        }
-                        console.log(addIngredientsQueryResult.command, addIngredientsQueryResult.rowCount);
-                    });
-            }
-            for (let j = 0; j < categoriesNumber; j++) {
-                pgClient.query(insertCategoriesQueryString, [selectRecipeIdQueryResult.rows[0]["id_recipe"], isCategoryAnArray ? req.body.category[j] : req.body.category], (insertCategoriesQueryError, insertCategoriesQueryResult) => {
-                    if (insertCategoriesQueryError) {
-                        throw insertCategoriesQueryError;
-                    }
-                    console.log(insertCategoriesQueryResult.command, insertCategoriesQueryResult.rowCount);
-                });
-            }
-        })
+        for (let j = 0; j < categoriesNumber; j++) {
+            await client.query(insertCategoriesQueryString, [query.rows[0]["id_recipe"], isCategoryAnArray ? req.body.category[j] : req.body.category]);
+        }
+        await client.query("COMMIT;");
         res.redirect('/recipes/add_recipe_confirmation');
-    });
+    } catch (e) {
+        await client.query('ROLLBACK').catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release()
+    }
 });
 
 router.get('/add_recipe_confirmation', (req, res) => {
     res.render('./recipes/add_recipe_confirmation');
 });
+
 router.get('/edit_recipe_confirmation', (req, res) => {
     res.render('./recipes/edit_recipe_confirmation');
 });
@@ -173,7 +153,7 @@ router.get('/ingredients', (req, res) => {
     res.render('./recipes/ingredients_search_screen');
 });
 
-router.get('/:linkToRecipe', (req, res, next) => {
+router.get('/:linkToRecipe', async (req, res, next) => {
     const recipeQueryString = `
     SELECT 
         rec.id_recipe, 
@@ -225,36 +205,32 @@ router.get('/:linkToRecipe', (req, res, next) => {
 
     const linkToRecipe = '/recipes/'.concat(req.params.linkToRecipe);
 
-    pgClient.query(recipeQueryString, [linkToRecipe], (recipeQueryError, recipeQueryResult) => {
-        if (recipeQueryError) throw recipeQueryError;
-        if (recipeQueryResult.rowCount === 0) {
-            console.log(recipeQueryResult.rowCount);
-            res.status(404).render('error', { message: 'Przepis nie istnieje.' } );
+    const client = await pgClient.connect();
+
+    try {
+        await client.query("BEGIN;");
+        const recipe = await client.query(recipeQueryString, [linkToRecipe]);
+        if (recipe.rowCount === 0) {
+            res.status(404).render('error', { message: 'Przepis nie istnieje.' });
         } else {
-            const recipeId = recipeQueryResult.rows[0]["id_recipe"];
-            pgClient.query(ingredientsQueryString, [recipeId], (ingredientsQueryError, ingredientsQueryResult) => {
-                if (ingredientsQueryError) throw ingredientsQueryError;
-                /* 
-                
-                Recipe fields: id_recipe, recipe_name, score, date_of_creation, complicity, preparation_time, description
-                number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname.
-    
-                Ingredients fields: ingredient_name, amount, unit_name.
-    
-                */
-                pgClient.query(alternativeIngredientsQueryString, [recipeId], (alternativeIngredientsQueryError, alternativeIngredientsQueryResult) => {
-                    if (alternativeIngredientsQueryError) {
-                        throw alternativeIngredientsQueryError;
-                    }
-                    res.render('./recipes/recipe_page', {
-                        recipe: recipeQueryResult.rows,
-                        ingredients: ingredientsQueryResult.rows,
-                        alternative_ingredients: alternativeIngredientsQueryResult.rows
-                    });
-                });
+            const recipeId = recipe.rows[0]["id_recipe"];
+            const ingredients = await client.query(ingredientsQueryString, [recipeId]);
+            const alternativeIngredients = await client.query(alternativeIngredientsQueryString, [recipeId]);
+            res.render('./recipes/recipe_page', {
+                recipe: recipe.rows,
+                ingredients: ingredients.rows,
+                alternative_ingredients: alternativeIngredients.rows
             });
         }
-    });
+        await client.query("COMMIT;");
+    } catch (e) {
+        await client.query("ROLLBACK;").catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release();
+    }
 });
 
 router.get('/:linkToRecipe/edit', (req, res) => {
@@ -290,7 +266,7 @@ router.get('/:linkToRecipe/edit', (req, res) => {
     });
 });
 
-router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => {
+router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), async (req, res) => {
     let filepathsArray = [];
     // Modify filepaths so they match database format
     for (let file of req.files) {
@@ -331,8 +307,6 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
     INSERT INTO categories_per_recipe (recipe_id, category_id) VALUES 
     ($1, (SELECT id_category FROM categories WHERE category_name = $2));`;
 
-    let selectRecipeIdQueryString = `SELECT id_recipe FROM recipes WHERE recipe_name = $1`;
-
     let queryParametersList = [];
     for (let i = 1; i <= ingredientsNumber; i++) {
         queryParametersList.push('$' + (i * i));
@@ -341,79 +315,52 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), (req, res) => 
         queryParametersList.push('$' + (i * i) + 3);
     }
     let isCategoryAnArray = Array.isArray(req.body.category);
-    if(isCategoryAnArray){
-        req.body.category= req.body.category.filter(value =>{
+    if (isCategoryAnArray) {
+        req.body.category = req.body.category.filter(value => {
             return value != "";
         });
     }
 
     let categoriesNumber = isCategoryAnArray ? req.body.category.length : 1;
 
-
-    const recipeBody = {
-        recipe_name: req.body.recipeName,
-        state: 'Niezweryfikowany',
-        date_of_modification: Date.now(),
-        complicity: req.body.complicity,
-        preparation_time: req.body.preparationTime,
-        description: req.body.description,
-        number_of_people: req.body.numberOfPeople,
-        photo_one: filepathsArray[0],
-        photo_two: filepathsArray[1],
-        photo_three: filepathsArray[2],
-        photo_four: filepathsArray[3],
-        visible_email: req.body.emailAccepted ? "true" : "false"
-    };
-    pgClient.query(addRecipeQueryString, [
-        recipeBody.state,
-        recipeBody.date_of_modification,
-        recipeBody.complicity,
-        recipeBody.preparation_time,
-        recipeBody.description,
-        recipeBody.number_of_people,
-        recipeBody.photo_one,
-        recipeBody.photo_two,
-        recipeBody.photo_three,
-        recipeBody.photo_four,
-        recipeBody.visible_email,
+    const recipeBody = [
+        'Niezweryfikowany',
+        Date.now(),
+        req.body.complicity,
+        req.body.preparationTime,
+        req.body.description,
+        req.body.numberOfPeople,
+        filepathsArray[0],
+        filepathsArray[1],
+        filepathsArray[2],
+        filepathsArray[3],
+        req.body.emailAccepted ? "true" : "false",
         req.body.recipeId
-    ], (addRecipeQueryError, addRecipeQueryResult) => {
-        if (addRecipeQueryError) {
-            throw addRecipeQueryError;
-        }
-        pgClient.query(deleteCategoriesQueryString, [req.body.recipeId], (deleteCategoriesQueryError, deleteCategoriesQueryResult) => {
-            if (deleteCategoriesQueryError) {
-                throw deleteCategoriesQueryError;
-            }
-            console.log(`DELETED ${deleteCategoriesQueryResult.rowCount} CATEGORIES`);
-        });
+    ];
 
-        pgClient.query(deleteIngredientsQueryString, [req.body.recipeId], (deleteIngredientsQueryError, deleteIngredientsQueryResult) => {
-            if (deleteIngredientsQueryError) {
-                throw deleteIngredientsQueryError;
-            }
-            console.log(`DELETED ${deleteIngredientsQueryResult.rowCount} INGREDIENTS`);
-        });
+    const client = await pgClient.connect();
 
+    try {
+        await client.query("BEGIN;");
+        await client.query(addRecipeQueryString, recipeBody);
+        await client.query(deleteCategoriesQueryString, [req.body.recipeId]);
+        await client.query(deleteIngredientsQueryString, [req.body.recipeId]);
         for (let i = 0; i < ingredientsNumber; i++) {
-            pgClient.query(addIngredientsQueryString, [req.body.recipeId, req.body.ingredientName[i], req.body.ingredientUnit[i], req.body.ingredientQuantity[i]],
-                (addIngredientsQueryError, addIngredientsQueryResult) => {
-                    if (addIngredientsQueryError) {
-                        throw addIngredientsQueryError;
-                    }
-                    console.log(addIngredientsQueryResult.command, addIngredientsQueryResult.rowCount);
-                });
+            await client.query(addIngredientsQueryString, [req.body.recipeId, req.body.ingredientName[i], req.body.ingredientUnit[i], req.body.ingredientQuantity[i]]);
         }
         for (let j = 0; j < categoriesNumber; j++) {
-            pgClient.query(insertCategoriesQueryString, [req.body.recipeId, isCategoryAnArray ? req.body.category[j] : req.body.category], (insertCategoriesQueryError, insertCategoriesQueryResult) => {
-                if (insertCategoriesQueryError) {
-                    throw insertCategoriesQueryError;
-                }
-                console.log(insertCategoriesQueryResult.command, insertCategoriesQueryResult.rowCount);
-            });
+            await client.query(insertCategoriesQueryString, [req.body.recipeId, isCategoryAnArray ? req.body.category[j] : req.body.category]);
         }
+        await client.query("COMMIT;");
         res.redirect('/recipes/edit_recipe_confirmation');
-    });
+    } catch (e) {
+        await client.query("ROLLBACK;").catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release();
+    }
 });
 
 router.get('/search/name', (req, res) => {
@@ -453,7 +400,7 @@ router.get('/search/name', (req, res) => {
     });
 });
 
-router.get('/search/categories', (req, res) => {
+router.get('/search/categories', async (req, res) => {
     let categoriesFromRequest = req.query['categories-checkboxes'];
     let categoriesFromRequestAsArray;
     // Check if there is more than one value passed by form
@@ -502,26 +449,37 @@ router.get('/search/categories', (req, res) => {
         INNER JOIN users usr ON rec.user_id = usr.id_user     
     WHERE cat.category_name IN  (${queryParametersList.join(',')}) AND rec.state = 'Zweryfikowany';`;
 
-    // Query PostgreSQL - ops have to be an array (even if there is only one value within)
-    pgClient.query(searchCategoriesQueryString, categoriesFromRequestAsArray, (searchCategoriesQueryError, searchCategoriesQueryResult) => {
-        if (searchCategoriesQueryError) throw searchCategoriesQueryError;
+    const getCategoryPhotoQueryString =
+        `SELECT category_photo FROM categories WHERE category_name = $1`;
+
+    const client = await pgClient.connect();
+
+    try {
+        await client.query("BEGIN;");
+        const recipes = await client.query(searchCategoriesQueryString, categoriesFromRequestAsArray);
         if (categoriesFromRequestAsArray.length === 1) {
-            pgClient.query(`SELECT category_photo FROM categories WHERE category_name = $1`, categoriesFromRequestAsArray, (photoErr, photoRes) => {
-                if (photoErr) throw photoErr;
-                res.render('./recipes/recipe_search_categories', {
-                    searchedCategories: categoriesFromRequestAsArray,
-                    recipes: searchCategoriesQueryResult.rows,
-                    catPhoto: photoRes.rows[0]["category_photo"],
-                    oneCategory: true
-                });
+            const photo = await client.query(getCategoryPhotoQueryString, categoriesFromRequestAsArray);
+            res.render('./recipes/recipe_search_categories', {
+                searchedCategories: categoriesFromRequestAsArray,
+                recipes: recipes.rows,
+                catPhoto: photo.rows[0]["category_photo"],
+                oneCategory: true
             });
         } else {
             res.render('./recipes/recipe_search_categories', {
                 searchedCategories: categoriesFromRequestAsArray,
-                recipes: searchCategoriesQueryResult.rows
+                recipes: recipes.rows
             });
         }
-    });
+        await client.query("COMMIT;");
+    } catch (e) {
+        await client.query("ROLLBACK;").catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release();
+    }
 });
 
 router.post('/search/ingredients', (req, res) => {
