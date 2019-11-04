@@ -63,9 +63,6 @@ const removeDataFromEngine = (user, recipe) => {
 router.get('/recommendations', (req, res) => {
     // get recommendations for current user
     request(`http://localhost:3001/recommendations/${res.locals.userId}`, (error, response, body) => {
-        console.error('error:', error); // Print the error if one occurred
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        console.log(JSON.parse(body)); // Print the HTML for the Google homepage.
         res.json(JSON.parse(body));
     });
 });

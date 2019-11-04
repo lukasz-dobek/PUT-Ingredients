@@ -66,9 +66,6 @@ router.post('/accept_report_transact', async (req, res, e) => {
         const recipeStateQueryString = `
     UPDATE recipes SET state = 'Niezaakceptowany', date_of_modification = TO_TIMESTAMP(${Date.now()} / 1000.0) WHERE id_recipe = $1`;
 
-        const testQS = `
-    DELETE FROM units WHERE unit_namelol = 'trolle'`;
-
         const { reportId, recipeId } = req.body;
 
         await client.query('BEGIN');
