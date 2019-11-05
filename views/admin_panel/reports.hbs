@@ -104,7 +104,7 @@
     }
 
     function acceptReport(reportId, recipeId) {
-        $.post('/api/reports/accept_report_transact', {
+        $.post('/api/reports/accept_report', {
             reportId: reportId,
             recipeId: recipeId
         }).done(() => {
