@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     res.render('./admin_panel/main', { layout: 'layout_admin_panel' });
 });
 
-router.get('/recipes/:linkToRecipe', (req, res) => {
+router.get('/recipes/:linkToRecipe', async (req, res) => {
     const recipeQueryString = `
     SELECT 
         rec.id_recipe, 
@@ -59,73 +59,84 @@ router.get('/recipes/:linkToRecipe', (req, res) => {
 
     const linkToRecipe = '/recipes/'.concat(req.params.linkToRecipe);
 
-    pgClient.query(recipeQueryString, [linkToRecipe], (recipeQueryError, recipeQueryResult) => {
-        if (recipeQueryError) throw recipeQueryError;
-        const recipeId = recipeQueryResult.rows[0]["id_recipe"];
-        pgClient.query(ingredientsQueryString, [recipeId], (ingredientsQueryError, ingredientsQueryResult) => {
-            if (ingredientsQueryError) throw ingredientsQueryError;
-            /* 
-            
-            Recipe fields: id_recipe, recipe_name, score, date_of_creation, complicity, preparation_time, description
-            number_of_people, link_to_recipe, photo_one, photo_two, photo_three, photo_four, email_address, nickname.
+    const client = await pgClient.connect();
 
-            Ingredients fields: ingredient_name, amount, unit_name.
+    try {
+        await client.query("BEGIN");
+        const recipe = await client.query(recipeQueryString, [linkToRecipe]);
+        const recipeId = recipe.rows[0]["id_recipe"];
+        console.log(recipeId);
 
-            */
-            pgClient.query(alternativeIngredientsQueryString, [recipeId], (alternativeIngredientsQueryError, alternativeIngredientsQueryResult) => {
-                if (alternativeIngredientsQueryError) {
-                    throw alternativeIngredientsQueryError;
-                }
-                res.render('./admin_panel/recipe_page_admin', {
-                    layout: 'layout_admin_panel',
-                    recipe: recipeQueryResult.rows,
-                    ingredients: ingredientsQueryResult.rows,
-                    alternative_ingredients: alternativeIngredientsQueryResult.rows
-                });
-            });
+        const ingredients = await client.query(ingredientsQueryString, [recipeId]);
+        const alternativeIngredients = await client.query(alternativeIngredientsQueryString, [recipeId]);
+        await client.query("COMMIT");
+        res.render('./admin_panel/recipe_page_admin', {
+            layout: 'layout_admin_panel',
+            recipe: recipe.rows,
+            ingredients: ingredients.rows,
+            alternative_ingredients: alternativeIngredients.rows
         });
-    });
+    } catch (e) {
+        await client.query("ROLLBACK").catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release();
+    }
 });
 
-router.get('/reports/:id', (req, res) => {
-    const reportsQueryString = `
-    SELECT 
-        rep.id_report,
-        rep.reportee_id,
-        usr_a.nickname as reportee_nickname,
-        rep.reported_id,
-        usr_b.nickname as reported_nickname,
-        usr_b.email_address as reported_email,
-        rec.recipe_name,
-        rep.recipe_id,
-        rep.description,
-        TO_CHAR(rep.date_of_report, 'DD/MM/YY') AS data,
-        TO_CHAR(rep.date_of_report, 'HH24:MI:SS') AS godzina,
-        CASE rep.status
-            WHEN 0 THEN 'Aktywne'
-            WHEN 1 THEN 'Unieważnione'
-            WHEN 2 THEN 'Zweryfikowane'
-        END AS status
-    FROM reports rep
-        INNER JOIN users usr_a ON rep.reportee_id = usr_a.id_user
-        INNER JOIN users usr_b ON rep.reported_id = usr_b.id_user
-        INNER JOIN recipes rec ON rep.recipe_id = rec.id_recipe
-    WHERE rep.recipe_id = $1;`
+router.get('/reports/:id', async (req, res) => {
+    const reportsQueryString =
+        `SELECT 
+            rep.id_report,
+            rep.reportee_id,
+            usr_a.nickname as reportee_nickname,
+            rep.reported_id,
+            usr_b.nickname as reported_nickname,
+            usr_b.email_address as reported_email,
+            rec.recipe_name,
+            rep.recipe_id,
+            rep.description,
+            TO_CHAR(rep.date_of_report, 'DD/MM/YY') AS data,
+            TO_CHAR(rep.date_of_report, 'HH24:MI:SS') AS godzina,
+            CASE rep.status
+                WHEN 0 THEN 'Aktywne'
+                WHEN 1 THEN 'Unieważnione'
+                WHEN 2 THEN 'Zweryfikowane'
+            END AS status
+        FROM reports rep
+            INNER JOIN users usr_a ON rep.reportee_id = usr_a.id_user
+            INNER JOIN users usr_b ON rep.reported_id = usr_b.id_user
+            INNER JOIN recipes rec ON rep.recipe_id = rec.id_recipe
+        WHERE rep.recipe_id = $1;`;
 
-    const recipeQueryString = `SELECT recipe_name FROM recipes WHERE id_recipe = $1;`;
+    const recipeQueryString =
+        `SELECT recipe_name FROM recipes WHERE id_recipe = $1;`;
 
-    let recipeId = req.params.id;
-    pgClient.query(reportsQueryString, [recipeId], (reportsQueryError, reportsQueryResult) => {
-        if (reportsQueryError) {
-            throw reportsQueryError;
-        }
-        pgClient.query(recipeQueryString, [recipeId], (recipeQueryError, recipeQueryResult) => {
-            if (recipeQueryError) {
-                throw recipeQueryError;
-            }
-            res.render('./admin_panel/reports', { layout: 'layout_admin_panel', reportsInfo: reportsQueryResult.rows, recipeName: recipeQueryResult.rows[0]["recipe_name"]});
+    const { id: recipeId } = req.params;
+
+    const client = await pgClient.connect();
+
+    try {
+        await client.query("BEGIN");
+        const reports = await client.query(reportsQueryString, [recipeId]);
+        const recipes = await client.query(recipeQueryString, [recipeId]);
+        await client.query("COMMIT");
+        res.render('./admin_panel/reports', { 
+            layout: 'layout_admin_panel',
+            reportsInfo: reports.rows,
+            recipeName: recipes.rows[0]["recipe_name"]
         });
-    });
+
+    } catch (e) {
+        await client.query("ROLLBACK").catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release()
+    }
 });
 
 router.get('/user_management', (req, res) => {
@@ -210,10 +221,10 @@ router.post('/user_management', (req, res) => {
     });
 });
 
-router.get('/user_management/:nickname', (req, res) => {
+router.get('/user_management/:nickname', async (req, res) => {
     let nickname = req.params.nickname;
-    const userInfoQueryString = `
-    SELECT 
+    const userInfoQueryString = 
+    `SELECT 
         email_address,
         nickname, 
         name, 
@@ -232,8 +243,8 @@ router.get('/user_management/:nickname', (req, res) => {
         id_user
     FROM users WHERE nickname = $1;`;
 
-    const userActivitiesQueryString = `
-    SELECT 
+    const userActivitiesQueryString = 
+    `SELECT 
         TO_CHAR(usa.date_of_activity, 'YY/MM/DD') AS data,
         TO_CHAR(usa.date_of_activity, 'HH24:MI:SS') AS godzina,
         usa.activity_name,
@@ -242,17 +253,27 @@ router.get('/user_management/:nickname', (req, res) => {
     FROM user_activities usa INNER JOIN users usr ON usa.user_id = usr.id_user
     WHERE usr.nickname = $1
     ORDER BY date_of_activity DESC;`
-    pgClient.query(userInfoQueryString, [nickname], (userInfoQueryError, userInfoQueryResult) => {
-        if (userInfoQueryError) {
-            throw userInfoQueryError;
-        }
-        pgClient.query(userActivitiesQueryString, [nickname], (userActivitiesQueryError, userActivitiesQueryResult) => {
-            if (userActivitiesQueryError) {
-                throw userActivitiesQueryError;
-            }
-            res.render('./admin_panel/user_management_details', { layout: 'layout_admin_panel', userInfo: userInfoQueryResult.rows, userActivities: userActivitiesQueryResult.rows });
+
+    const client = await pgClient.connect();
+
+    try {
+        await client.query("BEGIN");
+        const user = await client.query(userInfoQueryString, [nickname]);
+        const userActivities = await client.query(userActivitiesQueryString, [nickname]);
+        await client.query("COMMIT");
+        res.render('./admin_panel/user_management_details', {
+            layout: 'layout_admin_panel', 
+            userInfo: user.rows, 
+            userActivities: userActivities.rows 
         });
-    });
+    } catch (e) {
+        await client.query("ROLLBACK").catch(er => {
+            console.log(er);
+        });
+        return e;
+    } finally {
+        client.release()
+    }
 });
 
 router.get('/recipe_management', (req, res) => {
@@ -288,7 +309,7 @@ router.post('/recipe_management', (req, res) => {
 
     let whereReported = "";
 
-    if (isReported !== "2"){
+    if (isReported !== "2") {
         isReported = req.body.isReported == 1 ? 'NOT NULL' : 'NULL';
         whereReported = `AND (SELECT DISTINCT 1 FROM reports rep WHERE rep.recipe_id = rec.id_recipe AND rep.status = 0 OR rep.status = 2) IS ${isReported}`;
     }
