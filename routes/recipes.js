@@ -137,7 +137,7 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), async (req, res) =
         });
         return e;
     } finally {
-        client.release()
+        client.release();
     }
 });
 
