@@ -124,7 +124,7 @@ router.post('/reset_password/:hash', async (req, res) => {
             }
             argon2.hash(password).then(async hashedPassword => {
                 await client.query(updatePasswordQueryString, [hashedPassword, hash]);
-
+                await client.query("COMMIT");
                 req.flash('success_msg', 'Hasło zmienione poprawnie!');
                 res.redirect('/login');
             }).catch(hashErr => {
