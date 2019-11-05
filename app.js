@@ -99,8 +99,10 @@ handlebars.registerPartials(__dirname.concat('/views/partials'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use(logger(':date[iso] - [:method] - :url :status - :response-time ms'));
-
+// Morgan configuration - log in specific format and ignore urls starting with stuff from public dir
+app.use(logger(':date[iso] - [:method] - :url :status - :response-time ms', {
+  skip: (req, res) => req.url.match(/^\/(images)|(javascripts)|(stylesheets)/g)
+}));
 // Allow express to use json in requests and responses
 // Extended true - we might want to use more complex forms
 app.use(express.json());
