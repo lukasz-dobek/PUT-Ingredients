@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const pgClient = require('./../db/pg-controller');
+const pgClient = require('../db/PGController');
 const argon2 = require('argon2');
 
 module.exports =  function(passport) {

@@ -13,7 +13,7 @@ const favicon = require('serve-favicon');
 
 const { ensureAuthenticated } = require('./config/auth');
 const { ensureAdministrator } = require('./config/auth');
-const pgClient = require('./db/pg-controller');
+const pgClient = require('./db/PGController');
 // Favicon handler
 
 // Routers
@@ -99,8 +99,10 @@ handlebars.registerPartials(__dirname.concat('/views/partials'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use(logger(':date[iso] - [:method] - :url :status - :response-time ms'));
-
+// Morgan configuration - log in specific format and ignore urls starting with stuff from public dir
+app.use(logger(':date[iso] - [:method] - :url :status - :response-time ms', {
+  skip: (req, res) => req.url.match(/^\/(images)|(javascripts)|(stylesheets)/g)
+}));
 // Allow express to use json in requests and responses
 // Extended true - we might want to use more complex forms
 app.use(express.json());
@@ -109,7 +111,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   store: new pgSession({
     pool: pgClient,                // Connection pool
-    tableName: 'user_session'   // Use another table-name than the default "session" one
+    tableName: 'user_session',   // Use another table-name than the default "session" one
+    schemaName: 'public',
   }),
   secret: process.env.FOO_COOKIE_SECRET,
   resave: true,

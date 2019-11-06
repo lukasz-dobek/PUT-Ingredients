@@ -1,16 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const pgClient = require('../../db/pg-controller');
+const pgClient = require('../../db/PGController');
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const addVoteQueryString = `
     INSERT INTO user_votes (user_id, recipe_id, score, date_of_vote) VALUES
-    ($1, $2, $3, TO_TIMESTAMP($4/ 1000.0));
-    `;
+    ($1, $2, $3, TO_TIMESTAMP($4/ 1000.0));`;
+
+    const { recipeId, vote: score, voteDate: date } = req.body;
+
     const userId = res.locals.userId;
-    const recipeId = req.body.recipeId;
-    const score = req.body.vote;
-    const date = req.body.voteDate;
 
     const getNumberOfVotesPerRecipeQueryString = `
     SELECT 
@@ -25,27 +24,24 @@ router.post('/', (req, res) => {
     SET score = $1
     WHERE id_recipe = $2;`;
 
-
-    pgClient.query(addVoteQueryString, [userId, recipeId, score, date], (addVoteQueryError, addVoteQueryResult) => {
-        if (addVoteQueryError) {
-            throw addVoteQueryError;
-        }
-        pgClient.query(getNumberOfVotesPerRecipeQueryString, [recipeId], (getNumberOfVotesPerRecipeQueryError, getNumberOfVotesPerRecipeQueryResult) => {
-            if (getNumberOfVotesPerRecipeQueryError) {
-                throw getNumberOfVotesPerRecipeQueryError;
-            }
-            let numberOfVotes = getNumberOfVotesPerRecipeQueryResult.rows[0]["number_of_votes"];
-            let averageScore = getNumberOfVotesPerRecipeQueryResult.rows[0]["average_score"];
-            
-            pgClient.query(updateRecipeScoreQueryString, [averageScore, recipeId], (updateRecipeScoreQueryError, updateRecipeScoreQueryResult) => {
-                if (updateRecipeScoreQueryError) {
-                    throw updateRecipeScoreQueryError;
-                }
-                console.log(`POST /votes - query successful - ${addVoteQueryResult.rowCount} added`);
-                res.json(addVoteQueryResult.rows);   
-            });
+    const client = await pgClient.connect();
+    try {
+        await client.query("BEGIN");
+        const result = await client.query(addVoteQueryString, [userId, recipeId, score, date]);
+        const query = await client.query(getNumberOfVotesPerRecipeQueryString, [recipeId]);
+        let numberOfVotes = query.rows[0]["number_of_votes"];
+        let averageScore = query.rows[0]["average_score"];
+        await client.query(updateRecipeScoreQueryString, [averageScore, recipeId]);
+        await client.query("COMMIT");
+        res.json(result.rows);
+    } catch (e) {
+        await client.query("ROLLBACK").catch(er => {
+            console.log(er);
         });
-    });
+        return e;
+    } finally {
+        client.release();
+    }
 });
 
 router.get('/:recipeId/:userEmail', (req, res) => {

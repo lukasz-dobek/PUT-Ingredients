@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pgClient = require('../../db/pg-controller');
+const pgClient = require('../../db/PGController');
 
 router.get('/recipes_in_month', (req, res) => {
     const recipesInMonthsQueryString = `
