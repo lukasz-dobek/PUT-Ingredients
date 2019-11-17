@@ -56,7 +56,7 @@ $.getJSON(`/api/votes/${recipeId}/${currentUserEmail}`, (jsonData) => {
                     voteDate: Date.now()
                 }).done(function () {
                     location.reload(true);
-                });
+                }).catch(er => console.log(er));
             }
         };
         starBox.appendChild(star);

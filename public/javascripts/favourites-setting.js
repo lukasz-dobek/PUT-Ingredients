@@ -16,7 +16,7 @@ function uncolourHeart(element) {
     element.style.color = "";
 }
 
-function addToFavourites(e, userId) {
+function setFavourite(e, userId) {
     let heart = document.getElementById(e.target.id);
     let recipeId = splitRecipeId(heart.id);
     if (heart.classList.contains('far')) {
