@@ -10,7 +10,7 @@ async function getCategoryNames() {
     return categories;
 }
 
-function splitRecipeId(elementId) {
+function splitElementId(elementId) {
     return elementId.split('_')[1];
 }
 
@@ -48,4 +48,4 @@ async function deleteData(url = '', data = {}) {
     return await response.json(); // parses JSON response into native JavaScript objects
 }
 
-export { getCategoryNames, postData, deleteData, splitRecipeId };
+export { getCategoryNames, postData, deleteData, splitElementId };

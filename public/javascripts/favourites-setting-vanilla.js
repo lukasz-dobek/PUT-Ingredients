@@ -1,4 +1,4 @@
-import { postData, deleteData, splitRecipeId } from './common.js';
+import { postData, deleteData, splitElementId } from './common.js';
 
 function colorHeartAsFavourite(element) {
     element.classList = [];
@@ -14,7 +14,7 @@ function uncolourHeart(element) {
 
 window.setFavourite = async function (e, userId) {
     let heart = document.getElementById(e.target.id);
-    let recipeId = splitRecipeId(heart.id);
+    let recipeId = splitElementId(heart.id);
     if (heart.classList.contains('far')) {
         colorHeartAsFavourite(heart);
         const response = await postData("/api/favourites/", {
@@ -39,9 +39,9 @@ const currentUserEmail = document.getElementById('userProfileDropdown').textCont
     const favourites = document.querySelectorAll('[id^="favouritesButton_"]');
 
     Object.values(favourites).forEach(async favourite => {
-        const categoryBox = document.getElementById(`categoryBox_${splitRecipeId(favourite.id)}`);
-        recipesOnPage.push(parseInt(splitRecipeId(favourite.id)));
-        const request = await fetch(`/api/categories/recipe/${splitRecipeId(favourite.id)}`);
+        const categoryBox = document.getElementById(`categoryBox_${splitElementId(favourite.id)}`);
+        recipesOnPage.push(parseInt(splitElementId(favourite.id)));
+        const request = await fetch(`/api/categories/recipe/${splitElementId(favourite.id)}`);
         const categories = await request.json()
         categories.forEach(category => {
             let pill = document.createElement('span');
