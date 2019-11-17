@@ -1,5 +1,6 @@
 let heart = document.querySelectorAll('[id^="favouritesButton_"]')[0];
-let recipeId = splitRecipeId(heart.id);
+let recipeId = splitElementId(heart.id);
+const currentUserEmail = document.getElementById('userProfileDropdown').textContent.trim();
 
 function splitNumber(elementId) {
     return elementId.split('_')[1];
