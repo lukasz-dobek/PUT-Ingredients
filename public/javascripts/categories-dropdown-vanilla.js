@@ -1,11 +1,7 @@
-(async () => {
-    const categoriesPromise = await fetch("/api/categories/all");
-    const categoriesJSON = await categoriesPromise.json();
-    const categories = [];
+import { getCategoryNames } from './common.js';
 
-    categoriesJSON.forEach(element => {
-        categories.push(element["category_name"]);
-    });
+(async () => {
+    const categories = await getCategoryNames();
 
     let dropdownCategories = document.getElementById('dropdownCategories');
     let dropdownUnorderedList = document.createElement('ul');
