@@ -1,12 +1,8 @@
 import { splitElementId, postData } from './common.js'
 
-let heart = document.querySelectorAll('[id^="favouritesButton_"]')[0];
-let recipeId = splitElementId(heart.id);
+const heart = document.querySelectorAll('[id^="favouritesButton_"]')[0];
+const recipeId = splitElementId(heart.id);
 const currentUserEmail = document.getElementById('userProfileDropdown').textContent.trim();
-
-function splitNumber(elementId) {
-    return elementId.split('_')[1];
-}
 
 function hasVoted() {
     let starBox = document.getElementById('starBox');
@@ -35,7 +31,7 @@ function hasVoted() {
         star.id = `scoreStar_${i}`;
         star.addEventListener("click", async (e) => {
             let star = document.getElementById(e.target.id);
-            let scoreValue = parseInt(splitNumber(star.id)) + 1;
+            let scoreValue = parseInt(splitElementId(star.id)) + 1;
             if (!hasVoted()) {
                 return alert('Nie możesz zagłosować na przepis, na który już zagłosowałeś!');
             } else {
