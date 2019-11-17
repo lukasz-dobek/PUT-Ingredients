@@ -46,7 +46,7 @@ router.post('/send_email', (req, res) => {
     let message = `${messageContent} <br><br> Wiadomość została wysłana za pomocą panelu administracyjnego. W celu bezkonfliktowego kontaktu proszę odpowiedz na adres ${adminEmail}.`;
 
     mailClient.sendEmail(userEmail, subject, message);
-    res.send('Mail sent.');
+    res.json('sent-ok');
 });
 
 router.post('/send_shopping_list', (req, res) => {
