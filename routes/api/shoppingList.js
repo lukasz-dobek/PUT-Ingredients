@@ -106,9 +106,11 @@ router.delete('/shoppingList', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
-    } finally {
+        console.log(e);
+        return next(e);
+        } finally {
         client.release();
     }
 });

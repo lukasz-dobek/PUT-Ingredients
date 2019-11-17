@@ -134,8 +134,10 @@ router.post('/add_new_recipe', upload.array('imageInput', 4), async (req, res) =
     } catch (e) {
         await client.query('ROLLBACK').catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release();
     }
@@ -226,8 +228,10 @@ router.get('/:linkToRecipe', async (req, res, next) => {
     } catch (e) {
         await client.query("ROLLBACK;").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release();
     }
@@ -356,8 +360,10 @@ router.post('/:linkToRecipe/edit', upload.array('imageInput', 4), async (req, re
     } catch (e) {
         await client.query("ROLLBACK;").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release();
     }
@@ -475,8 +481,10 @@ router.get('/search/categories', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK;").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release();
     }

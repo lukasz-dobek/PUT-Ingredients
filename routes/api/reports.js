@@ -25,8 +25,10 @@ router.post('/revoke_report', async (req, res) => {
     } catch (e) {
         await client.query('ROLLBACK').catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release()
     }
@@ -50,8 +52,10 @@ router.post('/accept_report', async (req, res, e) => {
     } catch (e) {
         await client.query('ROLLBACK').catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release()
     }

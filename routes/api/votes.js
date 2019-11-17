@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pgClient = require('../../db/PGController');
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     const addVoteQueryString = `
     INSERT INTO user_votes (user_id, recipe_id, score, date_of_vote) VALUES
     ($1, $2, $3, TO_TIMESTAMP($4/ 1000.0));`;
@@ -21,7 +21,8 @@ router.post('/', async (req, res) => {
 
     const updateRecipeScoreQueryString = `
     UPDATE recipes
-    SET score = $1
+    SET score = $1, 
+    date_of_modification = TO_TIMESTAMP(${Date.now()} / 1000.0)
     WHERE id_recipe = $2;`;
 
     const client = await pgClient.connect();
@@ -37,8 +38,10 @@ router.post('/', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.error(e);
+        return next(e);
     } finally {
         client.release();
     }
