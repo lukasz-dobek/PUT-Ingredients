@@ -10,11 +10,11 @@ router.get('/all', (req, res) => {
 });
 
 router.get('/email/:email',(req,res)=>{
-    const  queryString = `SELECT * FROM users WHERE email_address = $1`;
+    const  queryString = `SELECT email_address FROM users WHERE email_address = $1`;
     const emailValue = req.params.email;
     pgClient.query(queryString,[emailValue],(err,result)=>{
         if(err) throw err;
-        res.json(result.rows);
+        res.json(result.rowCount);
     })
 });
 
