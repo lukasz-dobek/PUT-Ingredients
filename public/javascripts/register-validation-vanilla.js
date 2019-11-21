@@ -35,12 +35,11 @@ document.addEventListener("submit", function (event) {
 
 function hasError(field) {
 
-    if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button' || field.URL) return;
+    if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button' || field.URL || field.id === "exampleModalLong") return;
 
     if (arePasswordsEquivalent()) {
         if (field.name === 'passwordConfirm') return 'Hasła nie zgadzają się.';
     }
-
     let validity = field.validity;
 
     if (validity.valid) return;
@@ -72,8 +71,8 @@ function hasError(field) {
 
 function showError(field, error) {
 
-    if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button' || field.URL) return;
-
+    if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button' || field.URL || field.id === "exampleModalLong") return;
+    
     field.classList.add('error');
 
     let id = field.id;
@@ -103,8 +102,8 @@ function showError(field, error) {
 };
 
 function removeError(field) {
-    if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button' || field.URL) return;
-
+    if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button' || field.URL || field.id === "exampleModalLong") return;    
+    
     field.classList.remove('error');
     field.removeAttribute('aria-describedby');
 
