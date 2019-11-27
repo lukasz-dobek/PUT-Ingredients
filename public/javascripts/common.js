@@ -14,6 +14,10 @@ function splitElementId(elementId) {
     return elementId.split('_')[1];
 }
 
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
 async function postData(url = '', data = {}) {
     // Default options are marked with *
     const response = await fetch(url, {
@@ -48,4 +52,4 @@ async function deleteData(url = '', data = {}) {
     return await response.json(); // parses JSON response into native JavaScript objects
 }
 
-export { getCategoryNames, postData, deleteData, splitElementId };
+export { getCategoryNames, postData, deleteData, splitElementId, insertAfter };
