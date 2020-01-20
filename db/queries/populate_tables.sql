@@ -10,50 +10,6 @@ INSERT INTO users (email_address,password,nickname,date_of_join,name,surname,is_
 ('jfq23989@bcaoo.com','$argon2i$v=19$m=4096,t=3,p=1$5Z6sleuhvp1FLzrm8Nr6bg$3XNIYuhNp+1/hrMo/hAdy+D6/tqeWIWibDrX1Llq+J4','NoneOne','2019-03-06 20:58:10.237','Kamil','Nowal',false,0,'61aff79bbff3ddbdbc7ac6bdda4ac722356aa36bd902d2a1d0e290e56f7824b4616b116ab41c4e091fda4af07182ae2c'),
 ('adepcio@gmail.com','$argon2i$v=19$m=4096,t=3,p=1$QQwvDUGaIWmp/hxUy8F/7A$O9RTi42j+4146zqFN/n5TAaGpjMZAz3NGFy4Vci8xeU','Łukasz','2019-03-11 20:59:48.111','Łukasz','Dobek',false,1,null);
 
-
--- INSERT INTO user_activities (user_id,date_of_login,browser_info) VALUES
--- (1,'2019-06-01 08:11:09.931','Mozzila Firefox'),
--- (2,'2019-06-01 14:11:20.319','Internet Explorer'),
--- (4,'2019-06-01 15:12:30.130','Google Chrome'),
--- (7,'2019-06-02 20:17:20.337','Mozzila Firefox'),
--- (10,'2019-06-02 20:19:35.860','Google Chrome'),
--- (3,'2019-06-02 22:19:21.330','Google Chrome'),
--- (2,'2019-06-03 09:19:21.330','Safari'),
--- (8,'2019-06-03 22:01:27.625','Microsoft Edge'),
--- (4,'2019-06-04 11:55:21.310','Google Chrome'),
--- (6,'2019-06-04 22:11:27.625','Google Chrome'),
--- (5,'2019-06-04 23:13:37.623','Mozzila Firefox'),
--- (2,'2019-06-05 22:51:25.555','Internet Explorer'),
--- (8,'2019-06-05 22:56:26.611','Opera'),
--- (7,'2019-06-05 23:11:33.325','Mozzila Firefox'),
--- (3,'2019-06-05 23:13:27.828','Google Chrome'),
--- (10,'2019-06-06 06:03:26.668','Google Chrome'),
--- (2,'2019-06-06 06:07:25.008','Safari'),
--- (1,'2019-06-06 06:44:34.062','Microsoft Edge'),
--- (4,'2019-06-07 02:03:26.111','Mozzila Firefox'),
--- (6,'2019-06-07 07:49:19.955','Opera'),
--- (6,'2019-06-07 08:35:56.131','Mozzila Firefox'),
--- (10,'2019-06-08 10:16:26.369','Internet Explorer'),
--- (8,'2019-06-08 11:17:37.100','Opera'),
--- (3,'2019-06-08 21:11:23.355','Mozzila Firefox'),
--- (7,'2019-06-08 22:21:34.669','Google Chrome'),
--- (10,'2019-06-08 23:25:45.330','Google Chrome'),
--- (2,'2019-06-08 23:57:57.980','Safari'),
--- (10,'2019-06-09 06:21:32.025','Microsoft Edge'),
--- (4,'2019-06-09 14:04:01.090','Mozzila Firefox'),
--- (6,'2019-06-09 15:33:47.105','Opera'),
--- (5,'2019-06-09 15:41:31.112','Mozzila Firefox'),
--- (2,'2019-06-09 16:41:21.518','Internet Explorer'),
--- (8,'2019-06-09 22:32:59.199','Opera'),
--- (5,'2019-06-10 04:55:10.005','Mozzila Firefox'),
--- (5,'2019-06-10 07:13:13.828','Google Chrome'),
--- (3,'2019-06-11 08:03:26.668','Google Chrome'),
--- (2,'2019-06-11 09:19:25.808','Safari'),
--- (2,'2019-06-11 14:57:55.062','Microsoft Edge'),
--- (4,'2019-06-12 16:03:26.181','Mozzila Firefox'),
--- (6,'2019-06-14 18:47:00.205','Google Chrome');
-
-
 INSERT INTO categories (category_name, category_photo) VALUES
 ('Śniadanie', '/images/sniadanie.jpeg'),
 ('Obiad', '/images/obiad.jpeg'),
@@ -79,7 +35,6 @@ INSERT INTO categories (category_name, category_photo) VALUES
 ('Kuchnia angielska', '/images/kuchnia-angielska.jpeg'),
 ('Kuchnia orientalna', '/images/kuchnia-orientalna.jpeg');
 
-
 INSERT INTO types (name) VALUES
 ('warzywa'),
 ('owoce'),
@@ -96,7 +51,6 @@ INSERT INTO types (name) VALUES
 ('napoje'),
 ('wyroby cukiernicze');
 
-
 INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (1,'Marchew'),
 (1,'Pomidor'),
@@ -110,7 +64,7 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (7,'Shitake'),
 (14,'Miód'),
 (4,'Twaróg'),
-(4,'Jajka'),
+(4,'Jajko'),
 (4,'Mleko'),
 (9,'Mąka pszenna'),
 (9,'Proszek do pieczenia'),
@@ -180,7 +134,7 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (10,'Sól'),
 (10,'Pieprz'),
 (4,'Śmietana gęsta'),
-(1,'Fasolka świża'),
+(1,'Fasolka świeża'),
 (10,'Fasolka suszona'),
 (12,'Fasolka z puszki'),
 (10,'Papryczka chilli'),
@@ -202,7 +156,7 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (12,'Sos rybny'),
 (1,'Sok z cytryny'),
 (10,'Kolendra'),
-(9,'Makraon'),
+(9,'Makaron'),
 (11,'Łosoś wędzony'),
 (10,'Koperek'),
 (4,'Śmietanka 30%'),
@@ -221,7 +175,6 @@ INSERT INTO ingredients (type_id,ingredient_name) VALUES
 (9,'Tortilla'),
 (2,'Truskawki'),
 (1,'Sok z limonki');
-
 
 INSERT INTO recipes (user_id,recipe_name,state,score,date_of_creation,date_of_modification,complicity,preparation_time,description,number_of_people,photo_one, photo_two, photo_three, photo_four, link_to_recipe, visible_email) VALUES
 (5,'Zielone Pesto','Zweryfikowany',0.0,'2019-03-12 21:00:00',null,1,'30min','Wszystkie składniki utrzeć w moździerzu lub zmiksować rozdrabniaczem (lub mini melakserem lub blenderem), tak aby powstały małe drobinki składników, na koniec doprawić solą morską i pieprzem.',6,'/images/pesto_1.jpeg','/images/pesto_2.jpeg','/images/pesto_3.jpeg','/images/pesto_4.jpeg', '/recipes/zielone_pesto', true),
@@ -273,7 +226,6 @@ Zmiksować na płynny koktajl.',1,'/images/koktajl-z-borowek_1.jpeg','/images/ko
 W drugiej misce wymieszać mąkę z proszkiem do pieczenia. Krótko połączyć składniki z dwóch misek za pomocą łyżki na dość gęstą masę.
 Rozgrzać patelnię (np. naleśnikową lub inną z nieprzywierającą powłoką), nakładać po 2 łyżki ciasta na jednego placka, wyrównać powierzchnię i smażyć na średnim ogniu do czasu aż urosną i będą ładnie zrumienione przez około 2,5 minuty.
 Gdy placki trochę podrosną wcisnąć w ciasto po ok. 4 plasterki truskawek. Przewrócić na drugą stronę i smażyć do zrumienienia w podobnym czasie jak poprzednio. Posypać cukrem pudrem.',4,'/images/placki-serowe-z-truskawkami_1.jpeg',NULL,NULL,NULL, '/recipes/placki_serowe_z_truskawkami', true);
-
 
 INSERT INTO units (unit_name) VALUES
 ('g'),
@@ -327,66 +279,12 @@ INSERT INTO categories_per_recipe (recipe_id,category_id) VALUES
 (15,1),
 (15,6);
 
-
-INSERT INTO favourites (user_id, recipe_id, date_of_favourite) VALUES
-(1,1,'2019-04-03 19:23:30'),
-(3,7,'2019-04-23 21:00:20'),
-(7,4,'2019-05-01 13:34:44'),
-(8,7,'2019-05-11 06:24:34'),
-(1,3,'2019-05-27 11:11:30'),
-(2,11,'2019-05-28 19:44:21'),
-(4,1,'2019-06-02 10:12:23'),
-(4,5,'2019-06-09 10:16:13'),
-(3,9,'2019-06-11 19:57:37'),
-(5,12,'2019-06-19 14:34:04'),
-(8,13,'2019-06-20 15:53:55'),
-(1,14,'2019-06-24 23:23:34'),
-(2,15,'2019-06-28 17:19:07'),
-(6,8,'2019-07-01 18:18:33'),
-(2,10,'2019-07-01 20:03:55'),
-(5,8,'2019-07-02 10:52:15'),
-(7,2,'2019-07-02 12:12:22');
-
-
--- INSERT INTO user_votes (user_id,recipe_id,score, date_of_vote) VALUES
--- (1,3,3.0,'2019-04-03 19:23:30'),
--- (3,10,3.5,'2019-04-03 21:23:30'),
--- (8,4,4.0,'2019-04-11 13:30:00'),
--- (8,7,4.5,'2019-04-13 11:23:30'),
--- (1,2,2.0,'2019-04-23 12:23:30'),
--- (2,1,5.0,'2019-05-03 14:23:30'),
--- (4,4,3.5,'2019-05-05 18:12:23'),
--- (1,5,3.0,'2019-05-06 18:23:30'),
--- (2,7,3.5,'2019-05-13 22:23:30'),
--- (2,14,4.0,'2019-05-27 13:30:00'),
--- (7,7,4.5,'2019-05-28 12:23:30'),
--- (5,2,2.0,'2019-05-29 19:23:30'),
--- (5,10,5.0,'2019-05-30 20:23:30'),
--- (4,3,3.5,'2019-05-30 21:12:23'),
--- (1,9,3.0,'2019-06-01 02:23:30'),
--- (3,5,3.5,'2019-06-03 06:23:30'),
--- (8,14,4.0,'2019-06-05 11:30:00'),
--- (6,7,4.5,'2019-06-10 19:23:30'),
--- (1,12,2.0,'2019-06-13 05:23:30'),
--- (2,11,5.0,'2019-06-18 14:23:30'),
--- (4,14,3.5,'2019-06-19 14:12:23'),
--- (1,1,3.0,'2019-06-20 20:23:30'),
--- (6,3,3.5,'2019-06-21 22:23:30'),
--- (2,4,4.0,'2019-06-23 13:30:00'),
--- (7,15,4.5,'2019-06-24 16:23:30'),
--- (5,15,2.0,'2019-07-01 16:23:30'),
--- (5,11,5.0,'2019-07-01 19:23:30'),
--- (1,9,3.5,'2019-07-02 10:12:23'),
--- (3,14,4.5,'2019-07-02 19:12:23');
-
-
 INSERT INTO reports (reportee_id,reported_id,assigned_admin_id,recipe_id,description,status,date_of_report) VALUES
 (8,1,3,7,'LOREM IPSUM',0,'2019-04-12'),
 (4,3,8,4,'LOREM IPSUM TESTOWANIE',0,'2019-04-12'),
 (2,7,3,6,'Naruszenie regulaminu',1,'2019-04-01'),
 (2,3,8,1,'Nie lubie go',0,'2019-04-02'),
 (6,8,3,5,'LOREM IPSU',-1,'2019-03-12');
-
 
 INSERT INTO ingredients_used_in_recipe (recipe_id,ingredient_id,unit_id,amount) VALUES
 (1,57,1,'25'),
@@ -517,7 +415,6 @@ INSERT INTO ingredients_used_in_recipe (recipe_id,ingredient_id,unit_id,amount) 
 (15,15,7,'0.3'),
 (15,16,5,'2'),
 (15,122,1,'60');
-
 
 INSERT INTO alternative_ingredients (ingredient_id,replacement_id) VALUES
 (8,11),
