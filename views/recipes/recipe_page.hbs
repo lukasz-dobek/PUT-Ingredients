@@ -30,8 +30,7 @@
 
         <div class="col">
           <p style="text-align:right;">
-            <i class="far fa-heart" id="favouritesButton_{{id_recipe}}"
-              onClick="addToFavourites(event, {{@root.userId}})"
+            <i class="far fa-heart" id="favouritesButton_{{id_recipe}}" onClick="setFavourite(event, {{@root.userId}})"
               style="font-size: 1.7vw; position: absolute; bottom:0.4vw; right:1vw"></i>
           </p>
         </div>
@@ -124,11 +123,7 @@
         </div>
         <div class="col">
           <p style="font-size: 1.5vw; color: #F8D93F; text-align: right" id="starBox"></p>
-          {{!-- <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i> --}}
+
         </div>
       </div>
     </div>
@@ -242,9 +237,8 @@
 
       <div class="row" style="margin-top:2.5vw">
         <button type="button" class="btn btn-success ml-3 rounded-0"
-          style="color:black; background-color:#27AE60; height: 2.7vw; width: 12.6vw" id="shopListButton_{{id_recipe}}"
-          onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ
-          ZAKUPÓW</button>
+          style="color:black; background-color:#27AE60; height: 2.7vw; width: auto" id="shopListButton_{{id_recipe}}"
+          onclick="addToShopList(event, {{@root.userId}})">STWÓRZ LISTĘ ZAKUPÓW</button>
       </div>
     </div>
   </div>
@@ -285,9 +279,9 @@
 </div>
 
 
-<script src="/javascripts/favouritesHandler.js"></script>
-<script src="/javascripts/scoreStarsHandler.js"></script>
-<script src="/javascripts/shopListHandler.js"></script>
+<script type="module" src="/javascripts/favourites-setting-vanilla.js"></script>
+<script type="module" src="/javascripts/scores-mechanism-vanilla.js"></script>
+<script type="module" src="/javascripts/recipe-shopping-list-addition-vanilla.js"></script>
 <script src="/javascripts/recommendations.js"></script>
 
 

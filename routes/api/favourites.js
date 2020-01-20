@@ -81,7 +81,7 @@ router.post('/', (req, res) => {
             throw addToFavouritesQueryError;
         }
         console.log(`POST /favourites - query successful - ${addToFavouritesQueryResult.rowCount} added`);
-        sendDataToEngine(userId, recipeId);
+        sendDataToEngine(userId.toString(), recipeId.toString());
         res.json(addToFavouritesQueryResult.rows);
     });
 });
@@ -97,7 +97,7 @@ router.delete('/', (req, res) => {
         if (removeFromFavouritesQueryError) {
             throw removeFromFavouritesQueryError;
         }
-        removeDataFromEngine(userId, recipeId);
+        removeDataFromEngine(userId.toString(), recipeId.toString());
         console.log(`DELETE /favourites - query successful - ${removeFromFavouritesQueryResult.rowCount} removed`);
         res.json(removeFromFavouritesQueryResult.rows);
     });

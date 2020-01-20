@@ -1,10 +1,10 @@
-function splitRecipeId(elementId) {
+function splitElementId(elementId) {
     return elementId.split('_')[1];
 }
 
 function addToShopList(e, userId) {
     let shopList = document.getElementById(e.target.id);
-    let recipeId = splitRecipeId(shopList.id);
+    let recipeId = splitElementId(shopList.id);
     $.getJSON(`/api/users/shopping_list/${recipeId}`, (jsonData) => {
         if (jsonData >= 1) {
             e.target.classList.add('error');
@@ -39,14 +39,14 @@ function addToShopList(e, userId) {
 
 // function getIdOfList(e) {
 //     let shopList = document.getElementById(e.target.id);
-//     let recipeId = splitRecipeId(shopList.id);
+//     let recipeId = splitElementId(shopList.id);
 //     return recipeId;
 //
 // }
 //
 // function deleteFromShoppingList(e,userId) {
 //     let shopList = document.getElementById(e.target.id);
-//     let recipeId = splitRecipeId(shopList.id);
+//     let recipeId = splitElementId(shopList.id);
 //     $.ajax({
 //         url: '/api/shoppingList/',
 //         type: 'DELETE',

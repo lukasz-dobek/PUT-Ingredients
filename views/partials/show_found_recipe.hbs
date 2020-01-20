@@ -27,7 +27,7 @@
           <p style="text-align:right;">
             <i id="favouritesButton_{{id_recipe}}" class="far fa-heart"
               style="font-size: 1.3vw; position: absolute; bottom:0.4vw; right:1vw"
-              onClick="addToFavourites(event, {{@root.userId}})"></i>
+              onClick="setFavourite(event, {{@root.userId}})"></i>
           </p>
         </div>
       </div>
@@ -97,7 +97,6 @@
           {{!-- kategorie --}}
           <div class="col">
             <p id="categoryBox_{{id_recipe}}">
-              {{!-- <i class="fas fa-utensils" style="font-size: 1.3vw; position: absolute; bottom:0;"></i> --}}
             </p>
           </div>
           <div class="col-5">

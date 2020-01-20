@@ -119,8 +119,10 @@ router.post('/change_password', async (req, res) => {
         } catch (e) {
             await client.query("ROLLBACK").catch(er => {
                 console.log(er);
+                return next(er);
             });
-            return e;
+            console.log(e);
+            return next(e);
         } finally {
             client.release();
         }
@@ -161,8 +163,10 @@ router.get('/delete_account', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release();
     }
@@ -214,8 +218,10 @@ router.post('/report_recipe', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release();
     }

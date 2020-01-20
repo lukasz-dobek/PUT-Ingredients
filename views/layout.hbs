@@ -11,14 +11,13 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 
   <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
-  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
   <script src="https://kit.fontawesome.com/14c7d64e0c.js"></script>
   <script src="/javascripts/jquery/jquery-3.3.1.slim.min.js"></script>
   <script src="/javascripts/jquery/jquery-3.1.1.min.js"></script>
   <script src="/javascripts/popper/popper.min.js"></script>
   <script src="/javascripts/bootstrap/bootstrap.min.js"></script>
 
-  <script src="/javascripts/categories_dropdown.js"></script>
+  <script type="module" src="/javascripts/categories-dropdown.js"></script>
   <title>Ingredients</title>
 </head>
 
@@ -102,9 +101,5 @@
   <hr class="mt-5">
   {{>messages}}
   {{{body}}}
-  {{#if scriptName}}
-  {{!-- TODO --}}
-  <script src="{{scriptName}}"></script>
-  {{/if}}
 </body>
 </html>

@@ -10,11 +10,11 @@ router.get('/all', (req, res) => {
 });
 
 router.get('/email/:email',(req,res)=>{
-    const  queryString = `SELECT * FROM users WHERE email_address = $1`;
+    const  queryString = `SELECT email_address FROM users WHERE email_address = $1`;
     const emailValue = req.params.email;
     pgClient.query(queryString,[emailValue],(err,result)=>{
         if(err) throw err;
-        res.json(result.rows);
+        res.json(result.rowCount);
     })
 });
 
@@ -46,7 +46,7 @@ router.post('/send_email', (req, res) => {
     let message = `${messageContent} <br><br> Wiadomość została wysłana za pomocą panelu administracyjnego. W celu bezkonfliktowego kontaktu proszę odpowiedz na adres ${adminEmail}.`;
 
     mailClient.sendEmail(userEmail, subject, message);
-    res.send('Mail sent.');
+    res.json('sent-ok');
 });
 
 router.post('/send_shopping_list', (req, res) => {

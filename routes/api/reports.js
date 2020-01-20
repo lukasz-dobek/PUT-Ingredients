@@ -2,10 +2,6 @@ const express = require('express');
 const pgClient = require('../../db/PGController');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    // todo
-});
-
 router.post('/revoke_report', async (req, res) => {
     const client = await pgClient.connect();
     const { reportId, recipeId } = req.body;
@@ -25,8 +21,10 @@ router.post('/revoke_report', async (req, res) => {
     } catch (e) {
         await client.query('ROLLBACK').catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release()
     }
@@ -50,8 +48,10 @@ router.post('/accept_report', async (req, res, e) => {
     } catch (e) {
         await client.query('ROLLBACK').catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release()
     }

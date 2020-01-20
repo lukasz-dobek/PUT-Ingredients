@@ -1,6 +1,6 @@
 let favourites = document.querySelectorAll('[id^="favouritesButton_"]'); // just those elements!
 
-function splitRecipeId(elementId) {
+function splitElementId(elementId) {
     return elementId.split('_')[1];
 }
 
@@ -16,9 +16,9 @@ function uncolourHeart(element) {
     element.style.color = "";
 }
 
-function addToFavourites(e, userId) {
+function setFavourite(e, userId) {
     let heart = document.getElementById(e.target.id);
-    let recipeId = splitRecipeId(heart.id);
+    let recipeId = splitElementId(heart.id);
     if (heart.classList.contains('far')) {
         colorHeartAsFavourite(heart);
         $.post("/api/favourites/", {
@@ -42,10 +42,10 @@ function addToFavourites(e, userId) {
 const currentUserEmail = document.getElementById('userProfileDropdown').textContent.trim();
 let recipesOnPage = [];
 Object.values(favourites).forEach(favourite => {
-    recipesOnPage.push(parseInt(splitRecipeId(favourite.id)));
+    recipesOnPage.push(parseInt(splitElementId(favourite.id)));
 
-    $.getJSON(`/api/categories/recipe/${splitRecipeId(favourite.id)}`, (jsonData) => {
-        let categoryBox = document.getElementById(`categoryBox_${splitRecipeId(favourite.id)}`);
+    $.getJSON(`/api/categories/recipe/${splitElementId(favourite.id)}`, (jsonData) => {
+        let categoryBox = document.getElementById(`categoryBox_${splitElementId(favourite.id)}`);
         jsonData.forEach(element => {
             // <span class="badge badge-pill badge-secondary">Secondary</span>
             let pill = document.createElement('span');

@@ -79,8 +79,10 @@ router.get('/recipes/:linkToRecipe', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release();
     }
@@ -132,8 +134,10 @@ router.get('/reports/:id', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release()
     }
@@ -269,8 +273,10 @@ router.get('/user_management/:nickname', async (req, res) => {
     } catch (e) {
         await client.query("ROLLBACK").catch(er => {
             console.log(er);
+            return next(er);
         });
-        return e;
+        console.log(e);
+        return next(e);
     } finally {
         client.release()
     }
