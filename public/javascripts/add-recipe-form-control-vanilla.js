@@ -197,7 +197,7 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
     autocompleteIngredientName(document.getElementById("ingredientName1"), ingredientsNames);
     autocompleteIngredientName(document.getElementById("ingredientName2"), ingredientsNames);
 
-    createIngredient = function () {
+    window.createIngredient = function () {
         numberOfIngredients++;
         let ingredientsField = document.getElementById('ingredients');
 
