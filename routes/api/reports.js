@@ -2,10 +2,6 @@ const express = require('express');
 const pgClient = require('../../db/PGController');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    // todo
-});
-
 router.post('/revoke_report', async (req, res) => {
     const client = await pgClient.connect();
     const { reportId, recipeId } = req.body;
