@@ -50,7 +50,7 @@ router.delete('/:id', (req, res) => {
 });
 
 router.post('/accept_recipe', (req, res) => {
-    const acceptRecipeQueryString = `UPDATE recipes SET state = 'Zweryfikowany' WHERE id_recipe = $1`;
+    const acceptRecipeQueryString = `UPDATE recipes SET state = 'Zweryfikowany', date_of_modification = TO_TIMESTAMP(${Date.now()} / 1000.0) WHERE id_recipe = $1`;
     const recipeId = req.body.recipeId;
 
     pgClient.query(acceptRecipeQueryString, [recipeId], (acceptRecipeQueryError, acceptRecipeQueryResult) => {
@@ -62,14 +62,13 @@ router.post('/accept_recipe', (req, res) => {
 });
 
 router.post('/reject_recipe', (req, res) => {
-    const acceptRecipeQueryString = `UPDATE recipes SET state = 'Niezaakceptowany' WHERE id_recipe = $1`;
+    const rejectRecipeQueryString = `UPDATE recipes SET state = 'Niezaakceptowany', date_of_modification = TO_TIMESTAMP(${Date.now()} / 1000.0) WHERE id_recipe = $1`;
     const recipeId = req.body.recipeId;
-
-    pgClient.query(acceptRecipeQueryString, [recipeId], (acceptRecipeQueryError, acceptRecipeQueryResult) => {
-        if (acceptRecipeQueryError) {
-            acceptRecipeQueryError;
+    pgClient.query(rejectRecipeQueryString, [recipeId], (rejectRecipeQueryError, rejectRecipeQueryResult) => {
+        if (rejectRecipeQueryError) {
+            rejectRecipeQueryError;
         }
-        res.json(acceptRecipeQueryResult.rows);
+        res.json(rejectRecipeQueryResult.rows);
     });
 });
 
