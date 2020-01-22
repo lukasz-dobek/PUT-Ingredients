@@ -36,7 +36,7 @@ function hasVoted() {
                 return alert('Nie możesz zagłosować na przepis, na który już zagłosowałeś!');
             } else {
                 await postData("/api/votes/", {
-                    userEmail: currentUserEmail, // uwaga, w post odbieram ale korzystam z ID dla ulatwienia query
+                    userEmail: currentUserEmail, 
                     recipeId: recipeId,
                     vote: scoreValue,
                     voteDate: Date.now()

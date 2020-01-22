@@ -90,69 +90,46 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
         ingredientUnitsTwo.appendChild(unitOption);
     });
 
-    // Ingredients part
 
     autocompleteIngredientName = function (inp, arr) {
         var currentFocus;
-        /*execute a function when someone writes in the text field:*/
         inp.addEventListener("input", function (e) {
             var a, b, i, val = this.value;
-            /*close any already open lists of autocompleted values*/
             closeAllLists();
             if (!val) {
                 return false;
             }
             currentFocus = -1;
-            /*create a DIV element that will contain the items (values):*/
             a = document.createElement("DIV");
             a.setAttribute("id", this.id + "autocomplete-list");
             a.setAttribute("class", "autocomplete-items");
-            /*append the DIV element as a child of the autocomplete container:*/
             this.parentNode.appendChild(a);
-            /*for each item in the array...*/
             for (i = 0; i < arr.length; i++) {
-                /*check if the item starts with the same letters as the text field value:*/
                 if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                    /*create a DIV element for each matching element:*/
                     b = document.createElement("DIV");
-                    /*make the matching letters bold:*/
                     b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
                     b.innerHTML += arr[i].substr(val.length);
-                    /*insert a input field that will hold the current array item's value:*/
                     b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                    /*execute a function when someone clicks on the item value (DIV element):*/
                     b.addEventListener("click", function (e) {
-                        /*insert the value for the autocomplete text field:*/
                         inp.value = this.getElementsByTagName("input")[0].value;
-                        /*close the list of autocompleted values,
-                        (or any other open lists of autocompleted values:*/
                         closeAllLists();
                     });
                     a.appendChild(b);
                 }
             }
         });
-        /*execute a function presses a key on the keyboard:*/
         inp.addEventListener("keydown", function (e) {
             var x = document.getElementById(this.id + "autocomplete-list");
             if (x) x = x.getElementsByTagName("div");
             if (e.keyCode == 40) {
-                /*If the arrow DOWN key is pressed,
-                increase the currentFocus variable:*/
                 currentFocus++;
-                /*and and make the current item more visible:*/
                 addActive(x);
             } else if (e.keyCode == 38) { //up
-                /*If the arrow UP key is pressed,
-                decrease the currentFocus variable:*/
                 currentFocus--;
-                /*and and make the current item more visible:*/
                 addActive(x);
             } else if (e.keyCode == 13) {
-                /*If the ENTER key is pressed, prevent the form from being submitted,*/
                 e.preventDefault();
                 if (currentFocus > -1) {
-                    /*and simulate a click on the "active" item:*/
                     if (x) x[currentFocus].click();
                 }
             }
@@ -160,26 +137,20 @@ $.when(unitsPromise, ingredientsPromise).then((unitData, ingredientData) => {
 
 
         addActive = function (x) {
-            /*a function to classify an item as "active":*/
             if (!x) return false;
-            /*start by removing the "active" class on all items:*/
             removeActive(x);
             if (currentFocus >= x.length) currentFocus = 0;
             if (currentFocus < 0) currentFocus = (x.length - 1);
-            /*add class "autocomplete-active":*/
             x[currentFocus].classList.add("autocomplete-active");
         }
 
         removeActive = function (x) {
-            /*a function to remove the "active" class from all autocomplete items:*/
             for (var i = 0; i < x.length; i++) {
                 x[i].classList.remove("autocomplete-active");
             }
         }
 
         closeAllLists = function (elmnt) {
-            /*close all autocomplete lists in the document,
-            except the one passed as an argument:*/
             var x = document.getElementsByClassName("autocomplete-items");
             for (var i = 0; i < x.length; i++) {
                 if (elmnt != x[i] && elmnt != inp) {
@@ -419,10 +390,6 @@ $("#file-input").change(function () {
     readURL(this);
 });
 
-// // weryfikacja
-// let checkIngredientName = function(){
-//
-// }
 
 function splitRecipeId(elementId) {
     return elementId.split('_')[1];
@@ -466,10 +433,8 @@ $.getJSON("/api/recipes/all", (data) => {
         return recipeNameTaken;
     };
 
-    // Validate the field
     let hasError = function (field) {
 
-        // Don't validate submits, buttons, file and reset inputs, and disabled fields
         if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
 
         if (checkRecipeName()) {
@@ -481,63 +446,47 @@ $.getJSON("/api/recipes/all", (data) => {
             if (field.id === 'numberOfPortions' && field.value > 20) return 'Wartość nie może być większa niż 20';
             if (field.value <= 0) return "Wartość nie może być zerowa, lub ujemna."
         }
-        // Get validity
         let validity = field.validity;
-
-        // If valid, return null
         if (validity.valid) return;
 
         if (validity.typeMismatch) {
-            // Email
             if (field.type === 'number') return 'Wprowadzone dane muszą być liczbą.';
         }
 
         if(field.id==="mainPhotoSelect"){
                 return "Musisz dodać co najmniej jedno zdjęcie i wybrać, które ma być główne";
         }
-        // If field is required and empty
         if (validity.valueMissing) {
             if (field.id === "categorySelect1") return 'Musi zostać wybrana co najmniej jedna kategoria.';
             if (field.name === 'check') return 'Musisz zaakceptować regulamin.';
             return 'To pole jest obowiązkowe.';
         }
-        // If too short
         if (validity.tooShort) {
             if (field.name === 'recipename') return 'Nazwa przepisu musi składać się co najmniej 5 znaków.'
             if (field.name === 'ingredientName') return 'Nazwa składnika musi mieć co najmniej 3 znaki.'
         }
 
-        // If too long
         if (validity.tooLong) {
             if (field.name === 'nickname') return 'Nazwa przepisu może się składać masymalnie z 35 znaków.'
             if (field.name === 'ingredientName') return 'Nazwa składnika może się składać maksymalnie z 50 znaków.'
         }
-        // If all else fails, return a generic catchall error
         return 'Podana wartość jest błędna.';
-
     };
 
 
-    // Show an error message
     let showError = function (field, error) {
 
-        // Add error class to field
         field.classList.add('error');
-        // Get field id or name
         let id = field.id || field.name;
         if (!id) return;
 
-        // Check if error message field already exists
-        // If not, create one
         let message = field.form.querySelector('.error-message#error-for-' + id);
         if (!message) {
             message = document.createElement('div');
             message.className = 'error-message container';
             message.id = 'error-for-' + id;
 
-            // If the field is a radio button or checkbox, insert error after the label
             let label;
-            //if (field.type === 'radio' || field.type ==='checkbox') {
             label = field.form.querySelector('label[for="' + id + '"]') || field.parentNode;
             if (label) {
                 if (field.id === 'category1') {
@@ -552,46 +501,34 @@ $.getJSON("/api/recipes/all", (data) => {
                 }
 
             }
-            //}
 
-            // Otherwise, insert it after the field
             if (!label) {
                 field.parentNode.insertBefore(message, field.nextSibling);
             }
 
         }
 
-        // Add ARIA role to the field
         field.setAttribute('aria-describedby', 'error-for-' + id);
 
-        // Update error message
         message.innerHTML = error;
 
-        // Show error message
         message.style.display = 'block';
         message.style.visibility = 'visible';
-        //   }
     };
 
 
-    // Remove the error message
     let removeError = function (field) {
 
-        // Remove error class to field
         field.classList.remove('error');
 
-        // Remove ARIA role from the field
         field.removeAttribute('aria-describedby');
-        // Get field id or name
         let id = field.id || field.name;
         if (!id) return;
 
 
-        // Check if an error message is in the DOM
         let message = field.form.querySelector('.error-message#error-for-' + id + '');
         if (!message) return;
 
-        // If so, hide it
         message.innerHTML = '';
         message.style.display = 'none';
         message.style.visibility = 'hidden';

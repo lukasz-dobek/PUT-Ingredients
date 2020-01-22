@@ -28,7 +28,6 @@ const sendDataToEngine = (user, recipe) => {
         }
     }, (error, response, body) => {
         console.log(error);
-        // console.log(response);
     });
 
     request.post(`http://localhost:3001/recipes/${recipe}`, {
@@ -37,7 +36,6 @@ const sendDataToEngine = (user, recipe) => {
         }
     }, (error, response, body) => {
         console.log(error);
-        // console.log(response);
     })
 };
 
@@ -48,7 +46,6 @@ const removeDataFromEngine = (user, recipe) => {
         }
     }, (error, response, body) => {
         console.log(error);
-        // console.log(response);
     });
     request.delete(`http://localhost:3001/recipes/${recipe}`, {
         json: {
@@ -56,12 +53,10 @@ const removeDataFromEngine = (user, recipe) => {
         }
     }, (error, response, body) => {
         console.log(error);
-        // console.log(response);
     });
 };
 
 router.get('/recommendations', (req, res) => {
-    // get recommendations for current user
     request(`http://localhost:3001/recommendations/${res.locals.userId}`, (error, response, body) => {
         res.json(JSON.parse(body));
     });
@@ -72,7 +67,6 @@ router.post('/', (req, res) => {
     INSERT INTO favourites (user_id, recipe_id, date_of_favourite) VALUES
     ($1, $2, TO_TIMESTAMP($3 / 1000.0));
     `;
-    // to_timestamp(${Date.now() / 1000.0})
     const userId = req.body.userId;
     const recipeId = req.body.recipeId;
     const addedToFavouritesDate = Date.now();

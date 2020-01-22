@@ -149,7 +149,6 @@ $.getJSON('/api/ingredients/names', (ingredientData) => {
 
             let ingredientCheckBox = document.createElement('input');
             ingredientCheckBox.classList.add('form-check-input');
-            // ingredientCheckBox.id = `ingredientCheck${(i * 4) + j}`;
             ingredientCheckBox.id = `ingredientCheck_${quickIngredientsSearch[(i * 4) + j].replace(' ', '_')}`;
             ingredientCheckBox.type = "checkbox";
             ingredientCheckBox.value = quickIngredientsSearch[(i * 4) + j];

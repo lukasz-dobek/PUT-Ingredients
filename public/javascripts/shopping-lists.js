@@ -292,11 +292,9 @@ function sendMail(email, e) {
                 if (!id) return;
 
 
-                // Check if an error message is in the DOM
                 let message = e.target.nextSibling;
                 if (!message) return;
 
-                // If so, hide it
                 message.innerHTML = '';
                 message.style.display = 'none';
                 message.style.visibility = 'hidden';
@@ -309,7 +307,6 @@ function sendMail(email, e) {
         } else {
             clicked.classList.add('error');
 
-            // Get field id or name
             let id = clicked.id || clicked.name;
             if (!id) return;
             if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
@@ -348,7 +345,6 @@ function addToUpdated(e) {
         if (quantity <= 0) {
             let errorField = nameDiv.querySelector('.col > #quantityForm');
             errorField.classList.add('error');
-            // Get field id or name
             let id = errorField.id || errorField.name;
             if (!id) return;
             if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
@@ -370,7 +366,6 @@ function addToUpdated(e) {
         } else if (quantity > 2000) {
             let errorField = nameDiv.querySelector('.col > #quantityForm');
             errorField.classList.add('error');
-            // Get field id or name
             let id = errorField.id || errorField.name;
             if (!id) return;
             if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
@@ -404,7 +399,6 @@ function addToUpdated(e) {
         if (quantity <= 0) {
             let errorField = nameDiv.querySelector('.col > #quantityForm');
             errorField.classList.add('error');
-            // Get field id or name
             let id = errorField.id || errorField.name;
             if (!id) return;
             if (!e.target.nextSibling) {
@@ -431,7 +425,6 @@ function addToUpdated(e) {
         } else if (quantity > 2000) {
             let errorField = nameDiv.querySelector('.col > #quantityForm');
             errorField.classList.add('error');
-            // Get field id or name
             let id = errorField.id || errorField.name;
             if (!id) return;
             if (!e.target.nextSibling) {
@@ -465,11 +458,9 @@ function addToUpdated(e) {
                 if (!id) return;
 
 
-                // Check if an error message is in the DOM
                 let message = e.target.nextSibling;
                 if (!message) return;
 
-                // If so, hide it
                 message.innerHTML = '';
                 message.style.display = 'none';
                 message.style.visibility = 'hidden';
@@ -505,7 +496,6 @@ function saveChanges(e) {
         emptyLists = true;
 
         clicked.classList.add('error');
-        // Get field id or name
         let id = clicked.id || clicked.name;
         if (!id) return;
         if (!e.target.nextSibling) {
@@ -588,11 +578,9 @@ function saveChanges(e) {
                     if (!id) return;
 
 
-                    // Check if an error message is in the DOM
                     let message = e.target.nextSibling;
                     if (!message) return;
 
-                    // If so, hide it
                     message.innerHTML = '';
                     message.style.display = 'none';
                     message.style.visibility = 'hidden';
@@ -605,7 +593,6 @@ function saveChanges(e) {
         } else {
             clicked.classList.add('error');
 
-            // Get field id or name
             let id = clicked.id || clicked.name;
             if (!id) return;
             if (!e.target.parentNode.parentNode.querySelector('[id^=error]')) {
@@ -670,7 +657,6 @@ function deleteFromShoppingList(e) {
 
 }
 
-//$.getJSON("/api/users/shopping_list", (data) => {
 $.ajax({
     url: '/api/users/shopping_list',
     dataType: 'json',
@@ -695,7 +681,6 @@ $.ajax({
             button.setAttribute("aria-expanded", "false");
             button.setAttribute("aria-controls", "div_" + item['recipe_name'].split(" ").join("_"));
             button.setAttribute("data-parent", "#allRecipesShoppingList");
-            //button.style='width: 75%; margin-top: 1%; margin-bottom: 1%;';
 
             button.id = item['recipe_name'].split(" ").join("_");
             button.textContent = item['recipe_name'];

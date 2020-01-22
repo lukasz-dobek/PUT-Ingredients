@@ -33,26 +33,5 @@ function addToShopList(e, userId) {
                 window.location.replace('/users/shopping_lists');
             });
         }
-        // Otherwise, remove any existing error message
     });
 }
-
-// function getIdOfList(e) {
-//     let shopList = document.getElementById(e.target.id);
-//     let recipeId = splitElementId(shopList.id);
-//     return recipeId;
-//
-// }
-//
-// function deleteFromShoppingList(e,userId) {
-//     let shopList = document.getElementById(e.target.id);
-//     let recipeId = splitElementId(shopList.id);
-//     $.ajax({
-//         url: '/api/shoppingList/',
-//         type: 'DELETE',
-//         data: {
-//             userId: userId,
-//             recipeId: recipeId
-//         }
-//     });
-// }

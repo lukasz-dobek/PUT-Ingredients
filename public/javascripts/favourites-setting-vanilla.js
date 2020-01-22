@@ -31,7 +31,6 @@ window.setFavourite = async function (e, userId) {
     }
 };
 
-// Not really related to favourites - this part covers setting proper "category pills" for each recipe on page
 const recipesOnPage = [];
 const currentUserEmail = document.getElementById('userProfileDropdown').textContent.trim();
 

@@ -7,7 +7,6 @@ router.post('/', (req, res) => {
     INSERT INTO shop_lists (user_id, recipe_id) VALUES
     ($1, $2);
     `;
-    // to_timestamp(${Date.now() / 1000.0})
     const userId = req.body.userId;
     const recipeId = req.body.recipeId;
 
@@ -16,7 +15,6 @@ router.post('/', (req, res) => {
             throw addToShoppingListQueryError;
         }
         console.log(`POST /shoppingList - query successful - ${addToShoppingListQueryResult.rowCount} added`);
-        // res.redirect('/users/shopping_lists')
         res.json(addToShoppingListQueryResult.rows);
     });
 });

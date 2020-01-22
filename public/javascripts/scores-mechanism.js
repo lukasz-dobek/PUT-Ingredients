@@ -6,22 +6,6 @@ function splitNumber(elementId) {
     return elementId.split('_')[1];
 }
 
-// function voteForRecipe(e) {
-//     let star = document.getElementById(e.target.id);
-//     let scoreValue = splitNumber(star.id);
-//     if (hasVoted) {
-//         return alert('Nie mozesz zaglosowac na przepis, na ktory juz zaglosowales!');
-//     } else {
-//         $.post("/api/votes/", {
-//             userEmail: currentUserEmail, // uwaga, w post odbieram ale korzystam z ID dla ulatwienia query
-//             recipeId: recipeId,
-//             vote: scoreValue,
-//             voteDate: Date.now()
-//         });
-//         location.reload(true);
-//     }
-// }
-
 function hasVoted() {
     let starBox = document.getElementById('starBox');
     let voteValue = 0;
@@ -51,7 +35,7 @@ $.getJSON(`/api/votes/${recipeId}/${currentUserEmail}`, (jsonData) => {
                 return alert('Nie możesz zagłosować na przepis, na który już zagłosowałeś!');
             } else {
                 $.post("/api/votes/", {
-                    userEmail: currentUserEmail, // uwaga, w post odbieram ale korzystam z ID dla ulatwienia query
+                    userEmail: currentUserEmail, 
                     recipeId: recipeId,
                     vote: scoreValue,
                     voteDate: Date.now()

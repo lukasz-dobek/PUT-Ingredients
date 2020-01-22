@@ -65,8 +65,6 @@ router.get('/recipes/:linkToRecipe', async (req, res) => {
         await client.query("BEGIN");
         const recipe = await client.query(recipeQueryString, [linkToRecipe]);
         const recipeId = recipe.rows[0]["id_recipe"];
-        console.log(recipeId);
-
         const ingredients = await client.query(ingredientsQueryString, [recipeId]);
         const alternativeIngredients = await client.query(alternativeIngredientsQueryString, [recipeId]);
         await client.query("COMMIT");
