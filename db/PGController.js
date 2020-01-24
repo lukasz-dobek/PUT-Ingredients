@@ -1,11 +1,13 @@
 const { Pool } = require('pg');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const poolConnectionOptions = {
   host: 'localhost',
   port: 5432,
-  user: 'postgres',
-  password: 'super456',
-  database: 'sandbox',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
 };
 
 const dbCheckQS = `SELECT current_database() AS "Current_database", now() AS "Current_time", $1 AS "Mode";`;
