@@ -17,6 +17,7 @@
       // The following rule
       "matchPackageNames": ["express-handlebars", "express"],
       "groupName": "express deps",
+      "separateMajorMinor": false,
     }
   ],
 }
