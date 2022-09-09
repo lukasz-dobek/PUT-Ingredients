@@ -8,6 +8,7 @@
   "reviewers": ["@lukasz-dobek"],
   "prHourlyLimit": 5,
   "prConcurrentLimit": 10,
+  "additionalBranchPrefix": "{{baseDir}}-",
   "packageRules": [
     {
       "matchManagers": ["npm"],
