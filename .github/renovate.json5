@@ -7,6 +7,7 @@
   "labels": ["dependencies"],
   "reviewers": ["@lukasz-dobek"],
   "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
   "packageRules": [
     {
       "matchManagers": ["npm"],
