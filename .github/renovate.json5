@@ -10,8 +10,8 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "labels": ["javascript"],
-      "additionalReviewers": ["@OlgaDetko"],
+      "addLabels": ["javascript"],
+      "additionalReviewers": [],
     }
   ],
 }
