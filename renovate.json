@@ -5,5 +5,5 @@
     ":preserveSemverRanges"
   ],
   "labels": ["dependencies"],
-  "prHourlyLimit": 1
+  "prHourlyLimit": 5
 }
