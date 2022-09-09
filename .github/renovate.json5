@@ -12,6 +12,11 @@
       "matchManagers": ["npm"],
       "addLabels": ["javascript"],
       "additionalReviewers": [],
+    },
+    {
+      // The following rule
+      "matchPackageNames": ["express-handlebars", "express"],
+      "groupName": "express deps",
     }
   ],
 }
