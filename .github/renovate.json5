@@ -5,11 +5,13 @@
     ":preserveSemverRanges",
   ],
   "labels": ["dependencies"],
+  "reviewers": ["@lukasz-dobek"],
   "prHourlyLimit": 5,
   "packageRules": [
     {
       "matchManagers": ["npm"],
       "labels": ["javascript"],
+      "additionalReviewers": ["@OlgaDetko"],
     }
   ],
 }
